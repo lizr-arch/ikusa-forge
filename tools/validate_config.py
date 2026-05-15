@@ -231,6 +231,10 @@ def validate_formation_patterns(formations, errors):
                 errors.append(f"{label}: pattern.slots[{slot_index}] must be an object")
                 continue
 
+            role = slot.get("role")
+            if not isinstance(role, str) or not role:
+                errors.append(f"{label}: pattern.slots[{slot_index}].role must be a non-empty string")
+
             x = slot.get("x")
             y = slot.get("y")
             if not isinstance(x, int) or not isinstance(y, int):

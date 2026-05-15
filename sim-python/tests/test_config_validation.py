@@ -134,6 +134,32 @@ class ConfigValidationTests(unittest.TestCase):
 
         self.assert_has_error(errors, "player coordinate (0, 1) is not in formation slots")
 
+    def test_formation_slot_missing_role_fails(self):
+        output_dir = self.export_sample_config()
+        formations = self.load_table(output_dir, "formations")
+        del formations[0]["pattern"]["slots"][0]["role"]
+        self.write_table(output_dir, "formations", formations)
+
+        errors = validate_config(output_dir)
+
+        self.assert_has_error(
+            errors,
+            "formations.fish_scale: pattern.slots[0].role must be a non-empty string",
+        )
+
+    def test_formation_slot_empty_role_fails(self):
+        output_dir = self.export_sample_config()
+        formations = self.load_table(output_dir, "formations")
+        formations[0]["pattern"]["slots"][0]["role"] = ""
+        self.write_table(output_dir, "formations", formations)
+
+        errors = validate_config(output_dir)
+
+        self.assert_has_error(
+            errors,
+            "formations.fish_scale: pattern.slots[0].role must be a non-empty string",
+        )
+
 
 if __name__ == "__main__":
     unittest.main()

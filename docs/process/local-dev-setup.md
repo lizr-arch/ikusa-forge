@@ -1,6 +1,6 @@
 # Local Development Setup
 
-This repository is currently in Phase 1 Data Config v0.1.2 state.
+This repository is currently in Phase 1 Data Config v0.1.3 state.
 
 The scaffold and first config pipeline exist so later tasks can add a deterministic Python simulator, a C# subprocess host, and an HTML replay debugger without mixing responsibilities.
 
@@ -45,7 +45,7 @@ The bare `python` command is kept as a compatibility example for simple local sh
 
 Current behavior:
 
-- v0.1/v0.1.2 reads CSV sample data from `config/source/sample_data/*.csv`.
+- v0.1/v0.1.3 reads CSV sample data from `config/source/sample_data/*.csv`.
 - Writes formatted runtime JSON to `config/generated/*.json`.
 - Converts configured comma-separated fields into JSON arrays.
 - Parses configured JSON cells such as formation patterns and encounter unit lists.
@@ -84,9 +84,12 @@ The validator currently checks:
 - missing skill, weapon type, unit, and formation references
 - negative `hp`, `atk`, `defense`, `range`, `cooldown`, and `attack_interval`
 - basic 4x3 formation and encounter coordinate validity
+- non-empty `role` values for every formation `pattern.slots` entry
 - encounter unit coordinates against the selected formation's `pattern.slots`
 - required constants: `tick_rate`, `max_ticks`, `board_rows`, `board_cols`, `default_seed`
 - negative numeric constants such as `max_ticks`
+
+With v0.1.3 validation, simulator work can safely rely on `unit coordinate -> formation slot -> role` lookup before applying formation bonuses.
 
 ## Test config tools
 
@@ -102,7 +105,7 @@ The tests export sample data into a temporary directory and validate both valid 
 
 Designer source format is still intended to be xlsx, and runtime format is still JSON.
 
-Data Config v0.1/v0.1.2 uses CSV sample data first because it gives a dependency-free closed loop for schema, exporter, validator, and tests. This keeps Phase 1 moving without adding an xlsx parser before the data shape is stable.
+Data Config v0.1/v0.1.3 uses CSV sample data first because it gives a dependency-free closed loop for schema, exporter, validator, and tests. This keeps Phase 1 moving without adding an xlsx parser before the data shape is stable.
 
 TODO: add an xlsx adapter behind the same `tools/export_xlsx_to_json.py` command after the schema and validator stabilize.
 
