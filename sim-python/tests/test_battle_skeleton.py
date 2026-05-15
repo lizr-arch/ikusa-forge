@@ -70,8 +70,9 @@ class BattleSkeletonTests(unittest.TestCase):
         battle_end = events[-1]
         self.assertEqual("battle_end", battle_end.type)
         self.assertEqual(state.max_ticks, battle_end.tick)
-        self.assertEqual("draw", battle_end.payload["result"]["winner"])
-        self.assertEqual("timeout_no_combat", battle_end.payload["result"]["reason"])
+        self.assertEqual({"winner", "reason", "end_tick"}, set(battle_end.payload.keys()))
+        self.assertEqual("draw", battle_end.payload["winner"])
+        self.assertEqual("timeout_no_combat", battle_end.payload["reason"])
 
     def test_events_group_by_tick_without_reordering(self):
         state, events = self.run_demo()

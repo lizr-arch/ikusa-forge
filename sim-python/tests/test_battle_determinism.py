@@ -49,6 +49,14 @@ class BattleDeterminismTests(unittest.TestCase):
         self.assertEqual(1001, build_replay_document(first_state, first_events)["metadata"]["seed"])
         self.assertEqual(2002, build_replay_document(second_state, second_events)["metadata"]["seed"])
 
+    def test_skeleton_replay_metadata_keeps_result_object(self):
+        state, events = run_battle_skeleton(self.load_sample_bundle(), "demo_001", 1001)
+        metadata_result = build_replay_document(state, events)["metadata"]["result"]
+
+        self.assertEqual("draw", metadata_result["winner"])
+        self.assertEqual("timeout_no_combat", metadata_result["reason"])
+        self.assertEqual(state.max_ticks, metadata_result["end_tick"])
+
 
 if __name__ == "__main__":
     unittest.main()
