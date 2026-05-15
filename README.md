@@ -34,12 +34,13 @@ Current Python simulator status:
 - Minimal Skill Triggers / 最小技能触发
 - `skill_trigger event / 技能触发事件`
 - damage reason / 伤害原因 in replay events / 回放事件
+- Replay Report / 回放与战报
+- `battle_report.json / 战报 JSON`
 
 Still future work:
 
 - synergy application / 羁绊应用
 - formation bonus application / 阵型加成应用
-- battle report / 战报
 - HTML viewer / Web 回放器
 - C# host / C# 宿主
 - Godot
@@ -76,5 +77,6 @@ Then load:
 ```text
 runs/demo_001/replay.json
 runs/demo_001/debug_timeline.json
+runs/demo_001/battle_report.json
 runs/demo_001/run_summary.md
 ```

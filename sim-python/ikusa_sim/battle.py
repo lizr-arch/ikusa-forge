@@ -1,7 +1,7 @@
 """battle.py is a compatibility facade / 兼容转发层.
 
 New code should prefer importing from runtime_models, events, rng,
-battle_skeleton, targeting, combat_rules, basic_combat, and skills.
+battle_skeleton, targeting, combat_rules, basic_combat, skills, and report.
 """
 
 from ikusa_sim.battle_skeleton import (
@@ -21,6 +21,7 @@ from ikusa_sim.combat_rules import (
     calculate_skill_damage,
 )
 from ikusa_sim.events import BattleEvent, event_to_dict, events_to_tick_groups
+from ikusa_sim.report import build_battle_report, build_battle_report_from_events
 from ikusa_sim.rng import BattleRng
 from ikusa_sim.runtime_models import BattleResult, BattleState, UnitState
 from ikusa_sim.skills import (
@@ -46,6 +47,8 @@ __all__ = [
     "battle_result_to_dict",
     "battle_state_to_dict",
     "build_replay_document",
+    "build_battle_report",
+    "build_battle_report_from_events",
     "calculate_basic_damage",
     "calculate_skill_damage",
     "create_battle_state",
