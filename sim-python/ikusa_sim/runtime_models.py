@@ -4,7 +4,7 @@ from dataclasses import dataclass
 from typing import List, Optional
 
 
-@dataclass(frozen=True)
+@dataclass
 class UnitState:
     instance_id: str
     side: str
@@ -23,6 +23,8 @@ class UnitState:
     skill_ids: List[str]
     hp: int
     alive: bool
+    next_action_tick: int = 0
+    action_interval_ticks: int = 0
 
 
 @dataclass(frozen=True)
