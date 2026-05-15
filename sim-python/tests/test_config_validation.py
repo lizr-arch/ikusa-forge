@@ -44,6 +44,24 @@ class ConfigValidationTests(unittest.TestCase):
 
         self.assertEqual([], errors)
 
+    def test_valid_constants_object_passes(self):
+        output_dir = self.export_sample_config()
+        constants = self.load_table(output_dir, "constants")
+
+        errors = validate_config(output_dir)
+
+        self.assertEqual([], errors)
+        self.assertEqual(
+            {
+                "tick_rate": 20,
+                "max_ticks": 1200,
+                "board_rows": 3,
+                "board_cols": 4,
+                "default_seed": 1001,
+            },
+            constants,
+        )
+
     def test_invalid_missing_reference_fails(self):
         output_dir = self.export_sample_config()
         units = self.load_table(output_dir, "units")
@@ -74,6 +92,36 @@ class ConfigValidationTests(unittest.TestCase):
         errors = validate_config(output_dir)
 
         self.assert_has_error(errors, "field 'hp' must not be negative")
+
+    def test_missing_tick_rate_fails(self):
+        output_dir = self.export_sample_config()
+        constants = self.load_table(output_dir, "constants")
+        del constants["tick_rate"]
+        self.write_table(output_dir, "constants", constants)
+
+        errors = validate_config(output_dir)
+
+        self.assert_has_error(errors, "missing required key 'tick_rate'")
+
+    def test_missing_max_ticks_fails(self):
+        output_dir = self.export_sample_config()
+        constants = self.load_table(output_dir, "constants")
+        del constants["max_ticks"]
+        self.write_table(output_dir, "constants", constants)
+
+        errors = validate_config(output_dir)
+
+        self.assert_has_error(errors, "missing required key 'max_ticks'")
+
+    def test_negative_max_ticks_fails(self):
+        output_dir = self.export_sample_config()
+        constants = self.load_table(output_dir, "constants")
+        constants["max_ticks"] = -1
+        self.write_table(output_dir, "constants", constants)
+
+        errors = validate_config(output_dir)
+
+        self.assert_has_error(errors, "constants.max_ticks: value must not be negative")
 
 
 if __name__ == "__main__":

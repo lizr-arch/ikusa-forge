@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """CSV-first config exporter for Ikusa Forge Phase 1.
 
-v0.1 exporter currently reads CSV sample data from config/source/sample_data.
+v0.1/v0.1.1 reads CSV sample data from config/source/sample_data.
+Runtime output is JSON under config/generated.
 The command name is kept stable for the planned xlsx adapter.
 """
 
@@ -151,6 +152,19 @@ def read_csv_table(csv_path, table):
     return rows
 
 
+def build_constants_runtime(rows):
+    # type: (List[Dict[str, Any]]) -> Dict[str, Any]
+    constants = {}  # type: Dict[str, Any]
+    for index, row in enumerate(rows, start=2):
+        key = row.get("key", "")
+        if not key:
+            raise ConfigExportError(f"constants.csv row {index}: missing key")
+        if key in constants:
+            raise ConfigExportError(f"constants.csv row {index}: duplicate key '{key}'")
+        constants[key] = row.get("value")
+    return constants
+
+
 def export_tables(input_dir, output_dir):
     # type: (Path, Path) -> List[Path]
     source_dir = select_source_dir(input_dir)
@@ -166,9 +180,10 @@ def export_tables(input_dir, output_dir):
             raise ConfigExportError(f"missing source table: {csv_path}")
 
         rows = read_csv_table(csv_path, table)
+        runtime_data = build_constants_runtime(rows) if table == "constants" else rows
         output_path = output_dir / f"{table}.json"
         with output_path.open("w", encoding="utf-8", newline="\n") as handle:
-            json.dump(rows, handle, indent=2, ensure_ascii=False)
+            json.dump(runtime_data, handle, indent=2, ensure_ascii=False)
             handle.write("\n")
         written.append(output_path)
 
@@ -179,7 +194,8 @@ def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         description=(
             "Export Ikusa Forge config to runtime JSON. "
-            "v0.1 currently reads CSV sample data; xlsx adapter is planned."
+            "v0.1/v0.1.1 reads CSV sample data from config/source/sample_data; "
+            "xlsx adapter is planned."
         )
     )
     parser.add_argument("--input", required=True, type=Path, help="Source config directory, e.g. config/source")

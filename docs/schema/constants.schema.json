@@ -1,15 +1,16 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "Ikusa Forge Constants",
-  "type": "array",
-  "items": {
-    "type": "object",
-    "required": ["key", "value", "description"],
-    "properties": {
-      "key": { "type": "string", "minLength": 1 },
-      "value": { "type": ["number", "string", "boolean"] },
-      "description": { "type": "string", "minLength": 1 }
-    },
-    "additionalProperties": false
+  "type": "object",
+  "required": ["tick_rate", "max_ticks", "board_rows", "board_cols", "default_seed"],
+  "properties": {
+    "tick_rate": { "type": "integer", "minimum": 0 },
+    "max_ticks": { "type": "integer", "minimum": 0 },
+    "board_rows": { "type": "integer", "const": 3 },
+    "board_cols": { "type": "integer", "const": 4 },
+    "default_seed": { "type": "integer" }
+  },
+  "additionalProperties": {
+    "type": ["number", "string", "boolean"]
   }
 }

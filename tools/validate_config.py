@@ -8,14 +8,13 @@ from pathlib import Path
 from typing import Any, Dict, List, Optional, Set, Tuple
 
 
-TABLES = [
+DATA_TABLES = [
     "units",
     "weapons",
     "skills",
     "formations",
     "synergies",
     "encounters",
-    "constants",
 ]
 
 REQUIRED_FIELDS = {
@@ -44,7 +43,6 @@ REQUIRED_FIELDS = {
         "enemy_formation",
         "reward_pool",
     ],
-    "constants": ["key", "value", "description"],
 }
 
 NONNEGATIVE_FIELDS = {
@@ -53,7 +51,8 @@ NONNEGATIVE_FIELDS = {
     "skills": ["cooldown"],
 }
 
-REQUIRED_CONSTANT_KEYS = {"tick_rate", "max_ticks"}
+REQUIRED_CONSTANT_KEYS = {"tick_rate", "max_ticks", "board_rows", "board_cols", "default_seed"}
+NONNEGATIVE_CONSTANT_KEYS = {"tick_rate", "max_ticks", "board_rows", "board_cols"}
 
 
 def load_json_table(input_dir, table, errors):
@@ -80,6 +79,25 @@ def load_json_table(input_dir, table, errors):
         else:
             errors.append(f"{table}[{index}]: expected object")
     return records
+
+
+def load_constants(input_dir, errors):
+    # type: (Path, List[str]) -> Dict[str, Any]
+    path = input_dir / "constants.json"
+    if not path.is_file():
+        errors.append(f"missing generated file: {path}")
+        return {}
+
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+    except json.JSONDecodeError as exc:
+        errors.append(f"{path}: invalid JSON: {exc.msg}")
+        return {}
+
+    if not isinstance(data, dict) or isinstance(data, list):
+        errors.append(f"{path}: expected top-level object")
+        return {}
+    return data
 
 
 def record_label(table, record, index):
@@ -116,6 +134,11 @@ def validate_unique_key(table, records, errors):
 
 def is_number(value: Any) -> bool:
     return isinstance(value, (int, float)) and not isinstance(value, bool)
+
+
+def is_integer(value):
+    # type: (Any) -> bool
+    return isinstance(value, int) and not isinstance(value, bool)
 
 
 def validate_nonnegative_numbers(table, records, errors):
@@ -243,17 +266,25 @@ def validate_encounters(encounters, unit_ids, formation_ids, errors):
 
 
 def validate_constants(constants, errors):
-    # type: (List[Dict[str, Any]], List[str]) -> None
-    keys = {record.get("key") for record in constants if isinstance(record.get("key"), str)}
-    missing = sorted(REQUIRED_CONSTANT_KEYS - keys)
+    # type: (Dict[str, Any], List[str]) -> None
+    missing = sorted(REQUIRED_CONSTANT_KEYS - set(constants.keys()))
     for key in missing:
         errors.append(f"constants: missing required key '{key}'")
+
+    for key in sorted(REQUIRED_CONSTANT_KEYS & set(constants.keys())):
+        value = constants[key]
+        if not is_integer(value):
+            errors.append(f"constants.{key}: value must be an integer")
+            continue
+        if key in NONNEGATIVE_CONSTANT_KEYS and value < 0:
+            errors.append(f"constants.{key}: value must not be negative")
 
 
 def validate_config(input_dir):
     # type: (Path) -> List[str]
     errors = []  # type: List[str]
-    tables = {table: load_json_table(input_dir, table, errors) for table in TABLES}
+    tables = {table: load_json_table(input_dir, table, errors) for table in DATA_TABLES}
+    constants = load_constants(input_dir, errors)
 
     for table, records in tables.items():
         validate_required_fields(table, records, errors)
@@ -273,7 +304,7 @@ def validate_config(input_dir):
     validate_weapon_references(tables["weapons"], skill_ids, errors)
     validate_formation_patterns(tables["formations"], errors)
     validate_encounters(tables["encounters"], unit_ids, formation_ids, errors)
-    validate_constants(tables["constants"], errors)
+    validate_constants(constants, errors)
 
     return errors
 
