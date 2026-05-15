@@ -42,7 +42,7 @@ Success means:
 ```bash
 python tools/export_xlsx_to_json.py --input config/source --output config/generated
 python tools/validate_config.py --input config/generated
-python tools/run_demo_battle.py --battle demo_001 --seed 1001 --out runs/demo_001
+python tools/run_demo_battle.py --battle demo_001 --seed 1001 --config config/generated --out runs/demo_001
 
 dotnet run --project host-csharp/IkusaForge.Host -- --battle demo_001 --seed 1001
 ```
@@ -57,5 +57,6 @@ Then load:
 
 ```text
 runs/demo_001/replay.json
-runs/demo_001/battle_report.json
+runs/demo_001/debug_timeline.json
+runs/demo_001/run_summary.md
 ```
