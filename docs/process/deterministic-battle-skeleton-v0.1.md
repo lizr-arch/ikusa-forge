@@ -123,6 +123,18 @@ The result / 结果 is always:
 }
 ```
 
+The `battle_end / 战斗结束` event payload / 事件载荷 uses that same top-level shape:
+
+```json
+{
+  "winner": "draw",
+  "reason": "timeout_no_combat",
+  "end_tick": 1200
+}
+```
+
+Replay metadata / 回放元数据 still keeps `metadata.result / 元数据结果` as the same result object.
+
 ## Demo Command
 
 Export and validate config first:

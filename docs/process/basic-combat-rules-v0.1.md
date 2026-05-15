@@ -119,6 +119,18 @@ Basic mode / 基础战斗模式 emits:
 - `death / 死亡`
 - `battle_end / 战斗结束`
 
+The `battle_end / 战斗结束` event payload / 事件载荷 has top-level result fields:
+
+```json
+{
+  "winner": "ally",
+  "reason": "enemy_eliminated",
+  "end_tick": 440
+}
+```
+
+Replay metadata / 回放元数据 still keeps `metadata.result / 元数据结果` as a result object with `winner`, `reason`, and `end_tick`.
+
 Event ids / 事件 ID remain deterministic and sequential:
 
 ```text

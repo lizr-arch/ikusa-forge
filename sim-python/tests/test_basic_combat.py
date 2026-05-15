@@ -13,6 +13,7 @@ for path in (SIM_DIR, TOOLS_DIR):
 
 from export_xlsx_to_json import export_tables  # noqa: E402
 from ikusa_sim.basic_combat import run_basic_combat  # noqa: E402
+from ikusa_sim.battle_skeleton import build_replay_document  # noqa: E402
 from ikusa_sim.config_loader import load_config  # noqa: E402
 from ikusa_sim.events import event_to_dict  # noqa: E402
 
@@ -40,6 +41,7 @@ class BasicCombatTests(unittest.TestCase):
         self.assertIn("damage", event_types)
         self.assertIn("death", event_types)
         self.assertEqual("battle_end", events[-1].type)
+        self.assertEqual({"winner", "reason", "end_tick"}, set(events[-1].payload.keys()))
         self.assertNotEqual("timeout_no_combat", events[-1].payload["reason"])
         self.assertTrue(state.finished)
 
@@ -69,6 +71,14 @@ class BasicCombatTests(unittest.TestCase):
         self.assertNotIn("skill_trigger", event_types)
         self.assertNotIn("synergy", event_types)
         self.assertNotIn("formation_bonus", event_types)
+
+    def test_basic_replay_metadata_keeps_result_object(self):
+        state, events = self.run_demo()
+        metadata_result = build_replay_document(state, events)["metadata"]["result"]
+
+        self.assertIn("winner", metadata_result)
+        self.assertIn("reason", metadata_result)
+        self.assertIn("end_tick", metadata_result)
 
 
 if __name__ == "__main__":

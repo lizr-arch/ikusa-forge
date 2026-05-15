@@ -5,7 +5,7 @@ and victory checks. It intentionally does not implement skills, synergies,
 formation bonuses, battle reports, viewers, host integration, or Godot logic.
 """
 
-from typing import Dict, List, Optional, Tuple
+from typing import List, Optional, Tuple
 
 from ikusa_sim.battle_skeleton import (
     battle_result_to_dict,
@@ -166,21 +166,14 @@ def _finish_battle(
     state.current_tick = result.end_tick
     state.finished = True
     state.result = result
-    payload = battle_result_to_dict(result)
     events.append(
         BattleEvent(
             tick=result.end_tick,
             event_id=_next_event_id(state),
             type="battle_end",
-            payload=_battle_end_payload(payload),
+            payload=battle_result_to_dict(result),
         )
     )
-
-
-def _battle_end_payload(result_payload: Dict[str, object]) -> Dict[str, object]:
-    payload = dict(result_payload)
-    payload["result"] = result_payload
-    return payload
 
 
 def _format_event_id(sequence_number: int) -> str:

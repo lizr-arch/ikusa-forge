@@ -101,7 +101,7 @@ def run_battle_skeleton(
             tick=state.current_tick,
             event_id=_next_event_id(state),
             type="battle_end",
-            payload={"result": battle_result_to_dict(result)},
+            payload=battle_result_to_dict(result),
         )
     )
 
