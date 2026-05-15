@@ -123,6 +123,17 @@ class ConfigValidationTests(unittest.TestCase):
 
         self.assert_has_error(errors, "constants.max_ticks: value must not be negative")
 
+    def test_encounter_coordinate_outside_formation_slots_fails(self):
+        output_dir = self.export_sample_config()
+        encounters = self.load_table(output_dir, "encounters")
+        encounters[0]["player_units"][0]["x"] = 0
+        encounters[0]["player_units"][0]["y"] = 1
+        self.write_table(output_dir, "encounters", encounters)
+
+        errors = validate_config(output_dir)
+
+        self.assert_has_error(errors, "player coordinate (0, 1) is not in formation slots")
+
 
 if __name__ == "__main__":
     unittest.main()

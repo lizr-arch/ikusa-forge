@@ -157,6 +157,34 @@ def collect_ids(records):
     return {record["id"] for record in records if isinstance(record.get("id"), str) and record["id"]}
 
 
+def collect_formation_slot_coords(formations):
+    # type: (List[Dict[str, Any]]) -> Dict[str, Set[Tuple[int, int]]]
+    slots_by_formation = {}  # type: Dict[str, Set[Tuple[int, int]]]
+    for formation in formations:
+        formation_id = formation.get("id")
+        if not isinstance(formation_id, str) or not formation_id:
+            continue
+
+        pattern = formation.get("pattern")
+        if not isinstance(pattern, dict):
+            continue
+
+        slots = pattern.get("slots")
+        if not isinstance(slots, list):
+            continue
+
+        coords = set()  # type: Set[Tuple[int, int]]
+        for slot in slots:
+            if not isinstance(slot, dict):
+                continue
+            x = slot.get("x")
+            y = slot.get("y")
+            if isinstance(x, int) and isinstance(y, int):
+                coords.add((x, y))
+        slots_by_formation[formation_id] = coords
+    return slots_by_formation
+
+
 def validate_unit_references(units, skill_ids, weapon_types, errors):
     # type: (List[Dict[str, Any]], Set[str], Set[str], List[str]) -> None
     for index, unit in enumerate(units):
@@ -217,8 +245,17 @@ def validate_formation_patterns(formations, errors):
             seen_coords.add(coord)
 
 
-def validate_encounter_unit_list(encounter_label, field, entries, unit_ids, errors):
-    # type: (str, str, Any, Set[str], List[str]) -> None
+def validate_encounter_unit_list(
+    encounter_label,
+    side,
+    field,
+    entries,
+    unit_ids,
+    formation_id,
+    formation_slot_coords,
+    errors,
+):
+    # type: (str, str, str, Any, Set[str], Any, Optional[Set[Tuple[int, int]]], List[str]) -> None
     if not isinstance(entries, list) or not entries:
         errors.append(f"{encounter_label}: {field} must be a non-empty list")
         return
@@ -247,22 +284,52 @@ def validate_encounter_unit_list(encounter_label, field, entries, unit_ids, erro
             errors.append(f"{encounter_label}: duplicate {field} coordinate ({x}, {y})")
         seen_coords.add(coord)
 
+        if formation_slot_coords is not None and coord not in formation_slot_coords:
+            errors.append(
+                f"{encounter_label}: {side} coordinate ({x}, {y}) is not in formation slots "
+                f"for formation '{formation_id}'"
+            )
 
-def validate_encounters(encounters, unit_ids, formation_ids, errors):
-    # type: (List[Dict[str, Any]], Set[str], Set[str], List[str]) -> None
+
+def validate_encounters(encounters, unit_ids, formation_ids, formation_slot_coords_by_id, errors):
+    # type: (List[Dict[str, Any]], Set[str], Set[str], Dict[str, Set[Tuple[int, int]]], List[str]) -> None
     for index, encounter in enumerate(encounters):
         label = record_label("encounters", encounter, index)
 
         player_formation = encounter.get("player_formation")
         if player_formation not in formation_ids:
             errors.append(f"{label}: player_formation references unknown formation '{player_formation}'")
+            player_slots = None  # type: Optional[Set[Tuple[int, int]]]
+        else:
+            player_slots = formation_slot_coords_by_id.get(player_formation)
 
         enemy_formation = encounter.get("enemy_formation")
         if enemy_formation not in formation_ids:
             errors.append(f"{label}: enemy_formation references unknown formation '{enemy_formation}'")
+            enemy_slots = None  # type: Optional[Set[Tuple[int, int]]]
+        else:
+            enemy_slots = formation_slot_coords_by_id.get(enemy_formation)
 
-        validate_encounter_unit_list(label, "player_units", encounter.get("player_units"), unit_ids, errors)
-        validate_encounter_unit_list(label, "enemy_units", encounter.get("enemy_units"), unit_ids, errors)
+        validate_encounter_unit_list(
+            label,
+            "player",
+            "player_units",
+            encounter.get("player_units"),
+            unit_ids,
+            player_formation,
+            player_slots,
+            errors,
+        )
+        validate_encounter_unit_list(
+            label,
+            "enemy",
+            "enemy_units",
+            encounter.get("enemy_units"),
+            unit_ids,
+            enemy_formation,
+            enemy_slots,
+            errors,
+        )
 
 
 def validate_constants(constants, errors):
@@ -294,6 +361,7 @@ def validate_config(input_dir):
     skill_ids = collect_ids(tables["skills"])
     unit_ids = collect_ids(tables["units"])
     formation_ids = collect_ids(tables["formations"])
+    formation_slot_coords_by_id = collect_formation_slot_coords(tables["formations"])
     weapon_types = {
         record["type"]
         for record in tables["weapons"]
@@ -303,7 +371,7 @@ def validate_config(input_dir):
     validate_unit_references(tables["units"], skill_ids, weapon_types, errors)
     validate_weapon_references(tables["weapons"], skill_ids, errors)
     validate_formation_patterns(tables["formations"], errors)
-    validate_encounters(tables["encounters"], unit_ids, formation_ids, errors)
+    validate_encounters(tables["encounters"], unit_ids, formation_ids, formation_slot_coords_by_id, errors)
     validate_constants(constants, errors)
 
     return errors
