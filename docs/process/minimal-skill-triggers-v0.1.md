@@ -93,9 +93,9 @@ At tick 0 / 第 0 tick:
 During an action / 行动:
 
 1. The runner selects a target with Targeting AI / 目标选择 AI.
-2. It emits `attack / 攻击`.
-3. It tries one ready `on_attack / 攻击时触发` skill in unit skill order / 单位技能顺序.
-4. If no skill is ready / 没有可用技能, it falls back to Basic Attack / 普通攻击.
+2. It tries one ready `on_attack / 攻击时触发` skill in unit skill order / 单位技能顺序.
+3. If a skill action / 技能行动 is used, it emits `skill_trigger event / 技能触发事件` and `damage / 伤害`; it does not emit `attack / 攻击`.
+4. If no skill is ready / 没有可用技能, it falls back to Basic Attack / 普通攻击 and emits `attack / 攻击`.
 5. Damage / 伤害 may emit `damage / 伤害` and `death / 死亡`.
 6. Main action damage / 主动行动伤害 can trigger `on_attacked / 被攻击时触发` and `on_ally_attacked / 友军被攻击时触发`.
 7. Victory Check / 胜负判断 runs after the action / 行动结束后.
@@ -103,6 +103,10 @@ During an action / 行动:
 Reaction skills do not chain / 反应技能不递归触发. Counter damage / 反击伤害 and intercept damage / 拦截伤害 do not trigger another `on_attacked / 被攻击时触发` or `on_ally_attacked / 友军被攻击时触发` pass.
 
 ## Events / 事件
+
+`attack event / 攻击事件` only represents Basic Attack / 普通攻击. A skill action / 技能行动 uses `skill_trigger event / 技能触发事件` and does not emit an extra `attack / 攻击` event.
+
+For Basic Attack / 普通攻击, `attack.payload.target / 攻击事件目标` must match the following `damage.payload.target / 伤害事件目标` with `reason="basic_attack"`.
 
 `skill_trigger event / 技能触发事件` payload / 事件载荷:
 

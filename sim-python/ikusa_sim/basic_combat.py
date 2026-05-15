@@ -76,22 +76,10 @@ def _run_tick(
         if target is None:
             return _build_victory_result(state, tick)
 
-        events.append(
-            BattleEvent(
-                tick=tick,
-                event_id=_next_event_id(state),
-                type="attack",
-                payload={
-                    "attacker": attacker.instance_id,
-                    "target": target.instance_id,
-                },
-            )
-        )
-
         skill_result = try_use_on_attack_skill(attacker, target, state, config, tick, events)
         damaged_targets = skill_result.damaged_targets
         if not skill_result.used:
-            damaged_targets = [_apply_basic_attack_damage(state, events, tick, attacker, target)]
+            damaged_targets = [_apply_basic_attack(state, events, tick, attacker, target)]
 
         _trigger_reactions(state, config, events, tick, attacker, damaged_targets)
 
@@ -102,13 +90,25 @@ def _run_tick(
             return result
 
 
-def _apply_basic_attack_damage(
+def _apply_basic_attack(
     state: BattleState,
     events: List[BattleEvent],
     tick: int,
     attacker: UnitState,
     target: UnitState,
 ) -> UnitState:
+    events.append(
+        BattleEvent(
+            tick=tick,
+            event_id=_next_event_id(state),
+            type="attack",
+            payload={
+                "attacker": attacker.instance_id,
+                "target": target.instance_id,
+            },
+        )
+    )
+
     amount = calculate_basic_damage(attacker, target)
     reason = "basic_attack"
     died = apply_damage(target, amount, reason=reason, source=attacker.instance_id)
