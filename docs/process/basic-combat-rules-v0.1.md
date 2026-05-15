@@ -4,6 +4,8 @@ This stage adds the first Basic Combat Rules / 基础战斗规则 on top of the 
 
 The goal is to prove that a battle can progress through Targeting AI / 目标选择 AI, Basic Attack / 普通攻击, Damage / 伤害, Death / 死亡, and Victory Check / 胜负判断 while preserving deterministic replay output / 确定性回放输出.
 
+Note: this document describes the v0.1 baseline / v0.1 基线 before Minimal Skill Triggers / 最小技能触发. The current `--mode basic` runner also includes Skill Resolver / 技能解析器 behavior from `docs/process/minimal-skill-triggers-v0.1.md`.
+
 ## Scope
 
 Implemented:
@@ -167,4 +169,4 @@ python tools/run_demo_battle.py --battle demo_001 --seed 1001 --config config/ge
 python -m unittest discover -s sim-python/tests
 ```
 
-The tests cover Targeting AI / 目标选择 AI, Damage / 伤害, Death / 死亡, Basic Combat / 基础战斗, deterministic event streams / 确定性事件流, and the absence of future rule events / 未产生未来规则事件 such as skill or synergy events.
+The tests cover Targeting AI / 目标选择 AI, Damage / 伤害, Death / 死亡, Basic Combat / 基础战斗, deterministic event streams / 确定性事件流, and the absence of out-of-scope rule events / 未产生范围外规则事件 such as synergy / 羁绊 or formation bonus / 阵型加成 events.

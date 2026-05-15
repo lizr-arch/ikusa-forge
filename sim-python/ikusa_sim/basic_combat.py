@@ -1,8 +1,9 @@
 """Basic combat runner for Ikusa Forge Phase 1.
 
-This module implements deterministic targeting, basic attack, damage, death,
-and victory checks. It intentionally does not implement skills, synergies,
-formation bonuses, battle reports, viewers, host integration, or Godot logic.
+This module implements deterministic targeting, basic attack, minimal skill
+triggers, damage, death, and victory checks. It intentionally does not
+implement synergies, formation bonuses, battle reports, viewers, host
+integration, or Godot logic.
 """
 
 from typing import List, Optional, Tuple
@@ -21,6 +22,12 @@ from ikusa_sim.events import BattleEvent
 from ikusa_sim.models import ConfigBundle
 from ikusa_sim.rng import BattleRng
 from ikusa_sim.runtime_models import BattleResult, BattleState, UnitState
+from ikusa_sim.skills import (
+    try_use_on_ally_attacked_skills,
+    try_use_on_attack_skill,
+    try_use_on_attacked_skills,
+    try_use_on_battle_start_skills,
+)
 from ikusa_sim.targeting import select_target
 
 
@@ -39,11 +46,12 @@ def run_basic_combat(
     encounter = config.encounters[battle_id]
     events = [_battle_start_event(state)]
     events.extend(spawn_units_from_encounter(config, encounter, state))
+    try_use_on_battle_start_skills(state, config, events)
     _initialize_action_schedule(state)
 
     for tick in range(0, state.max_ticks + 1):
         state.current_tick = tick
-        result = _run_tick(state, events, tick)
+        result = _run_tick(state, config, events, tick)
         if result:
             _finish_battle(state, events, result)
             return state, events
@@ -55,6 +63,7 @@ def run_basic_combat(
 
 def _run_tick(
     state: BattleState,
+    config: ConfigBundle,
     events: List[BattleEvent],
     tick: int,
 ) -> Optional[BattleResult]:
@@ -79,35 +88,70 @@ def _run_tick(
             )
         )
 
-        amount = calculate_basic_damage(attacker, target)
-        died = apply_damage(target, amount)
+        skill_result = try_use_on_attack_skill(attacker, target, state, config, tick, events)
+        damaged_targets = skill_result.damaged_targets
+        if not skill_result.used:
+            damaged_targets = [_apply_basic_attack_damage(state, events, tick, attacker, target)]
+
+        _trigger_reactions(state, config, events, tick, attacker, damaged_targets)
+
+        if attacker.alive:
+            attacker.next_action_tick = tick + attacker.action_interval_ticks
+        result = _build_victory_result(state, tick)
+        if result:
+            return result
+
+
+def _apply_basic_attack_damage(
+    state: BattleState,
+    events: List[BattleEvent],
+    tick: int,
+    attacker: UnitState,
+    target: UnitState,
+) -> UnitState:
+    amount = calculate_basic_damage(attacker, target)
+    reason = "basic_attack"
+    died = apply_damage(target, amount, reason=reason, source=attacker.instance_id)
+    events.append(
+        BattleEvent(
+            tick=tick,
+            event_id=_next_event_id(state),
+            type="damage",
+            payload={
+                "source": attacker.instance_id,
+                "target": target.instance_id,
+                "amount": amount,
+                "target_hp_after": target.hp,
+                "reason": reason,
+            },
+        )
+    )
+    if died:
         events.append(
             BattleEvent(
                 tick=tick,
                 event_id=_next_event_id(state),
-                type="damage",
-                payload={
-                    "source": attacker.instance_id,
-                    "target": target.instance_id,
-                    "amount": amount,
-                    "target_hp_after": target.hp,
-                },
+                type="death",
+                payload={"unit": target.instance_id},
             )
         )
-        if died:
-            events.append(
-                BattleEvent(
-                    tick=tick,
-                    event_id=_next_event_id(state),
-                    type="death",
-                    payload={"unit": target.instance_id},
-                )
-            )
+    return target
 
-        attacker.next_action_tick = tick + attacker.action_interval_ticks
-        result = _build_victory_result(state, tick)
-        if result:
-            return result
+
+def _trigger_reactions(
+    state: BattleState,
+    config: ConfigBundle,
+    events: List[BattleEvent],
+    tick: int,
+    attacker: UnitState,
+    damaged_targets: List[UnitState],
+) -> None:
+    for defender in damaged_targets:
+        if not attacker.alive or not defender.alive:
+            continue
+        try_use_on_attacked_skills(attacker, defender, state, config, tick, events)
+        if attacker.alive:
+            try_use_on_ally_attacked_skills(attacker, defender, state, config, tick, events)
 
 
 def _battle_start_event(state: BattleState) -> BattleEvent:

@@ -27,6 +27,24 @@ Success means:
 - battle report explains the main reason for win/loss
 - C# host can invoke the Python simulator and read outputs
 
+Current Python simulator status:
+
+- deterministic battle skeleton / 确定性战斗骨架
+- Basic Combat Rules / 基础战斗规则
+- Minimal Skill Triggers / 最小技能触发
+- `skill_trigger event / 技能触发事件`
+- damage reason / 伤害原因 in replay events / 回放事件
+
+Still future work:
+
+- synergy application / 羁绊应用
+- formation bonus application / 阵型加成应用
+- battle report / 战报
+- HTML viewer / Web 回放器
+- C# host / C# 宿主
+- Godot
+- xlsx adapter / xlsx 适配器
+
 ## Planned stack
 
 | Layer | Technology | Responsibility |

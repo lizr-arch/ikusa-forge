@@ -1,7 +1,7 @@
 """Runtime battle models for Ikusa Forge Phase 1."""
 
-from dataclasses import dataclass
-from typing import List, Optional
+from dataclasses import dataclass, field
+from typing import Dict, List, Optional
 
 
 @dataclass
@@ -25,6 +25,14 @@ class UnitState:
     alive: bool
     next_action_tick: int = 0
     action_interval_ticks: int = 0
+    guard_value: int = 0
+    skill_cooldowns: Dict[str, int] = field(default_factory=dict)
+    atk: int = field(init=False)
+    defense: int = field(init=False)
+
+    def __post_init__(self) -> None:
+        self.atk = self.base_atk
+        self.defense = self.base_defense
 
 
 @dataclass(frozen=True)
