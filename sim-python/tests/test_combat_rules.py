@@ -12,7 +12,9 @@ from ikusa_sim.combat_rules import (  # noqa: E402
     apply_damage,
     attack_interval_to_ticks,
     calculate_basic_damage,
+    calculate_skill_damage,
 )
+from ikusa_sim.models import SkillDef  # noqa: E402
 from ikusa_sim.runtime_models import UnitState  # noqa: E402
 
 
@@ -43,17 +45,44 @@ class CombatRuleTests(unittest.TestCase):
         self.assertEqual(24, attack_interval_to_ticks(1.2, 20))
         self.assertEqual(1, attack_interval_to_ticks(0.0, 20))
 
-    def test_basic_damage_uses_atk_minus_defense(self):
+    def test_basic_damage_uses_current_atk_minus_current_defense(self):
         attacker = make_unit("attacker", atk=14)
         defender = make_unit("defender", defense=6)
+        attacker.atk = 18
+        defender.defense = 5
 
-        self.assertEqual(8, calculate_basic_damage(attacker, defender))
+        self.assertEqual(13, calculate_basic_damage(attacker, defender))
 
     def test_basic_damage_has_minimum_one(self):
         attacker = make_unit("attacker", atk=3)
         defender = make_unit("defender", defense=10)
 
         self.assertEqual(1, calculate_basic_damage(attacker, defender))
+
+    def test_guard_value_reduces_damage_with_minimum_one(self):
+        attacker = make_unit("attacker", atk=14)
+        defender = make_unit("defender", defense=6)
+        defender.guard_value = 20
+
+        self.assertEqual(1, calculate_basic_damage(attacker, defender))
+
+    def test_skill_damage_uses_current_stats_and_effect_value(self):
+        attacker = make_unit("attacker", atk=14)
+        defender = make_unit("defender", defense=6)
+        skill = SkillDef(
+            id="katana_slash",
+            name="Katana Slash",
+            trigger="on_attack",
+            target_rule="current_target",
+            cooldown=1.0,
+            effect_type="damage",
+            effect_value=16,
+            tags=[],
+        )
+        attacker.atk = 18
+        defender.defense = 5
+
+        self.assertEqual(29, calculate_skill_damage(attacker, defender, skill))
 
     def test_apply_damage_reduces_hp_without_death(self):
         defender = make_unit("defender", hp=20)

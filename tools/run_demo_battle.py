@@ -99,6 +99,7 @@ def _build_run_summary(state, events, mode) -> str:
             f"- result: `{result_line}`",
             f"- battle_start events: `{event_counts.get('battle_start', 0)}`",
             f"- unit_spawn events: `{event_counts.get('unit_spawn', 0)}`",
+            f"- skill_trigger events: `{event_counts.get('skill_trigger', 0)}`",
             f"- attack events: `{event_counts.get('attack', 0)}`",
             f"- damage events: `{event_counts.get('damage', 0)}`",
             f"- death events: `{event_counts.get('death', 0)}`",
@@ -113,7 +114,7 @@ def _build_run_summary(state, events, mode) -> str:
 def _mode_note(mode) -> str:
     if mode == "skeleton":
         return "No combat rules applied: no attack, damage, death, targeting AI, skill resolver, synergy application, or formation bonus application runs in skeleton mode."
-    return "Basic combat rules applied: targeting AI, basic attack, damage, death, and victory check. Skills, synergies, formation bonuses, battle report, viewer, C# host, and Godot are not implemented."
+    return "Basic combat rules applied: targeting AI, basic attack, minimal skill triggers, damage, death, and victory check. Synergies, formation bonuses, battle report, viewer, C# host, and Godot are not implemented."
 
 
 if __name__ == "__main__":

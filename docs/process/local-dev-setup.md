@@ -1,8 +1,8 @@
 # Local Development Setup
 
-This repository is currently in Phase 1 Basic Combat Rules / 基础战斗规则 v0.1 state.
+This repository is currently in Phase 1 Minimal Skill Triggers / 最小技能触发 v0.1 state.
 
-The config pipeline, pure Python runtime model boundary, deterministic replay event stream, and Basic Combat Rules / 基础战斗规则 exist so later tasks can add battle reports, a C# subprocess host, and an HTML replay debugger without mixing responsibilities.
+The config pipeline, pure Python runtime model boundary, deterministic replay event stream, Basic Combat Rules / 基础战斗规则, and Minimal Skill Triggers / 最小技能触发 exist so later tasks can add battle reports, a C# subprocess host, and an HTML replay debugger without mixing responsibilities.
 
 ## Expected local tools
 
@@ -125,9 +125,9 @@ Runtime side enum / 运行时阵营枚举 uses `ally/enemy`.
 
 `config.encounters[].enemy_units / 配置字段 enemy_units` enters runtime as `UnitState.side="enemy" / 敌方阵营`.
 
-## Run basic combat
+## Run basic combat with skill triggers
 
-After export and validation, run Basic Combat Rules / 基础战斗规则 with:
+After export and validation, run Basic Combat Rules / 基础战斗规则 plus Minimal Skill Triggers / 最小技能触发 with:
 
 ```bash
 python tools/run_demo_battle.py --battle demo_001 --seed 1001 --config config/generated --out runs/demo_001 --mode basic
@@ -147,6 +147,9 @@ Current behavior:
 - Spawns config `enemy_units / 敌方单位配置字段` second as `enemy_001..enemy_006` with runtime side / 运行时阵营 `enemy / 敌方`.
 - Emits deterministic `BattleEvent` ids such as `evt_000001`.
 - Runs Targeting AI / 目标选择 AI, Basic Attack / 普通攻击, Damage / 伤害, Death / 死亡, and Victory Check / 胜负判断.
+- Runs Skill Resolver / 技能解析器, Skill Cooldown / 技能冷却, `on_battle_start / 战斗开始触发`, `on_attack / 攻击时触发`, `on_attacked / 被攻击时触发`, and `on_ally_attacked / 友军被攻击时触发`.
+- Emits `skill_trigger event / 技能触发事件`.
+- Adds `reason / 伤害原因` to `damage / 伤害` events, using `basic_attack / 普通攻击` or `skill:<skill_id> / 技能 ID`.
 - Writes `runs/demo_001/replay.json` with `schema_version="battle_replay.v0.1"` and tick groups containing combat events / 战斗事件.
 - Writes `runs/demo_001/debug_timeline.json` as a flat event list.
 - Writes `runs/demo_001/run_summary.md` with battle id, seed, unit count, event counts, and result.
@@ -160,10 +163,11 @@ python tools/run_demo_battle.py --battle demo_001 --seed 1001 --config config/ge
 
 Current limitations:
 
-- No skill resolver / 技能解析器, synergy application / 羁绊应用, formation bonus application / 阵型加成应用, battle report / 战报, HTML viewer / Web 回放器, C# host / C# 宿主, Godot gameplay / Godot 玩法, xlsx adapter / xlsx 适配器, or third-party dependencies / 第三方依赖.
+- No synergy application / 羁绊应用, formation bonus application / 阵型加成应用, battle report / 战报, HTML viewer / Web 回放器, C# host / C# 宿主, Godot gameplay / Godot 玩法, xlsx adapter / xlsx 适配器, third-party dependencies / 第三方依赖, or general-purpose Skill DSL / 通用技能 DSL.
 
 See `docs/process/deterministic-battle-skeleton-v0.1.md` for the runtime skeleton boundary.
 See `docs/process/basic-combat-rules-v0.1.md` for Basic Combat Rules / 基础战斗规则.
+See `docs/process/minimal-skill-triggers-v0.1.md` for Minimal Skill Triggers / 最小技能触发.
 
 ## Battle skeleton module boundary
 
@@ -176,7 +180,8 @@ The v0.1.1 skeleton is split into focused Python modules:
 - `targeting.py / 目标选择`: Targeting AI / 目标选择 AI.
 - `combat_rules.py / 战斗规则`: Basic Attack / 普通攻击, Damage / 伤害, and Death / 死亡 helpers.
 - `basic_combat.py / 基础战斗`: Basic Combat Rules / 基础战斗规则 runner and Victory Check / 胜负判断.
-- `battle.py / 兼容转发层`: compatibility facade / 兼容转发层 for old imports. New code should prefer `runtime_models.py`, `events.py`, `rng.py`, and `battle_skeleton.py`.
+- `skills.py / 技能解析器`: Minimal Skill Triggers / 最小技能触发, Skill Cooldown / 技能冷却, and `skill_trigger event / 技能触发事件` emission.
+- `battle.py / 兼容转发层`: compatibility facade / 兼容转发层 for old imports. New code should prefer `runtime_models.py`, `events.py`, `rng.py`, `battle_skeleton.py`, `targeting.py`, `combat_rules.py`, `basic_combat.py`, and `skills.py`.
 
 ## Test config tools
 
@@ -189,7 +194,7 @@ python -m unittest discover -s sim-python/tests
 The tests export sample data into a temporary directory and validate both valid and invalid generated config.
 They also verify deterministic battle skeleton unit creation, event counts, result payloads, tick grouping, and same-seed event stability.
 They verify runtime side enum / 运行时阵营枚举 values `ally/enemy` and keep `battle.py / 兼容转发层` import compatibility covered.
-They verify Targeting AI / 目标选择 AI, Basic Attack / 普通攻击, Damage / 伤害, Death / 死亡, Basic Combat / 基础战斗 determinism, and absence of future rule events / 未产生未来规则事件.
+They verify Targeting AI / 目标选择 AI, Basic Attack / 普通攻击, Damage / 伤害, Death / 死亡, Minimal Skill Triggers / 最小技能触发, Skill Cooldown / 技能冷却, Basic Combat / 基础战斗 determinism, and absence of out-of-scope rule events / 未产生范围外规则事件 such as synergy / 羁绊 or formation bonus / 阵型加成 events.
 
 ## CSV-first note
 

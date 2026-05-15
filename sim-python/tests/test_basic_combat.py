@@ -37,6 +37,7 @@ class BasicCombatTests(unittest.TestCase):
         state, events = self.run_demo()
         event_types = [event.type for event in events]
 
+        self.assertIn("skill_trigger", event_types)
         self.assertIn("attack", event_types)
         self.assertIn("damage", event_types)
         self.assertIn("death", event_types)
@@ -64,13 +65,22 @@ class BasicCombatTests(unittest.TestCase):
             [event.event_id for event in events],
         )
 
-    def test_basic_combat_does_not_emit_future_rule_events(self):
+    def test_basic_combat_does_not_emit_future_out_of_scope_events(self):
         _, events = self.run_demo()
         event_types = {event.type for event in events}
 
-        self.assertNotIn("skill_trigger", event_types)
         self.assertNotIn("synergy", event_types)
         self.assertNotIn("formation_bonus", event_types)
+
+    def test_basic_combat_damage_events_include_reason(self):
+        _, events = self.run_demo()
+        damage_events = [event for event in events if event.type == "damage"]
+
+        self.assertTrue(damage_events)
+        self.assertTrue(all("reason" in event.payload for event in damage_events))
+        self.assertTrue(
+            any(event.payload["reason"].startswith("skill:") for event in damage_events)
+        )
 
     def test_basic_replay_metadata_keeps_result_object(self):
         state, events = self.run_demo()
