@@ -1,14 +1,15 @@
 # Local Development Setup
 
-This repository is currently in Phase 1 Data Config v0.1.3 state.
+This repository is currently in Phase 1 Python Combat Models v0.1 state.
 
-The scaffold and first config pipeline exist so later tasks can add a deterministic Python simulator, a C# subprocess host, and an HTML replay debugger without mixing responsibilities.
+The config pipeline and first pure Python model boundary exist so later tasks can add a deterministic battle skeleton, a C# subprocess host, and an HTML replay debugger without mixing responsibilities.
 
 ## Expected local tools
 
 - Project target: Python >= 3.10.
 - Recommended Python: 3.11 or newer.
-- Current scripts may still run on Python 3.6 for this machine's local compatibility, but that is not a long-term project constraint.
+- Python 3.6 is no longer supported for the Python combat model layer because it uses standard-library dataclasses and modern typing expectations.
+- On Windows, prefer `py -3.11` for all simulator/model commands.
 - .NET SDK for the future C# host.
 - A modern browser for the future HTML replay debugger.
 
@@ -90,6 +91,34 @@ The validator currently checks:
 - negative numeric constants such as `max_ticks`
 
 With v0.1.3 validation, simulator work can safely rely on `unit coordinate -> formation slot -> role` lookup before applying formation bonuses.
+
+## Load config models
+
+The first Python combat-core layer can load generated JSON into pure config
+models without running a battle:
+
+```bash
+python tools/inspect_config_models.py --config config/generated
+```
+
+Windows Python launcher form:
+
+```bash
+py -3.11 tools/inspect_config_models.py --config config/generated
+```
+
+Current behavior:
+
+- Reads only `config/generated/*.json`.
+- Calls the config validator before loading models.
+- Builds a `ConfigBundle` of pure config dataclasses.
+- Prints the `demo_001` player and enemy formation coordinate-to-role lookup.
+- Acts as the current smoke/debug CLI for the config model layer.
+- Does not run a battle.
+- Does not create `UnitState`, `BattleState`, a tick loop, replay output, or battle reports.
+- Defers runtime battle state creation to the next phase.
+
+See `docs/process/python-combat-models-v0.1.md` for the model boundary.
 
 ## Test config tools
 
