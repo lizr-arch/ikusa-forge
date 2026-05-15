@@ -1,8 +1,8 @@
 # Local Development Setup
 
-This repository is currently in Phase 1 Python Combat Models v0.1 state.
+This repository is currently in Phase 1 deterministic battle skeleton v0.1 state.
 
-The config pipeline and first pure Python model boundary exist so later tasks can add a deterministic battle skeleton, a C# subprocess host, and an HTML replay debugger without mixing responsibilities.
+The config pipeline, first pure Python model boundary, and minimal deterministic replay event stream exist so later tasks can add combat rules, a C# subprocess host, and an HTML replay debugger without mixing responsibilities.
 
 ## Expected local tools
 
@@ -20,10 +20,10 @@ No heavy dependencies are required for the current CSV-first config pipeline.
 ```text
 config/source/      Designer-editable source data and CSV sample data.
 config/generated/   Runtime JSON output; generated files are ignored.
-sim-python/         Future pure Python combat simulator package and tests.
+sim-python/         Pure Python combat simulator package and tests.
 host-csharp/        Future C# host that invokes Python as a subprocess.
 web-viewer/         Future local HTML replay debugger.
-tools/              Future export, validation, and demo-run scripts.
+tools/              Export, validation, inspection, and demo-run scripts.
 runs/               Generated battle run output; generated files are ignored.
 docs/schema/        JSON schema drafts for runtime config.
 ```
@@ -114,11 +114,41 @@ Current behavior:
 - Builds a `ConfigBundle` of pure config dataclasses.
 - Prints the `demo_001` player and enemy formation coordinate-to-role lookup.
 - Acts as the current smoke/debug CLI for the config model layer.
-- Does not run a battle.
-- Does not create `UnitState`, `BattleState`, a tick loop, replay output, or battle reports.
-- Defers runtime battle state creation to the next phase.
 
 See `docs/process/python-combat-models-v0.1.md` for the model boundary.
+
+`UnitDef` is a reusable config definition loaded from runtime JSON. `UnitState` is a per-battle runtime instance created from `UnitDef`, encounter placement, and formation role. `ConfigBundle` is the read-only config collection. `BattleState` is one battle run's runtime state.
+
+## Run deterministic battle skeleton
+
+After export and validation, run the Phase 1 skeleton with:
+
+```bash
+python tools/run_demo_battle.py --battle demo_001 --seed 1001 --config config/generated --out runs/demo_001
+```
+
+Windows Python launcher form:
+
+```bash
+py -3.11 tools/run_demo_battle.py --battle demo_001 --seed 1001 --config config/generated --out runs/demo_001
+```
+
+Current behavior:
+
+- Loads a `ConfigBundle` from generated runtime JSON.
+- Creates `BattleState` and twelve `UnitState` objects for `demo_001`.
+- Spawns player units first as `ally_001..ally_006`, then enemy units as `enemy_001..enemy_006`.
+- Emits deterministic `BattleEvent` ids such as `evt_000001`.
+- Writes `runs/demo_001/replay.json` with `schema_version="battle_replay.v0.1"` and tick groups for tick `0` and tick `1200`.
+- Writes `runs/demo_001/debug_timeline.json` as a flat event list.
+- Writes `runs/demo_001/run_summary.md` with battle id, seed, unit count, event counts, and result.
+- Ends with `winner="draw"` and `reason="timeout_no_combat"`.
+
+Current limitations:
+
+- No attack, damage, death, targeting AI, skill resolver, synergy application, formation bonus application, full battle report, HTML viewer, C# host, Godot gameplay, xlsx adapter, or third-party dependencies.
+
+See `docs/process/deterministic-battle-skeleton-v0.1.md` for the runtime skeleton boundary.
 
 ## Test config tools
 
@@ -129,6 +159,7 @@ python -m unittest discover -s sim-python/tests
 ```
 
 The tests export sample data into a temporary directory and validate both valid and invalid generated config.
+They also verify deterministic battle skeleton unit creation, event counts, result payloads, tick grouping, and same-seed event stability.
 
 ## CSV-first note
 
@@ -148,13 +179,15 @@ git status --short
 
 Confirm that only intended source files are untracked or changed. Generated files under `config/generated/` are ignored except `.gitkeep`.
 
-## Later command flow
+## Command flow
 
-The intended full Phase 1 flow is documented in `README.md`. Data export and validation are implemented; battle simulation and host commands are still future work:
+The current implemented local flow is:
 
 ```bash
-python tools/run_demo_battle.py --battle demo_001 --seed 1001 --out runs/demo_001
-dotnet run --project host-csharp/IkusaForge.Host -- --battle demo_001 --seed 1001
+python tools/export_xlsx_to_json.py --input config/source --output config/generated
+python tools/validate_config.py --input config/generated
+python tools/inspect_config_models.py --config config/generated
+python tools/run_demo_battle.py --battle demo_001 --seed 1001 --config config/generated --out runs/demo_001
 ```
 
-Do not treat the battle or C# host commands as runnable until the corresponding Phase 1 tasks are implemented.
+C# host, HTML replay viewer, and full battle report commands are still future work.
