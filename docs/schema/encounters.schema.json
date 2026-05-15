@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Ikusa Forge Encounters",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "required": [
+      "id",
+      "name",
+      "player_units",
+      "player_formation",
+      "enemy_units",
+      "enemy_formation",
+      "reward_pool"
+    ],
+    "properties": {
+      "id": { "type": "string", "minLength": 1 },
+      "name": { "type": "string", "minLength": 1 },
+      "player_units": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": ["unit_id", "x", "y"],
+          "properties": {
+            "unit_id": { "type": "string", "minLength": 1 },
+            "x": { "type": "integer", "minimum": 0, "maximum": 3 },
+            "y": { "type": "integer", "minimum": 0, "maximum": 2 }
+          },
+          "additionalProperties": false
+        }
+      },
+      "player_formation": { "type": "string", "minLength": 1 },
+      "enemy_units": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": ["unit_id", "x", "y"],
+          "properties": {
+            "unit_id": { "type": "string", "minLength": 1 },
+            "x": { "type": "integer", "minimum": 0, "maximum": 3 },
+            "y": { "type": "integer", "minimum": 0, "maximum": 2 }
+          },
+          "additionalProperties": false
+        }
+      },
+      "enemy_formation": { "type": "string", "minLength": 1 },
+      "reward_pool": {
+        "type": "array",
+        "items": { "type": "string", "minLength": 1 }
+      }
+    },
+    "additionalProperties": false
+  }
+}

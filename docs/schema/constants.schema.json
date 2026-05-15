@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Ikusa Forge Constants",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "required": ["key", "value", "description"],
+    "properties": {
+      "key": { "type": "string", "minLength": 1 },
+      "value": { "type": ["number", "string", "boolean"] },
+      "description": { "type": "string", "minLength": 1 }
+    },
+    "additionalProperties": false
+  }
+}

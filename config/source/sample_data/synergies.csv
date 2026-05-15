@@ -1,0 +1,7 @@
+id,name,required_tags,thresholds,scope
+spear_wall,Spear Wall,spear,"{""2"":{""defense"":3},""4"":{""defense"":8}}",matching_units
+arrow_volley,Arrow Volley,bow,"{""2"":{""atk"":2},""4"":{""atk"":6}}",matching_units
+sword_rhythm,Sword Rhythm,katana,"{""2"":{""attack_interval_delta"":-0.1},""4"":{""attack_interval_delta"":-0.2}}",matching_units
+massed_troops,Massed Troops,ashigaru,"{""3"":{""hp"":10},""6"":{""hp"":25}}",matching_units
+duelist_honor,Duelist Honor,samurai,"{""2"":{""atk"":5}}",matching_units
+flank_opening,Flank Opening,flank,"{""1"":{""opening_damage"":12},""2"":{""opening_damage"":24}}",formation_slots

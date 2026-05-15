@@ -1,0 +1,11 @@
+id,name,trigger,target_rule,cooldown,effect_type,effect_value,tags
+katana_slash,Katana Slash,on_attack,current_target,1.0,damage,16,"katana,melee"
+iaijutsu_burst,Iaijutsu Burst,on_attack,lowest_hp_enemy,4.0,damage,32,"katana,burst"
+spear_thrust,Spear Thrust,on_attack,current_target,1.3,damage,15,"spear,reach"
+brace_counter,Brace Counter,on_attacked,attacker,3.0,counter_damage,18,"spear,counter"
+bow_shot,Bow Shot,on_attack,current_target,1.5,damage,13,"bow,ranged"
+focus_fire,Focus Fire,on_attack,lowest_hp_enemy,5.0,focus_fire,20,"bow,focus"
+shield_guard,Shield Guard,on_battle_start,self,6.0,guard,12,"shield,protector"
+intercept,Intercept,on_ally_attacked,attacker,4.0,intercept,10,"shield,protector"
+smoke_strike,Smoke Strike,on_attack,current_target,3.0,damage,22,"ninja_tool,disruption"
+banner_rally,Banner Rally,on_battle_start,adjacent_allies,8.0,buff,8,"banner,support"

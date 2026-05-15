@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Ikusa Forge Weapons",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "required": [
+      "id",
+      "name",
+      "type",
+      "damage_type",
+      "range",
+      "cooldown",
+      "skill_ids"
+    ],
+    "properties": {
+      "id": { "type": "string", "minLength": 1 },
+      "name": { "type": "string", "minLength": 1 },
+      "type": {
+        "type": "string",
+        "enum": ["katana", "spear", "bow", "shield", "ninja_tool"]
+      },
+      "damage_type": {
+        "type": "string",
+        "enum": ["slash", "pierce", "blunt", "shadow"]
+      },
+      "range": { "type": "integer", "minimum": 0 },
+      "cooldown": { "type": "number", "minimum": 0 },
+      "skill_ids": {
+        "type": "array",
+        "items": { "type": "string", "minLength": 1 }
+      }
+    },
+    "additionalProperties": false
+  }
+}
