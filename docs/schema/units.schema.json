@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Ikusa Forge Units",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "required": [
+      "id",
+      "name",
+      "tags",
+      "hp",
+      "atk",
+      "defense",
+      "range",
+      "attack_interval",
+      "weapon_slots",
+      "skill_ids"
+    ],
+    "properties": {
+      "id": { "type": "string", "minLength": 1 },
+      "name": { "type": "string", "minLength": 1 },
+      "tags": {
+        "type": "array",
+        "items": { "type": "string", "minLength": 1 }
+      },
+      "hp": { "type": "integer", "minimum": 0 },
+      "atk": { "type": "integer", "minimum": 0 },
+      "defense": { "type": "integer", "minimum": 0 },
+      "range": { "type": "integer", "minimum": 0 },
+      "attack_interval": { "type": "number", "minimum": 0 },
+      "weapon_slots": {
+        "type": "array",
+        "items": {
+          "type": "string",
+          "enum": ["katana", "spear", "bow", "shield", "ninja_tool"]
+        }
+      },
+      "skill_ids": {
+        "type": "array",
+        "items": { "type": "string", "minLength": 1 }
+      }
+    },
+    "additionalProperties": false
+  }
+}

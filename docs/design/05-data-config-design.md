@@ -82,6 +82,15 @@ config/generated/
 | pattern | string/json | center_front |
 | bonus_rule | string | center_units_atk_plus_10 |
 
+### Formation slot semantics
+
+In Data Config v0.1.3, `formation.pattern.slots` defines the legal positions and role regions for that formation.
+
+- Each slot coordinate uses the side-local 4x3 board: `x` is `0..3`, and `y` is `0..2`.
+- Each slot must include a non-empty string `role` value so later simulator logic can map a unit coordinate to a formation role.
+- When an encounter uses a formation, every unit coordinate on that side must be inside that formation's `pattern.slots`.
+- Later simulator work can safely look up the unit coordinate in the selected formation, read the slot role, and apply formation bonuses from `bonus_rule`.
+
 ## synergies.xlsx
 
 | Field | Type | Example |
@@ -118,5 +127,7 @@ The validator must catch:
 - negative hp / cooldown / range
 - unknown tags where strict tag list is enabled
 - invalid formation coordinates
+- missing or empty formation slot roles
+- encounter unit coordinates not present in the selected formation slots
 - invalid JSON cells
 - empty required fields

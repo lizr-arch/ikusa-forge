@@ -1,0 +1,6 @@
+key,value,description
+tick_rate,20,simulation ticks per second
+max_ticks,1200,maximum ticks before timeout
+board_rows,3,rows per side in the v0.1 formation grid
+board_cols,4,columns per side in the v0.1 formation grid
+default_seed,1001,default seed for demo data tools

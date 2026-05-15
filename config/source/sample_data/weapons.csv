@@ -1,0 +1,6 @@
+id,name,type,damage_type,range,cooldown,skill_ids
+katana_basic,Ashigaru Katana,katana,slash,1,1.0,"katana_slash,iaijutsu_burst"
+spear_basic,Bamboo Spear,spear,pierce,2,1.3,"spear_thrust,brace_counter"
+bow_basic,Yumi Bow,bow,pierce,3,1.5,"bow_shot,focus_fire"
+shield_basic,Reinforced Shield,shield,blunt,1,1.7,"shield_guard,intercept"
+ninja_tool_basic,Smoke Kit,ninja_tool,shadow,1,1.1,smoke_strike

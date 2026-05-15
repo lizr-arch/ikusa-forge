@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Ikusa Forge Skills",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "required": [
+      "id",
+      "name",
+      "trigger",
+      "target_rule",
+      "cooldown",
+      "effect_type",
+      "effect_value",
+      "tags"
+    ],
+    "properties": {
+      "id": { "type": "string", "minLength": 1 },
+      "name": { "type": "string", "minLength": 1 },
+      "trigger": {
+        "type": "string",
+        "enum": ["on_attack", "on_attacked", "on_battle_start", "on_ally_attacked"]
+      },
+      "target_rule": {
+        "type": "string",
+        "enum": ["self", "attacker", "current_target", "lowest_hp_enemy", "adjacent_allies", "frontline_allies"]
+      },
+      "cooldown": { "type": "number", "minimum": 0 },
+      "effect_type": {
+        "type": "string",
+        "enum": ["damage", "counter_damage", "guard", "intercept", "buff", "focus_fire"]
+      },
+      "effect_value": { "type": "number" },
+      "tags": {
+        "type": "array",
+        "items": { "type": "string", "minLength": 1 }
+      }
+    },
+    "additionalProperties": false
+  }
+}

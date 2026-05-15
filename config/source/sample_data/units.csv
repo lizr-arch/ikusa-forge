@@ -1,0 +1,13 @@
+id,name,tags,hp,atk,defense,range,attack_interval,weapon_slots,skill_ids
+ashigaru_spear,Ashigaru Spear,"ashigaru,spear,frontline",125,14,6,1,1.2,spear,"spear_thrust,brace_counter"
+ashigaru_bow,Ashigaru Bow,"ashigaru,bow,backline",85,11,3,3,1.4,bow,"bow_shot,focus_fire"
+samurai_katana,Samurai Katana,"samurai,katana,frontline",115,18,5,1,1.0,katana,"katana_slash,iaijutsu_burst"
+shield_guard,Shield Guard,"ashigaru,shield,frontline,protector",150,9,10,1,1.6,shield,"shield_guard,intercept"
+ninja_scout,Ninja Scout,"ninja,ninja_tool,flank,disruption",80,16,3,1,0.9,ninja_tool,smoke_strike
+banner_bearer,Banner Bearer,"ashigaru,banner,support",95,8,4,2,1.8,spear,banner_rally
+ronin_katana,Ronin Katana,"ronin,katana,frontline",110,17,4,1,1.0,katana,"katana_slash,iaijutsu_burst"
+enemy_spearman,Enemy Spearman,"ashigaru,spear,frontline",120,13,6,1,1.2,spear,"spear_thrust,brace_counter"
+enemy_archer,Enemy Archer,"ashigaru,bow,backline",82,10,3,3,1.4,bow,"bow_shot,focus_fire"
+enemy_shield,Enemy Shield,"ashigaru,shield,frontline,protector",145,8,10,1,1.6,shield,"shield_guard,intercept"
+enemy_ninja,Enemy Ninja,"ninja,ninja_tool,flank,disruption",78,15,3,1,0.9,ninja_tool,smoke_strike
+enemy_banner,Enemy Banner,"ashigaru,banner,support",92,8,4,2,1.8,spear,banner_rally

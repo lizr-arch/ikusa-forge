@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Ikusa Forge Formations",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "required": ["id", "name", "pattern", "bonus_rule"],
+    "properties": {
+      "id": { "type": "string", "minLength": 1 },
+      "name": { "type": "string", "minLength": 1 },
+      "pattern": {
+        "type": "object",
+        "required": ["rows", "cols", "slots"],
+        "properties": {
+          "rows": { "type": "integer", "const": 3 },
+          "cols": { "type": "integer", "const": 4 },
+          "slots": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["x", "y", "role"],
+              "properties": {
+                "x": { "type": "integer", "minimum": 0, "maximum": 3 },
+                "y": { "type": "integer", "minimum": 0, "maximum": 2 },
+                "role": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "Formation role used for coordinate-to-role lookup."
+                }
+              },
+              "additionalProperties": false
+            }
+          }
+        },
+        "additionalProperties": false
+      },
+      "bonus_rule": { "type": "string", "minLength": 1 }
+    },
+    "additionalProperties": false
+  }
+}

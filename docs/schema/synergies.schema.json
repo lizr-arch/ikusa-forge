@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Ikusa Forge Synergies",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "required": ["id", "name", "required_tags", "thresholds", "scope"],
+    "properties": {
+      "id": { "type": "string", "minLength": 1 },
+      "name": { "type": "string", "minLength": 1 },
+      "required_tags": {
+        "type": "array",
+        "items": { "type": "string", "minLength": 1 }
+      },
+      "thresholds": {
+        "type": "object",
+        "additionalProperties": {
+          "type": "object",
+          "additionalProperties": { "type": "number" }
+        }
+      },
+      "scope": {
+        "type": "string",
+        "enum": ["matching_units", "all_allies", "formation_slots"]
+      }
+    },
+    "additionalProperties": false
+  }
+}
