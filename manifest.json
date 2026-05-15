@@ -1,0 +1,26 @@
+{
+  "package": "ikusa-forge-phase0-planning-pack",
+  "created_for": "lizr-arch/ikusa-forge",
+  "purpose": "initial design/process/prompts package for Phase 0 / Phase 1 planning",
+  "files": [
+    "AGENTS.md",
+    "README.md",
+    "docs/design/00-project-brief.md",
+    "docs/design/01-combat-pillars.md",
+    "docs/design/02-mvp-scope-v0.1.md",
+    "docs/design/03-reference-game-study-template.md",
+    "docs/design/04-system-overview.md",
+    "docs/design/05-data-config-design.md",
+    "docs/process/00-web-gpt-codex-workflow.md",
+    "docs/process/01-phase-1-task-board.md",
+    "docs/process/02-review-checklist.md",
+    "docs/process/03-decision-log.md",
+    "docs/prompts/codex/00-bootstrap-repo.prompt.md",
+    "docs/prompts/codex/01-data-config.prompt.md",
+    "docs/prompts/codex/02-python-combat-core.prompt.md",
+    "docs/prompts/codex/03-csharp-host.prompt.md",
+    "docs/prompts/codex/04-html-replay-viewer.prompt.md",
+    "docs/prompts/codex/05-phase1-integration.prompt.md",
+    "docs/prompts/codex/README.md"
+  ]
+}
