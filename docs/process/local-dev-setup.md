@@ -91,6 +91,31 @@ The validator currently checks:
 
 With v0.1.3 validation, simulator work can safely rely on `unit coordinate -> formation slot -> role` lookup before applying formation bonuses.
 
+## Load config models
+
+The first Python combat-core layer can load generated JSON into pure config
+models without running a battle:
+
+```bash
+python tools/inspect_config_models.py --config config/generated
+```
+
+Windows Python launcher form:
+
+```bash
+py -3.11 tools/inspect_config_models.py --config config/generated
+```
+
+Current behavior:
+
+- Reads only `config/generated/*.json`.
+- Calls the config validator before loading models.
+- Builds a `ConfigBundle` of pure config dataclasses.
+- Supports formation coordinate-to-role lookup.
+- Does not create `UnitState`, `BattleState`, a tick loop, replay output, or battle reports.
+
+See `docs/process/python-combat-models-v0.1.md` for the model boundary.
+
 ## Test config tools
 
 Run the standard-library unittest suite:
