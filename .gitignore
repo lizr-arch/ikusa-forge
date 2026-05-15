@@ -1,0 +1,35 @@
+# Python cache and local environments
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+.venv/
+venv/
+env/
+ENV/
+
+# .NET build output
+bin/
+obj/
+TestResults/
+*.user
+*.suo
+*.nupkg
+
+# Generated runtime battle outputs
+runs/*
+!runs/.gitkeep
+
+# Generated runtime config output
+config/generated/*
+!config/generated/.gitkeep
+
+# Local editor / OS noise
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
