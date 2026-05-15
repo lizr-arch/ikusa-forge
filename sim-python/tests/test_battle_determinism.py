@@ -12,8 +12,9 @@ for path in (SIM_DIR, TOOLS_DIR):
         sys.path.insert(0, str(path))
 
 from export_xlsx_to_json import export_tables  # noqa: E402
-from ikusa_sim.battle import build_replay_document, event_to_dict, run_battle_skeleton  # noqa: E402
+from ikusa_sim.battle_skeleton import build_replay_document, run_battle_skeleton  # noqa: E402
 from ikusa_sim.config_loader import load_config  # noqa: E402
+from ikusa_sim.events import event_to_dict  # noqa: E402
 
 
 class BattleDeterminismTests(unittest.TestCase):

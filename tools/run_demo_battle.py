@@ -13,12 +13,9 @@ SIM_DIR = REPO_ROOT / "sim-python"
 if str(SIM_DIR) not in sys.path:
     sys.path.insert(0, str(SIM_DIR))
 
-from ikusa_sim.battle import (  # noqa: E402
-    build_replay_document,
-    event_to_dict,
-    run_battle_skeleton,
-)
+from ikusa_sim.battle_skeleton import build_replay_document, run_battle_skeleton  # noqa: E402
 from ikusa_sim.config_loader import ConfigLoadError, load_config  # noqa: E402
+from ikusa_sim.events import event_to_dict  # noqa: E402
 
 
 def build_parser() -> argparse.ArgumentParser:

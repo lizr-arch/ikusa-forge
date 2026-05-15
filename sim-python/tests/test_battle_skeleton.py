@@ -12,8 +12,10 @@ for path in (SIM_DIR, TOOLS_DIR):
         sys.path.insert(0, str(path))
 
 from export_xlsx_to_json import export_tables  # noqa: E402
-from ikusa_sim.battle import events_to_tick_groups, run_battle_skeleton  # noqa: E402
+from ikusa_sim.battle import run_battle_skeleton as facade_run_battle_skeleton  # noqa: E402
+from ikusa_sim.battle_skeleton import run_battle_skeleton  # noqa: E402
 from ikusa_sim.config_loader import load_config  # noqa: E402
+from ikusa_sim.events import events_to_tick_groups  # noqa: E402
 
 
 class BattleSkeletonTests(unittest.TestCase):
@@ -42,6 +44,17 @@ class BattleSkeletonTests(unittest.TestCase):
         self.assertEqual(0, events[0].tick)
         self.assertEqual(state.max_ticks, state.current_tick)
 
+    def test_runtime_sides_are_ally_and_enemy(self):
+        state, events = self.run_demo()
+        sides_by_instance_id = {unit.instance_id: unit.side for unit in state.units}
+        spawn_payloads = [event.payload["unit"] for event in events if event.type == "unit_spawn"]
+
+        self.assertEqual("ally", sides_by_instance_id["ally_001"])
+        self.assertEqual("enemy", sides_by_instance_id["enemy_001"])
+        self.assertEqual({"ally", "enemy"}, {unit.side for unit in state.units})
+        self.assertEqual("ally", spawn_payloads[0]["side"])
+        self.assertEqual("enemy", spawn_payloads[6]["side"])
+
     def test_demo_emits_minimal_event_stream(self):
         state, events = self.run_demo()
         event_types = [event.type for event in events]
@@ -68,6 +81,13 @@ class BattleSkeletonTests(unittest.TestCase):
         self.assertEqual("battle_start", groups[0]["events"][0]["type"])
         self.assertEqual("unit_spawn", groups[0]["events"][1]["type"])
         self.assertEqual("battle_end", groups[1]["events"][0]["type"])
+
+    def test_battle_module_facade_remains_compatible(self):
+        bundle = self.load_sample_bundle()
+        state, events = facade_run_battle_skeleton(bundle, "demo_001", 1001)
+
+        self.assertEqual(12, len(state.units))
+        self.assertEqual(14, len(events))
 
 
 if __name__ == "__main__":

@@ -1,6 +1,6 @@
 # Local Development Setup
 
-This repository is currently in Phase 1 deterministic battle skeleton v0.1 state.
+This repository is currently in Phase 1 deterministic battle skeleton v0.1.1 state.
 
 The config pipeline, first pure Python model boundary, and minimal deterministic replay event stream exist so later tasks can add combat rules, a C# subprocess host, and an HTML replay debugger without mixing responsibilities.
 
@@ -117,7 +117,13 @@ Current behavior:
 
 See `docs/process/python-combat-models-v0.1.md` for the model boundary.
 
-`UnitDef` is a reusable config definition loaded from runtime JSON. `UnitState` is a per-battle runtime instance created from `UnitDef`, encounter placement, and formation role. `ConfigBundle` is the read-only config collection. `BattleState` is one battle run's runtime state.
+`UnitDef / 单位配置定义` is a reusable config definition loaded from runtime JSON. `UnitState / 单位运行时状态` is a per-battle runtime instance created from `UnitDef`, encounter placement / 遭遇战站位, and formation role / 阵型角色. `ConfigBundle / 只读配置集合` is the read-only config collection. `BattleState / 战斗运行时状态` is one battle run's runtime state.
+
+Runtime side enum / 运行时阵营枚举 uses `ally/enemy`.
+
+`config.encounters[].player_units / 配置字段 player_units` enters runtime as `UnitState.side="ally" / 我方阵营`.
+
+`config.encounters[].enemy_units / 配置字段 enemy_units` enters runtime as `UnitState.side="enemy" / 敌方阵营`.
 
 ## Run deterministic battle skeleton
 
@@ -137,7 +143,8 @@ Current behavior:
 
 - Loads a `ConfigBundle` from generated runtime JSON.
 - Creates `BattleState` and twelve `UnitState` objects for `demo_001`.
-- Spawns player units first as `ally_001..ally_006`, then enemy units as `enemy_001..enemy_006`.
+- Spawns config `player_units / 玩家单位配置字段` first as `ally_001..ally_006` with runtime side / 运行时阵营 `ally / 我方`.
+- Spawns config `enemy_units / 敌方单位配置字段` second as `enemy_001..enemy_006` with runtime side / 运行时阵营 `enemy / 敌方`.
 - Emits deterministic `BattleEvent` ids such as `evt_000001`.
 - Writes `runs/demo_001/replay.json` with `schema_version="battle_replay.v0.1"` and tick groups for tick `0` and tick `1200`.
 - Writes `runs/demo_001/debug_timeline.json` as a flat event list.
@@ -146,9 +153,19 @@ Current behavior:
 
 Current limitations:
 
-- No attack, damage, death, targeting AI, skill resolver, synergy application, formation bonus application, full battle report, HTML viewer, C# host, Godot gameplay, xlsx adapter, or third-party dependencies.
+- No attack / 攻击, damage / 伤害, death / 死亡, targeting AI / 目标选择 AI, skill resolver / 技能解析器, synergy application / 羁绊应用, formation bonus application / 阵型加成应用, battle report / 战报, HTML viewer / Web 回放器, C# host / C# 宿主, Godot gameplay / Godot 玩法, xlsx adapter / xlsx 适配器, or third-party dependencies / 第三方依赖.
 
 See `docs/process/deterministic-battle-skeleton-v0.1.md` for the runtime skeleton boundary.
+
+## Battle skeleton module boundary
+
+The v0.1.1 skeleton is split into focused Python modules:
+
+- `runtime_models.py / 运行时模型`: `UnitState`, `BattleState`, `BattleResult`.
+- `events.py / 战斗事件`: `BattleEvent`, `event_to_dict`, `events_to_tick_groups`.
+- `rng.py / 随机包装器`: `BattleRng`.
+- `battle_skeleton.py / 战斗骨架`: `create_battle_state`, `spawn_units_from_encounter`, `run_battle_skeleton`, replay document helpers, and runtime dict serializers.
+- `battle.py / 兼容转发层`: compatibility facade / 兼容转发层 for old imports. New code should prefer `runtime_models.py`, `events.py`, `rng.py`, and `battle_skeleton.py`.
 
 ## Test config tools
 
@@ -160,6 +177,7 @@ python -m unittest discover -s sim-python/tests
 
 The tests export sample data into a temporary directory and validate both valid and invalid generated config.
 They also verify deterministic battle skeleton unit creation, event counts, result payloads, tick grouping, and same-seed event stability.
+They verify runtime side enum / 运行时阵营枚举 values `ally/enemy` and keep `battle.py / 兼容转发层` import compatibility covered.
 
 ## CSV-first note
 

@@ -1,4 +1,4 @@
-# Deterministic Battle Skeleton v0.1
+# Deterministic Battle Skeleton v0.1.1
 
 This stage adds the first deterministic battle runtime skeleton / 确定性战斗运行时骨架.
 
@@ -15,6 +15,12 @@ Implemented:
 - `BattleRng / 战斗随机包装器`: battle-scoped wrapper around `random.Random(seed)`. The skeleton instantiates it but does not consume random values yet.
 - `run_battle_skeleton() / 运行战斗骨架`: emits `battle_start`, `unit_spawn`, and `battle_end`.
 - `tools/run_demo_battle.py`: writes replay / 回放, debug timeline / 调试时间线, and run summary / 运行摘要 artifacts.
+- Module split / 模块拆分:
+  - `runtime_models.py / 运行时模型`
+  - `events.py / 战斗事件`
+  - `rng.py / 随机包装器`
+  - `battle_skeleton.py / 战斗骨架`
+  - `battle.py / 兼容转发层`
 
 Not implemented:
 
@@ -44,6 +50,12 @@ Not implemented:
 
 `BattleEvent / 战斗事件` is the replay-facing event contract. It is data-only and can be serialized into `replay.json / 回放 JSON` or `debug_timeline.json / 调试时间线 JSON`.
 
+Runtime side enum / 运行时阵营枚举 uses `ally/enemy`.
+
+`config.encounters[].player_units / 配置字段 player_units` remains the designer-facing config field. During runtime state creation it becomes `UnitState.side="ally" / 我方阵营`.
+
+`config.encounters[].enemy_units / 配置字段 enemy_units` becomes `UnitState.side="enemy" / 敌方阵营`.
+
 The dependency direction stays:
 
 ```text
@@ -51,6 +63,36 @@ config -> simulator -> replay/report -> viewer/host
 ```
 
 The simulator does not import the web viewer / Web 回放器, Godot scene / Godot 场景, or C# UI / C# 界面.
+
+## Module Boundary
+
+`runtime_models.py / 运行时模型` owns runtime dataclasses:
+
+- `UnitState / 单位运行时状态`
+- `BattleState / 战斗运行时状态`
+- `BattleResult / 战斗结果`
+
+`events.py / 战斗事件` owns event data and grouping:
+
+- `BattleEvent / 战斗事件`
+- `event_to_dict`
+- `events_to_tick_groups`
+
+`rng.py / 随机包装器` owns:
+
+- `BattleRng / 战斗随机包装器`
+
+`battle_skeleton.py / 战斗骨架` owns runtime orchestration and serialization:
+
+- `create_battle_state`
+- `spawn_units_from_encounter`
+- `run_battle_skeleton`
+- `build_replay_document`
+- `battle_state_to_dict`
+- `unit_state_to_dict`
+- `battle_result_to_dict`
+
+`battle.py / 兼容转发层` is a compatibility facade. New code should prefer importing from `runtime_models.py / 运行时模型`, `events.py / 战斗事件`, `rng.py / 随机包装器`, and `battle_skeleton.py / 战斗骨架`.
 
 ## Event Stream
 
@@ -68,8 +110,8 @@ For `demo_001 / 演示战斗 001`:
 - tick `0`: twelve `unit_spawn / 单位生成` events.
 - tick `1200`: one `battle_end / 战斗结束` event.
 
-Player units / 玩家单位 are spawned first as `ally_001` through `ally_006`.
-Enemy units / 敌方单位 are spawned second as `enemy_001` through `enemy_006`.
+Config `player_units / 玩家单位配置字段` are spawned first as `ally_001` through `ally_006` with runtime side / 运行时阵营 `ally / 我方`.
+Config `enemy_units / 敌方单位配置字段` are spawned second as `enemy_001` through `enemy_006` with runtime side / 运行时阵营 `enemy / 敌方`.
 
 The result / 结果 is always:
 
@@ -121,6 +163,7 @@ The tests assert:
 
 - `demo_001` creates twelve `UnitState / 单位运行时状态` objects.
 - `ally_001` and `enemy_001` exist.
+- runtime side enum / 运行时阵营枚举 is `ally/enemy`.
 - every `UnitState.role / 单位运行时角色` is non-empty.
 - the event stream contains one `battle_start`, twelve `unit_spawn`, and one `battle_end`.
 - the final result is draw / 平局 because of timeout without combat / 无战斗超时.
