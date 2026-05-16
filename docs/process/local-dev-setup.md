@@ -268,4 +268,17 @@ The demo run writes:
 - `runs/demo_001/battle_report.json`
 - `runs/demo_001/run_summary.md`
 
+Smoke-check the generated Phase 1 MVP artifacts / 第一阶段 MVP 产物:
+
+```bash
+python tools/smoke_phase1_mvp.py --run runs/demo_001 --viewer web-viewer --battle demo_001 --seed 1001
+```
+
+This smoke check validates replay/report shape and viewer entry files. It does not automate a browser.
+
+Phase 1 review docs:
+
+- `docs/process/phase-1-mvp-review.md`
+- `docs/process/viewer-smoke-checklist.md`
+
 C# host commands are still future work.

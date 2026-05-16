@@ -53,7 +53,7 @@ Still future work:
 | Host | C# / .NET | Execute battle runs, manage paths, read replay/report DTOs |
 | Combat core | Python | Rules, targeting, skills, damage, synergies, deterministic simulation |
 | Config | xlsx -> JSON | Designer-editable source data and runtime data |
-| Debug view | HTML / JS | Replay playback, event timeline, battle report |
+| Debug view | Vite + TypeScript + native SVG/DOM | Replay playback, event timeline, battle report |
 | Final client | Godot C# | Later playable shell and presentation layer |
 
 ## First command flow
@@ -62,6 +62,7 @@ Still future work:
 python tools/export_xlsx_to_json.py --input config/source --output config/generated
 python tools/validate_config.py --input config/generated
 python tools/run_demo_battle.py --battle demo_001 --seed 1001 --config config/generated --out runs/demo_001 --mode basic
+python tools/smoke_phase1_mvp.py --run runs/demo_001 --viewer web-viewer --battle demo_001 --seed 1001
 
 dotnet run --project host-csharp/IkusaForge.Host -- --battle demo_001 --seed 1001
 ```
@@ -88,3 +89,8 @@ cd web-viewer
 npm run typecheck
 npm run build
 ```
+
+Review docs:
+
+- `docs/process/phase-1-mvp-review.md`
+- `docs/process/viewer-smoke-checklist.md`
