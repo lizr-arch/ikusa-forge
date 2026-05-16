@@ -2,6 +2,11 @@
 
 This repository is currently in Phase 1 Replay Report / 回放与战报 plus SVG Replay Viewer / SVG 回放调试器 v0.1 state.
 
+For a packaged demo flow, see:
+
+- `docs/process/phase-1-demo-package.md`
+- `docs/process/phase-1-summary.md`
+
 The config pipeline, pure Python runtime model boundary, deterministic replay event stream, Basic Combat Rules / 基础战斗规则, Minimal Skill Triggers / 最小技能触发, Replay Report / 回放与战报, and read-only SVG Replay Viewer / SVG 回放调试器 exist so later tasks can add a C# subprocess host without mixing responsibilities.
 
 ## Expected local tools
@@ -283,6 +288,18 @@ Smoke-check the generated Phase 1 MVP artifacts / 第一阶段 MVP 产物:
 
 ```bash
 python tools/smoke_phase1_mvp.py --run runs/demo_001 --viewer web-viewer --battle demo_001 --seed 1001
+
+Phase 1 demo package one-step flow (minimal):
+
+```bash
+python tools/export_xlsx_to_json.py --input config/source --output config/generated
+python tools/validate_config.py --input config/generated
+python tools/run_demo_battle.py --battle demo_001 --seed 1001 --config config/generated --out runs/demo_001 --mode basic
+python tools/smoke_phase1_mvp.py --run runs/demo_001 --viewer web-viewer --battle demo_001 --seed 1001
+cd web-viewer
+npm install
+npm run dev
+```
 ```
 
 This smoke check validates replay/report shape and viewer entry files. It does not automate a browser.
