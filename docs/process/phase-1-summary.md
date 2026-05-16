@@ -10,10 +10,17 @@
 
 ## Major PRs / 主要 PR
 
+- #1 `feat(config): add phase 1 data config pipeline`
+- #2 `feat(sim): add config loader and combat models`
+- #3 `feat(sim): add deterministic battle skeleton`
+- #4 `feat(sim): add basic combat rules`
+- #5 `feat(sim): add minimal skill triggers`
+- #6 `feat(sim): add replay battle report`
 - #7 `feat(viewer): add svg replay viewer`
-- #8 `feat(viewer): add browser smoke test`
+- #8 `docs(process): add phase 1 mvp review`
 - #9 `test(viewer): add browser smoke test`
 - #10 `feat(viewer): improve html demo experience`
+- #11 `docs(process): add phase 1 demo package` (current / pending review)
 
 ## Current Commands / 当前命令
 
