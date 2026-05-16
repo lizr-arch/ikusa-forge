@@ -8,6 +8,10 @@
 - SVG Replay Viewer / SVG 回放调试器（read-only 本地回放查看）
 - Formation bonus / 阵型加成（推荐规则）与 Synergy application / 羁绊应用（推荐规则）在 tick 0 一次性应用并可追踪
 - Browser Smoke Test / 浏览器冒烟测试（Playwright 基础检查）
+- Verified real `demo_001` modifier evidence：
+  - formation modifiers in report summary / 战报阵型修正数 > 0
+  - synergy modifiers in report summary / 战报羁绊修正数 > 0
+  - `stat_modifier` events with both `source_type=formation` and `source_type=synergy`
 
 ## Major PRs / 主要 PR
 
@@ -22,6 +26,7 @@
 - #9 `test(viewer): add browser smoke test`
 - #10 `feat(viewer): improve html demo experience`
 - #11 `docs(process): add phase 1 demo package` (current / pending review)
+- #12 `feat(sim): add tactical depth pack` (current / pending review)
 
 ## Current Commands / 当前命令
 
@@ -57,12 +62,13 @@ npm run test:e2e
 - 无 C# host / C# 宿主
 - 无 Godot
 - 阵型加成和羁绊逻辑已应用，但尚未进入 CI 流程与可玩发布闭环
+- `opening_damage` / `formation_slots` 等字段在当前 phase 内未映射到可解释修正链路
 - 无 generated artifact commit / 不提交生成文件
+- `attack_interval_delta` 在 `synergy` 下当前仅在 `targeting/actions` schedule 初始化前更新；未做额外 DSL 扩展
 
 ## Recommended Next Branch / 推荐下一阶段分支
 
 优先关注交付可展示闭环与交付稳定性：
 
-1. 继续完善战术玩法深度验证（formation + synergy explainability）并补齐规则覆盖
+1. `phase1/ci-hardening`（若目标是稳定交付）
 2. `phase1/viewer-polish`（若目标是演示稳定）
-3. `phase1/ci-hardening`（若目标是稳定交付）

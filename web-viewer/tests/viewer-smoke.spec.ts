@@ -1,11 +1,26 @@
 import path from "node:path";
+import fs from "node:fs";
 import { expect, test, type Page } from "@playwright/test";
 
 const repoRoot = path.resolve(process.cwd(), "..");
 const replayPath = path.join(repoRoot, "runs", "demo_001", "replay.json");
 const reportPath = path.join(repoRoot, "runs", "demo_001", "battle_report.json");
+const debugTimelinePath = path.join(repoRoot, "runs", "demo_001", "debug_timeline.json");
 
 test("loads replay and report into the SVG replay viewer", async ({ page }) => {
+  const debugTimeline = JSON.parse(fs.readFileSync(debugTimelinePath, "utf8"));
+  const modifierRows = debugTimeline.filter((event: { type?: string }) => event.type === "stat_modifier");
+  const modifierSourceTypes = new Set(
+    debugTimeline
+      .filter((event: { type?: string; payload?: { source_type?: string } }) => event.type === "stat_modifier")
+      .map((event: { payload?: { source_type?: string } }) => event.payload?.source_type)
+      .filter((sourceType): sourceType is string => sourceType === "formation" || sourceType === "synergy"),
+  );
+
+  expect(modifierRows.length).toBeGreaterThan(0);
+  expect(modifierSourceTypes.has("formation")).toBeTruthy();
+  expect(modifierSourceTypes.has("synergy")).toBeTruthy();
+
   await page.goto("/");
 
   await expect(page).toHaveTitle(/Ikusa Forge SVG Replay Viewer/);
@@ -31,7 +46,7 @@ test("loads replay and report into the SVG replay viewer", async ({ page }) => {
   await expect(page.locator("#battle-summary")).toContainText("ally");
   await expect(page.locator("#battle-summary")).toContainText("enemy_eliminated");
   await expect(page.locator("#battle-summary")).toContainText(/end tick|end_tick/i);
-  await expect(page.locator("#battle-summary")).toContainText("216");
+  await expect(page.locator("#battle-summary")).toContainText("224");
 
   await expect(page.getByRole("img", { name: "Replay board" })).toBeVisible();
   await expect(page.locator(".unit-token")).toHaveCount(12);
@@ -81,6 +96,7 @@ test("loads replay and report into the SVG replay viewer", async ({ page }) => {
   await firstModifier.click();
   await expect(page.locator("#event-highlight")).toContainText("modifies");
   await expect(page.locator("#event-highlight")).toContainText("Reason");
+  await expect(page.locator("#event-highlight")).toContainText("Source Type");
 
   await page.locator('#report .report-table .report-unit-link[data-unit-id="ally_003"]').click();
   await expect(page.locator("#unit-detail")).toContainText("ally_003");
@@ -88,11 +104,13 @@ test("loads replay and report into the SVG replay viewer", async ({ page }) => {
 
   await expect(page.locator("#battle-summary")).toContainText("Total Modifiers");
   await expect(page.locator("#report")).toContainText("Total Modifiers");
+  await expect(page.locator("#report")).toContainText("Formation Modifiers");
+  await expect(page.locator("#report")).toContainText("Synergy Modifiers");
   await expect(page.locator("#report")).toContainText("ATK Bonus");
   await expect(page.locator("#report")).toContainText("DEF Bonus");
 
   await page.locator(".key-moment").filter({ hasText: "Battle ended" }).click();
-  await expect(page.locator("#tick-readout")).toContainText("Tick 216");
+  await expect(page.locator("#tick-readout")).toContainText("Tick 224");
 
   await expect(page.locator("#report")).toContainText("enemy_eliminated");
   await expect(page.locator("#report")).toContainText("Total Damage");

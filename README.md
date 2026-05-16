@@ -25,7 +25,7 @@ Success means:
 - fixed seed -> deterministic replay
 - replay can be inspected in HTML
 - battle report explains the main reason for win/loss
-- C# host can invoke Python and consume the same replay/report contract without changing combat logic (future goal, not yet implemented)
+- C# host contract compatibility is a future goal; it is not implemented yet
 
 Current Python simulator status:
 
@@ -62,7 +62,6 @@ npm run dev
 
 Still future work:
 
-- synergy application / 羁绊应用
 - C# host / C# 宿主: future goal is to consume the same replay/report contract without changing combat logic
 - Godot
 - xlsx adapter / xlsx 适配器

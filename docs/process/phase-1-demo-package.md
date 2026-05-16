@@ -64,16 +64,33 @@ npm run dev -- --host 127.0.0.1
 在当前主线下，`demo_001` 预期结果如下：
 
 - units / 单位数: `12`
-- events / 事件数: `184`
+- events / 事件数: `210`
 - winner / 胜者: `ally`
 - reason / 原因: `enemy_eliminated`
-- end_tick / 结束 tick: `216`
-- total_damage / 总伤害: `1088`
+- end_tick / 结束 tick: `224`
+- total_damage / 总伤害: `1192`
 - total_kills / 总击杀: `8`
-- total_skill_triggers / 总技能触发: `44`
-- total_modifiers / 总修正次数: `8`
-- formation_modifiers / 阵型加成次数: `4`
-- synergy_modifiers / 羁绊加成次数: `4`
+- total_skill_triggers / 总技能触发: `50`
+- total_modifiers / 总修正次数: `16`
+- formation_modifiers / 阵型加成次数: `8`
+- synergy_modifiers / 羁绊加成次数: `8`
+
+### Supported Synergy Stats / 支持的羁绊属性
+
+- `hp`
+- `attack_interval_delta`
+
+### Unsupported (for this phase) / 本阶段不支持
+
+- `opening_damage`（未在 current 战斗流程中映射为事件修正源）
+- `formation_slots`（当前统计未覆盖该维度）
+
+当前 `demo_001` 验证要求：
+
+- `battle_report.json` `summary.total_modifiers > 0`
+- `battle_report.json` `summary.formation_modifiers > 0`
+- `battle_report.json` `summary.synergy_modifiers > 0`
+- `debug_timeline.json` 存在 `stat_modifier` 且 `source_type` 同时出现 `formation` 与 `synergy`
 
 如果这些值未来因为规则调整变化，请同步更新本页、`tools/smoke_phase1_mvp.py`，以及本阶段 smoke 覆盖说明。
 

@@ -1,9 +1,10 @@
 """Synergy resolver for phase 2 tactical depth pack."""
 
-from typing import Callable, Dict, Iterable, List, Optional, Sequence
+from typing import Callable, Dict, Iterable, List, Optional, Sequence, Union
 
 from ikusa_sim import models as config_models
 from ikusa_sim.events import BattleEvent
+from ikusa_sim.combat_rules import attack_interval_to_ticks
 from ikusa_sim.runtime_models import BattleState, UnitState
 
 
@@ -38,7 +39,7 @@ def _apply_stat_modifier(
     source_type: str,
     units: Sequence[UnitState],
     stat: str,
-    amount: int,
+    amount: Union[int, float],
     reason: str,
     state: BattleState,
     events: List[BattleEvent],
@@ -46,13 +47,26 @@ def _apply_stat_modifier(
     for unit in sorted(units, key=lambda item: item.instance_id):
         applied = False
         if stat == "atk":
-            unit.atk += amount
+            unit.atk += int(round(amount))
             applied = True
         elif stat == "defense":
-            unit.defense += amount
+            unit.defense += int(round(amount))
             applied = True
         elif stat == "range":
-            unit.range += amount
+            unit.range += int(round(amount))
+            applied = True
+        elif stat == "hp":
+            unit.base_hp += int(round(amount))
+            unit.hp += int(round(amount))
+            applied = True
+        elif stat == "attack_interval_delta":
+            unit.base_attack_interval += float(amount)
+            if unit.action_interval_ticks > 0:
+                unit.action_interval_ticks = attack_interval_to_ticks(
+                    unit.base_attack_interval,
+                    state.tick_rate,
+                )
+            unit.next_action_tick = max(0, unit.next_action_tick)
             applied = True
 
         if not applied:
@@ -124,19 +138,24 @@ def _apply_thresholded_bonuses(
     reason = f"{source_id}:threshold_{matched_threshold}"
     source = f"synergy:{source_id}"
     for stat, value in thresholds_map[matched_threshold].items():
-        if not isinstance(value, (int, float)) or not int(value) == value:
-            # Skip unsupported stats such as float attack_interval_delta in this phase.
+        if not isinstance(value, (int, float)):
+            continue
+        if not _is_supported_stat(stat):
             continue
         _apply_stat_modifier(
             source=source,
             source_type="synergy",
             units=bonus_targets,
             stat=stat,
-            amount=int(value),
+            amount=value,
             reason=reason,
             state=state,
             events=events,
         )
+
+
+def _is_supported_stat(stat: str) -> bool:
+    return stat in {"atk", "defense", "range", "hp", "attack_interval_delta"}
 
 
 def _max_threshold(

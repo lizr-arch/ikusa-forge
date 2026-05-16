@@ -33,9 +33,19 @@ Handler map currently includes:
 
 - `type: stat_modifier`
 - `source_type: formation|synergy`
-- `stat / 属性`: `atk` / `defense` / `range`
+- `stat / 属性`: `atk` / `defense` / `range` / `hp` / `attack_interval_delta`
 - `amount / 数值`
 - `reason / 来源原因`
+
+当前 sample data 已支持的属性为：
+
+- `hp`：支持 `unit.base_hp` / `unit.hp` 叠加。
+- `attack_interval_delta`：支持 `base_attack_interval` 与 `action_interval_ticks` 更新。
+
+当前 sample data 尚不支持（或未在本阶段生效）：
+
+- `opening_damage`：本版本不实现该语义，可进入 `opening` 伤害流程后再评估。
+- `formation_slots`：当前按角色/阵型角色进行的阵型/羁绊统计尚未扩展到此范围。
 
 ## Triggered Modifier Event / 修正触发事件
 
@@ -88,6 +98,20 @@ Handler map currently includes:
 - 战报点击单位联动到棋盘
 - 关键时刻可导航到触发时刻
 
+## Real Demo Evidence / 真实演示证据
+
+在 `config/source/sample_data` 的真实 `demo_001` 下，当前验证链条要求至少满足：
+
+- `summary.formation_modifiers > 0` 且统计到 `8`
+- `summary.synergy_modifiers > 0` 且统计到 `8`
+- `summary.total_modifiers = 16`（`formation 8 + synergy 8`）
+- `debug_timeline.json` 的 `stat_modifier` 至少包含：
+  - `source_type: formation`
+  - `source_type: synergy`
+- `total_damage / 总伤害` 为 `1192`
+- `total_kills / 总击杀` 为 `8`
+- `total_skill_triggers / 总技能触发` 为 `50`
+
 ## Not in Scope / 不在范围
 
 - No C# host / 不做 C# 宿主（仅留现有契约兼容）
@@ -108,14 +132,14 @@ Handler map currently includes:
 
 预期关键变化（`demo_001 / seed 1001`）：
 
-- `events / 事件数`: `184`
-- `end_tick / 结束 tick`: `216`
-- `total_modifiers / 总修正`: `8`
-- `formation_modifiers / 阵型修正`: `4`
-- `synergy_modifiers / 群体修正`: `4`
-- `total_damage / 总伤害`: `1088`
+- `events / 事件数`: `210`
+- `end_tick / 结束 tick`: `224`
+- `total_modifiers / 总修正`: `16`
+- `formation_modifiers / 阵型修正`: `8`
+- `synergy_modifiers / 群体修正`: `8`
+- `total_damage / 总伤害`: `1192`
 - `total_kills / 总击杀`: `8`
-- `total_skill_triggers / 总技能触发`: `44`
+- `total_skill_triggers / 总技能触发`: `50`
 
 ## Known Limits / 已知限制
 

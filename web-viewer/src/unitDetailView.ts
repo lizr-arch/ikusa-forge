@@ -38,6 +38,8 @@ export const renderUnitDetail = (
       ["ATK Bonus", formatNumber(unit.statBonuses.get("atk"))],
       ["DEF Bonus", formatNumber(unit.statBonuses.get("defense"))],
       ["Range Bonus", formatNumber(unit.statBonuses.get("range"))],
+      ["HP Bonus", formatNumber(unit.statBonuses.get("hp"))],
+      ["ATKSPD Bonus", formatNumber(unit.statBonuses.get("attack_interval_delta"))],
       ["Modifiers", formatNumber(unitReport?.modifiers_received)],
       ["Damage Done", formatNumber(unitReport?.damage_done)],
       ["Damage Taken", formatNumber(unitReport?.damage_taken)],

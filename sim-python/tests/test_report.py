@@ -1,6 +1,7 @@
 import json
 import sys
 import unittest
+from collections import Counter
 from contextlib import redirect_stdout
 from io import StringIO
 from pathlib import Path
@@ -213,10 +214,59 @@ class BattleReportTests(unittest.TestCase):
         self.assertEqual("ally", basic_report["winner"])
         self.assertGreater(basic_report["summary"]["total_damage"], 0)
         self.assertGreater(basic_report["summary"]["total_skill_triggers"], 0)
+        self.assertGreater(basic_report["summary"]["total_modifiers"], 0)
+        self.assertGreater(basic_report["summary"]["formation_modifiers"], 0)
+        self.assertGreater(basic_report["summary"]["synergy_modifiers"], 0)
         self.assertTrue(basic_report["key_moments"])
         self.assertEqual(0, skeleton_report["summary"]["total_damage"])
         self.assertEqual(0, skeleton_report["summary"]["total_kills"])
         self.assertEqual(0, skeleton_report["summary"]["total_skill_triggers"])
+        self.assertEqual(0, skeleton_report["summary"].get("total_modifiers", 0))
+        self.assertEqual(0, skeleton_report["summary"].get("formation_modifiers", 0))
+        self.assertEqual(0, skeleton_report["summary"].get("synergy_modifiers", 0))
+
+    def test_demo_integration_has_form_and_syn_source_modifiers(self) -> None:
+        with TemporaryDirectory() as temp_dir:
+            temp_path = Path(temp_dir)
+            config_dir = temp_path / "generated"
+            basic_out = temp_path / "demo_run"
+            export_tables(REPO_ROOT / "config" / "source", config_dir)
+
+            with redirect_stdout(StringIO()):
+                run_demo_main(
+                    [
+                        "--battle",
+                        "demo_001",
+                        "--seed",
+                        "1001",
+                        "--config",
+                        str(config_dir),
+                        "--out",
+                        str(basic_out),
+                        "--mode",
+                        "basic",
+                    ]
+                )
+
+            debug_timeline = json.loads(
+                (basic_out / "debug_timeline.json").read_text(encoding="utf-8")
+            )
+            modifier_sources = Counter(
+                event["payload"].get("source_type")
+                for event in debug_timeline
+                if event.get("type") == "stat_modifier"
+            )
+
+            self.assertGreater(len([event for event in debug_timeline if event.get("type") == "stat_modifier"]), 0)
+            self.assertGreater(modifier_sources.get("formation", 0), 0)
+            self.assertGreater(modifier_sources.get("synergy", 0), 0)
+            self.assertTrue(
+                any(
+                    event["payload"].get("stat") == "hp"
+                    for event in debug_timeline
+                    if event.get("type") == "stat_modifier"
+                )
+            )
 
 
 if __name__ == "__main__":

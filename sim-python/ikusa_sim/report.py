@@ -74,12 +74,12 @@ def build_battle_report_from_events(
         if event_type == "stat_modifier":
             target = payload.get("target")
             stat = payload.get("stat")
-            amount = _as_int(payload.get("amount"))
+            amount = _as_number(payload.get("amount"))
             source_type = payload.get("source_type")
             if target and stat:
                 unit = _ensure_unit(units, target)
                 stat_bonuses = unit["stat_bonuses"]
-                previous = _as_int(stat_bonuses.get(stat))
+                previous = _as_number(stat_bonuses.get(stat))
                 stat_bonuses[stat] = previous + amount
                 unit["modifiers_received"] = unit.get("modifiers_received", 0) + 1
                 total_modifiers += 1
@@ -219,3 +219,13 @@ def _as_int(value: Any) -> int:
     if isinstance(value, float):
         return int(value)
     return 0
+
+
+def _as_number(value: Any) -> float:
+    if isinstance(value, bool):
+        return float(int(value))
+    if isinstance(value, int):
+        return float(value)
+    if isinstance(value, float):
+        return value
+    return 0.0

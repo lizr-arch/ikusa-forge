@@ -274,6 +274,9 @@ const applyStatModifier = (state: VisualState, event: ReplayEvent): void => {
       unit.defense += amount;
     } else if (stat === "range") {
       unit.range += amount;
+    } else if (stat === "hp") {
+      unit.maxHp += amount;
+      unit.hp += amount;
     }
     const next = new Map(unit.statBonuses);
     next.set(stat, (next.get(stat) ?? 0) + amount);

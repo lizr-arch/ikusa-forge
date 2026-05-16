@@ -147,6 +147,79 @@ class SynergyTests(unittest.TestCase):
         )
         self.assertTrue(all(event.payload["source"] == "synergy:mixed_arms" for event in events))
 
+    def test_supported_sample_stat_hp_is_applied(self) -> None:
+        state = _make_state(
+            [
+                _make_unit(instance_id="ally_001", side="ally", role="front", tags=["ashigaru"]),
+                _make_unit(instance_id="ally_002", side="ally", role="front", tags=["ashigaru"]),
+                _make_unit(instance_id="ally_003", side="ally", role="front", tags=["ashigaru"]),
+            ]
+        )
+        config = _make_config(
+            synergy_id="massed_troops",
+            thresholds={"3": {"hp": 10, "opening_damage": 12}},
+        )
+        events: List[BattleEvent] = []
+
+        apply_synergies(state, config, events)
+
+        for unit in state.units:
+            self.assertEqual(130, unit.base_hp)
+            self.assertEqual(130, unit.hp)
+        self.assertEqual(3, len(events))
+        self.assertTrue(all(event.payload["stat"] == "hp" for event in events))
+        self.assertTrue(all(event.payload["source_type"] == "synergy" for event in events))
+        self.assertTrue(all(event.payload["source"] == "synergy:massed_troops" for event in events))
+        self.assertEqual(
+            {"ally_001", "ally_002", "ally_003"},
+            {event.payload["target"] for event in events},
+        )
+
+    def test_supported_sample_stat_attack_interval_delta_is_applied(self) -> None:
+        state = _make_state(
+            [
+                _make_unit(instance_id="ally_001", side="ally", role="front", tags=["katana"]),
+                _make_unit(instance_id="ally_002", side="ally", role="front", tags=["katana"]),
+            ]
+        )
+        for unit in state.units:
+            unit.action_interval_ticks = 20
+
+        config = _make_config(
+            synergy_id="sword_rhythm",
+            thresholds={"2": {"attack_interval_delta": -0.1}},
+        )
+        events: List[BattleEvent] = []
+
+        apply_synergies(state, config, events)
+
+        self.assertAlmostEqual(0.9, state.units[0].base_attack_interval)
+        self.assertAlmostEqual(0.9, state.units[1].base_attack_interval)
+        self.assertEqual(18, state.units[0].action_interval_ticks)
+        self.assertEqual(18, state.units[1].action_interval_ticks)
+        self.assertEqual(2, len(events))
+        self.assertTrue(all(event.payload["stat"] == "attack_interval_delta" for event in events))
+        self.assertTrue(all(event.payload["source_type"] == "synergy" for event in events))
+
+    def test_unsupported_stat_is_skipped(self) -> None:
+        state = _make_state(
+            [
+                _make_unit(instance_id="ally_001", side="ally", role="front", tags=["spear"]),
+                _make_unit(instance_id="ally_002", side="ally", role="front", tags=["spear"]),
+            ]
+        )
+        config = _make_config(
+            synergy_id="spear_wall",
+            thresholds={"2": {"opening_damage": 12}},
+        )
+        events: List[BattleEvent] = []
+
+        apply_synergies(state, config, events)
+
+        self.assertEqual(120, state.units[0].base_hp)
+        self.assertEqual(10, state.units[0].base_atk)
+        self.assertEqual([], events)
+
     def test_event_id_is_deterministic_and_stable(self) -> None:
         state = _make_state(
             [
