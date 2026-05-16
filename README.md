@@ -36,12 +36,12 @@ Current Python simulator status:
 - damage reason / 伤害原因 in replay events / 回放事件
 - Replay Report / 回放与战报
 - `battle_report.json / 战报 JSON`
+- SVG Replay Viewer / SVG 回放调试器
 
 Still future work:
 
 - synergy application / 羁绊应用
 - formation bonus application / 阵型加成应用
-- HTML viewer / Web 回放器
 - C# host / C# 宿主
 - Godot
 - xlsx adapter / xlsx 适配器
@@ -66,17 +66,25 @@ python tools/run_demo_battle.py --battle demo_001 --seed 1001 --config config/ge
 dotnet run --project host-csharp/IkusaForge.Host -- --battle demo_001 --seed 1001
 ```
 
-Open:
+Start the SVG Replay Viewer / SVG 回放调试器:
 
-```text
-web-viewer/index.html
+```bash
+cd web-viewer
+npm install
+npm run dev
 ```
 
 Then load:
 
 ```text
 runs/demo_001/replay.json
-runs/demo_001/debug_timeline.json
 runs/demo_001/battle_report.json
-runs/demo_001/run_summary.md
+```
+
+Frontend verification:
+
+```bash
+cd web-viewer
+npm run typecheck
+npm run build
 ```
