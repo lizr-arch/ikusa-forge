@@ -37,6 +37,7 @@ Current Python simulator status:
 - Replay Report / 回放与战报
 - `battle_report.json / 战报 JSON`
 - SVG Replay Viewer / SVG 回放调试器
+- HTML Demo Complete Experience / HTML 最小 Demo 完整体验闭环
 
 Still future work:
 
@@ -82,6 +83,8 @@ runs/demo_001/replay.json
 runs/demo_001/battle_report.json
 ```
 
+The viewer keeps manual file inputs and now shows Demo Load Guidance / Demo 加载引导, Battle Summary / 战斗摘要, Event Highlight / 事件高亮, Report-to-Board Link / 战报到棋盘联动, and Key Moments navigation / 关键时刻跳转 for the generated `demo_001` run.
+
 Frontend verification:
 
 ```bash
@@ -97,3 +100,4 @@ Review docs:
 - `docs/process/phase-1-mvp-review.md`
 - `docs/process/viewer-smoke-checklist.md`
 - `docs/process/viewer-browser-smoke-v0.1.md`
+- `docs/process/html-demo-complete-experience-v0.1.md`

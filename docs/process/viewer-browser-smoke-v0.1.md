@@ -4,6 +4,8 @@ This stage adds a minimal Browser Smoke Test / 浏览器冒烟测试 for the SVG
 
 It turns the existing Manual Smoke / 手动冒烟 checklist into a small Playwright / 浏览器自动化测试工具 check. It is not a complete E2E / 端到端测试 system.
 
+The smoke now includes the HTML Demo Complete Experience / HTML 最小 Demo 完整体验闭环 surfaces documented in `docs/process/html-demo-complete-experience-v0.1.md`.
+
 ## Goal / 目标
 
 The goal is to verify the current Viewer Contract / 回放器契约 in a Headless Browser / 无头浏览器:
@@ -24,6 +26,11 @@ Smoke Coverage / 冒烟覆盖范围:
 - unit detail / 单位详情.
 - playback controls / 播放控制.
 - report panel / 战报面板.
+- Demo Load Guidance / Demo 加载引导.
+- Battle Summary / 战斗摘要.
+- Event Highlight / 事件高亮.
+- Report-to-Board Link / 战报到棋盘联动.
+- Key Moments navigation / 关键时刻跳转.
 
 ## Not in Scope / 不在范围
 
@@ -88,6 +95,7 @@ npm run test:e2e:headed
 3. load `../runs/demo_001/replay.json`.
 4. load `../runs/demo_001/battle_report.json`.
 5. verify the status / 状态, metadata / 元数据, board / 棋盘, timeline / 时间线, unit detail / 单位详情, playback controls / 播放控制, and report panel / 战报面板.
+6. verify the complete demo loop / 完整演示闭环 surfaces: Demo Load Guidance / Demo 加载引导, Battle Summary / 战斗摘要, Event Highlight / 事件高亮, Report-to-Board Link / 战报到棋盘联动, and Key Moments navigation / 关键时刻跳转.
 
 ## Known Limitations / 已知限制
 

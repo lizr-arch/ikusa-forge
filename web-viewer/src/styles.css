@@ -122,6 +122,7 @@ h3 {
 .metadata,
 .status-line,
 .tick-readout,
+.event-readout,
 .timeline-count,
 .empty-state {
   color: var(--text-muted);
@@ -192,6 +193,55 @@ h3 {
 .report-block {
   min-height: 0;
   overflow: auto;
+}
+
+.demo-guidance {
+  display: grid;
+  gap: 8px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 0.65rem;
+  background: #fbfcfb;
+}
+
+.demo-guidance p,
+.demo-guidance li {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  line-height: 1.35;
+}
+
+.demo-guidance pre {
+  max-width: 100%;
+  margin: 0;
+  overflow: auto;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 0.55rem;
+  background: #17211d;
+  color: #eef5f1;
+  font-size: 0.72rem;
+  line-height: 1.45;
+}
+
+.demo-guidance ul {
+  display: grid;
+  gap: 3px;
+  margin: 0;
+  padding-left: 1rem;
+}
+
+.load-state-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 5px;
+  color: var(--text-muted);
+  font-size: 0.78rem;
+}
+
+.load-state-grid strong {
+  color: #26322d;
+  overflow-wrap: anywhere;
 }
 
 .file-label,
@@ -275,6 +325,7 @@ select {
 }
 
 .timeline-row.selected {
+  border-left: 4px solid var(--accent);
   background: var(--accent-soft);
 }
 
@@ -353,10 +404,36 @@ select {
 }
 
 .marker-block,
-.report-section {
+.report-section,
+.event-highlight {
   display: grid;
   gap: 8px;
   margin-top: 12px;
+}
+
+.event-highlight {
+  margin-top: 0;
+}
+
+.event-highlight-summary {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 0.55rem;
+  background: var(--accent-soft);
+  color: #3f300d;
+  font-size: 0.84rem;
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+
+.battle-end-banner {
+  border: 1px solid #b7bfc0;
+  border-radius: 8px;
+  padding: 0.55rem;
+  background: #eef1f1;
+  color: #26322d;
+  font-size: 0.84rem;
+  font-weight: 700;
 }
 
 .top-units,
@@ -375,6 +452,11 @@ select {
   background: #fbfcfb;
 }
 
+.key-moment {
+  width: 100%;
+  text-align: left;
+}
+
 .top-unit-title,
 .key-moment-tick {
   color: var(--text-muted);
@@ -384,6 +466,23 @@ select {
 .top-unit-values {
   overflow-wrap: anywhere;
   font-size: 0.84rem;
+}
+
+.report-unit-link {
+  border: 0;
+  border-radius: 4px;
+  padding: 0.1rem 0.15rem;
+  background: transparent;
+  color: #174f41;
+  font-size: inherit;
+  font-weight: 700;
+  text-align: left;
+}
+
+.report-unit-link:hover:not(:disabled),
+.report-unit-link.selected {
+  background: var(--ally-soft);
+  color: #0f4034;
 }
 
 .table-scroll {
@@ -402,6 +501,10 @@ select {
   padding: 0.42rem 0.35rem;
   text-align: left;
   white-space: nowrap;
+}
+
+.report-unit-row.selected td {
+  background: var(--accent-soft);
 }
 
 .report-table th {
@@ -466,6 +569,26 @@ select {
   stroke-width: 3;
 }
 
+.unit-current-attack-source .unit-rect,
+.unit-current-skill-source .unit-rect,
+.unit-current-damage-source .unit-rect {
+  stroke: #2d5d91;
+  stroke-width: 3;
+}
+
+.unit-current-attack-target .unit-rect,
+.unit-current-skill-target .unit-rect,
+.unit-current-damage-target .unit-rect {
+  stroke: var(--danger);
+  stroke-width: 3;
+}
+
+.unit-current-death .unit-rect {
+  stroke: var(--danger);
+  stroke-dasharray: 6 4;
+  stroke-width: 4;
+}
+
 .unit-dead .unit-rect {
   fill: #e5e8e6;
   stroke: #98a19b;
@@ -513,6 +636,36 @@ select {
   stroke-width: 3;
 }
 
+.unit-current-death .death-slash {
+  stroke: var(--danger);
+  stroke-width: 5;
+}
+
+.unit-event-ring {
+  fill: none;
+  pointer-events: none;
+  stroke: var(--accent);
+  stroke-width: 3;
+}
+
+.unit-event-ring-attack-source,
+.unit-event-ring-skill-source,
+.unit-event-ring-damage-source {
+  stroke: #2d5d91;
+}
+
+.unit-event-ring-attack-target,
+.unit-event-ring-skill-target,
+.unit-event-ring-damage-target,
+.unit-event-ring-death {
+  stroke: var(--danger);
+}
+
+.unit-event-ring-battle-end {
+  stroke: #6d7470;
+  stroke-dasharray: 5 5;
+}
+
 .attack-line {
   stroke: #c64242;
   stroke-dasharray: 8 7;
@@ -541,6 +694,13 @@ select {
   fill: var(--danger);
   font-size: 17px;
   font-weight: 800;
+}
+
+.damage-reason-label {
+  fill: #7b2b2b;
+  font-size: 10px;
+  font-weight: 700;
+  text-anchor: middle;
 }
 
 @media (max-width: 1000px) {

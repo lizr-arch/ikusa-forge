@@ -29,7 +29,7 @@ export const eventSummary = (event: ReplayEvent): string => {
     case "damage":
       return `${text(event.payload.source)} deals ${text(event.payload.amount)} to ${text(
         event.payload.target,
-      )}`;
+      )} by ${text(event.payload.reason)}`;
     case "death":
       return `${text(event.payload.unit)} dies`;
     case "battle_end":
