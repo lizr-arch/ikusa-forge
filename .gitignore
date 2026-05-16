@@ -28,8 +28,14 @@ runs/*
 config/generated/*
 !config/generated/.gitkeep
 
+# Frontend dependencies and build output
+node_modules/
+web-viewer/node_modules/
+web-viewer/dist/
+
 # Local editor / OS noise
 .DS_Store
 Thumbs.db
 .idea/
 .vscode/
+.playwright-mcp/

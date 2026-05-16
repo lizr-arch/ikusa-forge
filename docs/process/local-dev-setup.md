@@ -1,8 +1,8 @@
 # Local Development Setup
 
-This repository is currently in Phase 1 Replay Report / 回放与战报 v0.1 state.
+This repository is currently in Phase 1 Replay Report / 回放与战报 plus SVG Replay Viewer / SVG 回放调试器 v0.1 state.
 
-The config pipeline, pure Python runtime model boundary, deterministic replay event stream, Basic Combat Rules / 基础战斗规则, Minimal Skill Triggers / 最小技能触发, and Replay Report / 回放与战报 exist so later tasks can add a C# subprocess host and an HTML replay debugger without mixing responsibilities.
+The config pipeline, pure Python runtime model boundary, deterministic replay event stream, Basic Combat Rules / 基础战斗规则, Minimal Skill Triggers / 最小技能触发, Replay Report / 回放与战报, and read-only SVG Replay Viewer / SVG 回放调试器 exist so later tasks can add a C# subprocess host without mixing responsibilities.
 
 ## Expected local tools
 
@@ -10,10 +10,11 @@ The config pipeline, pure Python runtime model boundary, deterministic replay ev
 - Recommended Python: 3.11 or newer.
 - Python 3.6 is no longer supported for the Python combat model layer because it uses standard-library dataclasses and modern typing expectations.
 - On Windows, prefer `py -3.11` for all simulator/model commands.
+- Node.js and npm for `web-viewer`.
 - .NET SDK for the future C# host.
-- A modern browser for the future HTML replay debugger.
+- A modern browser for the SVG Replay Viewer / SVG 回放调试器.
 
-No heavy dependencies are required for the current CSV-first config pipeline.
+No heavy dependencies are required for the current CSV-first config pipeline. The web viewer uses Vite + TypeScript and native SVG/DOM only.
 
 ## Repository layout
 
@@ -22,7 +23,7 @@ config/source/      Designer-editable source data and CSV sample data.
 config/generated/   Runtime JSON output; generated files are ignored.
 sim-python/         Pure Python combat simulator package and tests.
 host-csharp/        Future C# host that invokes Python as a subprocess.
-web-viewer/         Future local HTML replay debugger.
+web-viewer/         Local SVG replay debugger.
 tools/              Export, validation, inspection, and demo-run scripts.
 runs/               Generated battle run output; generated files are ignored.
 docs/schema/        JSON schema drafts for runtime config.
@@ -170,6 +171,38 @@ See `docs/process/deterministic-battle-skeleton-v0.1.md` for the runtime skeleto
 See `docs/process/basic-combat-rules-v0.1.md` for Basic Combat Rules / 基础战斗规则.
 See `docs/process/minimal-skill-triggers-v0.1.md` for Minimal Skill Triggers / 最小技能触发.
 See `docs/process/replay-report-v0.1.md` for Replay Report / 回放与战报.
+See `docs/process/svg-replay-viewer-v0.1.md` for SVG Replay Viewer / SVG 回放调试器.
+
+## Run SVG replay viewer
+
+Install the web-viewer dependencies once:
+
+```bash
+cd web-viewer
+npm install
+```
+
+Start the local viewer:
+
+```bash
+npm run dev
+```
+
+Build and typecheck the viewer:
+
+```bash
+npm run build
+npm run typecheck
+```
+
+The viewer reads files through browser file inputs. It does not call a backend and does not run combat logic.
+
+Manual loading targets after a demo run:
+
+```text
+runs/demo_001/replay.json
+runs/demo_001/battle_report.json
+```
 
 ## Battle skeleton module boundary
 
@@ -219,7 +252,7 @@ Confirm that only intended source files are untracked or changed. Generated file
 
 ## Command flow
 
-The current implemented local flow is:
+The current implemented local simulator flow is:
 
 ```bash
 python tools/export_xlsx_to_json.py --input config/source --output config/generated
@@ -235,4 +268,4 @@ The demo run writes:
 - `runs/demo_001/battle_report.json`
 - `runs/demo_001/run_summary.md`
 
-C# host and HTML replay viewer commands are still future work.
+C# host commands are still future work.
