@@ -32,6 +32,10 @@ config/generated/*
 node_modules/
 web-viewer/node_modules/
 web-viewer/dist/
+web-viewer/test-results/
+web-viewer/playwright-report/
+web-viewer/.playwright/
+web-viewer/blob-report/
 
 # Local editor / OS noise
 .DS_Store

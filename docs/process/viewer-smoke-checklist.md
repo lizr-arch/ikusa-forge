@@ -4,6 +4,8 @@ This checklist is a Manual Smoke / 手动冒烟 checklist for the SVG Replay Vie
 
 It intentionally does not use Playwright / 浏览器自动化 or add browser-test dependencies / 浏览器测试依赖.
 
+For automated Browser Smoke Test / 浏览器冒烟测试 coverage, see `docs/process/viewer-browser-smoke-v0.1.md`.
+
 ## Prerequisites / 前置条件
 
 Generate demo artifacts / 生成演示产物:
@@ -114,3 +116,5 @@ Viewer Smoke / 回放器冒烟:
 ## Known Manual Limit / 已知手动限制
 
 This checklist is not an Automated Browser Test / 自动浏览器测试. It is a repeatable manual smoke surface / 可重复手动冒烟面 for Phase 1 MVP Review / 第一阶段 MVP 复盘.
+
+The Playwright / 浏览器自动化测试工具 version of this smoke is intentionally minimal: it verifies File Input Loading / 文件输入加载 and the current Viewer Contract / 回放器契约, but it does not perform visual regression / 视觉回归 or pixel checks / 像素检查.
