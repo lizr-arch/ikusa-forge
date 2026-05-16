@@ -88,9 +88,12 @@ Frontend verification:
 cd web-viewer
 npm run typecheck
 npm run build
+npx playwright install chromium
+npm run test:e2e
 ```
 
 Review docs:
 
 - `docs/process/phase-1-mvp-review.md`
 - `docs/process/viewer-smoke-checklist.md`
+- `docs/process/viewer-browser-smoke-v0.1.md`

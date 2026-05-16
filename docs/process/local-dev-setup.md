@@ -195,6 +195,15 @@ npm run build
 npm run typecheck
 ```
 
+Run Browser Smoke Test / 浏览器冒烟测试:
+
+```bash
+npx playwright install chromium
+npm run test:e2e
+```
+
+The Browser Smoke Test / 浏览器冒烟测试 uses Playwright / 浏览器自动化测试工具 with Chromium / Chromium 浏览器. It checks replay/report File Input Loading / 文件输入加载, SVG Board / SVG 棋盘, Timeline / 时间线, Unit Detail Panel / 单位详情面板, Playback Controls / 播放控制, and Report Panel / 战报面板. It is not visual regression / 视觉回归, pixel testing / 像素测试, or a cross-browser matrix / 跨浏览器矩阵.
+
 The viewer reads files through browser file inputs. It does not call a backend and does not run combat logic.
 
 Manual loading targets after a demo run:
@@ -280,5 +289,6 @@ Phase 1 review docs:
 
 - `docs/process/phase-1-mvp-review.md`
 - `docs/process/viewer-smoke-checklist.md`
+- `docs/process/viewer-browser-smoke-v0.1.md`
 
 C# host commands are still future work.
