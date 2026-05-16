@@ -39,6 +39,24 @@ Current Python simulator status:
 - SVG Replay Viewer / SVG 回放调试器
 - HTML Demo Complete Experience / HTML 最小 Demo 完整体验闭环
 
+Phase 1 Demo Package / 第一阶段演示包 is available at:
+
+- `docs/process/phase-1-demo-package.md`
+- `docs/process/phase-1-summary.md`
+
+Quick start for a full demo run / 一次完整演示最简命令:
+
+```bash
+python tools/export_xlsx_to_json.py --input config/source --output config/generated
+python tools/validate_config.py --input config/generated
+python tools/run_demo_battle.py --battle demo_001 --seed 1001 --config config/generated --out runs/demo_001 --mode basic
+python tools/smoke_phase1_mvp.py --run runs/demo_001 --viewer web-viewer --battle demo_001 --seed 1001
+
+cd web-viewer
+npm install
+npm run dev
+```
+
 Still future work:
 
 - synergy application / 羁绊应用
