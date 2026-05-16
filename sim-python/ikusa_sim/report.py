@@ -23,6 +23,9 @@ def build_battle_report_from_events(
     total_damage = 0
     total_kills = 0
     total_skill_triggers = 0
+    total_modifiers = 0
+    formation_modifiers = 0
+    synergy_modifiers = 0
 
     for event in events:
         event_type = event.get("type")
@@ -68,6 +71,24 @@ def build_battle_report_from_events(
                 total_skill_triggers += 1
             continue
 
+        if event_type == "stat_modifier":
+            target = payload.get("target")
+            stat = payload.get("stat")
+            amount = _as_number(payload.get("amount"))
+            source_type = payload.get("source_type")
+            if target and stat:
+                unit = _ensure_unit(units, target)
+                stat_bonuses = unit["stat_bonuses"]
+                previous = _as_number(stat_bonuses.get(stat))
+                stat_bonuses[stat] = previous + amount
+                unit["modifiers_received"] = unit.get("modifiers_received", 0) + 1
+                total_modifiers += 1
+                if source_type == "formation":
+                    formation_modifiers += 1
+                elif source_type == "synergy":
+                    synergy_modifiers += 1
+            continue
+
         if event_type == "battle_end":
             battle_end = payload
             key_moments.append(_battle_end_key_moment(event, payload))
@@ -84,6 +105,9 @@ def build_battle_report_from_events(
             "total_damage": total_damage,
             "total_kills": total_kills,
             "total_skill_triggers": total_skill_triggers,
+            "total_modifiers": total_modifiers,
+            "formation_modifiers": formation_modifiers,
+            "synergy_modifiers": synergy_modifiers,
         },
         "units": units,
         "top_units": {
@@ -103,6 +127,8 @@ def _ensure_unit(units: Dict[str, Dict[str, Any]], unit_id: str) -> Dict[str, An
             "kills": 0,
             "deaths": 0,
             "skill_triggers": {},
+            "modifiers_received": 0,
+            "stat_bonuses": {},
         }
     return units[unit_id]
 
@@ -193,3 +219,13 @@ def _as_int(value: Any) -> int:
     if isinstance(value, float):
         return int(value)
     return 0
+
+
+def _as_number(value: Any) -> float:
+    if isinstance(value, bool):
+        return float(int(value))
+    if isinstance(value, int):
+        return float(value)
+    if isinstance(value, float):
+        return value
+    return 0.0

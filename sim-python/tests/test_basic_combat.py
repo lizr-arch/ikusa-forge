@@ -65,12 +65,11 @@ class BasicCombatTests(unittest.TestCase):
             [event.event_id for event in events],
         )
 
-    def test_basic_combat_does_not_emit_future_out_of_scope_events(self):
+    def test_basic_combat_emits_stat_modifier_events(self):
         _, events = self.run_demo()
         event_types = {event.type for event in events}
 
-        self.assertNotIn("synergy", event_types)
-        self.assertNotIn("formation_bonus", event_types)
+        self.assertIn("stat_modifier", event_types)
 
     def test_basic_combat_damage_events_include_reason(self):
         _, events = self.run_demo()

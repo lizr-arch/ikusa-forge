@@ -196,12 +196,11 @@ class SkillCombatTests(unittest.TestCase):
             [event.event_id for event in events],
         )
 
-    def test_skill_combat_does_not_emit_out_of_scope_rule_events(self):
+    def test_skill_combat_emits_stat_modifier_events(self):
         _, events = self.run_demo()
         event_types = {event.type for event in events}
 
-        self.assertNotIn("synergy", event_types)
-        self.assertNotIn("formation_bonus", event_types)
+        self.assertIn("stat_modifier", event_types)
 
     def test_battle_end_payload_keeps_top_level_result_contract(self):
         _, events = self.run_demo()

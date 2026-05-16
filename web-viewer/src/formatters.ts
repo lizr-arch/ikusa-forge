@@ -32,6 +32,8 @@ export const eventSummary = (event: ReplayEvent): string => {
       )} by ${text(event.payload.reason)}`;
     case "death":
       return `${text(event.payload.unit)} dies`;
+    case "stat_modifier":
+      return `${text(event.payload.source)} modifies ${text(event.payload.target)} ${text(event.payload.stat)} ${text(event.payload.amount)} (${text(event.payload.reason)})`;
     case "battle_end":
       return `winner ${text(event.payload.winner)} by ${text(event.payload.reason)}`;
     default:

@@ -23,16 +23,19 @@ class UnitState:
     skill_ids: List[str]
     hp: int
     alive: bool
+    formation_id: str = ""
     next_action_tick: int = 0
     action_interval_ticks: int = 0
     guard_value: int = 0
     skill_cooldowns: Dict[str, int] = field(default_factory=dict)
     atk: int = field(init=False)
     defense: int = field(init=False)
+    range: int = field(init=False)
 
     def __post_init__(self) -> None:
         self.atk = self.base_atk
         self.defense = self.base_defense
+        self.range = self.base_range
 
 
 @dataclass(frozen=True)

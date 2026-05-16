@@ -5,7 +5,7 @@ import argparse
 import json
 import sys
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Sequence
+from typing import Any, Dict, List, Optional, Sequence, Set, Tuple
 
 
 REQUIRED_EVENT_TYPES = [
@@ -16,6 +16,7 @@ REQUIRED_EVENT_TYPES = [
     "damage",
     "death",
     "battle_end",
+    "stat_modifier",
 ]
 
 REQUIRED_VIEWER_FILES = [
@@ -47,9 +48,11 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     report_path = args.run / "battle_report.json"
     replay = _load_object(replay_path, errors)
     report = _load_object(report_path, errors)
-    event_counts = _check_replay(replay, args.battle, args.seed, errors) if replay else {}
+    event_counts, modifier_source_types = (
+        _check_replay(replay, args.battle, args.seed, errors) if replay else ({}, set())
+    )
     if report:
-        _check_report(report, args.battle, args.seed, event_counts, errors)
+        _check_report(report, args.battle, args.seed, event_counts, modifier_source_types, errors)
     _check_viewer(args.viewer, errors)
 
     if errors:
@@ -69,6 +72,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     print(f"- viewer: {args.viewer}")
     print(f"- winner: {result.get('winner')} / {result.get('reason')} at tick {result.get('end_tick')}")
     print(f"- events: {_format_counts(event_counts)}")
+    print(f"- modifier source types: {sorted(modifier_source_types)}")
     print(
         "- report: "
         f"total_damage={summary.get('total_damage')}, "
@@ -98,7 +102,7 @@ def _check_replay(
     battle_id: str,
     seed: int,
     errors: List[str],
-) -> Dict[str, int]:
+) -> Tuple[Dict[str, int], Set[str]]:
     _expect(replay.get("schema_version") == "battle_replay.v0.1", "replay schema", errors)
     metadata = _as_dict(replay.get("metadata"))
     _expect(metadata.get("battle_id") == battle_id, "replay battle_id", errors)
@@ -108,13 +112,20 @@ def _check_replay(
     ticks = replay.get("ticks")
     if not isinstance(ticks, list) or not ticks:
         errors.append("replay ticks")
-        return {}
+        return {}, set()
 
     events = []  # type: List[Dict[str, Any]]
     for tick_group in ticks:
         group_events = _as_dict(tick_group).get("events")
         if isinstance(group_events, list):
             events.extend(event for event in group_events if isinstance(event, dict))
+    modifier_source_types: Set[str] = {
+        event["payload"]["source_type"]
+        for event in events
+        if event.get("type") == "stat_modifier"
+        and isinstance(event.get("payload"), dict)
+        and isinstance(event["payload"].get("source_type"), str)
+    }
     counts = _event_counts(events)
 
     for event_type in REQUIRED_EVENT_TYPES:
@@ -126,7 +137,7 @@ def _check_replay(
     result = _as_dict(metadata.get("result"))
     _expect(result.get("winner") in {"ally", "enemy", "draw"}, "replay winner", errors)
     _expect(isinstance(result.get("end_tick"), int), "replay end_tick", errors)
-    return counts
+    return counts, modifier_source_types
 
 
 def _check_report(
@@ -134,6 +145,7 @@ def _check_report(
     battle_id: str,
     seed: int,
     event_counts: Dict[str, int],
+    modifier_source_types: Set[str],
     errors: List[str],
 ) -> None:
     _expect(report.get("schema_version") == "battle_report.v0.1", "report schema", errors)
@@ -142,8 +154,18 @@ def _check_report(
     _expect(report.get("winner") in {"ally", "enemy", "draw"}, "report winner", errors)
 
     summary = _as_dict(report.get("summary"))
-    for field in ["total_damage", "total_kills", "total_skill_triggers"]:
+    for field in [
+        "total_damage",
+        "total_kills",
+        "total_skill_triggers",
+        "total_modifiers",
+    ]:
         _expect(_positive(summary.get(field)), f"report summary.{field}", errors)
+    _expect(summary.get("formation_modifiers", 0) > 0, "report summary.formation_modifiers", errors)
+    _expect(summary.get("synergy_modifiers", 0) > 0, "report summary.synergy_modifiers", errors)
+    _expect(summary.get("total_modifiers") == event_counts.get("stat_modifier"), "report modifier count", errors)
+    _expect("formation" in modifier_source_types, "replay has formation modifier source", errors)
+    _expect("synergy" in modifier_source_types, "replay has synergy modifier source", errors)
     if event_counts:
         _expect(summary.get("total_skill_triggers") == event_counts.get("skill_trigger"), "report trigger count", errors)
         _expect(summary.get("total_kills") == event_counts.get("death"), "report kill count", errors)
@@ -176,6 +198,10 @@ def _expect(condition: bool, label: str, errors: List[str]) -> None:
 
 def _positive(value: Any) -> bool:
     return isinstance(value, (int, float)) and not isinstance(value, bool) and value > 0
+
+
+def _non_negative(value: Any) -> bool:
+    return isinstance(value, (int, float)) and not isinstance(value, bool) and value >= 0
 
 
 def _as_dict(value: Any) -> Dict[str, Any]:

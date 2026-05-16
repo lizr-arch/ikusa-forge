@@ -26,6 +26,9 @@ export const renderReport = (
       ["Total Damage", formatNumber(report.summary?.total_damage)],
       ["Total Kills", formatNumber(report.summary?.total_kills)],
       ["Skill Triggers", formatNumber(report.summary?.total_skill_triggers)],
+      ["Total Modifiers", formatNumber(report.summary?.total_modifiers)],
+      ["Formation Modifiers", formatNumber(report.summary?.formation_modifiers)],
+      ["Synergy Modifiers", formatNumber(report.summary?.synergy_modifiers)],
     ]),
   );
 
@@ -99,7 +102,19 @@ const renderUnitTable = (
 
   const head = document.createElement("thead");
   const headRow = document.createElement("tr");
-  for (const title of ["Unit", "Done", "Taken", "Kills", "Deaths", "Skills"]) {
+  for (const title of [
+    "Unit",
+    "Done",
+    "Taken",
+    "Kills",
+    "Deaths",
+    "Skills",
+    "ATK Bonus",
+    "DEF Bonus",
+    "HP Bonus",
+    "ATKSPD Bonus",
+    "Modifiers",
+  ]) {
     const th = document.createElement("th");
     th.textContent = title;
     headRow.append(th);
@@ -119,12 +134,17 @@ const renderUnitTable = (
     appendCell(row, formatNumber(unitReport.kills));
     appendCell(row, formatNumber(unitReport.deaths));
     appendCell(row, formatNumber(totalSkillTriggers(unitReport)));
+    appendCell(row, formatNumber((unitReport.stat_bonuses ?? {}).atk));
+    appendCell(row, formatNumber((unitReport.stat_bonuses ?? {}).defense));
+    appendCell(row, formatNumber((unitReport.stat_bonuses ?? {}).hp));
+    appendCell(row, formatNumber((unitReport.stat_bonuses ?? {}).attack_interval_delta));
+    appendCell(row, formatNumber(unitReport.modifiers_received));
     body.append(row);
   }
   if (Object.keys(units).length === 0) {
     const row = document.createElement("tr");
     const cell = document.createElement("td");
-    cell.colSpan = 6;
+    cell.colSpan = 11;
     cell.textContent = "No unit rows";
     row.append(cell);
     body.append(row);

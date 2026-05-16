@@ -25,7 +25,7 @@ Success means:
 - fixed seed -> deterministic replay
 - replay can be inspected in HTML
 - battle report explains the main reason for win/loss
-- future goal: C# host can invoke Python and consume the same replay/report contract without changing combat logic
+- C# host contract compatibility is a future goal; it is not implemented yet
 
 Current Python simulator status:
 
@@ -38,11 +38,14 @@ Current Python simulator status:
 - `battle_report.json / 战报 JSON`
 - SVG Replay Viewer / SVG 回放调试器
 - HTML Demo Complete Experience / HTML 最小 Demo 完整体验闭环
+- Formation bonus / 阵型加成 与 Synergy application / 羁绊应用（当前 demo 已按 tick 0 一次性应用）
+- Report explainability / 报表可解释性（`stat_modifier` 计入回放与战报）
 
-Phase 1 Demo Package / 第一阶段演示包 is available at:
+Phase 1 Demo Package / 第一阶段演示包 / Phase 2 Tactical Depth notes are available at:
 
 - `docs/process/phase-1-demo-package.md`
 - `docs/process/phase-1-summary.md`
+- `docs/process/tactical-depth-pack-v0.1.md`
 
 Quick start for a full demo run / 一次完整演示最简命令:
 
@@ -59,8 +62,6 @@ npm run dev
 
 Still future work:
 
-- synergy application / 羁绊应用
-- formation bonus application / 阵型加成应用
 - C# host / C# 宿主: future goal is to consume the same replay/report contract without changing combat logic
 - Godot
 - xlsx adapter / xlsx 适配器

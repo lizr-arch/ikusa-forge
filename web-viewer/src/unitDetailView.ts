@@ -35,6 +35,12 @@ export const renderUnitDetail = (
       ["Range", formatNumber(unit.range)],
       ["Guard", formatNumber(unit.guardValue)],
       ["Skills", unit.skillIds.length > 0 ? unit.skillIds.join(", ") : "-"],
+      ["ATK Bonus", formatNumber(unit.statBonuses.get("atk"))],
+      ["DEF Bonus", formatNumber(unit.statBonuses.get("defense"))],
+      ["Range Bonus", formatNumber(unit.statBonuses.get("range"))],
+      ["HP Bonus", formatNumber(unit.statBonuses.get("hp"))],
+      ["ATKSPD Bonus", formatNumber(unit.statBonuses.get("attack_interval_delta"))],
+      ["Modifiers", formatNumber(unitReport?.modifiers_received)],
       ["Damage Done", formatNumber(unitReport?.damage_done)],
       ["Damage Taken", formatNumber(unitReport?.damage_taken)],
       ["Kills", formatNumber(unitReport?.kills)],
@@ -68,6 +74,15 @@ const renderLastMarkers = (unit: VisualUnit, state: VisualState): HTMLElement =>
     rows.push([
       "Skill",
       `T${state.lastSkill.tick} ${state.lastSkill.source} ${state.lastSkill.skill}`,
+    ]);
+  }
+  if (
+    state.lastModifier &&
+    [state.lastModifier.source, state.lastModifier.target].includes(unit.instanceId)
+  ) {
+    rows.push([
+      "Modifier",
+      `T${state.lastModifier.tick} ${state.lastModifier.source} ${state.lastModifier.stat} ${state.lastModifier.amount >= 0 ? "+" : ""}${state.lastModifier.amount} (${state.lastModifier.sourceType})`,
     ]);
   }
   if (

@@ -6,8 +6,9 @@ For a packaged demo flow, see:
 
 - `docs/process/phase-1-demo-package.md`
 - `docs/process/phase-1-summary.md`
+- `docs/process/tactical-depth-pack-v0.1.md`
 
-The config pipeline, pure Python runtime model boundary, deterministic replay event stream, Basic Combat Rules / 基础战斗规则, Minimal Skill Triggers / 最小技能触发, Replay Report / 回放与战报, and read-only SVG Replay Viewer / SVG 回放调试器 exist so later tasks can add a C# subprocess host without mixing responsibilities.
+The config pipeline, pure Python runtime model boundary, deterministic replay event stream, Basic Combat Rules / 基础战斗规则, Minimal Skill Triggers / 最小技能触发, Formation bonus / 阵型加成, Synergy application / 羁绊应用, Replay Report / 回放与战报, and read-only SVG Replay Viewer / SVG 回放调试器 exist so later tasks can add a C# subprocess host without mixing responsibilities.
 
 ## Expected local tools
 
@@ -170,7 +171,7 @@ python tools/run_demo_battle.py --battle demo_001 --seed 1001 --config config/ge
 
 Current limitations:
 
-- No synergy application / 羁绊应用, formation bonus application / 阵型加成应用, HTML viewer / Web 回放器, C# host / C# 宿主, Godot gameplay / Godot 玩法, xlsx adapter / xlsx 适配器, third-party dependencies / 第三方依赖, or general-purpose Skill DSL / 通用技能 DSL.
+No cross-browser Playwright matrix / 无跨浏览器 Playwright 矩阵, no visual regression / 无视觉回归, no C# host / C# 宿主 implementation, no Godot gameplay / 无 Godot 玩法, no xlsx adapter / xlsx 适配器, and no general-purpose Skill DSL / 无通用技能 DSL.
 
 See `docs/process/deterministic-battle-skeleton-v0.1.md` for the runtime skeleton boundary.
 See `docs/process/basic-combat-rules-v0.1.md` for Basic Combat Rules / 基础战斗规则.
@@ -246,7 +247,7 @@ python -m unittest discover -s sim-python/tests
 The tests export sample data into a temporary directory and validate both valid and invalid generated config.
 They also verify deterministic battle skeleton unit creation, event counts, result payloads, tick grouping, and same-seed event stability.
 They verify runtime side enum / 运行时阵营枚举 values `ally/enemy` and keep `battle.py / 兼容转发层` import compatibility covered.
-They verify Targeting AI / 目标选择 AI, Basic Attack / 普通攻击, Damage / 伤害, Death / 死亡, Minimal Skill Triggers / 最小技能触发, Skill Cooldown / 技能冷却, Replay Report / 回放与战报, Basic Combat / 基础战斗 determinism, and absence of out-of-scope rule events / 未产生范围外规则事件 such as synergy / 羁绊 or formation bonus / 阵型加成 events.
+They verify Targeting AI / 目标选择 AI, Basic Attack / 普通攻击, Damage / 伤害, Death / 死亡, Minimal Skill Triggers / 最小技能触发, Skill Cooldown / 技能冷却, Replay Report / 回放与战报, and Basic Combat / 基础战斗 determinism with current in-scope effects, including formation / 阵型 and synergy / 羁绊 modifiers.
 
 ## CSV-first note
 

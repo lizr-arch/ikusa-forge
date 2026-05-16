@@ -583,6 +583,12 @@ select {
   stroke-width: 3;
 }
 
+.unit-current-modifier-source .unit-rect,
+.unit-current-modifier-target .unit-rect {
+  stroke: #8a4fb6;
+  stroke-width: 3;
+}
+
 .unit-current-death .unit-rect {
   stroke: var(--danger);
   stroke-dasharray: 6 4;
@@ -657,8 +663,13 @@ select {
 .unit-event-ring-attack-target,
 .unit-event-ring-skill-target,
 .unit-event-ring-damage-target,
-.unit-event-ring-death {
+.unit-event-ring-death,
+.unit-event-ring-modifier-target {
   stroke: var(--danger);
+}
+
+.unit-event-ring-modifier-source {
+  stroke: #8a4fb6;
 }
 
 .unit-event-ring-battle-end {
@@ -699,6 +710,35 @@ select {
 .damage-reason-label {
   fill: #7b2b2b;
   font-size: 10px;
+  font-weight: 700;
+  text-anchor: middle;
+}
+
+.modifier-ring {
+  fill: none;
+  stroke: #8a4fb6;
+  stroke-width: 3;
+  pointer-events: none;
+}
+
+.modifier-ring-source {
+  stroke-dasharray: 9 5;
+}
+
+.modifier-ring-target {
+  stroke-dasharray: 4 4;
+}
+
+.modifier-label {
+  fill: #4d2a80;
+  font-size: 11px;
+  font-weight: 700;
+  text-anchor: middle;
+}
+
+.modifier-reason-label {
+  fill: #6232a3;
+  font-size: 9px;
   font-weight: 700;
   text-anchor: middle;
 }

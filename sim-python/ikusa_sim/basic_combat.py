@@ -2,8 +2,7 @@
 
 This module implements deterministic targeting, basic attack, minimal skill
 triggers, damage, death, and victory checks. It intentionally does not
-implement synergies, formation bonuses, battle reports, viewers, host
-integration, or Godot logic.
+implement viewers, host, or Godot logic.
 """
 
 from typing import List, Optional, Tuple
@@ -18,8 +17,10 @@ from ikusa_sim.combat_rules import (
     attack_interval_to_ticks,
     calculate_basic_damage,
 )
+from ikusa_sim.formation_bonus import apply_formation_bonuses
 from ikusa_sim.events import BattleEvent
 from ikusa_sim.models import ConfigBundle
+from ikusa_sim.synergy import apply_synergies
 from ikusa_sim.rng import BattleRng
 from ikusa_sim.runtime_models import BattleResult, BattleState, UnitState
 from ikusa_sim.skills import (
@@ -46,6 +47,8 @@ def run_basic_combat(
     encounter = config.encounters[battle_id]
     events = [_battle_start_event(state)]
     events.extend(spawn_units_from_encounter(config, encounter, state))
+    apply_formation_bonuses(state, events)
+    apply_synergies(state, config, events)
     try_use_on_battle_start_skills(state, config, events)
     _initialize_action_schedule(state)
 
