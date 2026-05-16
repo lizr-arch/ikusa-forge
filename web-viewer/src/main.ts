@@ -301,6 +301,10 @@ const unitHighlightsForEvent = (
     case "death":
       addHighlight(highlights, payload.unit, "death");
       break;
+    case "stat_modifier":
+      addHighlight(highlights, payload.source, "modifier-source");
+      addHighlight(highlights, payload.target, "modifier-target");
+      break;
     case "battle_end":
       for (const unit of visualState.units.values()) {
         if (!unit.alive) {

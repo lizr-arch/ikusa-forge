@@ -17,6 +17,7 @@ export interface VisualUnit {
   range: number;
   guardValue: number;
   skillIds: string[];
+  statBonuses: Map<string, number>;
 }
 
 export interface AttackAnnotation {
@@ -29,6 +30,16 @@ export interface DamageAnnotation {
   tick: number;
   source: string | null;
   target: string;
+  amount: number;
+  reason: string;
+}
+
+export interface StatModifierAnnotation {
+  tick: number;
+  source: string;
+  sourceType: string;
+  target: string;
+  stat: string;
   amount: number;
   reason: string;
 }
@@ -46,6 +57,7 @@ export interface VisualState {
   units: Map<string, VisualUnit>;
   lastAttack: AttackAnnotation | null;
   lastDamage: DamageAnnotation | null;
+  lastModifier: StatModifierAnnotation | null;
   lastSkill: SkillAnnotation | null;
   battleResult: BattleResult | null;
   appliedEventId: string | null;
@@ -63,6 +75,7 @@ export const createEmptyVisualState = (): VisualState => ({
   units: new Map<string, VisualUnit>(),
   lastAttack: null,
   lastDamage: null,
+  lastModifier: null,
   lastSkill: null,
   battleResult: null,
   appliedEventId: null,
@@ -163,6 +176,9 @@ export const applyEvent = (
     case "damage":
       applyDamage(state, event);
       return;
+    case "stat_modifier":
+      applyStatModifier(state, event);
+      return;
     case "death":
       applyDeath(state, event);
       return;
@@ -221,6 +237,7 @@ const applyUnitSpawn = (state: VisualState, event: ReplayEvent): void => {
     range: readNumber(snapshot.base_range, 0),
     guardValue: readNumber(snapshot.guard_value, 0),
     skillIds: readStringArray(snapshot.skill_ids),
+    statBonuses: new Map<string, number>(),
   });
 };
 
@@ -238,6 +255,36 @@ const applyDamage = (state: VisualState, event: ReplayEvent): void => {
     tick: event.tick,
     source,
     target,
+    amount,
+    reason: readString(event.payload.reason),
+  };
+};
+
+const applyStatModifier = (state: VisualState, event: ReplayEvent): void => {
+  const source = readString(event.payload.source);
+  const target = readString(event.payload.target);
+  const sourceType = readString(event.payload.source_type);
+  const stat = readString(event.payload.stat);
+  const amount = readNumber(event.payload.amount, 0);
+  const unit = state.units.get(target);
+  if (unit) {
+    if (stat === "atk") {
+      unit.atk += amount;
+    } else if (stat === "defense") {
+      unit.defense += amount;
+    } else if (stat === "range") {
+      unit.range += amount;
+    }
+    const next = new Map(unit.statBonuses);
+    next.set(stat, (next.get(stat) ?? 0) + amount);
+    unit.statBonuses = next;
+  }
+  state.lastModifier = {
+    tick: event.tick,
+    source,
+    sourceType,
+    target,
+    stat,
     amount,
     reason: readString(event.payload.reason),
   };

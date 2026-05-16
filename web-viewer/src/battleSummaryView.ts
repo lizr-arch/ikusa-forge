@@ -25,6 +25,9 @@ export const renderBattleSummary = (
     ["Total Damage", formatNumber(summary?.total_damage)],
     ["Total Kills", formatNumber(summary?.total_kills)],
     ["Skill Triggers", formatNumber(summary?.total_skill_triggers)],
+    ["Total Modifiers", formatNumber(summary?.total_modifiers)],
+    ["Formation Modifiers", formatNumber(summary?.formation_modifiers)],
+    ["Synergy Modifiers", formatNumber(summary?.synergy_modifiers)],
   ];
 
   container.append(statGrid(rows));

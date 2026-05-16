@@ -67,6 +67,15 @@ const eventDetailRows = (
         ["Amount", formatNumber(readNumber(event.payload.amount))],
         ["Reason", formatValue(readValue(event.payload.reason))],
       ];
+    case "stat_modifier":
+      return [
+        ["Source", formatValue(readValue(event.payload.source))],
+        ["Source Type", formatValue(readValue(event.payload.source_type))],
+        ["Target", formatValue(readValue(event.payload.target))],
+        ["Stat", formatValue(readValue(event.payload.stat))],
+        ["Amount", formatNumber(readNumber(event.payload.amount))],
+        ["Reason", formatValue(readValue(event.payload.reason))],
+      ];
     case "death":
       return [["Unit", formatValue(readValue(event.payload.unit))]];
     case "battle_end":

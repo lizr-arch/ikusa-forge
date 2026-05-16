@@ -7,6 +7,8 @@ export type EventUnitHighlight =
   | "skill-target"
   | "damage-source"
   | "damage-target"
+  | "modifier-source"
+  | "modifier-target"
   | "death"
   | "battle-end";
 
@@ -135,6 +137,54 @@ const drawAnnotations = (
         class: "skill-label",
       });
       svg.append(label);
+    }
+  }
+
+  if (state.lastModifier) {
+    const source = centers.get(state.lastModifier.source);
+    const target = centers.get(state.lastModifier.target);
+    if (source) {
+      const sourceRing = svgElement("rect");
+      setAttrs(sourceRing, {
+        x: source.x - 42,
+        y: source.y - 46,
+        width: 84,
+        height: 92,
+        rx: 10,
+        class: "modifier-ring modifier-ring-source",
+      });
+      svg.append(sourceRing);
+    }
+
+    if (target) {
+      const targetRing = svgElement("circle");
+      setAttrs(targetRing, {
+        cx: target.x,
+        cy: target.y,
+        r: state.lastModifier.stat === "atk" ? 42 : 36,
+        class: "modifier-ring modifier-ring-target",
+      });
+      svg.append(targetRing);
+
+      const summary = svgElement("text");
+      summary.textContent = `${state.lastModifier.stat}${state.lastModifier.amount >= 0 ? "+" : ""}${state.lastModifier.amount}`;
+      setAttrs(summary, {
+        x: target.x,
+        y: target.y + 4,
+        class: "modifier-label",
+      });
+      svg.append(summary);
+    }
+
+    if (state.lastModifier.reason && target) {
+      const reason = svgElement("text");
+      reason.textContent = shorten(state.lastModifier.reason, 17);
+      setAttrs(reason, {
+        x: target.x,
+        y: target.y + 18,
+        class: "modifier-reason-label",
+      });
+      svg.append(reason);
     }
   }
 

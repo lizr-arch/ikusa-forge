@@ -130,7 +130,7 @@ def _build_run_summary(state, events, mode, battle_report) -> str:
 def _mode_note(mode) -> str:
     if mode == "skeleton":
         return "No combat rules applied: no attack, damage, death, targeting AI, skill resolver, synergy application, or formation bonus application runs in skeleton mode. An event-derived battle report is still written with zero combat totals."
-    return "Basic combat rules applied: targeting AI, basic attack, minimal skill triggers, damage, death, and victory check. An event-derived battle report is written. Synergies, formation bonuses, viewer, C# host, and Godot are not implemented."
+    return "Basic combat rules applied: targeting AI, basic attack, minimal skill triggers, formation bonuses, synergies, damage, death, and victory check. An event-derived battle report is written. Cross-language viewer, C# host, and Godot remain for future phases."
 
 
 def _format_top_units(unit_ids) -> str:

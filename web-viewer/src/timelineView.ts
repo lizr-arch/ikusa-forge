@@ -7,6 +7,7 @@ export type TimelineFilter =
   | "skill_trigger"
   | "damage"
   | "death"
+  | "stat_modifier"
   | "battle_end";
 
 export const TIMELINE_FILTERS: TimelineFilter[] = [
@@ -15,6 +16,7 @@ export const TIMELINE_FILTERS: TimelineFilter[] = [
   "skill_trigger",
   "damage",
   "death",
+  "stat_modifier",
   "battle_end",
 ];
 

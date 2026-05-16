@@ -5,7 +5,8 @@ export type KnownReplayEventType =
   | "skill_trigger"
   | "damage"
   | "death"
-  | "battle_end";
+  | "battle_end"
+  | "stat_modifier";
 
 export type UnitSide = "ally" | "enemy" | string;
 
@@ -114,12 +115,17 @@ export interface UnitReport {
   kills: number;
   deaths: number;
   skill_triggers: Record<string, number>;
+  modifiers_received?: number;
+  stat_bonuses?: Record<string, number>;
 }
 
 export interface ReportSummary {
   total_damage?: number;
   total_kills?: number;
   total_skill_triggers?: number;
+  total_modifiers?: number;
+  formation_modifiers?: number;
+  synergy_modifiers?: number;
 }
 
 export interface ReportTopUnits {

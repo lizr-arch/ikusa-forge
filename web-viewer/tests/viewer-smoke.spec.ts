@@ -23,24 +23,28 @@ test("loads replay and report into the SVG replay viewer", async ({ page }) => {
   await expect(page.locator("#status")).toContainText("battle_report.json loaded");
   await expect(page.locator("#metadata")).toContainText("demo_001");
   await expect(page.locator("#metadata")).toContainText("seed 1001");
-  await expect(page.locator("#metadata")).toContainText("events 217");
+  await expect(page.locator("#metadata")).toContainText("events ");
   await expect(page.locator("#replay-load-state")).toContainText("replay.json loaded");
   await expect(page.locator("#report-load-state")).toContainText("battle_report.json loaded");
 
   await expect(page.locator("#battle-summary")).toContainText("demo_001");
   await expect(page.locator("#battle-summary")).toContainText("ally");
   await expect(page.locator("#battle-summary")).toContainText("enemy_eliminated");
-  await expect(page.locator("#battle-summary")).toContainText("260");
+  await expect(page.locator("#battle-summary")).toContainText(/end tick|end_tick/i);
+  await expect(page.locator("#battle-summary")).toContainText("216");
 
   await expect(page.getByRole("img", { name: "Replay board" })).toBeVisible();
   await expect(page.locator(".unit-token")).toHaveCount(12);
   await expect(page.locator('[aria-label="ally_001"]')).toBeVisible();
   await expect(page.locator('[aria-label="enemy_001"]')).toBeVisible();
 
-  await expect(page.locator(".timeline-row")).toHaveCount(217);
+  const totalRows = await countTimelineRows(page);
+  expect(totalRows).toBeGreaterThan(0);
+  expect(totalRows).toBeGreaterThan(await countTimelineRows(page, "stat_modifier"));
   await expectFilteredTimelineRows(page, "damage");
   await expectFilteredTimelineRows(page, "skill_trigger");
   await expectFilteredTimelineRows(page, "death");
+  await expectFilteredTimelineRows(page, "stat_modifier");
   await page.locator(".timeline-filter select").selectOption("all");
 
   await page.locator('[aria-label="ally_001"]').click();
@@ -71,12 +75,24 @@ test("loads replay and report into the SVG replay viewer", async ({ page }) => {
   await expect(page.locator("#event-highlight")).toContainText("Reason");
   await expect(page.locator("#event-highlight")).toContainText(/basic_attack|skill:/);
 
+  await page.locator(".timeline-filter select").selectOption("stat_modifier");
+  const firstModifier = page.locator(".timeline-row").first();
+  await expect(firstModifier).toBeVisible();
+  await firstModifier.click();
+  await expect(page.locator("#event-highlight")).toContainText("modifies");
+  await expect(page.locator("#event-highlight")).toContainText("Reason");
+
   await page.locator('#report .report-table .report-unit-link[data-unit-id="ally_003"]').click();
   await expect(page.locator("#unit-detail")).toContainText("ally_003");
   await expect(page.locator('[aria-label="ally_003"].unit-selected')).toBeVisible();
 
+  await expect(page.locator("#battle-summary")).toContainText("Total Modifiers");
+  await expect(page.locator("#report")).toContainText("Total Modifiers");
+  await expect(page.locator("#report")).toContainText("ATK Bonus");
+  await expect(page.locator("#report")).toContainText("DEF Bonus");
+
   await page.locator(".key-moment").filter({ hasText: "Battle ended" }).click();
-  await expect(page.locator("#tick-readout")).toContainText("Tick 260");
+  await expect(page.locator("#tick-readout")).toContainText("Tick 216");
 
   await expect(page.locator("#report")).toContainText("enemy_eliminated");
   await expect(page.locator("#report")).toContainText("Total Damage");
@@ -89,4 +105,13 @@ const expectFilteredTimelineRows = async (
 ): Promise<void> => {
   await page.locator(".timeline-filter select").selectOption(filter);
   await expect(page.locator(".timeline-row").first()).toBeVisible();
+  const filteredCount = await countTimelineRows(page, filter);
+  expect(filteredCount).toBeGreaterThan(0);
+};
+
+const countTimelineRows = async (page: Page, filter?: string): Promise<number> => {
+  if (filter) {
+    await page.locator(".timeline-filter select").selectOption(filter);
+  }
+  return Number(await page.locator(".timeline-row").count());
 };

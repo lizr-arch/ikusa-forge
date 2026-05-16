@@ -16,6 +16,7 @@ REQUIRED_EVENT_TYPES = [
     "damage",
     "death",
     "battle_end",
+    "stat_modifier",
 ]
 
 REQUIRED_VIEWER_FILES = [
@@ -142,8 +143,16 @@ def _check_report(
     _expect(report.get("winner") in {"ally", "enemy", "draw"}, "report winner", errors)
 
     summary = _as_dict(report.get("summary"))
-    for field in ["total_damage", "total_kills", "total_skill_triggers"]:
+    for field in [
+        "total_damage",
+        "total_kills",
+        "total_skill_triggers",
+        "total_modifiers",
+    ]:
         _expect(_positive(summary.get(field)), f"report summary.{field}", errors)
+    _expect(_non_negative(summary.get("formation_modifiers")), "report summary.formation_modifiers", errors)
+    _expect(_non_negative(summary.get("synergy_modifiers")), "report summary.synergy_modifiers", errors)
+    _expect(summary.get("total_modifiers") == event_counts.get("stat_modifier"), "report modifier count", errors)
     if event_counts:
         _expect(summary.get("total_skill_triggers") == event_counts.get("skill_trigger"), "report trigger count", errors)
         _expect(summary.get("total_kills") == event_counts.get("death"), "report kill count", errors)
@@ -176,6 +185,10 @@ def _expect(condition: bool, label: str, errors: List[str]) -> None:
 
 def _positive(value: Any) -> bool:
     return isinstance(value, (int, float)) and not isinstance(value, bool) and value > 0
+
+
+def _non_negative(value: Any) -> bool:
+    return isinstance(value, (int, float)) and not isinstance(value, bool) and value >= 0
 
 
 def _as_dict(value: Any) -> Dict[str, Any]:

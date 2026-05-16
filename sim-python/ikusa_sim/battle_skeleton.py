@@ -164,6 +164,7 @@ def _spawn_side_units(
             instance_id=f"{instance_prefix}_{index:03d}",
             side=side,
             role=get_slot_role(formation, encounter_unit.x, encounter_unit.y),
+            formation_id=formation_id,
         )
         state.units.append(unit_state)
         events.append(
@@ -188,6 +189,7 @@ def _create_unit_state(
     instance_id: str,
     side: str,
     role: str,
+    formation_id: str,
 ) -> UnitState:
     return UnitState(
         instance_id=instance_id,
@@ -205,6 +207,7 @@ def _create_unit_state(
         base_attack_interval=unit_def.attack_interval,
         weapon_slots=list(unit_def.weapon_slots),
         skill_ids=list(unit_def.skill_ids),
+        formation_id=formation_id,
         hp=unit_def.hp,
         alive=True,
     )
