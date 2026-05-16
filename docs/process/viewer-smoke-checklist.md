@@ -6,6 +6,8 @@ It intentionally does not use Playwright / 浏览器自动化 or add browser-tes
 
 For automated Browser Smoke Test / 浏览器冒烟测试 coverage, see `docs/process/viewer-browser-smoke-v0.1.md`.
 
+For HTML Demo Complete Experience / HTML 最小 Demo 完整体验闭环 behavior, see `docs/process/html-demo-complete-experience-v0.1.md`.
+
 ## Prerequisites / 前置条件
 
 Generate demo artifacts / 生成演示产物:
@@ -42,6 +44,8 @@ Expected / 预期:
 
 - status line / 状态行 shows both files loaded.
 - metadata / 元数据显示 `demo_001`, seed `1001`, and event count.
+- Demo Load Guidance / Demo 加载引导 shows the generation commands and expected files.
+- Battle Summary / 战斗摘要 shows winner / 胜者, reason / 原因, end_tick / 结束 tick, total_damage / 总伤害, total_kills / 总击杀, and total_skill_triggers / 总技能触发次数.
 - no backend request / 无后端请求 is needed.
 
 ## Board Checks / 棋盘检查
@@ -67,6 +71,17 @@ Confirm / 确认:
   - death / 死亡
   - battle_end / 战斗结束
 - Clicking an event / 点击事件 seeks to that tick / 跳转到该 tick.
+- The selected event row / 选中事件行 stays visibly highlighted and scrolls into view.
+
+## Event Highlight Checks / 事件高亮检查
+
+Confirm / 确认:
+
+- Event Highlight / 事件高亮 shows the current event id / 当前事件 ID, type / 类型, tick / tick, and summary / 摘要.
+- `skill_trigger / 技能触发` highlights source / 来源 and targets / 目标 on the SVG Board / SVG 棋盘.
+- `damage / 伤害` highlights the target / 目标 and shows reason / 伤害原因.
+- `death / 死亡` makes the dead unit / 死亡单位 visually stronger.
+- `battle_end / 战斗结束` shows the final winner / 胜者 and reason / 原因.
 
 ## Playback Checks / 播放检查
 
@@ -78,6 +93,9 @@ Confirm / 确认:
 - Previous Event / 上一个事件 and Next Event / 下一个事件 move between event positions.
 - Tick slider / tick 滑条 seeks to the selected tick.
 - Speed select / 速度选择 changes playback tick rate.
+- Current event id / 当前事件 ID is visible.
+- Current tick / 当前 tick and max tick / 最大 tick are visible.
+- Play / 播放 stops at battle_end / 战斗结束. Pressing Play from or past the end tick restarts from tick 0.
 
 ## Report Checks / 战报检查
 
@@ -88,6 +106,8 @@ Confirm / 确认:
 - Top Units / 最高单位 lists damage_done / 输出伤害, damage_taken / 承受伤害, and skill_triggers / 技能触发次数.
 - Unit Reports / 单位战报 table shows per-unit stats / 单位统计.
 - Key Moments / 关键时刻 includes death / 死亡 and battle_end / 战斗结束 entries.
+- Clicking a unit id / 点击单位 ID in Unit Reports / 单位战报 or Top Units / 最高单位 selects that board unit / 棋盘单位.
+- Clicking a Key Moment / 关键时刻 seeks to its tick / 跳转到对应 tick.
 
 ## Unit Detail Checks / 单位详情检查
 
@@ -109,6 +129,9 @@ Viewer Smoke / 回放器冒烟:
 - timeline filters work: yes/no
 - playback controls work: yes/no
 - report panel matches battle_report.json: yes/no
+- report-to-board link works: yes/no
+- key moments seek tick: yes/no
+- event highlight shows current event: yes/no
 - unit detail updates on click: yes/no
 - no backend required: yes/no
 ```

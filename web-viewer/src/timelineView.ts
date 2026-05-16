@@ -69,10 +69,16 @@ export const renderTimeline = (container: HTMLElement, options: TimelineRenderOp
     list.append(empty);
   }
 
+  let selectedRow: HTMLButtonElement | null = null;
   for (const entry of events) {
     const row = document.createElement("button");
     row.type = "button";
     row.className = entry.globalIndex === options.selectedEventIndex ? "timeline-row selected" : "timeline-row";
+    row.dataset.eventIndex = String(entry.globalIndex);
+    if (entry.globalIndex === options.selectedEventIndex) {
+      row.setAttribute("aria-current", "true");
+      selectedRow = row;
+    }
     row.addEventListener("click", () => options.onSelectEvent(entry.globalIndex));
 
     const tick = document.createElement("span");
@@ -92,6 +98,7 @@ export const renderTimeline = (container: HTMLElement, options: TimelineRenderOp
   }
 
   container.append(list);
+  selectedRow?.scrollIntoView({ block: "nearest" });
 };
 
 const filteredEvents = (options: TimelineRenderOptions): FlatReplayEvent[] => {

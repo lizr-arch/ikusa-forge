@@ -1,8 +1,19 @@
 import type { VisualState, VisualUnit } from "./replayState";
 
+export type EventUnitHighlight =
+  | "attack-source"
+  | "attack-target"
+  | "skill-source"
+  | "skill-target"
+  | "damage-source"
+  | "damage-target"
+  | "death"
+  | "battle-end";
+
 interface BoardRenderOptions {
   state: VisualState;
   selectedUnitId: string | null;
+  unitHighlights: Map<string, EventUnitHighlight>;
   onSelectUnit: (unitId: string) => void;
 }
 
@@ -138,6 +149,17 @@ const drawAnnotations = (
         class: "damage-label",
       });
       svg.append(text);
+
+      if (state.lastDamage.reason) {
+        const reason = svgElement("text");
+        reason.textContent = shorten(state.lastDamage.reason, 18);
+        setAttrs(reason, {
+          x: target.x + 26,
+          y: target.y - 3,
+          class: "damage-reason-label",
+        });
+        svg.append(reason);
+      }
     }
   }
 };
@@ -171,6 +193,7 @@ const drawUnit = (
     "unit-token",
     `unit-${unit.side}`,
     unit.alive ? "unit-alive" : "unit-dead",
+    eventHighlightClass(options.unitHighlights.get(unit.instanceId)),
     selected ? "unit-selected" : "",
   ]
     .filter(Boolean)
@@ -242,6 +265,20 @@ const drawUnit = (
     group.append(slash);
   }
 
+  const highlight = options.unitHighlights.get(unit.instanceId);
+  if (highlight) {
+    const ring = svgElement("rect");
+    setAttrs(ring, {
+      x: x - 5,
+      y: y - 5,
+      width: 110,
+      height: 66,
+      rx: 11,
+      class: `unit-event-ring unit-event-ring-${highlight}`,
+    });
+    group.append(ring);
+  }
+
   svg.append(group);
 };
 
@@ -279,6 +316,10 @@ const shorten = (value: string, length: number): string => {
     return value;
   }
   return `${value.slice(0, Math.max(0, length - 1))}.`;
+};
+
+const eventHighlightClass = (highlight: EventUnitHighlight | undefined): string => {
+  return highlight ? `unit-current-event unit-current-${highlight}` : "";
 };
 
 const svgElement = <K extends keyof SVGElementTagNameMap>(tag: K): SVGElementTagNameMap[K] => {

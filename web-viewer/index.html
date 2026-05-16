@@ -28,6 +28,22 @@
         <aside class="side-panel" aria-label="Replay tools">
           <section class="panel-block" aria-labelledby="loader-heading">
             <h2 id="loader-heading">Loader</h2>
+            <div id="demo-guidance" class="demo-guidance" aria-label="Demo Load Guidance">
+              <h3>Demo Load Guidance</h3>
+              <p>Generate demo files first:</p>
+              <pre><code>python tools/export_xlsx_to_json.py --input config/source --output config/generated
+python tools/validate_config.py --input config/generated
+python tools/run_demo_battle.py --battle demo_001 --seed 1001 --config config/generated --out runs/demo_001 --mode basic</code></pre>
+              <p>Demo files expected:</p>
+              <ul>
+                <li>runs/demo_001/replay.json</li>
+                <li>runs/demo_001/battle_report.json</li>
+              </ul>
+              <div class="load-state-grid" aria-label="Demo file load state">
+                <span>Replay <strong id="replay-load-state">not loaded</strong></span>
+                <span>Report <strong id="report-load-state">not loaded</strong></span>
+              </div>
+            </div>
             <label class="file-label">
               <span>replay.json</span>
               <input id="replay-file" type="file" accept="application/json,.json" />
@@ -39,8 +55,19 @@
             <button id="load-files" type="button" class="primary-button">Load files</button>
           </section>
 
+          <section class="panel-block" aria-labelledby="summary-heading">
+            <h2 id="summary-heading">Battle Summary</h2>
+            <div id="battle-summary"></div>
+          </section>
+
+          <section class="panel-block" aria-labelledby="event-heading">
+            <h2 id="event-heading">Event Highlight</h2>
+            <div id="event-highlight"></div>
+          </section>
+
           <section class="panel-block" aria-labelledby="controls-heading">
             <h2 id="controls-heading">Playback</h2>
+            <div id="event-readout" class="event-readout">Event -</div>
             <div class="control-row">
               <button id="play-pause" type="button">Play</button>
               <button id="step-tick" type="button">Step Tick</button>

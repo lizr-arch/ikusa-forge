@@ -1,7 +1,17 @@
 import { formatNumber, formatValue, totalSkillTriggers } from "./formatters";
-import type { BattleReport, UnitReport } from "./replayTypes";
+import type { BattleReport, KeyMoment, UnitReport } from "./replayTypes";
 
-export const renderReport = (container: HTMLElement, report: BattleReport | null): void => {
+interface ReportRenderOptions {
+  selectedUnitId: string | null;
+  onSelectUnit: (unitId: string) => void;
+  onSeekTick: (tick: number) => void;
+}
+
+export const renderReport = (
+  container: HTMLElement,
+  report: BattleReport | null,
+  options: ReportRenderOptions,
+): void => {
   container.replaceChildren();
   if (!report) {
     container.append(empty("No battle report loaded"));
@@ -19,20 +29,35 @@ export const renderReport = (container: HTMLElement, report: BattleReport | null
     ]),
   );
 
-  container.append(section("Top Units", renderTopUnits(report)));
-  container.append(section("Unit Reports", renderUnitTable(report.units ?? {})));
-  container.append(section("Key Moments", renderKeyMoments(report)));
+  container.append(section("Top Units", renderTopUnits(report, options)));
+  container.append(section("Unit Reports", renderUnitTable(report.units ?? {}, options)));
+  container.append(section("Key Moments", renderKeyMoments(report, options)));
 };
 
-const renderTopUnits = (report: BattleReport): HTMLElement => {
+const renderTopUnits = (report: BattleReport, options: ReportRenderOptions): HTMLElement => {
   const list = document.createElement("div");
   list.className = "top-units";
   const units = report.units ?? {};
   const topUnits = report.top_units ?? {};
   list.append(
-    topUnitRow("Damage Done", topUnits.damage_done ?? [], (unit) => units[unit]?.damage_done ?? 0),
-    topUnitRow("Damage Taken", topUnits.damage_taken ?? [], (unit) => units[unit]?.damage_taken ?? 0),
-    topUnitRow("Skill Triggers", topUnits.skill_triggers ?? [], (unit) => totalSkillTriggers(units[unit])),
+    topUnitRow(
+      "Damage Done",
+      topUnits.damage_done ?? [],
+      (unit) => units[unit]?.damage_done ?? 0,
+      options,
+    ),
+    topUnitRow(
+      "Damage Taken",
+      topUnits.damage_taken ?? [],
+      (unit) => units[unit]?.damage_taken ?? 0,
+      options,
+    ),
+    topUnitRow(
+      "Skill Triggers",
+      topUnits.skill_triggers ?? [],
+      (unit) => totalSkillTriggers(units[unit]),
+      options,
+    ),
   );
   return list;
 };
@@ -41,6 +66,7 @@ const topUnitRow = (
   label: string,
   unitIds: string[],
   valueForUnit: (unitId: string) => number,
+  options: ReportRenderOptions,
 ): HTMLElement => {
   const row = document.createElement("div");
   row.className = "top-unit-row";
@@ -49,15 +75,23 @@ const topUnitRow = (
   title.textContent = label;
   const values = document.createElement("div");
   values.className = "top-unit-values";
-  values.textContent =
-    unitIds.length > 0
-      ? unitIds.map((unitId) => `${unitId} (${valueForUnit(unitId)})`).join(", ")
-      : "-";
+  if (unitIds.length === 0) {
+    values.textContent = "-";
+  }
+  for (const [index, unitId] of unitIds.entries()) {
+    if (index > 0) {
+      values.append(document.createTextNode(", "));
+    }
+    values.append(unitButton(unitId, `${unitId} (${valueForUnit(unitId)})`, options));
+  }
   row.append(title, values);
   return row;
 };
 
-const renderUnitTable = (units: Record<string, UnitReport>): HTMLElement => {
+const renderUnitTable = (
+  units: Record<string, UnitReport>,
+  options: ReportRenderOptions,
+): HTMLElement => {
   const wrapper = document.createElement("div");
   wrapper.className = "table-scroll";
   const table = document.createElement("table");
@@ -78,7 +112,8 @@ const renderUnitTable = (units: Record<string, UnitReport>): HTMLElement => {
     left.localeCompare(right),
   )) {
     const row = document.createElement("tr");
-    appendCell(row, unitId);
+    row.className = unitId === options.selectedUnitId ? "report-unit-row selected" : "report-unit-row";
+    appendCell(row, unitButton(unitId, unitId, options));
     appendCell(row, formatNumber(unitReport.damage_done));
     appendCell(row, formatNumber(unitReport.damage_taken));
     appendCell(row, formatNumber(unitReport.kills));
@@ -99,7 +134,7 @@ const renderUnitTable = (units: Record<string, UnitReport>): HTMLElement => {
   return wrapper;
 };
 
-const renderKeyMoments = (report: BattleReport): HTMLElement => {
+const renderKeyMoments = (report: BattleReport, options: ReportRenderOptions): HTMLElement => {
   const list = document.createElement("div");
   list.className = "key-moment-list";
   const keyMoments = report.key_moments ?? [];
@@ -108,8 +143,14 @@ const renderKeyMoments = (report: BattleReport): HTMLElement => {
     return list;
   }
   for (const moment of keyMoments) {
-    const item = document.createElement("div");
+    const item = document.createElement("button");
+    item.type = "button";
     item.className = "key-moment";
+    const seekTick = keyMomentTick(moment);
+    item.disabled = seekTick === null;
+    if (seekTick !== null) {
+      item.addEventListener("click", () => options.onSeekTick(seekTick));
+    }
     const tick = document.createElement("span");
     tick.className = "key-moment-tick";
     tick.textContent = `T${formatNumber(moment.tick)}`;
@@ -146,10 +187,33 @@ const section = (title: string, content: HTMLElement): HTMLElement => {
   return block;
 };
 
-const appendCell = (row: HTMLTableRowElement, value: string): void => {
+const appendCell = (row: HTMLTableRowElement, value: string | HTMLElement): void => {
   const cell = document.createElement("td");
-  cell.textContent = value;
+  if (typeof value === "string") {
+    cell.textContent = value;
+  } else {
+    cell.append(value);
+  }
   row.append(cell);
+};
+
+const unitButton = (
+  unitId: string,
+  label: string,
+  options: ReportRenderOptions,
+): HTMLButtonElement => {
+  const button = document.createElement("button");
+  button.type = "button";
+  button.className = unitId === options.selectedUnitId ? "report-unit-link selected" : "report-unit-link";
+  button.dataset.unitId = unitId;
+  button.textContent = label;
+  button.addEventListener("click", () => options.onSelectUnit(unitId));
+  return button;
+};
+
+const keyMomentTick = (moment: KeyMoment): number | null => {
+  const preferred = moment.type === "battle_end" ? moment.end_tick ?? moment.tick : moment.tick;
+  return typeof preferred === "number" && Number.isFinite(preferred) ? preferred : null;
 };
 
 const empty = (message: string): HTMLElement => {

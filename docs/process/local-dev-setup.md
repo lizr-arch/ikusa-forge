@@ -213,6 +213,8 @@ runs/demo_001/replay.json
 runs/demo_001/battle_report.json
 ```
 
+The current viewer also supports HTML Demo Complete Experience / HTML 最小 Demo 完整体验闭环 behavior for `demo_001`: Demo Load Guidance / Demo 加载引导, Battle Summary / 战斗摘要, Event Highlight / 事件高亮, Timeline Current Event / 当前事件定位, Report-to-Board Link / 战报到棋盘联动, and Key Moments navigation / 关键时刻跳转. See `docs/process/html-demo-complete-experience-v0.1.md`.
+
 ## Battle skeleton module boundary
 
 The v0.1.1 skeleton is split into focused Python modules:
@@ -290,5 +292,6 @@ Phase 1 review docs:
 - `docs/process/phase-1-mvp-review.md`
 - `docs/process/viewer-smoke-checklist.md`
 - `docs/process/viewer-browser-smoke-v0.1.md`
+- `docs/process/html-demo-complete-experience-v0.1.md`
 
 C# host commands are still future work.
