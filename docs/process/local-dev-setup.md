@@ -1,8 +1,8 @@
 # Local Development Setup
 
-This repository is currently in Phase 1 Minimal Skill Triggers / 最小技能触发 v0.1 state.
+This repository is currently in Phase 1 Replay Report / 回放与战报 v0.1 state.
 
-The config pipeline, pure Python runtime model boundary, deterministic replay event stream, Basic Combat Rules / 基础战斗规则, and Minimal Skill Triggers / 最小技能触发 exist so later tasks can add battle reports, a C# subprocess host, and an HTML replay debugger without mixing responsibilities.
+The config pipeline, pure Python runtime model boundary, deterministic replay event stream, Basic Combat Rules / 基础战斗规则, Minimal Skill Triggers / 最小技能触发, and Replay Report / 回放与战报 exist so later tasks can add a C# subprocess host and an HTML replay debugger without mixing responsibilities.
 
 ## Expected local tools
 
@@ -152,7 +152,8 @@ Current behavior:
 - Adds `reason / 伤害原因` to `damage / 伤害` events, using `basic_attack / 普通攻击` or `skill:<skill_id> / 技能 ID`.
 - Writes `runs/demo_001/replay.json` with `schema_version="battle_replay.v0.1"` and tick groups containing combat events / 战斗事件.
 - Writes `runs/demo_001/debug_timeline.json` as a flat event list.
-- Writes `runs/demo_001/run_summary.md` with battle id, seed, unit count, event counts, and result.
+- Writes `runs/demo_001/battle_report.json` as an event-derived report / 基于事件生成战报 with `damage_done / 输出伤害`, `damage_taken / 承受伤害`, `kills / 击杀`, `skill_triggers / 技能触发次数`, and `key_moments / 关键时刻`.
+- Writes `runs/demo_001/run_summary.md` with battle id, seed, unit count, event counts, result, total damage / 总伤害, total kills / 总击杀, total skill triggers / 总技能触发次数, and top unit summaries / 最高单位摘要.
 - Ends when one side is eliminated / 一方全灭 or max tick / 最大 tick is reached.
 
 Skeleton compatibility mode / 骨架兼容模式 remains available:
@@ -163,11 +164,12 @@ python tools/run_demo_battle.py --battle demo_001 --seed 1001 --config config/ge
 
 Current limitations:
 
-- No synergy application / 羁绊应用, formation bonus application / 阵型加成应用, battle report / 战报, HTML viewer / Web 回放器, C# host / C# 宿主, Godot gameplay / Godot 玩法, xlsx adapter / xlsx 适配器, third-party dependencies / 第三方依赖, or general-purpose Skill DSL / 通用技能 DSL.
+- No synergy application / 羁绊应用, formation bonus application / 阵型加成应用, HTML viewer / Web 回放器, C# host / C# 宿主, Godot gameplay / Godot 玩法, xlsx adapter / xlsx 适配器, third-party dependencies / 第三方依赖, or general-purpose Skill DSL / 通用技能 DSL.
 
 See `docs/process/deterministic-battle-skeleton-v0.1.md` for the runtime skeleton boundary.
 See `docs/process/basic-combat-rules-v0.1.md` for Basic Combat Rules / 基础战斗规则.
 See `docs/process/minimal-skill-triggers-v0.1.md` for Minimal Skill Triggers / 最小技能触发.
+See `docs/process/replay-report-v0.1.md` for Replay Report / 回放与战报.
 
 ## Battle skeleton module boundary
 
@@ -181,7 +183,8 @@ The v0.1.1 skeleton is split into focused Python modules:
 - `combat_rules.py / 战斗规则`: Basic Attack / 普通攻击, Damage / 伤害, and Death / 死亡 helpers.
 - `basic_combat.py / 基础战斗`: Basic Combat Rules / 基础战斗规则 runner and Victory Check / 胜负判断.
 - `skills.py / 技能解析器`: Minimal Skill Triggers / 最小技能触发, Skill Cooldown / 技能冷却, and `skill_trigger event / 技能触发事件` emission.
-- `battle.py / 兼容转发层`: compatibility facade / 兼容转发层 for old imports. New code should prefer `runtime_models.py`, `events.py`, `rng.py`, `battle_skeleton.py`, `targeting.py`, `combat_rules.py`, `basic_combat.py`, and `skills.py`.
+- `report.py / 战报生成器`: event-derived report / 基于事件生成战报 for `battle_report.json / 战报 JSON`.
+- `battle.py / 兼容转发层`: compatibility facade / 兼容转发层 for old imports. New code should prefer `runtime_models.py`, `events.py`, `rng.py`, `battle_skeleton.py`, `targeting.py`, `combat_rules.py`, `basic_combat.py`, `skills.py`, and `report.py`.
 
 ## Test config tools
 
@@ -194,7 +197,7 @@ python -m unittest discover -s sim-python/tests
 The tests export sample data into a temporary directory and validate both valid and invalid generated config.
 They also verify deterministic battle skeleton unit creation, event counts, result payloads, tick grouping, and same-seed event stability.
 They verify runtime side enum / 运行时阵营枚举 values `ally/enemy` and keep `battle.py / 兼容转发层` import compatibility covered.
-They verify Targeting AI / 目标选择 AI, Basic Attack / 普通攻击, Damage / 伤害, Death / 死亡, Minimal Skill Triggers / 最小技能触发, Skill Cooldown / 技能冷却, Basic Combat / 基础战斗 determinism, and absence of out-of-scope rule events / 未产生范围外规则事件 such as synergy / 羁绊 or formation bonus / 阵型加成 events.
+They verify Targeting AI / 目标选择 AI, Basic Attack / 普通攻击, Damage / 伤害, Death / 死亡, Minimal Skill Triggers / 最小技能触发, Skill Cooldown / 技能冷却, Replay Report / 回放与战报, Basic Combat / 基础战斗 determinism, and absence of out-of-scope rule events / 未产生范围外规则事件 such as synergy / 羁绊 or formation bonus / 阵型加成 events.
 
 ## CSV-first note
 
@@ -225,4 +228,11 @@ python tools/inspect_config_models.py --config config/generated
 python tools/run_demo_battle.py --battle demo_001 --seed 1001 --config config/generated --out runs/demo_001 --mode basic
 ```
 
-C# host, HTML replay viewer, and full battle report commands are still future work.
+The demo run writes:
+
+- `runs/demo_001/replay.json`
+- `runs/demo_001/debug_timeline.json`
+- `runs/demo_001/battle_report.json`
+- `runs/demo_001/run_summary.md`
+
+C# host and HTML replay viewer commands are still future work.

@@ -1,7 +1,7 @@
 """Ikusa Forge Python simulator package.
 
 Current implemented scope covers pure config loading, deterministic battle
-skeleton output, basic combat rules, and minimal skill triggers.
+skeleton output, basic combat rules, minimal skill triggers, and replay reports.
 """
 
 from ikusa_sim.battle_skeleton import (
@@ -36,6 +36,7 @@ from ikusa_sim.models import (
     UnitDef,
     WeaponDef,
 )
+from ikusa_sim.report import build_battle_report, build_battle_report_from_events
 from ikusa_sim.rng import BattleRng
 from ikusa_sim.runtime_models import BattleResult, BattleState, UnitState
 from ikusa_sim.skills import (
@@ -74,6 +75,8 @@ __all__ = [
     "battle_state_to_dict",
     "build_role_lookup",
     "build_replay_document",
+    "build_battle_report",
+    "build_battle_report_from_events",
     "calculate_basic_damage",
     "calculate_skill_damage",
     "create_battle_state",

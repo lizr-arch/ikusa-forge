@@ -17,6 +17,7 @@ from ikusa_sim.battle_skeleton import build_replay_document, run_battle_skeleton
 from ikusa_sim.basic_combat import run_basic_combat  # noqa: E402
 from ikusa_sim.config_loader import ConfigLoadError, load_config  # noqa: E402
 from ikusa_sim.events import event_to_dict  # noqa: E402
+from ikusa_sim.report import build_battle_report  # noqa: E402
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -54,12 +55,18 @@ def main(argv: Optional[List[str]] = None) -> int:
     args.out.mkdir(parents=True, exist_ok=True)
     replay_path = args.out / "replay.json"
     timeline_path = args.out / "debug_timeline.json"
+    report_path = args.out / "battle_report.json"
     summary_path = args.out / "run_summary.md"
 
-    _write_json(replay_path, build_replay_document(state, events))
-    _write_json(timeline_path, [event_to_dict(event) for event in events])
+    replay_doc = build_replay_document(state, events)
+    timeline_events = [event_to_dict(event) for event in events]
+    battle_report = build_battle_report(replay_doc, timeline_events)
+
+    _write_json(replay_path, replay_doc)
+    _write_json(timeline_path, timeline_events)
+    _write_json(report_path, battle_report)
     with summary_path.open("w", encoding="utf-8", newline="\n") as handle:
-        handle.write(_build_run_summary(state, events, args.mode))
+        handle.write(_build_run_summary(state, events, args.mode, battle_report))
 
     result = state.result
     result_text = f"{result.winner} / {result.reason}" if result else "none"
@@ -70,6 +77,7 @@ def main(argv: Optional[List[str]] = None) -> int:
     print(f"- result: {result_text}")
     print(f"- replay: {replay_path}")
     print(f"- debug_timeline: {timeline_path}")
+    print(f"- battle_report: {report_path}")
     print(f"- run_summary: {summary_path}")
     return 0
 
@@ -78,7 +86,7 @@ def _write_json(path: Path, data: Union[Dict[str, Any], List[Dict[str, Any]]]) -
     path.write_text(json.dumps(data, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
 
 
-def _build_run_summary(state, events, mode) -> str:
+def _build_run_summary(state, events, mode, battle_report) -> str:
     event_counts = {}  # type: Dict[str, int]
     for event in events:
         event_counts[event.type] = event_counts.get(event.type, 0) + 1
@@ -87,6 +95,9 @@ def _build_run_summary(state, events, mode) -> str:
     result_line = "none"
     if result:
         result_line = f"{result.winner} / {result.reason} at tick {result.end_tick}"
+
+    summary = battle_report.get("summary", {})
+    top_units = battle_report.get("top_units", {})
 
     return "\n".join(
         [
@@ -104,6 +115,11 @@ def _build_run_summary(state, events, mode) -> str:
             f"- damage events: `{event_counts.get('damage', 0)}`",
             f"- death events: `{event_counts.get('death', 0)}`",
             f"- battle_end events: `{event_counts.get('battle_end', 0)}`",
+            f"- total_damage: `{summary.get('total_damage', 0)}`",
+            f"- total_kills: `{summary.get('total_kills', 0)}`",
+            f"- total_skill_triggers: `{summary.get('total_skill_triggers', 0)}`",
+            f"- top_damage_done: `{_format_top_units(top_units.get('damage_done', []))}`",
+            f"- top_damage_taken: `{_format_top_units(top_units.get('damage_taken', []))}`",
             "",
             _mode_note(mode),
             "",
@@ -113,8 +129,14 @@ def _build_run_summary(state, events, mode) -> str:
 
 def _mode_note(mode) -> str:
     if mode == "skeleton":
-        return "No combat rules applied: no attack, damage, death, targeting AI, skill resolver, synergy application, or formation bonus application runs in skeleton mode."
-    return "Basic combat rules applied: targeting AI, basic attack, minimal skill triggers, damage, death, and victory check. Synergies, formation bonuses, battle report, viewer, C# host, and Godot are not implemented."
+        return "No combat rules applied: no attack, damage, death, targeting AI, skill resolver, synergy application, or formation bonus application runs in skeleton mode. An event-derived battle report is still written with zero combat totals."
+    return "Basic combat rules applied: targeting AI, basic attack, minimal skill triggers, damage, death, and victory check. An event-derived battle report is written. Synergies, formation bonuses, viewer, C# host, and Godot are not implemented."
+
+
+def _format_top_units(unit_ids) -> str:
+    if not unit_ids:
+        return ""
+    return ", ".join(unit_ids)
 
 
 if __name__ == "__main__":
