@@ -61,15 +61,18 @@ npm install
 npm run dev
 ```
 
-Optional CI parity check / 可选 CI 对齐验证:
+Optional CI parity check / 可选 CI 对齐验证（当前 CI 使用 npm install）:
 
 ```bash
 cd web-viewer
-npm ci
+npm install
 npm run typecheck
 npm run build
 npm run test:e2e
 ```
+
+CI uses `npm install` now because `npm ci` can fail on optional dependency lockfile churn across Windows/Linux.
+`npm ci` is still a goal, but it remains temporarily unavailable until lockfile stabilization.
 
 Still future work:
 

@@ -36,7 +36,8 @@
 - `tools/validate_config.py`
 - `tools/run_demo_battle.py`
 - `tools/smoke_phase1_mvp.py`
-- `npm ci`（或在本地/CI 依赖行为不稳时切到 `npm install`）
+- `npm install`（当前 CI 为了稳定性使用 npm install）
+- `npm ci` 为理想目标：当前平台可选依赖 lockfile 仍存在差异，暂不稳定
 - `npm run typecheck`
 - `npm run build`
 - `npx playwright install chromium --with-deps`
@@ -67,7 +68,7 @@ python tools/run_demo_battle.py --battle demo_001 --seed 1001 --config config/ge
 python tools/smoke_phase1_mvp.py --run runs/demo_001 --viewer web-viewer --battle demo_001 --seed 1001
 
 cd web-viewer
-npm ci
+npm install
 npm run typecheck
 npm run build
 npx playwright install chromium --with-deps

@@ -70,7 +70,9 @@ jobs:
 
       - name: Install web viewer dependencies / 安装 Web 回放器依赖
         working-directory: web-viewer
-        run: npm ci
+        # Windows/Linux optional dependency lockfile churn currently makes npm ci unstable in CI;
+        # use npm install until lockfile is stabilized.
+        run: npm install
 
       - name: Web typecheck / Web 类型检查
         working-directory: web-viewer

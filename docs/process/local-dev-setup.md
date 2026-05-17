@@ -322,14 +322,14 @@ python tools/smoke_phase1_mvp.py --run runs/demo_001 --viewer web-viewer --battl
 python -m unittest discover -s sim-python/tests
 
 cd web-viewer
-npm ci
+npm install
 npm run typecheck
 npm run build
 npx playwright install chromium --with-deps
 npm run test:e2e
 ```
 
-如果 `npm ci` 在某些环境发生平台可选依赖问题，可记录原因后改用 `npm install`，并将该原因写入流水线讨论/问题列表。
+当前 CI 对齐命令使用 `npm install`。`npm ci` 在 Windows/Linux 可选依赖锁文件噪音（optional dependency lockfile churn）场景下不稳定，故暂时下沉为后续任务的理想目标。
 
 Phase 1 review docs:
 
