@@ -1,0 +1,89 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  python-sim:
+    name: Python Simulator / Python 模拟器
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout / 检出
+        uses: actions/checkout@v4
+
+      - name: Setup Python / 配置 Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Show Python version / 显示 Python 版本
+        run: python --version
+
+      - name: Export config / 导出配置
+        run: python tools/export_xlsx_to_json.py --input config/source --output config/generated
+
+      - name: Validate config / 配置校验
+        run: python tools/validate_config.py --input config/generated
+
+      - name: Run demo battle / 运行 demo 战斗
+        run: python tools/run_demo_battle.py --battle demo_001 --seed 1001 --config config/generated --out runs/demo_001 --mode basic
+
+      - name: Static MVP smoke / MVP 冒烟验证
+        run: python tools/smoke_phase1_mvp.py --run runs/demo_001 --viewer web-viewer --battle demo_001 --seed 1001
+
+      - name: Python unittest / Python 单测
+        run: python -m unittest discover -s sim-python/tests
+
+  web-viewer:
+    name: Web Viewer / Web 回放器
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout / 检出
+        uses: actions/checkout@v4
+
+      - name: Setup Python / 配置 Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Setup Node / 配置 Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+          cache-dependency-path: web-viewer/package-lock.json
+
+      - name: Export config / 导出配置
+        run: python tools/export_xlsx_to_json.py --input config/source --output config/generated
+
+      - name: Validate config / 配置校验
+        run: python tools/validate_config.py --input config/generated
+
+      - name: Run demo battle / 运行 demo 战斗
+        run: python tools/run_demo_battle.py --battle demo_001 --seed 1001 --config config/generated --out runs/demo_001 --mode basic
+
+      - name: Static MVP smoke / MVP 冒烟验证
+        run: python tools/smoke_phase1_mvp.py --run runs/demo_001 --viewer web-viewer --battle demo_001 --seed 1001
+
+      - name: Install web viewer dependencies / 安装 Web 回放器依赖
+        working-directory: web-viewer
+        run: npm ci
+
+      - name: Web typecheck / Web 类型检查
+        working-directory: web-viewer
+        run: npm run typecheck
+
+      - name: Web build / Web 构建
+        working-directory: web-viewer
+        run: npm run build
+
+      - name: Install Chromium for Playwright / 安装 Playwright Chromium
+        working-directory: web-viewer
+        run: npx playwright install chromium --with-deps
+
+      - name: Browser smoke / 浏览器冒烟
+        working-directory: web-viewer
+        run: npm run test:e2e
