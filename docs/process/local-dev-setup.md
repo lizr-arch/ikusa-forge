@@ -10,8 +10,9 @@ For a packaged demo flow, see:
 - `docs/process/ci-workflow-v0.1.md`
 - `docs/process/combat-behavior-pack-v0.1.md`
 - `docs/process/combat-system-pack-v0.1.md`
+- `docs/process/demo-one-click-and-scenarios-v0.1.md`
 
-The config pipeline, pure Python runtime model boundary, deterministic replay event stream, Basic Combat Rules / 基础战斗规则, Minimal Skill Triggers / 最小技能触发, Formation bonus / 阵型加成, Synergy application / 羁绊应用, Combat System Pack / 战斗系统包 explainability, Replay Report / 回放与战报, and read-only SVG Replay Viewer / SVG 回放调试器 exist so later tasks can add a C# subprocess host without mixing responsibilities.
+The config pipeline, pure Python runtime model boundary, deterministic replay event stream, Basic Combat Rules / 基础战斗规则, Minimal Skill Triggers / 最小技能触发, Formation bonus / 阵型加成, Synergy application / 羁绊应用, Combat System Pack / 战斗系统包 explainability, Demo One-Click / 一键 Demo, Scenario Manifest / 场景清单, Replay Report / 回放与战报, and read-only SVG Replay Viewer / SVG 回放调试器 exist so later tasks can add a C# subprocess host without mixing responsibilities.
 
 ## Expected local tools
 
@@ -33,6 +34,8 @@ config/generated/   Runtime JSON output; generated files are ignored.
 sim-python/         Pure Python combat simulator package and tests.
 host-csharp/        Future C# host that invokes Python as a subprocess.
 web-viewer/         Local SVG replay debugger.
+web-viewer/public/samples/
+                    Committed Curated Fixtures / 固化样例数据 for One-click Demo / 一键 Demo.
 tools/              Export, validation, inspection, and demo-run scripts.
 runs/               Generated battle run output; generated files are ignored.
 docs/schema/        JSON schema drafts for runtime config.
@@ -186,6 +189,30 @@ See `docs/process/replay-report-v0.1.md` for Replay Report / 回放与战报.
 See `docs/process/svg-replay-viewer-v0.1.md` for SVG Replay Viewer / SVG 回放调试器.
 See `docs/process/combat-system-pack-v0.1.md` for Combat System Pack / 战斗系统包 explainability.
 
+## Generate curated demo scenarios
+
+Batch Scenario Generation / 批量场景生成 creates committed static samples for the viewer:
+
+```bash
+python tools/generate_demo_scenarios.py --source config/source --out web-viewer/public/samples --battle demo_001 --seeds 1001 1002 1003
+```
+
+Smoke-check Scenario Manifest / 场景清单 and Curated Fixtures / 固化样例数据:
+
+```bash
+python tools/smoke_demo_scenarios.py --samples web-viewer/public/samples
+```
+
+This writes only:
+
+```text
+web-viewer/public/samples/manifest.json
+web-viewer/public/samples/*/replay.json
+web-viewer/public/samples/*/battle_report.json
+```
+
+`runs/` remains local generated output. `config/generated/` remains generated runtime config and is not committed. Current seed slots `1001`, `1002`, and `1003` may have the same battle result because current combat is deterministic and does not use randomness that changes this sample outcome.
+
 ## Run SVG replay viewer
 
 Install the web-viewer dependencies once:
@@ -219,6 +246,8 @@ The Browser Smoke Test / 浏览器冒烟测试 uses Playwright / 浏览器自动
 
 The viewer reads files through browser file inputs. It does not call a backend and does not run combat logic.
 
+With Demo One-Click / 一键 Demo, the viewer also fetches Scenario Manifest / 场景清单 from `/samples/manifest.json`. When it is available, Scenario Selector / 场景选择器 and Load Baseline Demo / 加载默认 Demo can load static replay/report fixtures directly from `web-viewer/public/samples`.
+
 Manual loading targets after a demo run:
 
 ```text
@@ -227,6 +256,7 @@ runs/demo_001/battle_report.json
 ```
 
 The current viewer also supports HTML Demo Complete Experience / HTML 最小 Demo 完整体验闭环 behavior for `demo_001`: Demo Load Guidance / Demo 加载引导, Battle Summary / 战斗摘要, Event Highlight / 事件高亮, Timeline Current Event / 当前事件定位, Report-to-Board Link / 战报到棋盘联动, Key Moments navigation / 关键时刻跳转, active status visibility / 当前状态可见性, cooldown visibility / 冷却可见性, next action tick / 下一行动 tick, and victory explanation / 胜负解释. See `docs/process/html-demo-complete-experience-v0.1.md`.
+Scenario Summary / 场景摘要 adds scenario id, scenario name, description, winner, reason, end tick, event count, total damage, status applications, skill cooldowns, and action schedules.
 
 ## Battle skeleton module boundary
 
@@ -325,6 +355,8 @@ python tools/export_xlsx_to_json.py --input config/source --output config/genera
 python tools/validate_config.py --input config/generated
 python tools/run_demo_battle.py --battle demo_001 --seed 1001 --config config/generated --out runs/demo_001 --mode basic
 python tools/smoke_phase1_mvp.py --run runs/demo_001 --viewer web-viewer --battle demo_001 --seed 1001
+python tools/generate_demo_scenarios.py --source config/source --out web-viewer/public/samples --battle demo_001 --seeds 1001 1002 1003
+python tools/smoke_demo_scenarios.py --samples web-viewer/public/samples
 python -m unittest discover -s sim-python/tests
 
 cd web-viewer
@@ -336,6 +368,7 @@ npm run test:e2e
 ```
 
 当前 CI 对齐命令使用 `npm install`。`npm ci` 在 Windows/Linux 可选依赖锁文件噪音（optional dependency lockfile churn）场景下不稳定，故暂时下沉为后续任务的理想目标。
+CI additionally runs `git diff --exit-code -- web-viewer/public/samples` after Batch Scenario Generation / 批量场景生成 to enforce the Demo Contract / 演示契约 that committed Curated Fixtures / 固化样例数据 are fresh.
 
 Phase 1 review docs:
 

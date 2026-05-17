@@ -1,0 +1,5251 @@
+{
+  "metadata": {
+    "battle_id": "demo_001",
+    "max_ticks": 1200,
+    "result": {
+      "end_tick": 240,
+      "reason": "enemy_eliminated",
+      "winner": "ally"
+    },
+    "seed": 1003,
+    "tick_rate": 20,
+    "unit_count": 12
+  },
+  "schema_version": "battle_replay.v0.1",
+  "ticks": [
+    {
+      "events": [
+        {
+          "event_id": "evt_000001",
+          "payload": {
+            "battle_id": "demo_001",
+            "max_ticks": 1200,
+            "mode": "basic",
+            "seed": 1003,
+            "tick_rate": 20
+          },
+          "tick": 0,
+          "type": "battle_start"
+        },
+        {
+          "event_id": "evt_000002",
+          "payload": {
+            "formation_id": "fish_scale",
+            "unit": {
+              "action_interval_ticks": 0,
+              "alive": true,
+              "atk": 9,
+              "base_atk": 9,
+              "base_attack_interval": 1.6,
+              "base_defense": 10,
+              "base_hp": 150,
+              "base_range": 1,
+              "defense": 10,
+              "formation_id": "fish_scale",
+              "guard_value": 0,
+              "hp": 150,
+              "instance_id": "ally_001",
+              "name": "Shield Guard",
+              "next_action_tick": 0,
+              "range": 1,
+              "role": "vanguard",
+              "side": "ally",
+              "skill_cooldowns": {},
+              "skill_ids": [
+                "shield_guard",
+                "intercept"
+              ],
+              "statuses": [],
+              "tags": [
+                "ashigaru",
+                "shield",
+                "frontline",
+                "protector"
+              ],
+              "unit_def_id": "shield_guard",
+              "weapon_slots": [
+                "shield"
+              ],
+              "x": 1,
+              "y": 0
+            }
+          },
+          "tick": 0,
+          "type": "unit_spawn"
+        },
+        {
+          "event_id": "evt_000003",
+          "payload": {
+            "formation_id": "fish_scale",
+            "unit": {
+              "action_interval_ticks": 0,
+              "alive": true,
+              "atk": 14,
+              "base_atk": 14,
+              "base_attack_interval": 1.2,
+              "base_defense": 6,
+              "base_hp": 125,
+              "base_range": 1,
+              "defense": 6,
+              "formation_id": "fish_scale",
+              "guard_value": 0,
+              "hp": 125,
+              "instance_id": "ally_002",
+              "name": "Ashigaru Spear",
+              "next_action_tick": 0,
+              "range": 1,
+              "role": "vanguard",
+              "side": "ally",
+              "skill_cooldowns": {},
+              "skill_ids": [
+                "spear_thrust",
+                "brace_counter"
+              ],
+              "statuses": [],
+              "tags": [
+                "ashigaru",
+                "spear",
+                "frontline"
+              ],
+              "unit_def_id": "ashigaru_spear",
+              "weapon_slots": [
+                "spear"
+              ],
+              "x": 2,
+              "y": 0
+            }
+          },
+          "tick": 0,
+          "type": "unit_spawn"
+        },
+        {
+          "event_id": "evt_000004",
+          "payload": {
+            "formation_id": "fish_scale",
+            "unit": {
+              "action_interval_ticks": 0,
+              "alive": true,
+              "atk": 18,
+              "base_atk": 18,
+              "base_attack_interval": 1.0,
+              "base_defense": 5,
+              "base_hp": 115,
+              "base_range": 1,
+              "defense": 5,
+              "formation_id": "fish_scale",
+              "guard_value": 0,
+              "hp": 115,
+              "instance_id": "ally_003",
+              "name": "Samurai Katana",
+              "next_action_tick": 0,
+              "range": 1,
+              "role": "center",
+              "side": "ally",
+              "skill_cooldowns": {},
+              "skill_ids": [
+                "katana_slash",
+                "iaijutsu_burst"
+              ],
+              "statuses": [],
+              "tags": [
+                "samurai",
+                "katana",
+                "frontline"
+              ],
+              "unit_def_id": "samurai_katana",
+              "weapon_slots": [
+                "katana"
+              ],
+              "x": 1,
+              "y": 1
+            }
+          },
+          "tick": 0,
+          "type": "unit_spawn"
+        },
+        {
+          "event_id": "evt_000005",
+          "payload": {
+            "formation_id": "fish_scale",
+            "unit": {
+              "action_interval_ticks": 0,
+              "alive": true,
+              "atk": 16,
+              "base_atk": 16,
+              "base_attack_interval": 0.9,
+              "base_defense": 3,
+              "base_hp": 80,
+              "base_range": 1,
+              "defense": 3,
+              "formation_id": "fish_scale",
+              "guard_value": 0,
+              "hp": 80,
+              "instance_id": "ally_004",
+              "name": "Ninja Scout",
+              "next_action_tick": 0,
+              "range": 1,
+              "role": "center",
+              "side": "ally",
+              "skill_cooldowns": {},
+              "skill_ids": [
+                "smoke_strike"
+              ],
+              "statuses": [],
+              "tags": [
+                "ninja",
+                "ninja_tool",
+                "flank",
+                "disruption"
+              ],
+              "unit_def_id": "ninja_scout",
+              "weapon_slots": [
+                "ninja_tool"
+              ],
+              "x": 2,
+              "y": 1
+            }
+          },
+          "tick": 0,
+          "type": "unit_spawn"
+        },
+        {
+          "event_id": "evt_000006",
+          "payload": {
+            "formation_id": "fish_scale",
+            "unit": {
+              "action_interval_ticks": 0,
+              "alive": true,
+              "atk": 11,
+              "base_atk": 11,
+              "base_attack_interval": 1.4,
+              "base_defense": 3,
+              "base_hp": 85,
+              "base_range": 3,
+              "defense": 3,
+              "formation_id": "fish_scale",
+              "guard_value": 0,
+              "hp": 85,
+              "instance_id": "ally_005",
+              "name": "Ashigaru Bow",
+              "next_action_tick": 0,
+              "range": 3,
+              "role": "support",
+              "side": "ally",
+              "skill_cooldowns": {},
+              "skill_ids": [
+                "bow_shot",
+                "focus_fire"
+              ],
+              "statuses": [],
+              "tags": [
+                "ashigaru",
+                "bow",
+                "backline"
+              ],
+              "unit_def_id": "ashigaru_bow",
+              "weapon_slots": [
+                "bow"
+              ],
+              "x": 0,
+              "y": 2
+            }
+          },
+          "tick": 0,
+          "type": "unit_spawn"
+        },
+        {
+          "event_id": "evt_000007",
+          "payload": {
+            "formation_id": "fish_scale",
+            "unit": {
+              "action_interval_ticks": 0,
+              "alive": true,
+              "atk": 8,
+              "base_atk": 8,
+              "base_attack_interval": 1.8,
+              "base_defense": 4,
+              "base_hp": 95,
+              "base_range": 2,
+              "defense": 4,
+              "formation_id": "fish_scale",
+              "guard_value": 0,
+              "hp": 95,
+              "instance_id": "ally_006",
+              "name": "Banner Bearer",
+              "next_action_tick": 0,
+              "range": 2,
+              "role": "support",
+              "side": "ally",
+              "skill_cooldowns": {},
+              "skill_ids": [
+                "banner_rally"
+              ],
+              "statuses": [],
+              "tags": [
+                "ashigaru",
+                "banner",
+                "support"
+              ],
+              "unit_def_id": "banner_bearer",
+              "weapon_slots": [
+                "spear"
+              ],
+              "x": 3,
+              "y": 2
+            }
+          },
+          "tick": 0,
+          "type": "unit_spawn"
+        },
+        {
+          "event_id": "evt_000008",
+          "payload": {
+            "formation_id": "crane_wing",
+            "unit": {
+              "action_interval_ticks": 0,
+              "alive": true,
+              "atk": 8,
+              "base_atk": 8,
+              "base_attack_interval": 1.6,
+              "base_defense": 10,
+              "base_hp": 145,
+              "base_range": 1,
+              "defense": 10,
+              "formation_id": "crane_wing",
+              "guard_value": 0,
+              "hp": 145,
+              "instance_id": "enemy_001",
+              "name": "Enemy Shield",
+              "next_action_tick": 0,
+              "range": 1,
+              "role": "left_flank",
+              "side": "enemy",
+              "skill_cooldowns": {},
+              "skill_ids": [
+                "shield_guard",
+                "intercept"
+              ],
+              "statuses": [],
+              "tags": [
+                "ashigaru",
+                "shield",
+                "frontline",
+                "protector"
+              ],
+              "unit_def_id": "enemy_shield",
+              "weapon_slots": [
+                "shield"
+              ],
+              "x": 0,
+              "y": 0
+            }
+          },
+          "tick": 0,
+          "type": "unit_spawn"
+        },
+        {
+          "event_id": "evt_000009",
+          "payload": {
+            "formation_id": "crane_wing",
+            "unit": {
+              "action_interval_ticks": 0,
+              "alive": true,
+              "atk": 13,
+              "base_atk": 13,
+              "base_attack_interval": 1.2,
+              "base_defense": 6,
+              "base_hp": 120,
+              "base_range": 1,
+              "defense": 6,
+              "formation_id": "crane_wing",
+              "guard_value": 0,
+              "hp": 120,
+              "instance_id": "enemy_002",
+              "name": "Enemy Spearman",
+              "next_action_tick": 0,
+              "range": 1,
+              "role": "right_flank",
+              "side": "enemy",
+              "skill_cooldowns": {},
+              "skill_ids": [
+                "spear_thrust",
+                "brace_counter"
+              ],
+              "statuses": [],
+              "tags": [
+                "ashigaru",
+                "spear",
+                "frontline"
+              ],
+              "unit_def_id": "enemy_spearman",
+              "weapon_slots": [
+                "spear"
+              ],
+              "x": 3,
+              "y": 0
+            }
+          },
+          "tick": 0,
+          "type": "unit_spawn"
+        },
+        {
+          "event_id": "evt_000010",
+          "payload": {
+            "formation_id": "crane_wing",
+            "unit": {
+              "action_interval_ticks": 0,
+              "alive": true,
+              "atk": 17,
+              "base_atk": 17,
+              "base_attack_interval": 1.0,
+              "base_defense": 4,
+              "base_hp": 110,
+              "base_range": 1,
+              "defense": 4,
+              "formation_id": "crane_wing",
+              "guard_value": 0,
+              "hp": 110,
+              "instance_id": "enemy_003",
+              "name": "Ronin Katana",
+              "next_action_tick": 0,
+              "range": 1,
+              "role": "center",
+              "side": "enemy",
+              "skill_cooldowns": {},
+              "skill_ids": [
+                "katana_slash",
+                "iaijutsu_burst"
+              ],
+              "statuses": [],
+              "tags": [
+                "ronin",
+                "katana",
+                "frontline"
+              ],
+              "unit_def_id": "ronin_katana",
+              "weapon_slots": [
+                "katana"
+              ],
+              "x": 1,
+              "y": 1
+            }
+          },
+          "tick": 0,
+          "type": "unit_spawn"
+        },
+        {
+          "event_id": "evt_000011",
+          "payload": {
+            "formation_id": "crane_wing",
+            "unit": {
+              "action_interval_ticks": 0,
+              "alive": true,
+              "atk": 15,
+              "base_atk": 15,
+              "base_attack_interval": 0.9,
+              "base_defense": 3,
+              "base_hp": 78,
+              "base_range": 1,
+              "defense": 3,
+              "formation_id": "crane_wing",
+              "guard_value": 0,
+              "hp": 78,
+              "instance_id": "enemy_004",
+              "name": "Enemy Ninja",
+              "next_action_tick": 0,
+              "range": 1,
+              "role": "center",
+              "side": "enemy",
+              "skill_cooldowns": {},
+              "skill_ids": [
+                "smoke_strike"
+              ],
+              "statuses": [],
+              "tags": [
+                "ninja",
+                "ninja_tool",
+                "flank",
+                "disruption"
+              ],
+              "unit_def_id": "enemy_ninja",
+              "weapon_slots": [
+                "ninja_tool"
+              ],
+              "x": 2,
+              "y": 1
+            }
+          },
+          "tick": 0,
+          "type": "unit_spawn"
+        },
+        {
+          "event_id": "evt_000012",
+          "payload": {
+            "formation_id": "crane_wing",
+            "unit": {
+              "action_interval_ticks": 0,
+              "alive": true,
+              "atk": 10,
+              "base_atk": 10,
+              "base_attack_interval": 1.4,
+              "base_defense": 3,
+              "base_hp": 82,
+              "base_range": 3,
+              "defense": 3,
+              "formation_id": "crane_wing",
+              "guard_value": 0,
+              "hp": 82,
+              "instance_id": "enemy_005",
+              "name": "Enemy Archer",
+              "next_action_tick": 0,
+              "range": 3,
+              "role": "left_support",
+              "side": "enemy",
+              "skill_cooldowns": {},
+              "skill_ids": [
+                "bow_shot",
+                "focus_fire"
+              ],
+              "statuses": [],
+              "tags": [
+                "ashigaru",
+                "bow",
+                "backline"
+              ],
+              "unit_def_id": "enemy_archer",
+              "weapon_slots": [
+                "bow"
+              ],
+              "x": 0,
+              "y": 2
+            }
+          },
+          "tick": 0,
+          "type": "unit_spawn"
+        },
+        {
+          "event_id": "evt_000013",
+          "payload": {
+            "formation_id": "crane_wing",
+            "unit": {
+              "action_interval_ticks": 0,
+              "alive": true,
+              "atk": 8,
+              "base_atk": 8,
+              "base_attack_interval": 1.8,
+              "base_defense": 4,
+              "base_hp": 92,
+              "base_range": 2,
+              "defense": 4,
+              "formation_id": "crane_wing",
+              "guard_value": 0,
+              "hp": 92,
+              "instance_id": "enemy_006",
+              "name": "Enemy Banner",
+              "next_action_tick": 0,
+              "range": 2,
+              "role": "right_support",
+              "side": "enemy",
+              "skill_cooldowns": {},
+              "skill_ids": [
+                "banner_rally"
+              ],
+              "statuses": [],
+              "tags": [
+                "ashigaru",
+                "banner",
+                "support"
+              ],
+              "unit_def_id": "enemy_banner",
+              "weapon_slots": [
+                "spear"
+              ],
+              "x": 3,
+              "y": 2
+            }
+          },
+          "tick": 0,
+          "type": "unit_spawn"
+        },
+        {
+          "event_id": "evt_000014",
+          "payload": {
+            "amount": 3,
+            "reason": "fish_scale:vanguard_center_atk_plus_3",
+            "source": "formation:fish_scale",
+            "source_type": "formation",
+            "stat": "atk",
+            "target": "ally_001"
+          },
+          "tick": 0,
+          "type": "stat_modifier"
+        },
+        {
+          "event_id": "evt_000015",
+          "payload": {
+            "amount": 3,
+            "reason": "fish_scale:vanguard_center_atk_plus_3",
+            "source": "formation:fish_scale",
+            "source_type": "formation",
+            "stat": "atk",
+            "target": "ally_002"
+          },
+          "tick": 0,
+          "type": "stat_modifier"
+        },
+        {
+          "event_id": "evt_000016",
+          "payload": {
+            "amount": 3,
+            "reason": "fish_scale:vanguard_center_atk_plus_3",
+            "source": "formation:fish_scale",
+            "source_type": "formation",
+            "stat": "atk",
+            "target": "ally_003"
+          },
+          "tick": 0,
+          "type": "stat_modifier"
+        },
+        {
+          "event_id": "evt_000017",
+          "payload": {
+            "amount": 3,
+            "reason": "fish_scale:vanguard_center_atk_plus_3",
+            "source": "formation:fish_scale",
+            "source_type": "formation",
+            "stat": "atk",
+            "target": "ally_004"
+          },
+          "tick": 0,
+          "type": "stat_modifier"
+        },
+        {
+          "event_id": "evt_000018",
+          "payload": {
+            "amount": 2,
+            "reason": "crane_wing:flank_pressure",
+            "source": "formation:crane_wing",
+            "source_type": "formation",
+            "stat": "atk",
+            "target": "enemy_001"
+          },
+          "tick": 0,
+          "type": "stat_modifier"
+        },
+        {
+          "event_id": "evt_000019",
+          "payload": {
+            "amount": 2,
+            "reason": "crane_wing:flank_pressure",
+            "source": "formation:crane_wing",
+            "source_type": "formation",
+            "stat": "atk",
+            "target": "enemy_002"
+          },
+          "tick": 0,
+          "type": "stat_modifier"
+        },
+        {
+          "event_id": "evt_000020",
+          "payload": {
+            "amount": 1,
+            "reason": "crane_wing:flank_pressure_support",
+            "source": "formation:crane_wing",
+            "source_type": "formation",
+            "stat": "atk",
+            "target": "enemy_005"
+          },
+          "tick": 0,
+          "type": "stat_modifier"
+        },
+        {
+          "event_id": "evt_000021",
+          "payload": {
+            "amount": 1,
+            "reason": "crane_wing:flank_pressure_support",
+            "source": "formation:crane_wing",
+            "source_type": "formation",
+            "stat": "atk",
+            "target": "enemy_006"
+          },
+          "tick": 0,
+          "type": "stat_modifier"
+        },
+        {
+          "event_id": "evt_000022",
+          "payload": {
+            "amount": 10,
+            "reason": "massed_troops:threshold_3",
+            "source": "synergy:massed_troops",
+            "source_type": "synergy",
+            "stat": "hp",
+            "target": "ally_001"
+          },
+          "tick": 0,
+          "type": "stat_modifier"
+        },
+        {
+          "event_id": "evt_000023",
+          "payload": {
+            "amount": 10,
+            "reason": "massed_troops:threshold_3",
+            "source": "synergy:massed_troops",
+            "source_type": "synergy",
+            "stat": "hp",
+            "target": "ally_002"
+          },
+          "tick": 0,
+          "type": "stat_modifier"
+        },
+        {
+          "event_id": "evt_000024",
+          "payload": {
+            "amount": 10,
+            "reason": "massed_troops:threshold_3",
+            "source": "synergy:massed_troops",
+            "source_type": "synergy",
+            "stat": "hp",
+            "target": "ally_005"
+          },
+          "tick": 0,
+          "type": "stat_modifier"
+        },
+        {
+          "event_id": "evt_000025",
+          "payload": {
+            "amount": 10,
+            "reason": "massed_troops:threshold_3",
+            "source": "synergy:massed_troops",
+            "source_type": "synergy",
+            "stat": "hp",
+            "target": "ally_006"
+          },
+          "tick": 0,
+          "type": "stat_modifier"
+        },
+        {
+          "event_id": "evt_000026",
+          "payload": {
+            "amount": 10,
+            "reason": "massed_troops:threshold_3",
+            "source": "synergy:massed_troops",
+            "source_type": "synergy",
+            "stat": "hp",
+            "target": "enemy_001"
+          },
+          "tick": 0,
+          "type": "stat_modifier"
+        },
+        {
+          "event_id": "evt_000027",
+          "payload": {
+            "amount": 10,
+            "reason": "massed_troops:threshold_3",
+            "source": "synergy:massed_troops",
+            "source_type": "synergy",
+            "stat": "hp",
+            "target": "enemy_002"
+          },
+          "tick": 0,
+          "type": "stat_modifier"
+        },
+        {
+          "event_id": "evt_000028",
+          "payload": {
+            "amount": 10,
+            "reason": "massed_troops:threshold_3",
+            "source": "synergy:massed_troops",
+            "source_type": "synergy",
+            "stat": "hp",
+            "target": "enemy_005"
+          },
+          "tick": 0,
+          "type": "stat_modifier"
+        },
+        {
+          "event_id": "evt_000029",
+          "payload": {
+            "amount": 10,
+            "reason": "massed_troops:threshold_3",
+            "source": "synergy:massed_troops",
+            "source_type": "synergy",
+            "stat": "hp",
+            "target": "enemy_006"
+          },
+          "tick": 0,
+          "type": "stat_modifier"
+        },
+        {
+          "event_id": "evt_000030",
+          "payload": {
+            "skill": "shield_guard",
+            "source": "ally_001",
+            "target_reason": "self",
+            "targets": [
+              "ally_001"
+            ],
+            "trigger": "on_battle_start"
+          },
+          "tick": 0,
+          "type": "skill_trigger"
+        },
+        {
+          "event_id": "evt_000031",
+          "payload": {
+            "amount": 12,
+            "expire_tick": null,
+            "id": "status_ally_001_shield_guard_001",
+            "reason": "skill:shield_guard",
+            "source": "ally_001",
+            "source_type": "skill",
+            "start_tick": 0,
+            "stat": "guard_value",
+            "target": "ally_001",
+            "target_reason": "self"
+          },
+          "tick": 0,
+          "type": "status_apply"
+        },
+        {
+          "event_id": "evt_000032",
+          "payload": {
+            "cooldown_ticks": 120,
+            "ready_tick": 120,
+            "skill": "shield_guard",
+            "source": "ally_001",
+            "start_tick": 0
+          },
+          "tick": 0,
+          "type": "skill_cooldown"
+        },
+        {
+          "event_id": "evt_000033",
+          "payload": {
+            "skill": "banner_rally",
+            "source": "ally_006",
+            "target_reason": "adjacent_allies",
+            "targets": [
+              "ally_004"
+            ],
+            "trigger": "on_battle_start"
+          },
+          "tick": 0,
+          "type": "skill_trigger"
+        },
+        {
+          "event_id": "evt_000034",
+          "payload": {
+            "amount": 8,
+            "expire_tick": null,
+            "id": "status_ally_004_banner_rally_001",
+            "reason": "skill:banner_rally",
+            "source": "ally_006",
+            "source_type": "skill",
+            "start_tick": 0,
+            "stat": "atk",
+            "target": "ally_004",
+            "target_reason": "adjacent_allies"
+          },
+          "tick": 0,
+          "type": "status_apply"
+        },
+        {
+          "event_id": "evt_000035",
+          "payload": {
+            "cooldown_ticks": 160,
+            "ready_tick": 160,
+            "skill": "banner_rally",
+            "source": "ally_006",
+            "start_tick": 0
+          },
+          "tick": 0,
+          "type": "skill_cooldown"
+        },
+        {
+          "event_id": "evt_000036",
+          "payload": {
+            "skill": "shield_guard",
+            "source": "enemy_001",
+            "target_reason": "self",
+            "targets": [
+              "enemy_001"
+            ],
+            "trigger": "on_battle_start"
+          },
+          "tick": 0,
+          "type": "skill_trigger"
+        },
+        {
+          "event_id": "evt_000037",
+          "payload": {
+            "amount": 12,
+            "expire_tick": null,
+            "id": "status_enemy_001_shield_guard_001",
+            "reason": "skill:shield_guard",
+            "source": "enemy_001",
+            "source_type": "skill",
+            "start_tick": 0,
+            "stat": "guard_value",
+            "target": "enemy_001",
+            "target_reason": "self"
+          },
+          "tick": 0,
+          "type": "status_apply"
+        },
+        {
+          "event_id": "evt_000038",
+          "payload": {
+            "cooldown_ticks": 120,
+            "ready_tick": 120,
+            "skill": "shield_guard",
+            "source": "enemy_001",
+            "start_tick": 0
+          },
+          "tick": 0,
+          "type": "skill_cooldown"
+        },
+        {
+          "event_id": "evt_000039",
+          "payload": {
+            "skill": "banner_rally",
+            "source": "enemy_006",
+            "target_reason": "adjacent_allies",
+            "targets": [
+              "enemy_004"
+            ],
+            "trigger": "on_battle_start"
+          },
+          "tick": 0,
+          "type": "skill_trigger"
+        },
+        {
+          "event_id": "evt_000040",
+          "payload": {
+            "amount": 8,
+            "expire_tick": null,
+            "id": "status_enemy_004_banner_rally_001",
+            "reason": "skill:banner_rally",
+            "source": "enemy_006",
+            "source_type": "skill",
+            "start_tick": 0,
+            "stat": "atk",
+            "target": "enemy_004",
+            "target_reason": "adjacent_allies"
+          },
+          "tick": 0,
+          "type": "status_apply"
+        },
+        {
+          "event_id": "evt_000041",
+          "payload": {
+            "cooldown_ticks": 160,
+            "ready_tick": 160,
+            "skill": "banner_rally",
+            "source": "enemy_006",
+            "start_tick": 0
+          },
+          "tick": 0,
+          "type": "skill_cooldown"
+        }
+      ],
+      "tick": 0
+    },
+    {
+      "events": [
+        {
+          "event_id": "evt_000042",
+          "payload": {
+            "skill": "smoke_strike",
+            "source": "ally_004",
+            "target_reason": "current_target",
+            "target_score": {
+              "column": 30,
+              "exposure": 60,
+              "final": 130,
+              "low_hp": 0,
+              "role": 6,
+              "threat": 34,
+              "tie_break": 1
+            },
+            "targets": [
+              "enemy_002"
+            ],
+            "trigger": "on_attack"
+          },
+          "tick": 18,
+          "type": "skill_trigger"
+        },
+        {
+          "event_id": "evt_000043",
+          "payload": {
+            "amount": 43,
+            "reason": "skill:smoke_strike",
+            "source": "ally_004",
+            "target": "enemy_002",
+            "target_hp_after": 87
+          },
+          "tick": 18,
+          "type": "damage"
+        },
+        {
+          "event_id": "evt_000044",
+          "payload": {
+            "cooldown_ticks": 60,
+            "ready_tick": 78,
+            "skill": "smoke_strike",
+            "source": "ally_004",
+            "start_tick": 18
+          },
+          "tick": 18,
+          "type": "skill_cooldown"
+        },
+        {
+          "event_id": "evt_000045",
+          "payload": {
+            "skill": "brace_counter",
+            "source": "enemy_002",
+            "target_reason": "current_target",
+            "targets": [
+              "ally_004"
+            ],
+            "trigger": "on_attacked"
+          },
+          "tick": 18,
+          "type": "skill_trigger"
+        },
+        {
+          "event_id": "evt_000046",
+          "payload": {
+            "amount": 30,
+            "reason": "skill:brace_counter",
+            "source": "enemy_002",
+            "target": "ally_004",
+            "target_hp_after": 50
+          },
+          "tick": 18,
+          "type": "damage"
+        },
+        {
+          "event_id": "evt_000047",
+          "payload": {
+            "cooldown_ticks": 60,
+            "ready_tick": 78,
+            "skill": "brace_counter",
+            "source": "enemy_002",
+            "start_tick": 18
+          },
+          "tick": 18,
+          "type": "skill_cooldown"
+        },
+        {
+          "event_id": "evt_000048",
+          "payload": {
+            "skill": "intercept",
+            "source": "enemy_001",
+            "target_reason": "current_target",
+            "targets": [
+              "ally_004"
+            ],
+            "trigger": "on_ally_attacked"
+          },
+          "tick": 18,
+          "type": "skill_trigger"
+        },
+        {
+          "event_id": "evt_000049",
+          "payload": {
+            "amount": 17,
+            "reason": "skill:intercept",
+            "source": "enemy_001",
+            "target": "ally_004",
+            "target_hp_after": 33
+          },
+          "tick": 18,
+          "type": "damage"
+        },
+        {
+          "event_id": "evt_000050",
+          "payload": {
+            "cooldown_ticks": 80,
+            "ready_tick": 98,
+            "skill": "intercept",
+            "source": "enemy_001",
+            "start_tick": 18
+          },
+          "tick": 18,
+          "type": "skill_cooldown"
+        },
+        {
+          "event_id": "evt_000051",
+          "payload": {
+            "action_interval_ticks": 18,
+            "current_tick": 18,
+            "next_action_tick": 36,
+            "reason": "after_action",
+            "unit": "ally_004"
+          },
+          "tick": 18,
+          "type": "action_scheduled"
+        },
+        {
+          "event_id": "evt_000052",
+          "payload": {
+            "skill": "smoke_strike",
+            "source": "enemy_004",
+            "target_reason": "current_target",
+            "target_score": {
+              "column": 40,
+              "exposure": 100,
+              "final": 182,
+              "low_hp": 0,
+              "role": 6,
+              "threat": 36,
+              "tie_break": 1
+            },
+            "targets": [
+              "ally_002"
+            ],
+            "trigger": "on_attack"
+          },
+          "tick": 18,
+          "type": "skill_trigger"
+        },
+        {
+          "event_id": "evt_000053",
+          "payload": {
+            "amount": 39,
+            "reason": "skill:smoke_strike",
+            "source": "enemy_004",
+            "target": "ally_002",
+            "target_hp_after": 96
+          },
+          "tick": 18,
+          "type": "damage"
+        },
+        {
+          "event_id": "evt_000054",
+          "payload": {
+            "cooldown_ticks": 60,
+            "ready_tick": 78,
+            "skill": "smoke_strike",
+            "source": "enemy_004",
+            "start_tick": 18
+          },
+          "tick": 18,
+          "type": "skill_cooldown"
+        },
+        {
+          "event_id": "evt_000055",
+          "payload": {
+            "skill": "brace_counter",
+            "source": "ally_002",
+            "target_reason": "current_target",
+            "targets": [
+              "enemy_004"
+            ],
+            "trigger": "on_attacked"
+          },
+          "tick": 18,
+          "type": "skill_trigger"
+        },
+        {
+          "event_id": "evt_000056",
+          "payload": {
+            "amount": 32,
+            "reason": "skill:brace_counter",
+            "source": "ally_002",
+            "target": "enemy_004",
+            "target_hp_after": 46
+          },
+          "tick": 18,
+          "type": "damage"
+        },
+        {
+          "event_id": "evt_000057",
+          "payload": {
+            "cooldown_ticks": 60,
+            "ready_tick": 78,
+            "skill": "brace_counter",
+            "source": "ally_002",
+            "start_tick": 18
+          },
+          "tick": 18,
+          "type": "skill_cooldown"
+        },
+        {
+          "event_id": "evt_000058",
+          "payload": {
+            "skill": "intercept",
+            "source": "ally_001",
+            "target_reason": "current_target",
+            "targets": [
+              "enemy_004"
+            ],
+            "trigger": "on_ally_attacked"
+          },
+          "tick": 18,
+          "type": "skill_trigger"
+        },
+        {
+          "event_id": "evt_000059",
+          "payload": {
+            "amount": 19,
+            "reason": "skill:intercept",
+            "source": "ally_001",
+            "target": "enemy_004",
+            "target_hp_after": 27
+          },
+          "tick": 18,
+          "type": "damage"
+        },
+        {
+          "event_id": "evt_000060",
+          "payload": {
+            "cooldown_ticks": 80,
+            "ready_tick": 98,
+            "skill": "intercept",
+            "source": "ally_001",
+            "start_tick": 18
+          },
+          "tick": 18,
+          "type": "skill_cooldown"
+        },
+        {
+          "event_id": "evt_000061",
+          "payload": {
+            "action_interval_ticks": 18,
+            "current_tick": 18,
+            "next_action_tick": 36,
+            "reason": "after_action",
+            "unit": "enemy_004"
+          },
+          "tick": 18,
+          "type": "action_scheduled"
+        }
+      ],
+      "tick": 18
+    },
+    {
+      "events": [
+        {
+          "event_id": "evt_000062",
+          "payload": {
+            "skill": "katana_slash",
+            "source": "ally_003",
+            "target_reason": "current_target",
+            "target_score": {
+              "column": 30,
+              "exposure": 60,
+              "final": 119,
+              "low_hp": 0,
+              "role": 0,
+              "threat": 29,
+              "tie_break": 0
+            },
+            "targets": [
+              "enemy_001"
+            ],
+            "trigger": "on_attack"
+          },
+          "tick": 20,
+          "type": "skill_trigger"
+        },
+        {
+          "event_id": "evt_000063",
+          "payload": {
+            "amount": 15,
+            "reason": "skill:katana_slash",
+            "source": "ally_003",
+            "target": "enemy_001",
+            "target_hp_after": 140
+          },
+          "tick": 20,
+          "type": "damage"
+        },
+        {
+          "event_id": "evt_000064",
+          "payload": {
+            "cooldown_ticks": 20,
+            "ready_tick": 40,
+            "skill": "katana_slash",
+            "source": "ally_003",
+            "start_tick": 20
+          },
+          "tick": 20,
+          "type": "skill_cooldown"
+        },
+        {
+          "event_id": "evt_000065",
+          "payload": {
+            "action_interval_ticks": 20,
+            "current_tick": 20,
+            "next_action_tick": 40,
+            "reason": "after_action",
+            "unit": "ally_003"
+          },
+          "tick": 20,
+          "type": "action_scheduled"
+        },
+        {
+          "event_id": "evt_000066",
+          "payload": {
+            "skill": "katana_slash",
+            "source": "enemy_003",
+            "target_reason": "current_target",
+            "target_score": {
+              "column": 40,
+              "exposure": 100,
+              "final": 189,
+              "low_hp": 0,
+              "role": 18,
+              "threat": 31,
+              "tie_break": 0
+            },
+            "targets": [
+              "ally_001"
+            ],
+            "trigger": "on_attack"
+          },
+          "tick": 20,
+          "type": "skill_trigger"
+        },
+        {
+          "event_id": "evt_000067",
+          "payload": {
+            "amount": 11,
+            "reason": "skill:katana_slash",
+            "source": "enemy_003",
+            "target": "ally_001",
+            "target_hp_after": 149
+          },
+          "tick": 20,
+          "type": "damage"
+        },
+        {
+          "event_id": "evt_000068",
+          "payload": {
+            "cooldown_ticks": 20,
+            "ready_tick": 40,
+            "skill": "katana_slash",
+            "source": "enemy_003",
+            "start_tick": 20
+          },
+          "tick": 20,
+          "type": "skill_cooldown"
+        },
+        {
+          "event_id": "evt_000069",
+          "payload": {
+            "action_interval_ticks": 20,
+            "current_tick": 20,
+            "next_action_tick": 40,
+            "reason": "after_action",
+            "unit": "enemy_003"
+          },
+          "tick": 20,
+          "type": "action_scheduled"
+        }
+      ],
+      "tick": 20
+    },
+    {
+      "events": [
+        {
+          "event_id": "evt_000070",
+          "payload": {
+            "skill": "spear_thrust",
+            "source": "ally_002",
+            "target_reason": "current_target",
+            "target_score": {
+              "column": 30,
+              "exposure": 60,
+              "final": 168,
+              "low_hp": 39,
+              "role": 5,
+              "threat": 34,
+              "tie_break": 1
+            },
+            "targets": [
+              "enemy_002"
+            ],
+            "trigger": "on_attack"
+          },
+          "tick": 24,
+          "type": "skill_trigger"
+        },
+        {
+          "event_id": "evt_000071",
+          "payload": {
+            "amount": 26,
+            "reason": "skill:spear_thrust",
+            "source": "ally_002",
+            "target": "enemy_002",
+            "target_hp_after": 61
+          },
+          "tick": 24,
+          "type": "damage"
+        },
+        {
+          "event_id": "evt_000072",
+          "payload": {
+            "cooldown_ticks": 26,
+            "ready_tick": 50,
+            "skill": "spear_thrust",
+            "source": "ally_002",
+            "start_tick": 24
+          },
+          "tick": 24,
+          "type": "skill_cooldown"
+        },
+        {
+          "event_id": "evt_000073",
+          "payload": {
+            "action_interval_ticks": 24,
+            "current_tick": 24,
+            "next_action_tick": 48,
+            "reason": "after_action",
+            "unit": "ally_002"
+          },
+          "tick": 24,
+          "type": "action_scheduled"
+        },
+        {
+          "event_id": "evt_000074",
+          "payload": {
+            "skill": "spear_thrust",
+            "source": "enemy_002",
+            "target_reason": "current_target",
+            "target_score": {
+              "column": 30,
+              "exposure": 60,
+              "final": 180,
+              "low_hp": 34,
+              "role": 20,
+              "threat": 36,
+              "tie_break": 1
+            },
+            "targets": [
+              "ally_002"
+            ],
+            "trigger": "on_attack"
+          },
+          "tick": 24,
+          "type": "skill_trigger"
+        },
+        {
+          "event_id": "evt_000075",
+          "payload": {
+            "amount": 24,
+            "reason": "skill:spear_thrust",
+            "source": "enemy_002",
+            "target": "ally_002",
+            "target_hp_after": 72
+          },
+          "tick": 24,
+          "type": "damage"
+        },
+        {
+          "event_id": "evt_000076",
+          "payload": {
+            "cooldown_ticks": 26,
+            "ready_tick": 50,
+            "skill": "spear_thrust",
+            "source": "enemy_002",
+            "start_tick": 24
+          },
+          "tick": 24,
+          "type": "skill_cooldown"
+        },
+        {
+          "event_id": "evt_000077",
+          "payload": {
+            "action_interval_ticks": 24,
+            "current_tick": 24,
+            "next_action_tick": 48,
+            "reason": "after_action",
+            "unit": "enemy_002"
+          },
+          "tick": 24,
+          "type": "action_scheduled"
+        }
+      ],
+      "tick": 24
+    },
+    {
+      "events": [
+        {
+          "event_id": "evt_000078",
+          "payload": {
+            "skill": "bow_shot",
+            "source": "ally_005",
+            "target_reason": "current_target",
+            "target_score": {
+              "column": 40,
+              "exposure": 100,
+              "final": 206,
+              "low_hp": 0,
+              "role": 18,
+              "threat": 48,
+              "tie_break": 4
+            },
+            "targets": [
+              "enemy_005"
+            ],
+            "trigger": "on_attack"
+          },
+          "tick": 28,
+          "type": "skill_trigger"
+        },
+        {
+          "event_id": "evt_000079",
+          "payload": {
+            "amount": 21,
+            "reason": "skill:bow_shot",
+            "source": "ally_005",
+            "target": "enemy_005",
+            "target_hp_after": 71
+          },
+          "tick": 28,
+          "type": "damage"
+        },
+        {
+          "event_id": "evt_000080",
+          "payload": {
+            "cooldown_ticks": 30,
+            "ready_tick": 58,
+            "skill": "bow_shot",
+            "source": "ally_005",
+            "start_tick": 28
+          },
+          "tick": 28,
+          "type": "skill_cooldown"
+        },
+        {
+          "event_id": "evt_000081",
+          "payload": {
+            "action_interval_ticks": 28,
+            "current_tick": 28,
+            "next_action_tick": 56,
+            "reason": "after_action",
+            "unit": "ally_005"
+          },
+          "tick": 28,
+          "type": "action_scheduled"
+        },
+        {
+          "event_id": "evt_000082",
+          "payload": {
+            "skill": "bow_shot",
+            "source": "enemy_005",
+            "target_reason": "current_target",
+            "target_score": {
+              "column": 40,
+              "exposure": 100,
+              "final": 206,
+              "low_hp": 0,
+              "role": 18,
+              "threat": 48,
+              "tie_break": 4
+            },
+            "targets": [
+              "ally_005"
+            ],
+            "trigger": "on_attack"
+          },
+          "tick": 28,
+          "type": "skill_trigger"
+        },
+        {
+          "event_id": "evt_000083",
+          "payload": {
+            "amount": 21,
+            "reason": "skill:bow_shot",
+            "source": "enemy_005",
+            "target": "ally_005",
+            "target_hp_after": 74
+          },
+          "tick": 28,
+          "type": "damage"
+        },
+        {
+          "event_id": "evt_000084",
+          "payload": {
+            "cooldown_ticks": 30,
+            "ready_tick": 58,
+            "skill": "bow_shot",
+            "source": "enemy_005",
+            "start_tick": 28
+          },
+          "tick": 28,
+          "type": "skill_cooldown"
+        },
+        {
+          "event_id": "evt_000085",
+          "payload": {
+            "action_interval_ticks": 28,
+            "current_tick": 28,
+            "next_action_tick": 56,
+            "reason": "after_action",
+            "unit": "enemy_005"
+          },
+          "tick": 28,
+          "type": "action_scheduled"
+        }
+      ],
+      "tick": 28
+    },
+    {
+      "events": [
+        {
+          "event_id": "evt_000086",
+          "payload": {
+            "attacker": "ally_001",
+            "target": "enemy_001",
+            "target_reason": "frontline_exposed_adjacent_column",
+            "target_score": {
+              "column": 30,
+              "exposure": 60,
+              "final": 135,
+              "low_hp": 11,
+              "role": 5,
+              "threat": 29,
+              "tie_break": 0
+            }
+          },
+          "tick": 32,
+          "type": "attack"
+        },
+        {
+          "event_id": "evt_000087",
+          "payload": {
+            "amount": 1,
+            "reason": "basic_attack",
+            "source": "ally_001",
+            "target": "enemy_001",
+            "target_hp_after": 139
+          },
+          "tick": 32,
+          "type": "damage"
+        },
+        {
+          "event_id": "evt_000088",
+          "payload": {
+            "action_interval_ticks": 32,
+            "current_tick": 32,
+            "next_action_tick": 64,
+            "reason": "after_action",
+            "unit": "ally_001"
+          },
+          "tick": 32,
+          "type": "action_scheduled"
+        },
+        {
+          "event_id": "evt_000089",
+          "payload": {
+            "attacker": "enemy_001",
+            "target": "ally_001",
+            "target_reason": "frontline_exposed_adjacent_column",
+            "target_score": {
+              "column": 30,
+              "exposure": 60,
+              "final": 135,
+              "low_hp": 8,
+              "role": 6,
+              "threat": 31,
+              "tie_break": 0
+            }
+          },
+          "tick": 32,
+          "type": "attack"
+        },
+        {
+          "event_id": "evt_000090",
+          "payload": {
+            "amount": 1,
+            "reason": "basic_attack",
+            "source": "enemy_001",
+            "target": "ally_001",
+            "target_hp_after": 148
+          },
+          "tick": 32,
+          "type": "damage"
+        },
+        {
+          "event_id": "evt_000091",
+          "payload": {
+            "action_interval_ticks": 32,
+            "current_tick": 32,
+            "next_action_tick": 64,
+            "reason": "after_action",
+            "unit": "enemy_001"
+          },
+          "tick": 32,
+          "type": "action_scheduled"
+        }
+      ],
+      "tick": 32
+    },
+    {
+      "events": [
+        {
+          "event_id": "evt_000092",
+          "payload": {
+            "attacker": "ally_004",
+            "target": "enemy_002",
+            "target_reason": "frontline_exposed_adjacent_column",
+            "target_score": {
+              "column": 30,
+              "exposure": 60,
+              "final": 193,
+              "low_hp": 63,
+              "role": 6,
+              "threat": 34,
+              "tie_break": 1
+            }
+          },
+          "tick": 36,
+          "type": "attack"
+        },
+        {
+          "event_id": "evt_000093",
+          "payload": {
+            "amount": 21,
+            "reason": "basic_attack",
+            "source": "ally_004",
+            "target": "enemy_002",
+            "target_hp_after": 40
+          },
+          "tick": 36,
+          "type": "damage"
+        },
+        {
+          "event_id": "evt_000094",
+          "payload": {
+            "action_interval_ticks": 18,
+            "current_tick": 36,
+            "next_action_tick": 54,
+            "reason": "after_action",
+            "unit": "ally_004"
+          },
+          "tick": 36,
+          "type": "action_scheduled"
+        },
+        {
+          "event_id": "evt_000095",
+          "payload": {
+            "attacker": "ally_006",
+            "target": "enemy_002",
+            "target_reason": "frontline_exposed_same_column",
+            "target_score": {
+              "column": 40,
+              "exposure": 100,
+              "final": 269,
+              "low_hp": 83,
+              "role": 12,
+              "threat": 34,
+              "tie_break": 1
+            }
+          },
+          "tick": 36,
+          "type": "attack"
+        },
+        {
+          "event_id": "evt_000096",
+          "payload": {
+            "amount": 2,
+            "reason": "basic_attack",
+            "source": "ally_006",
+            "target": "enemy_002",
+            "target_hp_after": 38
+          },
+          "tick": 36,
+          "type": "damage"
+        },
+        {
+          "event_id": "evt_000097",
+          "payload": {
+            "action_interval_ticks": 36,
+            "current_tick": 36,
+            "next_action_tick": 72,
+            "reason": "after_action",
+            "unit": "ally_006"
+          },
+          "tick": 36,
+          "type": "action_scheduled"
+        },
+        {
+          "event_id": "evt_000098",
+          "payload": {
+            "attacker": "enemy_004",
+            "target": "ally_002",
+            "target_reason": "frontline_exposed_same_column",
+            "target_score": {
+              "column": 40,
+              "exposure": 100,
+              "final": 238,
+              "low_hp": 56,
+              "role": 6,
+              "threat": 36,
+              "tie_break": 1
+            }
+          },
+          "tick": 36,
+          "type": "attack"
+        },
+        {
+          "event_id": "evt_000099",
+          "payload": {
+            "amount": 17,
+            "reason": "basic_attack",
+            "source": "enemy_004",
+            "target": "ally_002",
+            "target_hp_after": 55
+          },
+          "tick": 36,
+          "type": "damage"
+        },
+        {
+          "event_id": "evt_000100",
+          "payload": {
+            "action_interval_ticks": 18,
+            "current_tick": 36,
+            "next_action_tick": 54,
+            "reason": "after_action",
+            "unit": "enemy_004"
+          },
+          "tick": 36,
+          "type": "action_scheduled"
+        },
+        {
+          "event_id": "evt_000101",
+          "payload": {
+            "attacker": "enemy_006",
+            "target": "ally_004",
+            "target_reason": "frontline_exposed_adjacent_column",
+            "target_score": {
+              "column": 30,
+              "exposure": 60,
+              "final": 218,
+              "low_hp": 70,
+              "role": 12,
+              "threat": 46,
+              "tie_break": 3
+            }
+          },
+          "tick": 36,
+          "type": "attack"
+        },
+        {
+          "event_id": "evt_000102",
+          "payload": {
+            "amount": 6,
+            "reason": "basic_attack",
+            "source": "enemy_006",
+            "target": "ally_004",
+            "target_hp_after": 27
+          },
+          "tick": 36,
+          "type": "damage"
+        },
+        {
+          "event_id": "evt_000103",
+          "payload": {
+            "action_interval_ticks": 36,
+            "current_tick": 36,
+            "next_action_tick": 72,
+            "reason": "after_action",
+            "unit": "enemy_006"
+          },
+          "tick": 36,
+          "type": "action_scheduled"
+        }
+      ],
+      "tick": 36
+    },
+    {
+      "events": [
+        {
+          "event_id": "evt_000104",
+          "payload": {
+            "skill": "katana_slash",
+            "source": "ally_003",
+            "target_reason": "current_target",
+            "target_score": {
+              "column": 0,
+              "exposure": 0,
+              "final": 136,
+              "low_hp": 84,
+              "role": 18,
+              "threat": 34,
+              "tie_break": 1
+            },
+            "targets": [
+              "enemy_002"
+            ],
+            "trigger": "on_attack"
+          },
+          "tick": 40,
+          "type": "skill_trigger"
+        },
+        {
+          "event_id": "evt_000105",
+          "payload": {
+            "amount": 31,
+            "reason": "skill:katana_slash",
+            "source": "ally_003",
+            "target": "enemy_002",
+            "target_hp_after": 7
+          },
+          "tick": 40,
+          "type": "damage"
+        },
+        {
+          "event_id": "evt_000106",
+          "payload": {
+            "cooldown_ticks": 20,
+            "ready_tick": 60,
+            "skill": "katana_slash",
+            "source": "ally_003",
+            "start_tick": 40
+          },
+          "tick": 40,
+          "type": "skill_cooldown"
+        },
+        {
+          "event_id": "evt_000107",
+          "payload": {
+            "action_interval_ticks": 20,
+            "current_tick": 40,
+            "next_action_tick": 60,
+            "reason": "after_action",
+            "unit": "ally_003"
+          },
+          "tick": 40,
+          "type": "action_scheduled"
+        },
+        {
+          "event_id": "evt_000108",
+          "payload": {
+            "skill": "katana_slash",
+            "source": "enemy_003",
+            "target_reason": "current_target",
+            "target_score": {
+              "column": 30,
+              "exposure": 60,
+              "final": 215,
+              "low_hp": 71,
+              "role": 18,
+              "threat": 36,
+              "tie_break": 1
+            },
+            "targets": [
+              "ally_002"
+            ],
+            "trigger": "on_attack"
+          },
+          "tick": 40,
+          "type": "skill_trigger"
+        },
+        {
+          "event_id": "evt_000109",
+          "payload": {
+            "amount": 27,
+            "reason": "skill:katana_slash",
+            "source": "enemy_003",
+            "target": "ally_002",
+            "target_hp_after": 28
+          },
+          "tick": 40,
+          "type": "damage"
+        },
+        {
+          "event_id": "evt_000110",
+          "payload": {
+            "cooldown_ticks": 20,
+            "ready_tick": 60,
+            "skill": "katana_slash",
+            "source": "enemy_003",
+            "start_tick": 40
+          },
+          "tick": 40,
+          "type": "skill_cooldown"
+        },
+        {
+          "event_id": "evt_000111",
+          "payload": {
+            "action_interval_ticks": 20,
+            "current_tick": 40,
+            "next_action_tick": 60,
+            "reason": "after_action",
+            "unit": "enemy_003"
+          },
+          "tick": 40,
+          "type": "action_scheduled"
+        }
+      ],
+      "tick": 40
+    },
+    {
+      "events": [
+        {
+          "event_id": "evt_000112",
+          "payload": {
+            "attacker": "ally_002",
+            "target": "enemy_002",
+            "target_reason": "frontline_exposed_adjacent_column",
+            "target_score": {
+              "column": 30,
+              "exposure": 60,
+              "final": 242,
+              "low_hp": 113,
+              "role": 5,
+              "threat": 34,
+              "tie_break": 1
+            }
+          },
+          "tick": 48,
+          "type": "attack"
+        },
+        {
+          "event_id": "evt_000113",
+          "payload": {
+            "amount": 11,
+            "reason": "basic_attack",
+            "source": "ally_002",
+            "target": "enemy_002",
+            "target_hp_after": 0
+          },
+          "tick": 48,
+          "type": "damage"
+        },
+        {
+          "event_id": "evt_000114",
+          "payload": {
+            "unit": "enemy_002"
+          },
+          "tick": 48,
+          "type": "death"
+        },
+        {
+          "event_id": "evt_000115",
+          "payload": {
+            "action_interval_ticks": 24,
+            "current_tick": 48,
+            "next_action_tick": 72,
+            "reason": "after_action",
+            "unit": "ally_002"
+          },
+          "tick": 48,
+          "type": "action_scheduled"
+        }
+      ],
+      "tick": 48
+    },
+    {
+      "events": [
+        {
+          "event_id": "evt_000116",
+          "payload": {
+            "attacker": "ally_004",
+            "target": "enemy_001",
+            "target_reason": "frontline_exposed_remote",
+            "target_score": {
+              "column": 0,
+              "exposure": 0,
+              "final": 47,
+              "low_hp": 12,
+              "role": 6,
+              "threat": 29,
+              "tie_break": 0
+            }
+          },
+          "tick": 54,
+          "type": "attack"
+        },
+        {
+          "event_id": "evt_000117",
+          "payload": {
+            "amount": 5,
+            "reason": "basic_attack",
+            "source": "ally_004",
+            "target": "enemy_001",
+            "target_hp_after": 134
+          },
+          "tick": 54,
+          "type": "damage"
+        },
+        {
+          "event_id": "evt_000118",
+          "payload": {
+            "action_interval_ticks": 18,
+            "current_tick": 54,
+            "next_action_tick": 72,
+            "reason": "after_action",
+            "unit": "ally_004"
+          },
+          "tick": 54,
+          "type": "action_scheduled"
+        },
+        {
+          "event_id": "evt_000119",
+          "payload": {
+            "attacker": "enemy_004",
+            "target": "ally_002",
+            "target_reason": "frontline_exposed_same_column",
+            "target_score": {
+              "column": 40,
+              "exposure": 100,
+              "final": 277,
+              "low_hp": 95,
+              "role": 6,
+              "threat": 36,
+              "tie_break": 1
+            }
+          },
+          "tick": 54,
+          "type": "attack"
+        },
+        {
+          "event_id": "evt_000120",
+          "payload": {
+            "amount": 17,
+            "reason": "basic_attack",
+            "source": "enemy_004",
+            "target": "ally_002",
+            "target_hp_after": 11
+          },
+          "tick": 54,
+          "type": "damage"
+        },
+        {
+          "event_id": "evt_000121",
+          "payload": {
+            "action_interval_ticks": 18,
+            "current_tick": 54,
+            "next_action_tick": 72,
+            "reason": "after_action",
+            "unit": "enemy_004"
+          },
+          "tick": 54,
+          "type": "action_scheduled"
+        }
+      ],
+      "tick": 54
+    },
+    {
+      "events": [
+        {
+          "event_id": "evt_000122",
+          "payload": {
+            "skill": "focus_fire",
+            "source": "ally_005",
+            "target_reason": "lowest_hp_enemy",
+            "targets": [
+              "enemy_004"
+            ],
+            "trigger": "on_attack"
+          },
+          "tick": 56,
+          "type": "skill_trigger"
+        },
+        {
+          "event_id": "evt_000123",
+          "payload": {
+            "amount": 28,
+            "reason": "skill:focus_fire",
+            "source": "ally_005",
+            "target": "enemy_004",
+            "target_hp_after": 0
+          },
+          "tick": 56,
+          "type": "damage"
+        },
+        {
+          "event_id": "evt_000124",
+          "payload": {
+            "unit": "enemy_004"
+          },
+          "tick": 56,
+          "type": "death"
+        },
+        {
+          "event_id": "evt_000125",
+          "payload": {
+            "cooldown_ticks": 100,
+            "ready_tick": 156,
+            "skill": "focus_fire",
+            "source": "ally_005",
+            "start_tick": 56
+          },
+          "tick": 56,
+          "type": "skill_cooldown"
+        },
+        {
+          "event_id": "evt_000126",
+          "payload": {
+            "action_interval_ticks": 28,
+            "current_tick": 56,
+            "next_action_tick": 84,
+            "reason": "after_action",
+            "unit": "ally_005"
+          },
+          "tick": 56,
+          "type": "action_scheduled"
+        },
+        {
+          "event_id": "evt_000127",
+          "payload": {
+            "skill": "focus_fire",
+            "source": "enemy_005",
+            "target_reason": "lowest_hp_enemy",
+            "targets": [
+              "ally_002"
+            ],
+            "trigger": "on_attack"
+          },
+          "tick": 56,
+          "type": "skill_trigger"
+        },
+        {
+          "event_id": "evt_000128",
+          "payload": {
+            "amount": 25,
+            "reason": "skill:focus_fire",
+            "source": "enemy_005",
+            "target": "ally_002",
+            "target_hp_after": 0
+          },
+          "tick": 56,
+          "type": "damage"
+        },
+        {
+          "event_id": "evt_000129",
+          "payload": {
+            "unit": "ally_002"
+          },
+          "tick": 56,
+          "type": "death"
+        },
+        {
+          "event_id": "evt_000130",
+          "payload": {
+            "cooldown_ticks": 100,
+            "ready_tick": 156,
+            "skill": "focus_fire",
+            "source": "enemy_005",
+            "start_tick": 56
+          },
+          "tick": 56,
+          "type": "skill_cooldown"
+        },
+        {
+          "event_id": "evt_000131",
+          "payload": {
+            "action_interval_ticks": 28,
+            "current_tick": 56,
+            "next_action_tick": 84,
+            "reason": "after_action",
+            "unit": "enemy_005"
+          },
+          "tick": 56,
+          "type": "action_scheduled"
+        }
+      ],
+      "tick": 56
+    },
+    {
+      "events": [
+        {
+          "event_id": "evt_000132",
+          "payload": {
+            "skill": "katana_slash",
+            "source": "ally_003",
+            "target_reason": "current_target",
+            "target_score": {
+              "column": 30,
+              "exposure": 60,
+              "final": 135,
+              "low_hp": 16,
+              "role": 0,
+              "threat": 29,
+              "tie_break": 0
+            },
+            "targets": [
+              "enemy_001"
+            ],
+            "trigger": "on_attack"
+          },
+          "tick": 60,
+          "type": "skill_trigger"
+        },
+        {
+          "event_id": "evt_000133",
+          "payload": {
+            "amount": 15,
+            "reason": "skill:katana_slash",
+            "source": "ally_003",
+            "target": "enemy_001",
+            "target_hp_after": 119
+          },
+          "tick": 60,
+          "type": "damage"
+        },
+        {
+          "event_id": "evt_000134",
+          "payload": {
+            "cooldown_ticks": 20,
+            "ready_tick": 80,
+            "skill": "katana_slash",
+            "source": "ally_003",
+            "start_tick": 60
+          },
+          "tick": 60,
+          "type": "skill_cooldown"
+        },
+        {
+          "event_id": "evt_000135",
+          "payload": {
+            "action_interval_ticks": 20,
+            "current_tick": 60,
+            "next_action_tick": 80,
+            "reason": "after_action",
+            "unit": "ally_003"
+          },
+          "tick": 60,
+          "type": "action_scheduled"
+        },
+        {
+          "event_id": "evt_000136",
+          "payload": {
+            "skill": "katana_slash",
+            "source": "enemy_003",
+            "target_reason": "current_target",
+            "target_score": {
+              "column": 40,
+              "exposure": 100,
+              "final": 197,
+              "low_hp": 8,
+              "role": 18,
+              "threat": 31,
+              "tie_break": 0
+            },
+            "targets": [
+              "ally_001"
+            ],
+            "trigger": "on_attack"
+          },
+          "tick": 60,
+          "type": "skill_trigger"
+        },
+        {
+          "event_id": "evt_000137",
+          "payload": {
+            "amount": 11,
+            "reason": "skill:katana_slash",
+            "source": "enemy_003",
+            "target": "ally_001",
+            "target_hp_after": 137
+          },
+          "tick": 60,
+          "type": "damage"
+        },
+        {
+          "event_id": "evt_000138",
+          "payload": {
+            "cooldown_ticks": 20,
+            "ready_tick": 80,
+            "skill": "katana_slash",
+            "source": "enemy_003",
+            "start_tick": 60
+          },
+          "tick": 60,
+          "type": "skill_cooldown"
+        },
+        {
+          "event_id": "evt_000139",
+          "payload": {
+            "action_interval_ticks": 20,
+            "current_tick": 60,
+            "next_action_tick": 80,
+            "reason": "after_action",
+            "unit": "enemy_003"
+          },
+          "tick": 60,
+          "type": "action_scheduled"
+        }
+      ],
+      "tick": 60
+    },
+    {
+      "events": [
+        {
+          "event_id": "evt_000140",
+          "payload": {
+            "attacker": "ally_001",
+            "target": "enemy_001",
+            "target_reason": "frontline_exposed_adjacent_column",
+            "target_score": {
+              "column": 30,
+              "exposure": 60,
+              "final": 151,
+              "low_hp": 27,
+              "role": 5,
+              "threat": 29,
+              "tie_break": 0
+            }
+          },
+          "tick": 64,
+          "type": "attack"
+        },
+        {
+          "event_id": "evt_000141",
+          "payload": {
+            "amount": 1,
+            "reason": "basic_attack",
+            "source": "ally_001",
+            "target": "enemy_001",
+            "target_hp_after": 118
+          },
+          "tick": 64,
+          "type": "damage"
+        },
+        {
+          "event_id": "evt_000142",
+          "payload": {
+            "action_interval_ticks": 32,
+            "current_tick": 64,
+            "next_action_tick": 96,
+            "reason": "after_action",
+            "unit": "ally_001"
+          },
+          "tick": 64,
+          "type": "action_scheduled"
+        },
+        {
+          "event_id": "evt_000143",
+          "payload": {
+            "attacker": "enemy_001",
+            "target": "ally_001",
+            "target_reason": "frontline_exposed_adjacent_column",
+            "target_score": {
+              "column": 30,
+              "exposure": 60,
+              "final": 144,
+              "low_hp": 17,
+              "role": 6,
+              "threat": 31,
+              "tie_break": 0
+            }
+          },
+          "tick": 64,
+          "type": "attack"
+        },
+        {
+          "event_id": "evt_000144",
+          "payload": {
+            "amount": 1,
+            "reason": "basic_attack",
+            "source": "enemy_001",
+            "target": "ally_001",
+            "target_hp_after": 136
+          },
+          "tick": 64,
+          "type": "damage"
+        },
+        {
+          "event_id": "evt_000145",
+          "payload": {
+            "action_interval_ticks": 32,
+            "current_tick": 64,
+            "next_action_tick": 96,
+            "reason": "after_action",
+            "unit": "enemy_001"
+          },
+          "tick": 64,
+          "type": "action_scheduled"
+        }
+      ],
+      "tick": 64
+    },
+    {
+      "events": [
+        {
+          "event_id": "evt_000146",
+          "payload": {
+            "attacker": "ally_004",
+            "target": "enemy_001",
+            "target_reason": "frontline_exposed_remote",
+            "target_score": {
+              "column": 0,
+              "exposure": 0,
+              "final": 63,
+              "low_hp": 28,
+              "role": 6,
+              "threat": 29,
+              "tie_break": 0
+            }
+          },
+          "tick": 72,
+          "type": "attack"
+        },
+        {
+          "event_id": "evt_000147",
+          "payload": {
+            "amount": 5,
+            "reason": "basic_attack",
+            "source": "ally_004",
+            "target": "enemy_001",
+            "target_hp_after": 113
+          },
+          "tick": 72,
+          "type": "damage"
+        },
+        {
+          "event_id": "evt_000148",
+          "payload": {
+            "action_interval_ticks": 18,
+            "current_tick": 72,
+            "next_action_tick": 90,
+            "reason": "after_action",
+            "unit": "ally_004"
+          },
+          "tick": 72,
+          "type": "action_scheduled"
+        },
+        {
+          "event_id": "evt_000149",
+          "payload": {
+            "attacker": "ally_006",
+            "target": "enemy_001",
+            "target_reason": "frontline_exposed_remote",
+            "target_score": {
+              "column": 0,
+              "exposure": 0,
+              "final": 73,
+              "low_hp": 32,
+              "role": 12,
+              "threat": 29,
+              "tie_break": 0
+            }
+          },
+          "tick": 72,
+          "type": "attack"
+        },
+        {
+          "event_id": "evt_000150",
+          "payload": {
+            "amount": 1,
+            "reason": "basic_attack",
+            "source": "ally_006",
+            "target": "enemy_001",
+            "target_hp_after": 112
+          },
+          "tick": 72,
+          "type": "damage"
+        },
+        {
+          "event_id": "evt_000151",
+          "payload": {
+            "action_interval_ticks": 36,
+            "current_tick": 72,
+            "next_action_tick": 108,
+            "reason": "after_action",
+            "unit": "ally_006"
+          },
+          "tick": 72,
+          "type": "action_scheduled"
+        },
+        {
+          "event_id": "evt_000152",
+          "payload": {
+            "attacker": "enemy_006",
+            "target": "ally_004",
+            "target_reason": "frontline_exposed_adjacent_column",
+            "target_score": {
+              "column": 30,
+              "exposure": 60,
+              "final": 227,
+              "low_hp": 79,
+              "role": 12,
+              "threat": 46,
+              "tie_break": 2
+            }
+          },
+          "tick": 72,
+          "type": "attack"
+        },
+        {
+          "event_id": "evt_000153",
+          "payload": {
+            "amount": 6,
+            "reason": "basic_attack",
+            "source": "enemy_006",
+            "target": "ally_004",
+            "target_hp_after": 21
+          },
+          "tick": 72,
+          "type": "damage"
+        },
+        {
+          "event_id": "evt_000154",
+          "payload": {
+            "action_interval_ticks": 36,
+            "current_tick": 72,
+            "next_action_tick": 108,
+            "reason": "after_action",
+            "unit": "enemy_006"
+          },
+          "tick": 72,
+          "type": "action_scheduled"
+        }
+      ],
+      "tick": 72
+    },
+    {
+      "events": [
+        {
+          "event_id": "evt_000155",
+          "payload": {
+            "skill": "katana_slash",
+            "source": "ally_003",
+            "target_reason": "current_target",
+            "target_score": {
+              "column": 30,
+              "exposure": 60,
+              "final": 152,
+              "low_hp": 33,
+              "role": 0,
+              "threat": 29,
+              "tie_break": 0
+            },
+            "targets": [
+              "enemy_001"
+            ],
+            "trigger": "on_attack"
+          },
+          "tick": 80,
+          "type": "skill_trigger"
+        },
+        {
+          "event_id": "evt_000156",
+          "payload": {
+            "amount": 15,
+            "reason": "skill:katana_slash",
+            "source": "ally_003",
+            "target": "enemy_001",
+            "target_hp_after": 97
+          },
+          "tick": 80,
+          "type": "damage"
+        },
+        {
+          "event_id": "evt_000157",
+          "payload": {
+            "cooldown_ticks": 20,
+            "ready_tick": 100,
+            "skill": "katana_slash",
+            "source": "ally_003",
+            "start_tick": 80
+          },
+          "tick": 80,
+          "type": "skill_cooldown"
+        },
+        {
+          "event_id": "evt_000158",
+          "payload": {
+            "action_interval_ticks": 20,
+            "current_tick": 80,
+            "next_action_tick": 100,
+            "reason": "after_action",
+            "unit": "ally_003"
+          },
+          "tick": 80,
+          "type": "action_scheduled"
+        },
+        {
+          "event_id": "evt_000159",
+          "payload": {
+            "skill": "katana_slash",
+            "source": "enemy_003",
+            "target_reason": "current_target",
+            "target_score": {
+              "column": 40,
+              "exposure": 100,
+              "final": 207,
+              "low_hp": 18,
+              "role": 18,
+              "threat": 31,
+              "tie_break": 0
+            },
+            "targets": [
+              "ally_001"
+            ],
+            "trigger": "on_attack"
+          },
+          "tick": 80,
+          "type": "skill_trigger"
+        },
+        {
+          "event_id": "evt_000160",
+          "payload": {
+            "amount": 11,
+            "reason": "skill:katana_slash",
+            "source": "enemy_003",
+            "target": "ally_001",
+            "target_hp_after": 125
+          },
+          "tick": 80,
+          "type": "damage"
+        },
+        {
+          "event_id": "evt_000161",
+          "payload": {
+            "cooldown_ticks": 20,
+            "ready_tick": 100,
+            "skill": "katana_slash",
+            "source": "enemy_003",
+            "start_tick": 80
+          },
+          "tick": 80,
+          "type": "skill_cooldown"
+        },
+        {
+          "event_id": "evt_000162",
+          "payload": {
+            "action_interval_ticks": 20,
+            "current_tick": 80,
+            "next_action_tick": 100,
+            "reason": "after_action",
+            "unit": "enemy_003"
+          },
+          "tick": 80,
+          "type": "action_scheduled"
+        }
+      ],
+      "tick": 80
+    },
+    {
+      "events": [
+        {
+          "event_id": "evt_000163",
+          "payload": {
+            "skill": "bow_shot",
+            "source": "ally_005",
+            "target_reason": "current_target",
+            "target_score": {
+              "column": 40,
+              "exposure": 100,
+              "final": 233,
+              "low_hp": 27,
+              "role": 18,
+              "threat": 48,
+              "tie_break": 2
+            },
+            "targets": [
+              "enemy_005"
+            ],
+            "trigger": "on_attack"
+          },
+          "tick": 84,
+          "type": "skill_trigger"
+        },
+        {
+          "event_id": "evt_000164",
+          "payload": {
+            "amount": 21,
+            "reason": "skill:bow_shot",
+            "source": "ally_005",
+            "target": "enemy_005",
+            "target_hp_after": 50
+          },
+          "tick": 84,
+          "type": "damage"
+        },
+        {
+          "event_id": "evt_000165",
+          "payload": {
+            "cooldown_ticks": 30,
+            "ready_tick": 114,
+            "skill": "bow_shot",
+            "source": "ally_005",
+            "start_tick": 84
+          },
+          "tick": 84,
+          "type": "skill_cooldown"
+        },
+        {
+          "event_id": "evt_000166",
+          "payload": {
+            "action_interval_ticks": 28,
+            "current_tick": 84,
+            "next_action_tick": 112,
+            "reason": "after_action",
+            "unit": "ally_005"
+          },
+          "tick": 84,
+          "type": "action_scheduled"
+        },
+        {
+          "event_id": "evt_000167",
+          "payload": {
+            "skill": "bow_shot",
+            "source": "enemy_005",
+            "target_reason": "current_target",
+            "target_score": {
+              "column": 40,
+              "exposure": 100,
+              "final": 232,
+              "low_hp": 26,
+              "role": 18,
+              "threat": 48,
+              "tie_break": 3
+            },
+            "targets": [
+              "ally_005"
+            ],
+            "trigger": "on_attack"
+          },
+          "tick": 84,
+          "type": "skill_trigger"
+        },
+        {
+          "event_id": "evt_000168",
+          "payload": {
+            "amount": 21,
+            "reason": "skill:bow_shot",
+            "source": "enemy_005",
+            "target": "ally_005",
+            "target_hp_after": 53
+          },
+          "tick": 84,
+          "type": "damage"
+        },
+        {
+          "event_id": "evt_000169",
+          "payload": {
+            "cooldown_ticks": 30,
+            "ready_tick": 114,
+            "skill": "bow_shot",
+            "source": "enemy_005",
+            "start_tick": 84
+          },
+          "tick": 84,
+          "type": "skill_cooldown"
+        },
+        {
+          "event_id": "evt_000170",
+          "payload": {
+            "action_interval_ticks": 28,
+            "current_tick": 84,
+            "next_action_tick": 112,
+            "reason": "after_action",
+            "unit": "enemy_005"
+          },
+          "tick": 84,
+          "type": "action_scheduled"
+        }
+      ],
+      "tick": 84
+    },
+    {
+      "events": [
+        {
+          "event_id": "evt_000171",
+          "payload": {
+            "skill": "smoke_strike",
+            "source": "ally_004",
+            "target_reason": "current_target",
+            "target_score": {
+              "column": 0,
+              "exposure": 0,
+              "final": 79,
+              "low_hp": 44,
+              "role": 6,
+              "threat": 29,
+              "tie_break": 0
+            },
+            "targets": [
+              "enemy_001"
+            ],
+            "trigger": "on_attack"
+          },
+          "tick": 90,
+          "type": "skill_trigger"
+        },
+        {
+          "event_id": "evt_000172",
+          "payload": {
+            "amount": 27,
+            "reason": "skill:smoke_strike",
+            "source": "ally_004",
+            "target": "enemy_001",
+            "target_hp_after": 70
+          },
+          "tick": 90,
+          "type": "damage"
+        },
+        {
+          "event_id": "evt_000173",
+          "payload": {
+            "cooldown_ticks": 60,
+            "ready_tick": 150,
+            "skill": "smoke_strike",
+            "source": "ally_004",
+            "start_tick": 90
+          },
+          "tick": 90,
+          "type": "skill_cooldown"
+        },
+        {
+          "event_id": "evt_000174",
+          "payload": {
+            "action_interval_ticks": 18,
+            "current_tick": 90,
+            "next_action_tick": 108,
+            "reason": "after_action",
+            "unit": "ally_004"
+          },
+          "tick": 90,
+          "type": "action_scheduled"
+        }
+      ],
+      "tick": 90
+    },
+    {
+      "events": [
+        {
+          "event_id": "evt_000175",
+          "payload": {
+            "attacker": "ally_001",
+            "target": "enemy_001",
+            "target_reason": "frontline_exposed_adjacent_column",
+            "target_score": {
+              "column": 30,
+              "exposure": 60,
+              "final": 189,
+              "low_hp": 65,
+              "role": 5,
+              "threat": 29,
+              "tie_break": 0
+            }
+          },
+          "tick": 96,
+          "type": "attack"
+        },
+        {
+          "event_id": "evt_000176",
+          "payload": {
+            "amount": 1,
+            "reason": "basic_attack",
+            "source": "ally_001",
+            "target": "enemy_001",
+            "target_hp_after": 69
+          },
+          "tick": 96,
+          "type": "damage"
+        },
+        {
+          "event_id": "evt_000177",
+          "payload": {
+            "action_interval_ticks": 32,
+            "current_tick": 96,
+            "next_action_tick": 128,
+            "reason": "after_action",
+            "unit": "ally_001"
+          },
+          "tick": 96,
+          "type": "action_scheduled"
+        },
+        {
+          "event_id": "evt_000178",
+          "payload": {
+            "attacker": "enemy_001",
+            "target": "ally_001",
+            "target_reason": "frontline_exposed_adjacent_column",
+            "target_score": {
+              "column": 30,
+              "exposure": 60,
+              "final": 153,
+              "low_hp": 26,
+              "role": 6,
+              "threat": 31,
+              "tie_break": 0
+            }
+          },
+          "tick": 96,
+          "type": "attack"
+        },
+        {
+          "event_id": "evt_000179",
+          "payload": {
+            "amount": 1,
+            "reason": "basic_attack",
+            "source": "enemy_001",
+            "target": "ally_001",
+            "target_hp_after": 124
+          },
+          "tick": 96,
+          "type": "damage"
+        },
+        {
+          "event_id": "evt_000180",
+          "payload": {
+            "action_interval_ticks": 32,
+            "current_tick": 96,
+            "next_action_tick": 128,
+            "reason": "after_action",
+            "unit": "enemy_001"
+          },
+          "tick": 96,
+          "type": "action_scheduled"
+        }
+      ],
+      "tick": 96
+    },
+    {
+      "events": [
+        {
+          "event_id": "evt_000181",
+          "payload": {
+            "skill": "katana_slash",
+            "source": "ally_003",
+            "target_reason": "current_target",
+            "target_score": {
+              "column": 30,
+              "exposure": 60,
+              "final": 185,
+              "low_hp": 66,
+              "role": 0,
+              "threat": 29,
+              "tie_break": 0
+            },
+            "targets": [
+              "enemy_001"
+            ],
+            "trigger": "on_attack"
+          },
+          "tick": 100,
+          "type": "skill_trigger"
+        },
+        {
+          "event_id": "evt_000182",
+          "payload": {
+            "amount": 15,
+            "reason": "skill:katana_slash",
+            "source": "ally_003",
+            "target": "enemy_001",
+            "target_hp_after": 54
+          },
+          "tick": 100,
+          "type": "damage"
+        },
+        {
+          "event_id": "evt_000183",
+          "payload": {
+            "cooldown_ticks": 20,
+            "ready_tick": 120,
+            "skill": "katana_slash",
+            "source": "ally_003",
+            "start_tick": 100
+          },
+          "tick": 100,
+          "type": "skill_cooldown"
+        },
+        {
+          "event_id": "evt_000184",
+          "payload": {
+            "action_interval_ticks": 20,
+            "current_tick": 100,
+            "next_action_tick": 120,
+            "reason": "after_action",
+            "unit": "ally_003"
+          },
+          "tick": 100,
+          "type": "action_scheduled"
+        },
+        {
+          "event_id": "evt_000185",
+          "payload": {
+            "skill": "katana_slash",
+            "source": "enemy_003",
+            "target_reason": "current_target",
+            "target_score": {
+              "column": 40,
+              "exposure": 100,
+              "final": 215,
+              "low_hp": 26,
+              "role": 18,
+              "threat": 31,
+              "tie_break": 0
+            },
+            "targets": [
+              "ally_001"
+            ],
+            "trigger": "on_attack"
+          },
+          "tick": 100,
+          "type": "skill_trigger"
+        },
+        {
+          "event_id": "evt_000186",
+          "payload": {
+            "amount": 11,
+            "reason": "skill:katana_slash",
+            "source": "enemy_003",
+            "target": "ally_001",
+            "target_hp_after": 113
+          },
+          "tick": 100,
+          "type": "damage"
+        },
+        {
+          "event_id": "evt_000187",
+          "payload": {
+            "cooldown_ticks": 20,
+            "ready_tick": 120,
+            "skill": "katana_slash",
+            "source": "enemy_003",
+            "start_tick": 100
+          },
+          "tick": 100,
+          "type": "skill_cooldown"
+        },
+        {
+          "event_id": "evt_000188",
+          "payload": {
+            "action_interval_ticks": 20,
+            "current_tick": 100,
+            "next_action_tick": 120,
+            "reason": "after_action",
+            "unit": "enemy_003"
+          },
+          "tick": 100,
+          "type": "action_scheduled"
+        }
+      ],
+      "tick": 100
+    },
+    {
+      "events": [
+        {
+          "event_id": "evt_000189",
+          "payload": {
+            "attacker": "ally_004",
+            "target": "enemy_001",
+            "target_reason": "frontline_exposed_remote",
+            "target_score": {
+              "column": 0,
+              "exposure": 0,
+              "final": 113,
+              "low_hp": 78,
+              "role": 6,
+              "threat": 29,
+              "tie_break": 0
+            }
+          },
+          "tick": 108,
+          "type": "attack"
+        },
+        {
+          "event_id": "evt_000190",
+          "payload": {
+            "amount": 5,
+            "reason": "basic_attack",
+            "source": "ally_004",
+            "target": "enemy_001",
+            "target_hp_after": 49
+          },
+          "tick": 108,
+          "type": "damage"
+        },
+        {
+          "event_id": "evt_000191",
+          "payload": {
+            "action_interval_ticks": 18,
+            "current_tick": 108,
+            "next_action_tick": 126,
+            "reason": "after_action",
+            "unit": "ally_004"
+          },
+          "tick": 108,
+          "type": "action_scheduled"
+        },
+        {
+          "event_id": "evt_000192",
+          "payload": {
+            "attacker": "ally_006",
+            "target": "enemy_001",
+            "target_reason": "frontline_exposed_remote",
+            "target_score": {
+              "column": 0,
+              "exposure": 0,
+              "final": 123,
+              "low_hp": 82,
+              "role": 12,
+              "threat": 29,
+              "tie_break": 0
+            }
+          },
+          "tick": 108,
+          "type": "attack"
+        },
+        {
+          "event_id": "evt_000193",
+          "payload": {
+            "amount": 1,
+            "reason": "basic_attack",
+            "source": "ally_006",
+            "target": "enemy_001",
+            "target_hp_after": 48
+          },
+          "tick": 108,
+          "type": "damage"
+        },
+        {
+          "event_id": "evt_000194",
+          "payload": {
+            "action_interval_ticks": 36,
+            "current_tick": 108,
+            "next_action_tick": 144,
+            "reason": "after_action",
+            "unit": "ally_006"
+          },
+          "tick": 108,
+          "type": "action_scheduled"
+        },
+        {
+          "event_id": "evt_000195",
+          "payload": {
+            "attacker": "enemy_006",
+            "target": "ally_004",
+            "target_reason": "frontline_exposed_adjacent_column",
+            "target_score": {
+              "column": 30,
+              "exposure": 60,
+              "final": 236,
+              "low_hp": 88,
+              "role": 12,
+              "threat": 46,
+              "tie_break": 2
+            }
+          },
+          "tick": 108,
+          "type": "attack"
+        },
+        {
+          "event_id": "evt_000196",
+          "payload": {
+            "amount": 6,
+            "reason": "basic_attack",
+            "source": "enemy_006",
+            "target": "ally_004",
+            "target_hp_after": 15
+          },
+          "tick": 108,
+          "type": "damage"
+        },
+        {
+          "event_id": "evt_000197",
+          "payload": {
+            "skill": "intercept",
+            "source": "ally_001",
+            "target_reason": "current_target",
+            "targets": [
+              "enemy_006"
+            ],
+            "trigger": "on_ally_attacked"
+          },
+          "tick": 108,
+          "type": "skill_trigger"
+        },
+        {
+          "event_id": "evt_000198",
+          "payload": {
+            "amount": 18,
+            "reason": "skill:intercept",
+            "source": "ally_001",
+            "target": "enemy_006",
+            "target_hp_after": 84
+          },
+          "tick": 108,
+          "type": "damage"
+        },
+        {
+          "event_id": "evt_000199",
+          "payload": {
+            "cooldown_ticks": 80,
+            "ready_tick": 188,
+            "skill": "intercept",
+            "source": "ally_001",
+            "start_tick": 108
+          },
+          "tick": 108,
+          "type": "skill_cooldown"
+        },
+        {
+          "event_id": "evt_000200",
+          "payload": {
+            "action_interval_ticks": 36,
+            "current_tick": 108,
+            "next_action_tick": 144,
+            "reason": "after_action",
+            "unit": "enemy_006"
+          },
+          "tick": 108,
+          "type": "action_scheduled"
+        }
+      ],
+      "tick": 108
+    },
+    {
+      "events": [
+        {
+          "event_id": "evt_000201",
+          "payload": {
+            "attacker": "ally_005",
+            "target": "enemy_005",
+            "target_reason": "frontline_exposed_same_column",
+            "target_score": {
+              "column": 40,
+              "exposure": 100,
+              "final": 260,
+              "low_hp": 54,
+              "role": 18,
+              "threat": 48,
+              "tie_break": 2
+            }
+          },
+          "tick": 112,
+          "type": "attack"
+        },
+        {
+          "event_id": "evt_000202",
+          "payload": {
+            "amount": 8,
+            "reason": "basic_attack",
+            "source": "ally_005",
+            "target": "enemy_005",
+            "target_hp_after": 42
+          },
+          "tick": 112,
+          "type": "damage"
+        },
+        {
+          "event_id": "evt_000203",
+          "payload": {
+            "skill": "intercept",
+            "source": "enemy_001",
+            "target_reason": "current_target",
+            "targets": [
+              "ally_005"
+            ],
+            "trigger": "on_ally_attacked"
+          },
+          "tick": 112,
+          "type": "skill_trigger"
+        },
+        {
+          "event_id": "evt_000204",
+          "payload": {
+            "amount": 17,
+            "reason": "skill:intercept",
+            "source": "enemy_001",
+            "target": "ally_005",
+            "target_hp_after": 36
+          },
+          "tick": 112,
+          "type": "damage"
+        },
+        {
+          "event_id": "evt_000205",
+          "payload": {
+            "cooldown_ticks": 80,
+            "ready_tick": 192,
+            "skill": "intercept",
+            "source": "enemy_001",
+            "start_tick": 112
+          },
+          "tick": 112,
+          "type": "skill_cooldown"
+        },
+        {
+          "event_id": "evt_000206",
+          "payload": {
+            "action_interval_ticks": 28,
+            "current_tick": 112,
+            "next_action_tick": 140,
+            "reason": "after_action",
+            "unit": "ally_005"
+          },
+          "tick": 112,
+          "type": "action_scheduled"
+        },
+        {
+          "event_id": "evt_000207",
+          "payload": {
+            "attacker": "enemy_005",
+            "target": "ally_005",
+            "target_reason": "frontline_exposed_same_column",
+            "target_score": {
+              "column": 40,
+              "exposure": 100,
+              "final": 280,
+              "low_hp": 74,
+              "role": 18,
+              "threat": 48,
+              "tie_break": 3
+            }
+          },
+          "tick": 112,
+          "type": "attack"
+        },
+        {
+          "event_id": "evt_000208",
+          "payload": {
+            "amount": 8,
+            "reason": "basic_attack",
+            "source": "enemy_005",
+            "target": "ally_005",
+            "target_hp_after": 28
+          },
+          "tick": 112,
+          "type": "damage"
+        },
+        {
+          "event_id": "evt_000209",
+          "payload": {
+            "action_interval_ticks": 28,
+            "current_tick": 112,
+            "next_action_tick": 140,
+            "reason": "after_action",
+            "unit": "enemy_005"
+          },
+          "tick": 112,
+          "type": "action_scheduled"
+        }
+      ],
+      "tick": 112
+    },
+    {
+      "events": [
+        {
+          "event_id": "evt_000210",
+          "payload": {
+            "skill": "katana_slash",
+            "source": "ally_003",
+            "target_reason": "current_target",
+            "target_score": {
+              "column": 30,
+              "exposure": 60,
+              "final": 201,
+              "low_hp": 82,
+              "role": 0,
+              "threat": 29,
+              "tie_break": 0
+            },
+            "targets": [
+              "enemy_001"
+            ],
+            "trigger": "on_attack"
+          },
+          "tick": 120,
+          "type": "skill_trigger"
+        },
+        {
+          "event_id": "evt_000211",
+          "payload": {
+            "amount": 15,
+            "reason": "skill:katana_slash",
+            "source": "ally_003",
+            "target": "enemy_001",
+            "target_hp_after": 33
+          },
+          "tick": 120,
+          "type": "damage"
+        },
+        {
+          "event_id": "evt_000212",
+          "payload": {
+            "cooldown_ticks": 20,
+            "ready_tick": 140,
+            "skill": "katana_slash",
+            "source": "ally_003",
+            "start_tick": 120
+          },
+          "tick": 120,
+          "type": "skill_cooldown"
+        },
+        {
+          "event_id": "evt_000213",
+          "payload": {
+            "action_interval_ticks": 20,
+            "current_tick": 120,
+            "next_action_tick": 140,
+            "reason": "after_action",
+            "unit": "ally_003"
+          },
+          "tick": 120,
+          "type": "action_scheduled"
+        },
+        {
+          "event_id": "evt_000214",
+          "payload": {
+            "skill": "katana_slash",
+            "source": "enemy_003",
+            "target_reason": "current_target",
+            "target_score": {
+              "column": 40,
+              "exposure": 100,
+              "final": 224,
+              "low_hp": 35,
+              "role": 18,
+              "threat": 31,
+              "tie_break": 0
+            },
+            "targets": [
+              "ally_001"
+            ],
+            "trigger": "on_attack"
+          },
+          "tick": 120,
+          "type": "skill_trigger"
+        },
+        {
+          "event_id": "evt_000215",
+          "payload": {
+            "amount": 11,
+            "reason": "skill:katana_slash",
+            "source": "enemy_003",
+            "target": "ally_001",
+            "target_hp_after": 102
+          },
+          "tick": 120,
+          "type": "damage"
+        },
+        {
+          "event_id": "evt_000216",
+          "payload": {
+            "cooldown_ticks": 20,
+            "ready_tick": 140,
+            "skill": "katana_slash",
+            "source": "enemy_003",
+            "start_tick": 120
+          },
+          "tick": 120,
+          "type": "skill_cooldown"
+        },
+        {
+          "event_id": "evt_000217",
+          "payload": {
+            "action_interval_ticks": 20,
+            "current_tick": 120,
+            "next_action_tick": 140,
+            "reason": "after_action",
+            "unit": "enemy_003"
+          },
+          "tick": 120,
+          "type": "action_scheduled"
+        }
+      ],
+      "tick": 120
+    },
+    {
+      "events": [
+        {
+          "event_id": "evt_000218",
+          "payload": {
+            "attacker": "ally_004",
+            "target": "enemy_001",
+            "target_reason": "frontline_exposed_remote",
+            "target_score": {
+              "column": 0,
+              "exposure": 0,
+              "final": 129,
+              "low_hp": 94,
+              "role": 6,
+              "threat": 29,
+              "tie_break": 0
+            }
+          },
+          "tick": 126,
+          "type": "attack"
+        },
+        {
+          "event_id": "evt_000219",
+          "payload": {
+            "amount": 5,
+            "reason": "basic_attack",
+            "source": "ally_004",
+            "target": "enemy_001",
+            "target_hp_after": 28
+          },
+          "tick": 126,
+          "type": "damage"
+        },
+        {
+          "event_id": "evt_000220",
+          "payload": {
+            "action_interval_ticks": 18,
+            "current_tick": 126,
+            "next_action_tick": 144,
+            "reason": "after_action",
+            "unit": "ally_004"
+          },
+          "tick": 126,
+          "type": "action_scheduled"
+        }
+      ],
+      "tick": 126
+    },
+    {
+      "events": [
+        {
+          "event_id": "evt_000221",
+          "payload": {
+            "attacker": "ally_001",
+            "target": "enemy_001",
+            "target_reason": "frontline_exposed_adjacent_column",
+            "target_score": {
+              "column": 30,
+              "exposure": 60,
+              "final": 222,
+              "low_hp": 98,
+              "role": 5,
+              "threat": 29,
+              "tie_break": 0
+            }
+          },
+          "tick": 128,
+          "type": "attack"
+        },
+        {
+          "event_id": "evt_000222",
+          "payload": {
+            "amount": 1,
+            "reason": "basic_attack",
+            "source": "ally_001",
+            "target": "enemy_001",
+            "target_hp_after": 27
+          },
+          "tick": 128,
+          "type": "damage"
+        },
+        {
+          "event_id": "evt_000223",
+          "payload": {
+            "action_interval_ticks": 32,
+            "current_tick": 128,
+            "next_action_tick": 160,
+            "reason": "after_action",
+            "unit": "ally_001"
+          },
+          "tick": 128,
+          "type": "action_scheduled"
+        },
+        {
+          "event_id": "evt_000224",
+          "payload": {
+            "attacker": "enemy_001",
+            "target": "ally_001",
+            "target_reason": "frontline_exposed_adjacent_column",
+            "target_score": {
+              "column": 30,
+              "exposure": 60,
+              "final": 170,
+              "low_hp": 43,
+              "role": 6,
+              "threat": 31,
+              "tie_break": 0
+            }
+          },
+          "tick": 128,
+          "type": "attack"
+        },
+        {
+          "event_id": "evt_000225",
+          "payload": {
+            "amount": 1,
+            "reason": "basic_attack",
+            "source": "enemy_001",
+            "target": "ally_001",
+            "target_hp_after": 101
+          },
+          "tick": 128,
+          "type": "damage"
+        },
+        {
+          "event_id": "evt_000226",
+          "payload": {
+            "action_interval_ticks": 32,
+            "current_tick": 128,
+            "next_action_tick": 160,
+            "reason": "after_action",
+            "unit": "enemy_001"
+          },
+          "tick": 128,
+          "type": "action_scheduled"
+        }
+      ],
+      "tick": 128
+    },
+    {
+      "events": [
+        {
+          "event_id": "evt_000227",
+          "payload": {
+            "skill": "katana_slash",
+            "source": "ally_003",
+            "target_reason": "current_target",
+            "target_score": {
+              "column": 30,
+              "exposure": 60,
+              "final": 218,
+              "low_hp": 99,
+              "role": 0,
+              "threat": 29,
+              "tie_break": 0
+            },
+            "targets": [
+              "enemy_001"
+            ],
+            "trigger": "on_attack"
+          },
+          "tick": 140,
+          "type": "skill_trigger"
+        },
+        {
+          "event_id": "evt_000228",
+          "payload": {
+            "amount": 15,
+            "reason": "skill:katana_slash",
+            "source": "ally_003",
+            "target": "enemy_001",
+            "target_hp_after": 12
+          },
+          "tick": 140,
+          "type": "damage"
+        },
+        {
+          "event_id": "evt_000229",
+          "payload": {
+            "cooldown_ticks": 20,
+            "ready_tick": 160,
+            "skill": "katana_slash",
+            "source": "ally_003",
+            "start_tick": 140
+          },
+          "tick": 140,
+          "type": "skill_cooldown"
+        },
+        {
+          "event_id": "evt_000230",
+          "payload": {
+            "action_interval_ticks": 20,
+            "current_tick": 140,
+            "next_action_tick": 160,
+            "reason": "after_action",
+            "unit": "ally_003"
+          },
+          "tick": 140,
+          "type": "action_scheduled"
+        },
+        {
+          "event_id": "evt_000231",
+          "payload": {
+            "skill": "bow_shot",
+            "source": "ally_005",
+            "target_reason": "current_target",
+            "target_score": {
+              "column": 40,
+              "exposure": 100,
+              "final": 279,
+              "low_hp": 110,
+              "role": 0,
+              "threat": 29,
+              "tie_break": 0
+            },
+            "targets": [
+              "enemy_001"
+            ],
+            "trigger": "on_attack"
+          },
+          "tick": 140,
+          "type": "skill_trigger"
+        },
+        {
+          "event_id": "evt_000232",
+          "payload": {
+            "amount": 2,
+            "reason": "skill:bow_shot",
+            "source": "ally_005",
+            "target": "enemy_001",
+            "target_hp_after": 10
+          },
+          "tick": 140,
+          "type": "damage"
+        },
+        {
+          "event_id": "evt_000233",
+          "payload": {
+            "cooldown_ticks": 30,
+            "ready_tick": 170,
+            "skill": "bow_shot",
+            "source": "ally_005",
+            "start_tick": 140
+          },
+          "tick": 140,
+          "type": "skill_cooldown"
+        },
+        {
+          "event_id": "evt_000234",
+          "payload": {
+            "action_interval_ticks": 28,
+            "current_tick": 140,
+            "next_action_tick": 168,
+            "reason": "after_action",
+            "unit": "ally_005"
+          },
+          "tick": 140,
+          "type": "action_scheduled"
+        },
+        {
+          "event_id": "evt_000235",
+          "payload": {
+            "skill": "katana_slash",
+            "source": "enemy_003",
+            "target_reason": "current_target",
+            "target_score": {
+              "column": 40,
+              "exposure": 100,
+              "final": 233,
+              "low_hp": 44,
+              "role": 18,
+              "threat": 31,
+              "tie_break": 0
+            },
+            "targets": [
+              "ally_001"
+            ],
+            "trigger": "on_attack"
+          },
+          "tick": 140,
+          "type": "skill_trigger"
+        },
+        {
+          "event_id": "evt_000236",
+          "payload": {
+            "amount": 11,
+            "reason": "skill:katana_slash",
+            "source": "enemy_003",
+            "target": "ally_001",
+            "target_hp_after": 90
+          },
+          "tick": 140,
+          "type": "damage"
+        },
+        {
+          "event_id": "evt_000237",
+          "payload": {
+            "cooldown_ticks": 20,
+            "ready_tick": 160,
+            "skill": "katana_slash",
+            "source": "enemy_003",
+            "start_tick": 140
+          },
+          "tick": 140,
+          "type": "skill_cooldown"
+        },
+        {
+          "event_id": "evt_000238",
+          "payload": {
+            "action_interval_ticks": 20,
+            "current_tick": 140,
+            "next_action_tick": 160,
+            "reason": "after_action",
+            "unit": "enemy_003"
+          },
+          "tick": 140,
+          "type": "action_scheduled"
+        },
+        {
+          "event_id": "evt_000239",
+          "payload": {
+            "skill": "bow_shot",
+            "source": "enemy_005",
+            "target_reason": "current_target",
+            "target_score": {
+              "column": 40,
+              "exposure": 100,
+              "final": 290,
+              "low_hp": 84,
+              "role": 18,
+              "threat": 48,
+              "tie_break": 3
+            },
+            "targets": [
+              "ally_005"
+            ],
+            "trigger": "on_attack"
+          },
+          "tick": 140,
+          "type": "skill_trigger"
+        },
+        {
+          "event_id": "evt_000240",
+          "payload": {
+            "amount": 21,
+            "reason": "skill:bow_shot",
+            "source": "enemy_005",
+            "target": "ally_005",
+            "target_hp_after": 7
+          },
+          "tick": 140,
+          "type": "damage"
+        },
+        {
+          "event_id": "evt_000241",
+          "payload": {
+            "cooldown_ticks": 30,
+            "ready_tick": 170,
+            "skill": "bow_shot",
+            "source": "enemy_005",
+            "start_tick": 140
+          },
+          "tick": 140,
+          "type": "skill_cooldown"
+        },
+        {
+          "event_id": "evt_000242",
+          "payload": {
+            "action_interval_ticks": 28,
+            "current_tick": 140,
+            "next_action_tick": 168,
+            "reason": "after_action",
+            "unit": "enemy_005"
+          },
+          "tick": 140,
+          "type": "action_scheduled"
+        }
+      ],
+      "tick": 140
+    },
+    {
+      "events": [
+        {
+          "event_id": "evt_000243",
+          "payload": {
+            "attacker": "ally_004",
+            "target": "enemy_001",
+            "target_reason": "frontline_exposed_remote",
+            "target_score": {
+              "column": 0,
+              "exposure": 0,
+              "final": 147,
+              "low_hp": 112,
+              "role": 6,
+              "threat": 29,
+              "tie_break": 0
+            }
+          },
+          "tick": 144,
+          "type": "attack"
+        },
+        {
+          "event_id": "evt_000244",
+          "payload": {
+            "amount": 5,
+            "reason": "basic_attack",
+            "source": "ally_004",
+            "target": "enemy_001",
+            "target_hp_after": 5
+          },
+          "tick": 144,
+          "type": "damage"
+        },
+        {
+          "event_id": "evt_000245",
+          "payload": {
+            "action_interval_ticks": 18,
+            "current_tick": 144,
+            "next_action_tick": 162,
+            "reason": "after_action",
+            "unit": "ally_004"
+          },
+          "tick": 144,
+          "type": "action_scheduled"
+        },
+        {
+          "event_id": "evt_000246",
+          "payload": {
+            "attacker": "ally_006",
+            "target": "enemy_001",
+            "target_reason": "frontline_exposed_remote",
+            "target_score": {
+              "column": 0,
+              "exposure": 0,
+              "final": 157,
+              "low_hp": 116,
+              "role": 12,
+              "threat": 29,
+              "tie_break": 0
+            }
+          },
+          "tick": 144,
+          "type": "attack"
+        },
+        {
+          "event_id": "evt_000247",
+          "payload": {
+            "amount": 1,
+            "reason": "basic_attack",
+            "source": "ally_006",
+            "target": "enemy_001",
+            "target_hp_after": 4
+          },
+          "tick": 144,
+          "type": "damage"
+        },
+        {
+          "event_id": "evt_000248",
+          "payload": {
+            "action_interval_ticks": 36,
+            "current_tick": 144,
+            "next_action_tick": 180,
+            "reason": "after_action",
+            "unit": "ally_006"
+          },
+          "tick": 144,
+          "type": "action_scheduled"
+        },
+        {
+          "event_id": "evt_000249",
+          "payload": {
+            "attacker": "enemy_006",
+            "target": "ally_004",
+            "target_reason": "frontline_exposed_adjacent_column",
+            "target_score": {
+              "column": 30,
+              "exposure": 60,
+              "final": 245,
+              "low_hp": 97,
+              "role": 12,
+              "threat": 46,
+              "tie_break": 2
+            }
+          },
+          "tick": 144,
+          "type": "attack"
+        },
+        {
+          "event_id": "evt_000250",
+          "payload": {
+            "amount": 6,
+            "reason": "basic_attack",
+            "source": "enemy_006",
+            "target": "ally_004",
+            "target_hp_after": 9
+          },
+          "tick": 144,
+          "type": "damage"
+        },
+        {
+          "event_id": "evt_000251",
+          "payload": {
+            "action_interval_ticks": 36,
+            "current_tick": 144,
+            "next_action_tick": 180,
+            "reason": "after_action",
+            "unit": "enemy_006"
+          },
+          "tick": 144,
+          "type": "action_scheduled"
+        }
+      ],
+      "tick": 144
+    },
+    {
+      "events": [
+        {
+          "event_id": "evt_000252",
+          "payload": {
+            "attacker": "ally_001",
+            "target": "enemy_001",
+            "target_reason": "frontline_exposed_adjacent_column",
+            "target_score": {
+              "column": 30,
+              "exposure": 60,
+              "final": 240,
+              "low_hp": 116,
+              "role": 5,
+              "threat": 29,
+              "tie_break": 0
+            }
+          },
+          "tick": 160,
+          "type": "attack"
+        },
+        {
+          "event_id": "evt_000253",
+          "payload": {
+            "amount": 1,
+            "reason": "basic_attack",
+            "source": "ally_001",
+            "target": "enemy_001",
+            "target_hp_after": 3
+          },
+          "tick": 160,
+          "type": "damage"
+        },
+        {
+          "event_id": "evt_000254",
+          "payload": {
+            "action_interval_ticks": 32,
+            "current_tick": 160,
+            "next_action_tick": 192,
+            "reason": "after_action",
+            "unit": "ally_001"
+          },
+          "tick": 160,
+          "type": "action_scheduled"
+        },
+        {
+          "event_id": "evt_000255",
+          "payload": {
+            "skill": "katana_slash",
+            "source": "ally_003",
+            "target_reason": "current_target",
+            "target_score": {
+              "column": 30,
+              "exposure": 60,
+              "final": 236,
+              "low_hp": 117,
+              "role": 0,
+              "threat": 29,
+              "tie_break": 0
+            },
+            "targets": [
+              "enemy_001"
+            ],
+            "trigger": "on_attack"
+          },
+          "tick": 160,
+          "type": "skill_trigger"
+        },
+        {
+          "event_id": "evt_000256",
+          "payload": {
+            "amount": 15,
+            "reason": "skill:katana_slash",
+            "source": "ally_003",
+            "target": "enemy_001",
+            "target_hp_after": 0
+          },
+          "tick": 160,
+          "type": "damage"
+        },
+        {
+          "event_id": "evt_000257",
+          "payload": {
+            "unit": "enemy_001"
+          },
+          "tick": 160,
+          "type": "death"
+        },
+        {
+          "event_id": "evt_000258",
+          "payload": {
+            "cooldown_ticks": 20,
+            "ready_tick": 180,
+            "skill": "katana_slash",
+            "source": "ally_003",
+            "start_tick": 160
+          },
+          "tick": 160,
+          "type": "skill_cooldown"
+        },
+        {
+          "event_id": "evt_000259",
+          "payload": {
+            "action_interval_ticks": 20,
+            "current_tick": 160,
+            "next_action_tick": 180,
+            "reason": "after_action",
+            "unit": "ally_003"
+          },
+          "tick": 160,
+          "type": "action_scheduled"
+        },
+        {
+          "event_id": "evt_000260",
+          "payload": {
+            "skill": "katana_slash",
+            "source": "enemy_003",
+            "target_reason": "current_target",
+            "target_score": {
+              "column": 40,
+              "exposure": 100,
+              "final": 241,
+              "low_hp": 52,
+              "role": 18,
+              "threat": 31,
+              "tie_break": 0
+            },
+            "targets": [
+              "ally_001"
+            ],
+            "trigger": "on_attack"
+          },
+          "tick": 160,
+          "type": "skill_trigger"
+        },
+        {
+          "event_id": "evt_000261",
+          "payload": {
+            "amount": 11,
+            "reason": "skill:katana_slash",
+            "source": "enemy_003",
+            "target": "ally_001",
+            "target_hp_after": 79
+          },
+          "tick": 160,
+          "type": "damage"
+        },
+        {
+          "event_id": "evt_000262",
+          "payload": {
+            "cooldown_ticks": 20,
+            "ready_tick": 180,
+            "skill": "katana_slash",
+            "source": "enemy_003",
+            "start_tick": 160
+          },
+          "tick": 160,
+          "type": "skill_cooldown"
+        },
+        {
+          "event_id": "evt_000263",
+          "payload": {
+            "action_interval_ticks": 20,
+            "current_tick": 160,
+            "next_action_tick": 180,
+            "reason": "after_action",
+            "unit": "enemy_003"
+          },
+          "tick": 160,
+          "type": "action_scheduled"
+        }
+      ],
+      "tick": 160
+    },
+    {
+      "events": [
+        {
+          "event_id": "evt_000264",
+          "payload": {
+            "skill": "smoke_strike",
+            "source": "ally_004",
+            "target_reason": "current_target",
+            "target_score": {
+              "column": 30,
+              "exposure": 60,
+              "final": 132,
+              "low_hp": 0,
+              "role": 6,
+              "threat": 36,
+              "tie_break": 0
+            },
+            "targets": [
+              "enemy_003"
+            ],
+            "trigger": "on_attack"
+          },
+          "tick": 162,
+          "type": "skill_trigger"
+        },
+        {
+          "event_id": "evt_000265",
+          "payload": {
+            "amount": 45,
+            "reason": "skill:smoke_strike",
+            "source": "ally_004",
+            "target": "enemy_003",
+            "target_hp_after": 65
+          },
+          "tick": 162,
+          "type": "damage"
+        },
+        {
+          "event_id": "evt_000266",
+          "payload": {
+            "cooldown_ticks": 60,
+            "ready_tick": 222,
+            "skill": "smoke_strike",
+            "source": "ally_004",
+            "start_tick": 162
+          },
+          "tick": 162,
+          "type": "skill_cooldown"
+        },
+        {
+          "event_id": "evt_000267",
+          "payload": {
+            "action_interval_ticks": 18,
+            "current_tick": 162,
+            "next_action_tick": 180,
+            "reason": "after_action",
+            "unit": "ally_004"
+          },
+          "tick": 162,
+          "type": "action_scheduled"
+        }
+      ],
+      "tick": 162
+    },
+    {
+      "events": [
+        {
+          "event_id": "evt_000268",
+          "payload": {
+            "skill": "focus_fire",
+            "source": "ally_005",
+            "target_reason": "lowest_hp_enemy",
+            "targets": [
+              "enemy_005"
+            ],
+            "trigger": "on_attack"
+          },
+          "tick": 168,
+          "type": "skill_trigger"
+        },
+        {
+          "event_id": "evt_000269",
+          "payload": {
+            "amount": 28,
+            "reason": "skill:focus_fire",
+            "source": "ally_005",
+            "target": "enemy_005",
+            "target_hp_after": 14
+          },
+          "tick": 168,
+          "type": "damage"
+        },
+        {
+          "event_id": "evt_000270",
+          "payload": {
+            "cooldown_ticks": 100,
+            "ready_tick": 268,
+            "skill": "focus_fire",
+            "source": "ally_005",
+            "start_tick": 168
+          },
+          "tick": 168,
+          "type": "skill_cooldown"
+        },
+        {
+          "event_id": "evt_000271",
+          "payload": {
+            "action_interval_ticks": 28,
+            "current_tick": 168,
+            "next_action_tick": 196,
+            "reason": "after_action",
+            "unit": "ally_005"
+          },
+          "tick": 168,
+          "type": "action_scheduled"
+        },
+        {
+          "event_id": "evt_000272",
+          "payload": {
+            "skill": "focus_fire",
+            "source": "enemy_005",
+            "target_reason": "lowest_hp_enemy",
+            "targets": [
+              "ally_005"
+            ],
+            "trigger": "on_attack"
+          },
+          "tick": 168,
+          "type": "skill_trigger"
+        },
+        {
+          "event_id": "evt_000273",
+          "payload": {
+            "amount": 28,
+            "reason": "skill:focus_fire",
+            "source": "enemy_005",
+            "target": "ally_005",
+            "target_hp_after": 0
+          },
+          "tick": 168,
+          "type": "damage"
+        },
+        {
+          "event_id": "evt_000274",
+          "payload": {
+            "unit": "ally_005"
+          },
+          "tick": 168,
+          "type": "death"
+        },
+        {
+          "event_id": "evt_000275",
+          "payload": {
+            "cooldown_ticks": 100,
+            "ready_tick": 268,
+            "skill": "focus_fire",
+            "source": "enemy_005",
+            "start_tick": 168
+          },
+          "tick": 168,
+          "type": "skill_cooldown"
+        },
+        {
+          "event_id": "evt_000276",
+          "payload": {
+            "action_interval_ticks": 28,
+            "current_tick": 168,
+            "next_action_tick": 196,
+            "reason": "after_action",
+            "unit": "enemy_005"
+          },
+          "tick": 168,
+          "type": "action_scheduled"
+        }
+      ],
+      "tick": 168
+    },
+    {
+      "events": [
+        {
+          "event_id": "evt_000277",
+          "payload": {
+            "skill": "katana_slash",
+            "source": "ally_003",
+            "target_reason": "current_target",
+            "target_score": {
+              "column": 40,
+              "exposure": 100,
+              "final": 243,
+              "low_hp": 49,
+              "role": 18,
+              "threat": 36,
+              "tie_break": 0
+            },
+            "targets": [
+              "enemy_003"
+            ],
+            "trigger": "on_attack"
+          },
+          "tick": 180,
+          "type": "skill_trigger"
+        },
+        {
+          "event_id": "evt_000278",
+          "payload": {
+            "amount": 33,
+            "reason": "skill:katana_slash",
+            "source": "ally_003",
+            "target": "enemy_003",
+            "target_hp_after": 32
+          },
+          "tick": 180,
+          "type": "damage"
+        },
+        {
+          "event_id": "evt_000279",
+          "payload": {
+            "cooldown_ticks": 20,
+            "ready_tick": 200,
+            "skill": "katana_slash",
+            "source": "ally_003",
+            "start_tick": 180
+          },
+          "tick": 180,
+          "type": "skill_cooldown"
+        },
+        {
+          "event_id": "evt_000280",
+          "payload": {
+            "action_interval_ticks": 20,
+            "current_tick": 180,
+            "next_action_tick": 200,
+            "reason": "after_action",
+            "unit": "ally_003"
+          },
+          "tick": 180,
+          "type": "action_scheduled"
+        },
+        {
+          "event_id": "evt_000281",
+          "payload": {
+            "attacker": "ally_004",
+            "target": "enemy_003",
+            "target_reason": "frontline_exposed_adjacent_column",
+            "target_score": {
+              "column": 30,
+              "exposure": 60,
+              "final": 217,
+              "low_hp": 85,
+              "role": 6,
+              "threat": 36,
+              "tie_break": 0
+            }
+          },
+          "tick": 180,
+          "type": "attack"
+        },
+        {
+          "event_id": "evt_000282",
+          "payload": {
+            "amount": 23,
+            "reason": "basic_attack",
+            "source": "ally_004",
+            "target": "enemy_003",
+            "target_hp_after": 9
+          },
+          "tick": 180,
+          "type": "damage"
+        },
+        {
+          "event_id": "evt_000283",
+          "payload": {
+            "action_interval_ticks": 18,
+            "current_tick": 180,
+            "next_action_tick": 198,
+            "reason": "after_action",
+            "unit": "ally_004"
+          },
+          "tick": 180,
+          "type": "action_scheduled"
+        },
+        {
+          "event_id": "evt_000284",
+          "payload": {
+            "attacker": "ally_006",
+            "target": "enemy_006",
+            "target_reason": "frontline_exposed_same_column",
+            "target_score": {
+              "column": 40,
+              "exposure": 100,
+              "final": 227,
+              "low_hp": 21,
+              "role": 24,
+              "threat": 42,
+              "tie_break": 2
+            }
+          },
+          "tick": 180,
+          "type": "attack"
+        },
+        {
+          "event_id": "evt_000285",
+          "payload": {
+            "amount": 4,
+            "reason": "basic_attack",
+            "source": "ally_006",
+            "target": "enemy_006",
+            "target_hp_after": 80
+          },
+          "tick": 180,
+          "type": "damage"
+        },
+        {
+          "event_id": "evt_000286",
+          "payload": {
+            "action_interval_ticks": 36,
+            "current_tick": 180,
+            "next_action_tick": 216,
+            "reason": "after_action",
+            "unit": "ally_006"
+          },
+          "tick": 180,
+          "type": "action_scheduled"
+        },
+        {
+          "event_id": "evt_000287",
+          "payload": {
+            "skill": "katana_slash",
+            "source": "enemy_003",
+            "target_reason": "current_target",
+            "target_score": {
+              "column": 40,
+              "exposure": 100,
+              "final": 249,
+              "low_hp": 60,
+              "role": 18,
+              "threat": 31,
+              "tie_break": 0
+            },
+            "targets": [
+              "ally_001"
+            ],
+            "trigger": "on_attack"
+          },
+          "tick": 180,
+          "type": "skill_trigger"
+        },
+        {
+          "event_id": "evt_000288",
+          "payload": {
+            "amount": 11,
+            "reason": "skill:katana_slash",
+            "source": "enemy_003",
+            "target": "ally_001",
+            "target_hp_after": 68
+          },
+          "tick": 180,
+          "type": "damage"
+        },
+        {
+          "event_id": "evt_000289",
+          "payload": {
+            "cooldown_ticks": 20,
+            "ready_tick": 200,
+            "skill": "katana_slash",
+            "source": "enemy_003",
+            "start_tick": 180
+          },
+          "tick": 180,
+          "type": "skill_cooldown"
+        },
+        {
+          "event_id": "evt_000290",
+          "payload": {
+            "action_interval_ticks": 20,
+            "current_tick": 180,
+            "next_action_tick": 200,
+            "reason": "after_action",
+            "unit": "enemy_003"
+          },
+          "tick": 180,
+          "type": "action_scheduled"
+        },
+        {
+          "event_id": "evt_000291",
+          "payload": {
+            "attacker": "enemy_006",
+            "target": "ally_004",
+            "target_reason": "frontline_exposed_adjacent_column",
+            "target_score": {
+              "column": 30,
+              "exposure": 60,
+              "final": 254,
+              "low_hp": 106,
+              "role": 12,
+              "threat": 46,
+              "tie_break": 2
+            }
+          },
+          "tick": 180,
+          "type": "attack"
+        },
+        {
+          "event_id": "evt_000292",
+          "payload": {
+            "amount": 6,
+            "reason": "basic_attack",
+            "source": "enemy_006",
+            "target": "ally_004",
+            "target_hp_after": 3
+          },
+          "tick": 180,
+          "type": "damage"
+        },
+        {
+          "event_id": "evt_000293",
+          "payload": {
+            "action_interval_ticks": 36,
+            "current_tick": 180,
+            "next_action_tick": 216,
+            "reason": "after_action",
+            "unit": "enemy_006"
+          },
+          "tick": 180,
+          "type": "action_scheduled"
+        }
+      ],
+      "tick": 180
+    },
+    {
+      "events": [
+        {
+          "event_id": "evt_000294",
+          "payload": {
+            "attacker": "ally_001",
+            "target": "enemy_003",
+            "target_reason": "frontline_exposed_same_column",
+            "target_score": {
+              "column": 40,
+              "exposure": 100,
+              "final": 306,
+              "low_hp": 110,
+              "role": 20,
+              "threat": 36,
+              "tie_break": 0
+            }
+          },
+          "tick": 192,
+          "type": "attack"
+        },
+        {
+          "event_id": "evt_000295",
+          "payload": {
+            "amount": 8,
+            "reason": "basic_attack",
+            "source": "ally_001",
+            "target": "enemy_003",
+            "target_hp_after": 1
+          },
+          "tick": 192,
+          "type": "damage"
+        },
+        {
+          "event_id": "evt_000296",
+          "payload": {
+            "action_interval_ticks": 32,
+            "current_tick": 192,
+            "next_action_tick": 224,
+            "reason": "after_action",
+            "unit": "ally_001"
+          },
+          "tick": 192,
+          "type": "action_scheduled"
+        }
+      ],
+      "tick": 192
+    },
+    {
+      "events": [
+        {
+          "event_id": "evt_000297",
+          "payload": {
+            "skill": "bow_shot",
+            "source": "enemy_005",
+            "target_reason": "current_target",
+            "target_score": {
+              "column": 30,
+              "exposure": 60,
+              "final": 208,
+              "low_hp": 69,
+              "role": 18,
+              "threat": 31,
+              "tie_break": 0
+            },
+            "targets": [
+              "ally_001"
+            ],
+            "trigger": "on_attack"
+          },
+          "tick": 196,
+          "type": "skill_trigger"
+        },
+        {
+          "event_id": "evt_000298",
+          "payload": {
+            "amount": 2,
+            "reason": "skill:bow_shot",
+            "source": "enemy_005",
+            "target": "ally_001",
+            "target_hp_after": 66
+          },
+          "tick": 196,
+          "type": "damage"
+        },
+        {
+          "event_id": "evt_000299",
+          "payload": {
+            "cooldown_ticks": 30,
+            "ready_tick": 226,
+            "skill": "bow_shot",
+            "source": "enemy_005",
+            "start_tick": 196
+          },
+          "tick": 196,
+          "type": "skill_cooldown"
+        },
+        {
+          "event_id": "evt_000300",
+          "payload": {
+            "action_interval_ticks": 28,
+            "current_tick": 196,
+            "next_action_tick": 224,
+            "reason": "after_action",
+            "unit": "enemy_005"
+          },
+          "tick": 196,
+          "type": "action_scheduled"
+        }
+      ],
+      "tick": 196
+    },
+    {
+      "events": [
+        {
+          "event_id": "evt_000301",
+          "payload": {
+            "attacker": "ally_004",
+            "target": "enemy_003",
+            "target_reason": "frontline_exposed_adjacent_column",
+            "target_score": {
+              "column": 30,
+              "exposure": 60,
+              "final": 250,
+              "low_hp": 118,
+              "role": 6,
+              "threat": 36,
+              "tie_break": 0
+            }
+          },
+          "tick": 198,
+          "type": "attack"
+        },
+        {
+          "event_id": "evt_000302",
+          "payload": {
+            "amount": 23,
+            "reason": "basic_attack",
+            "source": "ally_004",
+            "target": "enemy_003",
+            "target_hp_after": 0
+          },
+          "tick": 198,
+          "type": "damage"
+        },
+        {
+          "event_id": "evt_000303",
+          "payload": {
+            "unit": "enemy_003"
+          },
+          "tick": 198,
+          "type": "death"
+        },
+        {
+          "event_id": "evt_000304",
+          "payload": {
+            "action_interval_ticks": 18,
+            "current_tick": 198,
+            "next_action_tick": 216,
+            "reason": "after_action",
+            "unit": "ally_004"
+          },
+          "tick": 198,
+          "type": "action_scheduled"
+        }
+      ],
+      "tick": 198
+    },
+    {
+      "events": [
+        {
+          "event_id": "evt_000305",
+          "payload": {
+            "skill": "katana_slash",
+            "source": "ally_003",
+            "target_reason": "current_target",
+            "target_score": {
+              "column": 30,
+              "exposure": 60,
+              "final": 257,
+              "low_hp": 101,
+              "role": 18,
+              "threat": 48,
+              "tie_break": 0
+            },
+            "targets": [
+              "enemy_005"
+            ],
+            "trigger": "on_attack"
+          },
+          "tick": 200,
+          "type": "skill_trigger"
+        },
+        {
+          "event_id": "evt_000306",
+          "payload": {
+            "amount": 34,
+            "reason": "skill:katana_slash",
+            "source": "ally_003",
+            "target": "enemy_005",
+            "target_hp_after": 0
+          },
+          "tick": 200,
+          "type": "damage"
+        },
+        {
+          "event_id": "evt_000307",
+          "payload": {
+            "unit": "enemy_005"
+          },
+          "tick": 200,
+          "type": "death"
+        },
+        {
+          "event_id": "evt_000308",
+          "payload": {
+            "cooldown_ticks": 20,
+            "ready_tick": 220,
+            "skill": "katana_slash",
+            "source": "ally_003",
+            "start_tick": 200
+          },
+          "tick": 200,
+          "type": "skill_cooldown"
+        },
+        {
+          "event_id": "evt_000309",
+          "payload": {
+            "action_interval_ticks": 20,
+            "current_tick": 200,
+            "next_action_tick": 220,
+            "reason": "after_action",
+            "unit": "ally_003"
+          },
+          "tick": 200,
+          "type": "action_scheduled"
+        }
+      ],
+      "tick": 200
+    },
+    {
+      "events": [
+        {
+          "event_id": "evt_000310",
+          "payload": {
+            "attacker": "ally_004",
+            "target": "enemy_006",
+            "target_reason": "frontline_exposed_adjacent_column",
+            "target_score": {
+              "column": 30,
+              "exposure": 60,
+              "final": 177,
+              "low_hp": 25,
+              "role": 20,
+              "threat": 42,
+              "tie_break": 0
+            }
+          },
+          "tick": 216,
+          "type": "attack"
+        },
+        {
+          "event_id": "evt_000311",
+          "payload": {
+            "amount": 23,
+            "reason": "basic_attack",
+            "source": "ally_004",
+            "target": "enemy_006",
+            "target_hp_after": 57
+          },
+          "tick": 216,
+          "type": "damage"
+        },
+        {
+          "event_id": "evt_000312",
+          "payload": {
+            "action_interval_ticks": 18,
+            "current_tick": 216,
+            "next_action_tick": 234,
+            "reason": "after_action",
+            "unit": "ally_004"
+          },
+          "tick": 216,
+          "type": "action_scheduled"
+        },
+        {
+          "event_id": "evt_000313",
+          "payload": {
+            "attacker": "ally_006",
+            "target": "enemy_006",
+            "target_reason": "frontline_exposed_same_column",
+            "target_score": {
+              "column": 40,
+              "exposure": 100,
+              "final": 258,
+              "low_hp": 52,
+              "role": 24,
+              "threat": 42,
+              "tie_break": 0
+            }
+          },
+          "tick": 216,
+          "type": "attack"
+        },
+        {
+          "event_id": "evt_000314",
+          "payload": {
+            "amount": 4,
+            "reason": "basic_attack",
+            "source": "ally_006",
+            "target": "enemy_006",
+            "target_hp_after": 53
+          },
+          "tick": 216,
+          "type": "damage"
+        },
+        {
+          "event_id": "evt_000315",
+          "payload": {
+            "action_interval_ticks": 36,
+            "current_tick": 216,
+            "next_action_tick": 252,
+            "reason": "after_action",
+            "unit": "ally_006"
+          },
+          "tick": 216,
+          "type": "action_scheduled"
+        },
+        {
+          "event_id": "evt_000316",
+          "payload": {
+            "attacker": "enemy_006",
+            "target": "ally_004",
+            "target_reason": "frontline_exposed_adjacent_column",
+            "target_score": {
+              "column": 30,
+              "exposure": 60,
+              "final": 263,
+              "low_hp": 115,
+              "role": 12,
+              "threat": 46,
+              "tie_break": 2
+            }
+          },
+          "tick": 216,
+          "type": "attack"
+        },
+        {
+          "event_id": "evt_000317",
+          "payload": {
+            "amount": 6,
+            "reason": "basic_attack",
+            "source": "enemy_006",
+            "target": "ally_004",
+            "target_hp_after": 0
+          },
+          "tick": 216,
+          "type": "damage"
+        },
+        {
+          "event_id": "evt_000318",
+          "payload": {
+            "unit": "ally_004"
+          },
+          "tick": 216,
+          "type": "death"
+        },
+        {
+          "event_id": "evt_000319",
+          "payload": {
+            "action_interval_ticks": 36,
+            "current_tick": 216,
+            "next_action_tick": 252,
+            "reason": "after_action",
+            "unit": "enemy_006"
+          },
+          "tick": 216,
+          "type": "action_scheduled"
+        }
+      ],
+      "tick": 216
+    },
+    {
+      "events": [
+        {
+          "event_id": "evt_000320",
+          "payload": {
+            "skill": "katana_slash",
+            "source": "ally_003",
+            "target_reason": "current_target",
+            "target_score": {
+              "column": 0,
+              "exposure": 0,
+              "final": 117,
+              "low_hp": 57,
+              "role": 18,
+              "threat": 42,
+              "tie_break": 0
+            },
+            "targets": [
+              "enemy_006"
+            ],
+            "trigger": "on_attack"
+          },
+          "tick": 220,
+          "type": "skill_trigger"
+        },
+        {
+          "event_id": "evt_000321",
+          "payload": {
+            "amount": 33,
+            "reason": "skill:katana_slash",
+            "source": "ally_003",
+            "target": "enemy_006",
+            "target_hp_after": 20
+          },
+          "tick": 220,
+          "type": "damage"
+        },
+        {
+          "event_id": "evt_000322",
+          "payload": {
+            "cooldown_ticks": 20,
+            "ready_tick": 240,
+            "skill": "katana_slash",
+            "source": "ally_003",
+            "start_tick": 220
+          },
+          "tick": 220,
+          "type": "skill_cooldown"
+        },
+        {
+          "event_id": "evt_000323",
+          "payload": {
+            "action_interval_ticks": 20,
+            "current_tick": 220,
+            "next_action_tick": 240,
+            "reason": "after_action",
+            "unit": "ally_003"
+          },
+          "tick": 220,
+          "type": "action_scheduled"
+        }
+      ],
+      "tick": 220
+    },
+    {
+      "events": [
+        {
+          "event_id": "evt_000324",
+          "payload": {
+            "attacker": "ally_001",
+            "target": "enemy_006",
+            "target_reason": "frontline_exposed_remote",
+            "target_score": {
+              "column": 0,
+              "exposure": 0,
+              "final": 143,
+              "low_hp": 96,
+              "role": 5,
+              "threat": 42,
+              "tie_break": 0
+            }
+          },
+          "tick": 224,
+          "type": "attack"
+        },
+        {
+          "event_id": "evt_000325",
+          "payload": {
+            "amount": 8,
+            "reason": "basic_attack",
+            "source": "ally_001",
+            "target": "enemy_006",
+            "target_hp_after": 12
+          },
+          "tick": 224,
+          "type": "damage"
+        },
+        {
+          "event_id": "evt_000326",
+          "payload": {
+            "action_interval_ticks": 32,
+            "current_tick": 224,
+            "next_action_tick": 256,
+            "reason": "after_action",
+            "unit": "ally_001"
+          },
+          "tick": 224,
+          "type": "action_scheduled"
+        }
+      ],
+      "tick": 224
+    },
+    {
+      "events": [
+        {
+          "event_id": "evt_000327",
+          "payload": {
+            "skill": "katana_slash",
+            "source": "ally_003",
+            "target_reason": "current_target",
+            "target_score": {
+              "column": 0,
+              "exposure": 0,
+              "final": 165,
+              "low_hp": 105,
+              "role": 18,
+              "threat": 42,
+              "tie_break": 0
+            },
+            "targets": [
+              "enemy_006"
+            ],
+            "trigger": "on_attack"
+          },
+          "tick": 240,
+          "type": "skill_trigger"
+        },
+        {
+          "event_id": "evt_000328",
+          "payload": {
+            "amount": 33,
+            "reason": "skill:katana_slash",
+            "source": "ally_003",
+            "target": "enemy_006",
+            "target_hp_after": 0
+          },
+          "tick": 240,
+          "type": "damage"
+        },
+        {
+          "event_id": "evt_000329",
+          "payload": {
+            "unit": "enemy_006"
+          },
+          "tick": 240,
+          "type": "death"
+        },
+        {
+          "event_id": "evt_000330",
+          "payload": {
+            "cooldown_ticks": 20,
+            "ready_tick": 260,
+            "skill": "katana_slash",
+            "source": "ally_003",
+            "start_tick": 240
+          },
+          "tick": 240,
+          "type": "skill_cooldown"
+        },
+        {
+          "event_id": "evt_000331",
+          "payload": {
+            "action_interval_ticks": 20,
+            "current_tick": 240,
+            "next_action_tick": 260,
+            "reason": "after_action",
+            "unit": "ally_003"
+          },
+          "tick": 240,
+          "type": "action_scheduled"
+        },
+        {
+          "event_id": "evt_000332",
+          "payload": {
+            "end_tick": 240,
+            "loser_alive": 0,
+            "loser_total_hp": 0,
+            "reason": "enemy_eliminated",
+            "summary": "ally won by enemy_eliminated at tick 240; winner_alive=3, loser_alive=0, winner_total_hp=286, loser_total_hp=0",
+            "winner": "ally",
+            "winner_alive": 3,
+            "winner_total_hp": 286
+          },
+          "tick": 240,
+          "type": "battle_end"
+        }
+      ],
+      "tick": 240
+    }
+  ]
+}

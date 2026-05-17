@@ -68,6 +68,15 @@ jobs:
       - name: Static MVP smoke / MVP 冒烟验证
         run: python tools/smoke_phase1_mvp.py --run runs/demo_001 --viewer web-viewer --battle demo_001 --seed 1001
 
+      - name: Generate demo scenarios / 生成 Demo 场景
+        run: python tools/generate_demo_scenarios.py --source config/source --out web-viewer/public/samples --battle demo_001 --seeds 1001 1002 1003
+
+      - name: Scenario smoke / 场景冒烟验证
+        run: python tools/smoke_demo_scenarios.py --samples web-viewer/public/samples
+
+      - name: Check curated fixture freshness / 检查固化样例是否过期
+        run: git diff --exit-code -- web-viewer/public/samples
+
       - name: Install web viewer dependencies / 安装 Web 回放器依赖
         working-directory: web-viewer
         # Windows/Linux optional dependency lockfile churn currently makes npm ci unstable in CI;

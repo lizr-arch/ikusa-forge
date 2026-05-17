@@ -1,0 +1,44 @@
+{
+  "scenarios": [
+    {
+      "battle_id": "demo_001",
+      "description": "Default demo battle with formation, synergy, skills, statuses, cooldowns, action scheduling, and victory explanation.",
+      "expected": {
+        "reason": "enemy_eliminated",
+        "winner": "ally"
+      },
+      "id": "demo_001",
+      "name": "Baseline Tactical Demo",
+      "replay_url": "/samples/demo_001/replay.json",
+      "report_url": "/samples/demo_001/battle_report.json",
+      "seed": 1001
+    },
+    {
+      "battle_id": "demo_001",
+      "description": "Demo battle scenario slot for seed 1002. Current combat is deterministic; this preserves a future randomized scenario slot without changing rules.",
+      "expected": {
+        "reason": "enemy_eliminated",
+        "winner": "ally"
+      },
+      "id": "demo_seed_1002",
+      "name": "Baseline Tactical Demo Seed 1002",
+      "replay_url": "/samples/demo_seed_1002/replay.json",
+      "report_url": "/samples/demo_seed_1002/battle_report.json",
+      "seed": 1002
+    },
+    {
+      "battle_id": "demo_001",
+      "description": "Demo battle scenario slot for seed 1003. Current combat is deterministic; this preserves a future randomized scenario slot without changing rules.",
+      "expected": {
+        "reason": "enemy_eliminated",
+        "winner": "ally"
+      },
+      "id": "demo_seed_1003",
+      "name": "Baseline Tactical Demo Seed 1003",
+      "replay_url": "/samples/demo_seed_1003/replay.json",
+      "report_url": "/samples/demo_seed_1003/battle_report.json",
+      "seed": 1003
+    }
+  ],
+  "schema_version": "scenario_manifest.v0.1"
+}

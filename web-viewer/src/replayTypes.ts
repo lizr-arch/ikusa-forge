@@ -236,3 +236,24 @@ export interface BattleReport {
   top_units?: ReportTopUnits;
   key_moments?: KeyMoment[];
 }
+
+export interface ScenarioExpectedResult {
+  winner?: string | null;
+  reason?: string | null;
+}
+
+export interface DemoScenario {
+  id: string;
+  battle_id?: string;
+  seed?: number;
+  name: string;
+  description: string;
+  replay_url: string;
+  report_url: string;
+  expected?: ScenarioExpectedResult;
+}
+
+export interface ScenarioManifest {
+  schema_version: string;
+  scenarios: DemoScenario[];
+}

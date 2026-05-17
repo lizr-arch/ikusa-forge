@@ -1,4 +1,11 @@
-import type { BattleReport, ReplayDocument, ReplayEvent, ReplayTick } from "./replayTypes";
+import type {
+  BattleReport,
+  DemoScenario,
+  ReplayDocument,
+  ReplayEvent,
+  ReplayTick,
+  ScenarioManifest,
+} from "./replayTypes";
 
 export type JsonFileResult<T> =
   | { ok: true; fileName: string; data: T }
@@ -14,6 +21,28 @@ export const readBattleReportFile = async (
   file: File | null,
 ): Promise<JsonFileResult<BattleReport>> => {
   return readJsonFile(file, "battle_report.json", isBattleReport);
+};
+
+export type JsonUrlResult<T> =
+  | { ok: true; url: string; data: T }
+  | { ok: false; url: string; error: string };
+
+export const fetchScenarioManifest = async (
+  url = "/samples/manifest.json",
+): Promise<JsonUrlResult<ScenarioManifest>> => {
+  return fetchJsonUrl(url, "scenario manifest", isScenarioManifest);
+};
+
+export const fetchReplayDocument = async (
+  url: string,
+): Promise<JsonUrlResult<ReplayDocument>> => {
+  return fetchJsonUrl(url, "replay.json", isReplayDocument);
+};
+
+export const fetchBattleReport = async (
+  url: string,
+): Promise<JsonUrlResult<BattleReport>> => {
+  return fetchJsonUrl(url, "battle_report.json", isBattleReport);
 };
 
 const readJsonFile = async <T>(
@@ -42,6 +71,26 @@ const readJsonFile = async <T>(
       fileName: file.name,
       error: `${file.name} could not be parsed: ${errorMessage(error)}`,
     };
+  }
+};
+
+const fetchJsonUrl = async <T>(
+  url: string,
+  label: string,
+  validate: (value: unknown) => value is T,
+): Promise<JsonUrlResult<T>> => {
+  try {
+    const response = await fetch(url, { cache: "no-cache" });
+    if (!response.ok) {
+      return { ok: false, url, error: `${label} could not be loaded from ${url}: ${response.status}` };
+    }
+    const parsed: unknown = await response.json();
+    if (!validate(parsed)) {
+      return { ok: false, url, error: `${url} does not match the expected ${label} shape.` };
+    }
+    return { ok: true, url, data: parsed };
+  } catch (error: unknown) {
+    return { ok: false, url, error: `${label} could not be loaded from ${url}: ${errorMessage(error)}` };
   }
 };
 
@@ -98,6 +147,26 @@ const isBattleReport = (value: unknown): value is BattleReport => {
     return false;
   }
   return true;
+};
+
+const isScenarioManifest = (value: unknown): value is ScenarioManifest => {
+  if (!isRecord(value) || value.schema_version !== "scenario_manifest.v0.1" || !Array.isArray(value.scenarios)) {
+    return false;
+  }
+  return value.scenarios.every(isDemoScenario);
+};
+
+const isDemoScenario = (value: unknown): value is DemoScenario => {
+  if (!isRecord(value)) {
+    return false;
+  }
+  return (
+    typeof value.id === "string" &&
+    typeof value.name === "string" &&
+    typeof value.description === "string" &&
+    typeof value.replay_url === "string" &&
+    typeof value.report_url === "string"
+  );
 };
 
 const isRecord = (value: unknown): value is Record<string, unknown> => {
