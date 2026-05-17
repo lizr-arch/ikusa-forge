@@ -28,6 +28,20 @@
         <aside class="side-panel" aria-label="Replay tools">
           <section class="panel-block" aria-labelledby="loader-heading">
             <h2 id="loader-heading">Loader</h2>
+            <div id="scenario-loader" class="scenario-loader" hidden aria-label="Scenario Selector">
+              <div class="scenario-loader-heading">
+                <h3>Scenario Selector</h3>
+                <span id="scenario-manifest-state">Manifest not loaded</span>
+              </div>
+              <label class="select-label">
+                <span>Scenario</span>
+                <select id="scenario-select"></select>
+              </label>
+              <div class="control-row">
+                <button id="load-baseline-demo" type="button" class="primary-button">Load Baseline Demo</button>
+                <button id="load-scenario" type="button">Load Scenario</button>
+              </div>
+            </div>
             <div id="demo-guidance" class="demo-guidance" aria-label="Demo Load Guidance">
               <h3>Demo Load Guidance</h3>
               <p>Generate demo files first:</p>
@@ -53,6 +67,11 @@ python tools/run_demo_battle.py --battle demo_001 --seed 1001 --config config/ge
               <input id="report-file" type="file" accept="application/json,.json" />
             </label>
             <button id="load-files" type="button" class="primary-button">Load files</button>
+          </section>
+
+          <section class="panel-block" aria-labelledby="scenario-summary-heading">
+            <h2 id="scenario-summary-heading">Scenario Summary</h2>
+            <div id="scenario-summary"></div>
           </section>
 
           <section class="panel-block" aria-labelledby="summary-heading">

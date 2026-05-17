@@ -13,15 +13,27 @@ import {
   type FlatReplayEvent,
   type VisualState,
 } from "./replayState";
-import { readBattleReportFile, readReplayDocumentFile } from "./replayLoader";
+import {
+  fetchBattleReport,
+  fetchReplayDocument,
+  fetchScenarioManifest,
+  readBattleReportFile,
+  readReplayDocumentFile,
+} from "./replayLoader";
 import { renderReport } from "./reportView";
+import { renderScenarioSummary } from "./scenarioSummaryView";
 import { renderTimeline, type TimelineFilter } from "./timelineView";
 import { renderUnitDetail } from "./unitDetailView";
-import type { BattleReport, ReplayDocument } from "./replayTypes";
+import type { BattleReport, DemoScenario, ReplayDocument, ScenarioManifest } from "./replayTypes";
 
 const replayInput = element<HTMLInputElement>("replay-file");
 const reportInput = element<HTMLInputElement>("report-file");
 const loadFilesButton = element<HTMLButtonElement>("load-files");
+const scenarioLoader = element<HTMLDivElement>("scenario-loader");
+const scenarioManifestState = element<HTMLSpanElement>("scenario-manifest-state");
+const scenarioSelect = element<HTMLSelectElement>("scenario-select");
+const loadBaselineDemoButton = element<HTMLButtonElement>("load-baseline-demo");
+const loadScenarioButton = element<HTMLButtonElement>("load-scenario");
 const playPauseButton = element<HTMLButtonElement>("play-pause");
 const stepTickButton = element<HTMLButtonElement>("step-tick");
 const previousEventButton = element<HTMLButtonElement>("previous-event");
@@ -35,6 +47,7 @@ const eventReadout = element<HTMLDivElement>("event-readout");
 const replayLoadState = element<HTMLElement>("replay-load-state");
 const reportLoadState = element<HTMLElement>("report-load-state");
 const boardContainer = element<HTMLDivElement>("board");
+const scenarioSummaryContainer = element<HTMLDivElement>("scenario-summary");
 const battleSummaryContainer = element<HTMLDivElement>("battle-summary");
 const eventHighlightContainer = element<HTMLDivElement>("event-highlight");
 const timelineContainer = element<HTMLDivElement>("timeline");
@@ -51,9 +64,34 @@ let timelineFilter: TimelineFilter = "all";
 let playbackTimer: number | null = null;
 let loadedReplayFileName: string | null = null;
 let loadedReportFileName: string | null = null;
+let scenarioManifest: ScenarioManifest | null = null;
+let selectedScenarioId: string | null = null;
+let loadedScenario: DemoScenario | null = null;
 
 loadFilesButton.addEventListener("click", () => {
   void loadFiles();
+});
+
+scenarioSelect.addEventListener("change", () => {
+  selectedScenarioId = scenarioSelect.value || null;
+});
+
+loadBaselineDemoButton.addEventListener("click", () => {
+  const scenario = baselineScenario();
+  if (!scenario) {
+    setStatus("Scenario manifest is not available.");
+    return;
+  }
+  void loadScenario(scenario);
+});
+
+loadScenarioButton.addEventListener("click", () => {
+  const scenario = selectedScenario();
+  if (!scenario) {
+    setStatus("Select a scenario first.");
+    return;
+  }
+  void loadScenario(scenario);
 });
 
 playPauseButton.addEventListener("click", () => {
@@ -123,6 +161,7 @@ const loadFiles = async (): Promise<void> => {
 
   replay = replayResult.data;
   report = loadedReport;
+  loadedScenario = null;
   loadedReplayFileName = replayResult.fileName;
   loadedReportFileName = loadedReport ? reportMessage.replace(" loaded", "") : null;
   flatEvents = flattenReplayEvents(replay);
@@ -130,6 +169,53 @@ const loadFiles = async (): Promise<void> => {
   selectedEventIndex = null;
   visualState = seekToTick(replay, 0);
   setStatus(`${replayResult.fileName} loaded; ${reportMessage}`);
+  render();
+};
+
+const loadScenarioManifest = async (): Promise<void> => {
+  const result = await fetchScenarioManifest();
+  if (!result.ok) {
+    scenarioManifest = null;
+    selectedScenarioId = null;
+    render();
+    return;
+  }
+
+  scenarioManifest = result.data;
+  selectedScenarioId = baselineScenario()?.id ?? result.data.scenarios[0]?.id ?? null;
+  render();
+};
+
+const loadScenario = async (scenario: DemoScenario): Promise<void> => {
+  stopPlayback();
+  setStatus(`Loading scenario ${scenario.id}`);
+
+  const [replayResult, reportResult] = await Promise.all([
+    fetchReplayDocument(scenario.replay_url),
+    fetchBattleReport(scenario.report_url),
+  ]);
+
+  if (!replayResult.ok) {
+    setStatus(replayResult.error);
+    return;
+  }
+  if (!reportResult.ok) {
+    setStatus(reportResult.error);
+    return;
+  }
+
+  replay = replayResult.data;
+  report = reportResult.data;
+  loadedScenario = scenario;
+  selectedScenarioId = scenario.id;
+  loadedReplayFileName = scenario.replay_url;
+  loadedReportFileName = scenario.report_url;
+  flatEvents = flattenReplayEvents(replay);
+  selectedUnitId = null;
+  selectedEventIndex = null;
+  timelineFilter = "all";
+  visualState = seekToTick(replay, 0);
+  setStatus(`scenario loaded: ${scenario.id}`);
   render();
 };
 
@@ -208,6 +294,7 @@ const playbackSpeed = (): number => {
 const render = (): void => {
   const maxTick = replay ? getReplayMaxTick(replay) : 0;
   const currentEvent = currentEventEntry();
+  renderScenarioControls();
   tickSlider.max = String(maxTick);
   tickSlider.value = String(Math.min(visualState.currentTick, maxTick));
   tickSlider.disabled = !replay;
@@ -235,6 +322,12 @@ const render = (): void => {
     },
   });
   renderBattleSummary(battleSummaryContainer, {
+    replay,
+    report,
+    eventCount: flatEvents.length,
+  });
+  renderScenarioSummary(scenarioSummaryContainer, {
+    scenario: loadedScenario,
     replay,
     report,
     eventCount: flatEvents.length,
@@ -273,6 +366,36 @@ const selectUnit = (unitId: string): void => {
 const currentEventEntry = (): FlatReplayEvent | null => {
   const index = selectedEventIndex ?? visualState.appliedEventIndex;
   return index === null ? null : flatEvents[index] ?? null;
+};
+
+const renderScenarioControls = (): void => {
+  const scenarios = scenarioManifest?.scenarios ?? [];
+  scenarioLoader.hidden = scenarios.length === 0;
+  scenarioManifestState.textContent = scenarios.length > 0 ? `${scenarios.length} scenarios` : "Manifest not loaded";
+  loadBaselineDemoButton.disabled = scenarios.length === 0;
+  loadScenarioButton.disabled = scenarios.length === 0;
+  scenarioSelect.disabled = scenarios.length === 0;
+
+  const selectedId = selectedScenarioId ?? scenarios[0]?.id;
+  scenarioSelect.replaceChildren();
+  for (const scenario of scenarios) {
+    const option = document.createElement("option");
+    option.value = scenario.id;
+    option.textContent = `${scenario.id} - ${scenario.name}`;
+    option.selected = scenario.id === selectedId;
+    scenarioSelect.append(option);
+  }
+};
+
+const selectedScenario = (): DemoScenario | null => {
+  const scenarios = scenarioManifest?.scenarios ?? [];
+  const scenarioId = selectedScenarioId ?? scenarioSelect.value;
+  return scenarios.find((scenario) => scenario.id === scenarioId) ?? scenarios[0] ?? null;
+};
+
+const baselineScenario = (): DemoScenario | null => {
+  const scenarios = scenarioManifest?.scenarios ?? [];
+  return scenarios.find((scenario) => scenario.id === "demo_001") ?? scenarios[0] ?? null;
 };
 
 const unitHighlightsForEvent = (
@@ -366,3 +489,4 @@ function element<T extends HTMLElement>(id: string): T {
 }
 
 render();
+void loadScenarioManifest();

@@ -9,6 +9,7 @@
 - Formation bonus / 阵型加成（推荐规则）与 Synergy application / 羁绊应用（推荐规则）在 tick 0 一次性应用并可追踪
 - Targeting explainability / 目标选择可解释性（`target_reason` / `target_score`）初步链路
 - Combat System Pack / 战斗系统包 explainability（`status_apply`、`skill_cooldown`、`action_scheduled`、`victory_explanation`）
+- Demo One-Click and Scenarios / 一键 Demo 与多场景（Scenario Manifest / 场景清单、Curated Fixtures / 固化样例数据、Scenario Selector / 场景选择器）
 - Browser Smoke Test / 浏览器冒烟测试（Playwright 基础检查）
 - Verified real `demo_001` modifier evidence：
   - formation modifiers in report summary / 战报阵型修正数 > 0
@@ -35,6 +36,7 @@
 - #12 `feat(sim): add tactical depth pack` (current / pending review)
 - #13 `ci: add phase 2 validation workflow` (current / pending review)
 - `phase2/combat-system-pack`: Combat System Pack / 战斗系统包 (current / pending review)
+- `phase2/demo-one-click-and-scenarios`: Demo One-Click and Scenarios / 一键 Demo 与多场景 (current / pending review)
 
 ## Current Commands / 当前命令
 
@@ -43,6 +45,8 @@ python tools/export_xlsx_to_json.py --input config/source --output config/genera
 python tools/validate_config.py --input config/generated
 python tools/run_demo_battle.py --battle demo_001 --seed 1001 --config config/generated --out runs/demo_001 --mode basic
 python tools/smoke_phase1_mvp.py --run runs/demo_001 --viewer web-viewer --battle demo_001 --seed 1001
+python tools/generate_demo_scenarios.py --source config/source --out web-viewer/public/samples --battle demo_001 --seeds 1001 1002 1003
+python tools/smoke_demo_scenarios.py --samples web-viewer/public/samples
 python -m unittest discover -s sim-python/tests
 
 cd web-viewer
@@ -62,11 +66,22 @@ npm run test:e2e
 - `runs/demo_001/run_summary.md`
 - `web-viewer/dist/`（前端产物）
 
+提交的演示样例产物（用于 One-click Demo / 一键 Demo）：
+
+- `web-viewer/public/samples/manifest.json`
+- `web-viewer/public/samples/demo_001/replay.json`
+- `web-viewer/public/samples/demo_001/battle_report.json`
+- `web-viewer/public/samples/demo_seed_1002/replay.json`
+- `web-viewer/public/samples/demo_seed_1002/battle_report.json`
+- `web-viewer/public/samples/demo_seed_1003/replay.json`
+- `web-viewer/public/samples/demo_seed_1003/battle_report.json`
+
 ## Known Limits / 已知限制
 
 - 离散 tick/event 播放，不是平滑动画
 - 浏览器冒烟覆盖，非完整 E2E
 - 无视觉回归
+- 无 Scenario Comparison / 场景对比 side-by-side UI（当前只提供场景选择和静态样例）
 - 无 C# host / C# 宿主
 - 无 Godot
 - 阵型加成和羁绊逻辑已应用，但尚未进入 CI 流程与可玩发布闭环
@@ -81,5 +96,6 @@ npm run test:e2e
 
 1. `phase2/combat-behavior-pack`（若目标是提升战斗行为可解释性）
 2. `phase2/combat-system-pack`（若目标是状态、冷却、行动时间线和胜负解释可见性）
-3. `phase2/ci-workflow`（若目标是稳定交付）
-4. `phase1/viewer-polish`（若目标是演示稳定）
+3. `phase2/demo-one-click-and-scenarios`（若目标是降低演示和冒烟门槛）
+4. `phase2/ci-workflow`（若目标是稳定交付）
+5. `phase1/viewer-polish`（若目标是演示稳定）

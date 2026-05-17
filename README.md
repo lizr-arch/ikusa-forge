@@ -41,6 +41,7 @@ Current Python simulator status:
 - Formation bonus / 阵型加成 与 Synergy application / 羁绊应用（当前 demo 已按 tick 0 一次性应用）
 - Report explainability / 报表可解释性（`stat_modifier` 计入回放与战报）
 - Combat System Pack / 战斗系统包（`status_apply`、`skill_cooldown`、`action_scheduled`、`victory_explanation` 可在 replay/report/viewer 中检查）
+- Demo One-Click and Scenarios / 一键 Demo 与多场景（viewer 可从静态 Scenario Manifest / 场景清单加载 Curated Fixtures / 固化样例数据，同时保留手动 file input）
 
 Phase 1 Demo Package / 第一阶段演示包 / Phase 2 Tactical Depth notes are available at:
 
@@ -50,6 +51,7 @@ Phase 1 Demo Package / 第一阶段演示包 / Phase 2 Tactical Depth notes are 
 - `docs/process/ci-workflow-v0.1.md`
 - `docs/process/combat-behavior-pack-v0.1.md`
 - `docs/process/combat-system-pack-v0.1.md`
+- `docs/process/demo-one-click-and-scenarios-v0.1.md`
 
 Quick start for a full demo run / 一次完整演示最简命令:
 
@@ -58,6 +60,8 @@ python tools/export_xlsx_to_json.py --input config/source --output config/genera
 python tools/validate_config.py --input config/generated
 python tools/run_demo_battle.py --battle demo_001 --seed 1001 --config config/generated --out runs/demo_001 --mode basic
 python tools/smoke_phase1_mvp.py --run runs/demo_001 --viewer web-viewer --battle demo_001 --seed 1001
+python tools/generate_demo_scenarios.py --source config/source --out web-viewer/public/samples --battle demo_001 --seeds 1001 1002 1003
+python tools/smoke_demo_scenarios.py --samples web-viewer/public/samples
 python -m unittest discover -s sim-python/tests
 cd web-viewer
 npm install
@@ -76,6 +80,7 @@ npm run test:e2e
 
 CI uses `npm install` now because `npm ci` can fail on optional dependency lockfile churn across Windows/Linux.
 `npm ci` is still a goal, but it remains temporarily unavailable until lockfile stabilization.
+CI also regenerates Scenario Manifest / 场景清单 and Curated Fixtures / 固化样例数据, then runs `git diff --exit-code -- web-viewer/public/samples` to prove committed samples are fresh.
 
 Still future work:
 
@@ -115,11 +120,19 @@ npm run dev
 Then load:
 
 ```text
+Click Load Baseline Demo / 加载默认 Demo to load:
+web-viewer/public/samples/demo_001/replay.json
+web-viewer/public/samples/demo_001/battle_report.json
+```
+
+Manual file input / 手动文件输入 remains available for:
+
+```text
 runs/demo_001/replay.json
 runs/demo_001/battle_report.json
 ```
 
-The viewer keeps manual file inputs and now shows Demo Load Guidance / Demo 加载引导, Battle Summary / 战斗摘要, Event Highlight / 事件高亮, Report-to-Board Link / 战报到棋盘联动, and Key Moments navigation / 关键时刻跳转 for the generated `demo_001` run.
+The viewer keeps manual file inputs and now shows Scenario Selector / 场景选择器, Scenario Summary / 场景摘要, Demo Load Guidance / Demo 加载引导, Battle Summary / 战斗摘要, Event Highlight / 事件高亮, Report-to-Board Link / 战报到棋盘联动, and Key Moments navigation / 关键时刻跳转 for the generated `demo_001` run.
 It also surfaces Combat System Pack / 战斗系统包 evidence: active statuses / 当前状态, skill cooldowns / 技能冷却, next action tick / 下一行动 tick, and victory explanation / 胜负解释.
 
 Frontend verification:

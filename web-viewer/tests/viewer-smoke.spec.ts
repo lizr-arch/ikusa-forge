@@ -7,7 +7,60 @@ const replayPath = path.join(repoRoot, "runs", "demo_001", "replay.json");
 const reportPath = path.join(repoRoot, "runs", "demo_001", "battle_report.json");
 const debugTimelinePath = path.join(repoRoot, "runs", "demo_001", "debug_timeline.json");
 
-test("loads replay and report into the SVG replay viewer", async ({ page }) => {
+test("loads curated scenario from manifest", async ({ page }) => {
+  await page.goto("/");
+
+  await expect(page).toHaveTitle(/Ikusa Forge SVG Replay Viewer/);
+  await expect(page.locator("#scenario-loader")).toBeVisible();
+  await expect(page.locator("#scenario-loader")).toContainText("Scenario Selector");
+  await expect(page.locator("#scenario-manifest-state")).toContainText("3 scenarios");
+  await expect(page.locator("#scenario-select")).toContainText("demo_001");
+  await expect(page.locator("#replay-file")).toBeAttached();
+  await expect(page.locator("#report-file")).toBeAttached();
+
+  await page.locator("#load-baseline-demo").click();
+
+  await expect(page.locator("#status")).toContainText("scenario loaded: demo_001");
+  await expect(page.locator("#metadata")).toContainText("demo_001");
+  await expect(page.locator("#metadata")).toContainText("seed 1001");
+  await expect(page.locator("#replay-load-state")).toContainText("/samples/demo_001/replay.json loaded");
+  await expect(page.locator("#report-load-state")).toContainText("/samples/demo_001/battle_report.json loaded");
+
+  await expect(page.locator("#scenario-summary")).toContainText("Baseline Tactical Demo");
+  await expect(page.locator("#scenario-summary")).toContainText("demo_001");
+  await expect(page.locator("#scenario-summary")).toContainText("ally");
+  await expect(page.locator("#scenario-summary")).toContainText("enemy_eliminated");
+  await expect(page.locator("#scenario-summary")).toContainText("Status Applied");
+  await expect(page.locator("#scenario-summary")).toContainText("Skill Cooldowns");
+  await expect(page.locator("#scenario-summary")).toContainText("Actions Scheduled");
+
+  await expect(page.locator("#battle-summary")).toContainText("ally");
+  await expect(page.locator("#battle-summary")).toContainText("enemy_eliminated");
+  await expect(page.locator("#battle-summary")).toContainText("240");
+
+  await expect(page.getByRole("img", { name: "Replay board" })).toBeVisible();
+  await expect(page.locator(".unit-token")).toHaveCount(12);
+
+  const totalRows = await countTimelineRows(page);
+  expect(totalRows).toBeGreaterThan(0);
+  await expectFilteredTimelineRows(page, "status_apply");
+  await expectFilteredTimelineRows(page, "skill_cooldown");
+  await expectFilteredTimelineRows(page, "action_scheduled");
+
+  await page.locator(".timeline-filter select").selectOption("skill_cooldown");
+  await page.locator(".timeline-row").first().click();
+  await expect(page.locator("#event-highlight")).toContainText("ready_tick");
+  await page.locator(".timeline-filter select").selectOption("action_scheduled");
+  await page.locator(".timeline-row").first().click();
+  await expect(page.locator("#event-highlight")).toContainText("next_action_tick");
+
+  await page.locator('[aria-label="ally_001"]').click();
+  await expect(page.locator("#unit-detail")).toContainText("Next Action Tick");
+  await expect(page.locator("#report")).toContainText("Victory Explanation");
+  await expect(page.locator("#report")).toContainText("enemy_eliminated");
+});
+
+test("manual file input loading remains available", async ({ page }) => {
   const debugTimeline = JSON.parse(fs.readFileSync(debugTimelinePath, "utf8"));
   const modifierRows = debugTimeline.filter((event: { type?: string }) => event.type === "stat_modifier");
   const statusRows = debugTimeline.filter((event: { type?: string }) => event.type === "status_apply");

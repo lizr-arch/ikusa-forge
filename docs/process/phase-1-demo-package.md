@@ -2,7 +2,7 @@
 
 ## Purpose / 目的
 
-这是用于演示当前 Phase 1 MVP 的可交付说明。目标是给评审、演示、验收提供一套一致的运行和检查入口，不新增系统功能，不改战斗规则，不扩展回放器能力。
+这是用于演示当前 Phase 1 MVP 的可交付说明。目标是给评审、演示、验收提供一套一致的运行和检查入口；Demo One-Click / 一键 Demo 只扩展静态样例加载入口，不新增战斗系统功能，不改战斗规则。
 
 ## What This Demo Shows / 这个 Demo 展示什么
 
@@ -16,6 +16,7 @@
 - Battle Report / 战报
 - SVG Replay Viewer / SVG 回放调试器
 - Combat System Pack / 战斗系统包 explainability: status lifecycle / 状态生命周期, skill cooldown / 技能冷却, action timeline / 行动时间线, victory explanation / 胜负解释
+- Demo One-Click / 一键 Demo and Scenario Selector / 场景选择器 powered by Scenario Manifest / 场景清单
 - Browser Smoke / 浏览器冒烟测试
 
 ## Demo Prerequisites / 演示前置条件
@@ -34,6 +35,8 @@ python tools/export_xlsx_to_json.py --input config/source --output config/genera
 python tools/validate_config.py --input config/generated
 python tools/run_demo_battle.py --battle demo_001 --seed 1001 --config config/generated --out runs/demo_001 --mode basic
 python tools/smoke_phase1_mvp.py --run runs/demo_001 --viewer web-viewer --battle demo_001 --seed 1001
+python tools/generate_demo_scenarios.py --source config/source --out web-viewer/public/samples --battle demo_001 --seeds 1001 1002 1003
+python tools/smoke_demo_scenarios.py --samples web-viewer/public/samples
 python -m unittest discover -s sim-python/tests
 
 cd web-viewer
@@ -48,9 +51,9 @@ npm run dev -- --host 127.0.0.1
 ## Viewer Demo Steps / 回放器演示步骤
 
 1. 打开 `http://127.0.0.1:5173`
-2. 在页面查看 Demo Load Guidance / Demo 加载引导
-3. 加载 `runs/demo_001/replay.json`
-4. 加载 `runs/demo_001/battle_report.json`
+2. 查看 Scenario Selector / 场景选择器
+3. 点击 Load Baseline Demo / 加载默认 Demo，直接加载 Curated Fixture / 固化样例数据
+4. 确认 Scenario Summary / 场景摘要 显示 `demo_001`
 5. 查看 Battle Summary / 战斗摘要
 6. 点击 Play / 播放
 7. 使用 Next Event / Previous Event
@@ -59,6 +62,13 @@ npm run dev -- --host 127.0.0.1
 10. 点击 Report Panel / 战报面板 中的 top unit 观察棋盘联动
 11. 点击 Key Moment / 关键时刻 跳到 `battle_end`
 12. 解释 `winner=ally`, `reason=enemy_eliminated`, `winner_alive=3`, `winner_total_hp=286`
+
+Manual File Input Loading / 手动文件输入加载 remains available for locally generated files:
+
+```text
+runs/demo_001/replay.json
+runs/demo_001/battle_report.json
+```
 
 ## Expected Demo Result / 预期演示结果
 
@@ -83,6 +93,8 @@ npm run dev -- --host 127.0.0.1
 - loser_alive / 败者存活数: `0`
 - winner_total_hp / 胜者剩余总 HP: `286`
 - loser_total_hp / 败者剩余总 HP: `0`
+- curated scenario count / 固化场景数量: `3`
+- scenario ids / 场景 ID: `demo_001`, `demo_seed_1002`, `demo_seed_1003`
 
 ### Supported Synergy Stats / 支持的羁绊属性
 
@@ -111,6 +123,7 @@ npm run dev -- --host 127.0.0.1
 - 通过固定参数运行 Python simulator 进行 demo，保证确定性（`seed=1001`）。
 - `replay.json` 记录事件流，`battle_report.json` 归纳伤害、击杀和触发。
 - Combat System Pack / 战斗系统包新增事件只解释状态、冷却、行动排期与胜负摘要，不改变战斗公式。
+- Demo One-Click / 一键 Demo 通过 Scenario Manifest / 场景清单 加载静态 replay/report，不需要后端。
 - Web viewer 只读取回放文件，不运行战斗逻辑。
 - 通过 board / timeline / report / unit detail 逐步回看一场战斗闭环。
 - 浏览器冒烟测试保证关键体验通路有最小自动化保障。
@@ -121,11 +134,14 @@ npm run dev -- --host 127.0.0.1
 - [ ] config validation passed / 配置校验通过
 - [ ] demo battle generated / 演示战斗已生成
 - [ ] static MVP smoke passed / MVP 静态冒烟通过
+- [ ] scenario smoke passed / 场景冒烟通过
 - [ ] Python unittest passed / Python 单测通过
 - [ ] web typecheck passed / 前端类型检查通过
 - [ ] web build passed / 前端构建通过
 - [ ] browser smoke passed / 浏览器冒烟通过
 - [ ] viewer loads replay/report / 回放器成功加载 replay 与 report
+- [ ] viewer loads curated scenario without manual file input / 回放器无需手动文件输入即可加载固化场景
+- [ ] manual file input still works / 手动文件输入仍可用
 - [ ] board shows 12 units / 棋盘显示 12 个单位
 - [ ] battle summary shows ally / enemy_eliminated / 战斗摘要显示 ally / enemy_eliminated
 - [ ] timeline filter works / 时间线筛选可用

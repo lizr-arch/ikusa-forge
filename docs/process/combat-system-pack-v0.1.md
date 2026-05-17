@@ -118,6 +118,8 @@ Viewer additions:
 - unit detail rows for active statuses, next action tick, last cooldown, and last action schedule
 - report rows for new summary counters and `victory_explanation`
 
+Demo One-Click and Scenarios / 一键 Demo 与多场景 consumes the same contract through committed Curated Fixtures / 固化样例数据 under `web-viewer/public/samples`. Scenario Manifest / 场景清单 points the viewer at replay/report pairs, and Scenario Selector / 场景选择器 loads them without changing simulator behavior.
+
 ## Determinism / 确定性
 
 All new events use the existing sequential `event_id` allocator. With the same config files, battle setup, and seed, the replay and report remain deterministic.
@@ -162,6 +164,8 @@ python tools/export_xlsx_to_json.py --input config/source --output config/genera
 python tools/validate_config.py --input config/generated
 python tools/run_demo_battle.py --battle demo_001 --seed 1001 --config config/generated --out runs/demo_001 --mode basic
 python tools/smoke_phase1_mvp.py --run runs/demo_001 --viewer web-viewer --battle demo_001 --seed 1001
+python tools/generate_demo_scenarios.py --source config/source --out web-viewer/public/samples --battle demo_001 --seeds 1001 1002 1003
+python tools/smoke_demo_scenarios.py --samples web-viewer/public/samples
 python -m unittest discover -s sim-python/tests
 
 cd web-viewer
