@@ -111,3 +111,26 @@ Then in Live Mode / 实时模式:
 Failure case should show clear message in `Live Status（实时状态）`:
 
 - `Live API unavailable（实时 API 不可用）`
+
+## Local CORS and hosting boundary / 本地 CORS 与托管边界
+
+Live mode uses local browser polling against `liveApi` on `127.0.0.1`:
+
+1. Start API locally:
+   - `python tools/run_live_api.py --config config/generated --host 127.0.0.1 --port 8765`
+2. Run viewer:
+   - `cd web-viewer && npm run dev`
+3. Click in UI:
+   - `Start Live Battle（开始实时战斗）`
+
+The API returns local dev CORS headers so calls from `http://127.0.0.1:5173` and `http://localhost:5173` succeed:
+
+- `Access-Control-Allow-Origin: *`
+- `Access-Control-Allow-Methods: GET, POST, OPTIONS`
+- `Access-Control-Allow-Headers: Content-Type`
+
+Local boundary notes:
+
+- 默认只应绑定本机地址（`--host 127.0.0.1`）;
+- 当前 `*` 来源策略为 local dev convenience，不应对不可信网络开放;
+- 若要对外提供服务，需要补充认证、严格 CORS policy 与 `config` 参数校验。

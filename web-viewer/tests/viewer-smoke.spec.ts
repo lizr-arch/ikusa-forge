@@ -1,5 +1,7 @@
 import path from "node:path";
 import fs from "node:fs";
+import type { ChildProcess } from "node:child_process";
+import { spawn } from "node:child_process";
 import { expect, test, type Page } from "@playwright/test";
 
 const repoRoot = path.resolve(process.cwd(), "..");
@@ -239,6 +241,53 @@ test("live mode controls are visible and API errors are readable", async ({ page
   await expect(page.locator("#status")).toContainText(/Live API unavailable|不可用|failed/i);
 });
 
+test("live mode can start and step with local API", async ({ page }) => {
+  const generatedUnits = path.join(repoRoot, "config", "generated", "units.json");
+  if (!fs.existsSync(generatedUnits)) {
+    test.skip(true, "config/generated is not prepared for local live API test");
+  }
+
+  const apiPort = 8766;
+  const apiUrl = `http://127.0.0.1:${apiPort}`;
+  const apiProcess = startLiveApiProcess(apiPort);
+
+  try {
+    await waitForLiveApi(apiUrl, apiProcess);
+
+    await page.goto("/");
+    await expect(page.locator("#live-mode-heading")).toBeVisible();
+    await expect(page.locator("#live-api-url")).toBeVisible();
+    await expect(page.locator("#live-battle-id")).toBeVisible();
+    await expect(page.locator("#live-seed")).toBeVisible();
+
+    await page.locator("#live-api-url").fill(apiUrl);
+    await page.locator("#live-battle-id").fill("demo_001");
+    await page.locator("#live-seed").fill("1001");
+    await page.locator("#start-live-battle").click();
+
+    await expect(page.locator("#live-session-id")).not.toHaveText("-", { timeout: 10_000 });
+    await expect(page.locator("#live-status-line")).toContainText(/connected|running|运行/i, { timeout: 10_000 });
+    await expect(page.locator("#metadata")).toContainText("battle demo_001");
+    await expect(page.locator("#metadata")).toContainText("seed 1001");
+    await expect(page.locator("#metadata")).toContainText("events ");
+    await expect(page.locator(".unit-token")).toHaveCount(12, { timeout: 10_000 });
+
+    const beforeCursor = Number((await page.locator("#live-event-cursor").textContent()) ?? "0");
+    const beforeTick = (await page.locator("#tick-readout").textContent()) ?? "Tick 0";
+    const beforeTimelineRows = await countTimelineRows(page);
+    await page.locator("#step-live-battle").click();
+
+    await waitForLiveProgress(page, beforeCursor, beforeTick, beforeTimelineRows);
+
+    await page.locator("#reset-live-battle").click();
+    await expect(page.locator("#live-session-id")).toContainText("-", { timeout: 10_000 });
+    await expect(page.locator("#live-status")).toContainText(/ready|idle/i, { timeout: 10_000 });
+    await expect(page.locator("#live-event-cursor")).toHaveText("0");
+  } finally {
+    await stopLiveApiProcess(apiProcess);
+  }
+});
+
 const expectFilteredTimelineRows = async (
   page: Page,
   filter: string,
@@ -254,4 +303,75 @@ const countTimelineRows = async (page: Page, filter?: string): Promise<number> =
     await page.locator(".timeline-filter select").selectOption(filter);
   }
   return Number(await page.locator(".timeline-row").count());
+};
+
+const startLiveApiProcess = (port: number): ChildProcess => {
+  const server = spawn("python", [
+    "tools/run_live_api.py",
+    "--config",
+    "config/generated",
+    "--host",
+    "127.0.0.1",
+    "--port",
+    String(port),
+  ], { cwd: repoRoot, stdio: "ignore" });
+
+  return server;
+};
+
+const stopLiveApiProcess = async (server: ChildProcess): Promise<void> => {
+  if (server.killed || server.exitCode !== null) {
+    return;
+  }
+
+  server.kill();
+  await new Promise<void>((resolve) => {
+    server.once("exit", () => {
+      resolve();
+    });
+  });
+};
+
+const waitForLiveApi = async (url: string, proc: ChildProcess, timeoutMs = 12_000): Promise<void> => {
+  const deadline = Date.now() + timeoutMs;
+  while (Date.now() < deadline) {
+    try {
+      const response = await fetch(`${url}/api/health`);
+      if (response.ok) {
+        return;
+      }
+    } catch (error) {
+      // ignore and retry
+    }
+    if (proc.exitCode !== null) {
+      throw new Error(`Live API exited before ready. Code=${proc.exitCode}`);
+    }
+    await wait(100);
+  }
+  throw new Error(`Live API failed to start: ${url}`);
+};
+
+const wait = (ms: number): Promise<void> =>
+  new Promise((resolve) => {
+    setTimeout(resolve, ms);
+  });
+
+const waitForLiveProgress = async (
+  page: Page,
+  beforeCursor: number,
+  beforeTick: string,
+  beforeTimelineRows: number,
+): Promise<void> => {
+  const deadline = Date.now() + 10_000;
+  while (Date.now() < deadline) {
+    const afterCursor = Number((await page.locator("#live-event-cursor").textContent()) ?? "0");
+    const afterTick = (await page.locator("#tick-readout").textContent()) ?? "Tick 0";
+    const afterTimelineRows = await countTimelineRows(page);
+
+    if (afterCursor !== beforeCursor || afterTick !== beforeTick || afterTimelineRows > beforeTimelineRows) {
+      return;
+    }
+    await wait(100);
+  }
+  throw new Error("Live step produced no visible progress");
 };

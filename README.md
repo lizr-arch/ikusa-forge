@@ -160,6 +160,12 @@ python tools/smoke_live_api.py --host 127.0.0.1 --port 8765 --battle demo_001 --
 The API is a Python standard-library Local HTTP Server / 本地 HTTP 服务 for external clients.
 HTML Live Mode / HTML 实时模式 now consumes this API directly with HTTP polling.
 
+For local HTML Live Mode, the API runs on localhost and returns local development CORS headers
+(`Access-Control-Allow-Origin: *`, `Access-Control-Allow-Methods: GET, POST, OPTIONS`,
+`Access-Control-Allow-Headers: Content-Type`) so it can be called from
+`http://127.0.0.1:5173` / `http://localhost:5173`.
+Keep this CORS behavior local-only and avoid exposing it on untrusted networks.
+
 HTML Live Mode usage:
 
 ```bash
