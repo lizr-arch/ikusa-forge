@@ -44,6 +44,7 @@ Current Python simulator status:
 - Demo One-Click and Scenarios / 一键 Demo 与多场景（viewer 可从静态 Scenario Manifest / 场景清单加载 Curated Fixtures / 固化样例数据，同时保留手动 file input）
 - Live Combat Runtime Foundation / 实时战斗运行时基础（`BattleSession / 战斗会话`、`step_battle_session / 单步推进`、`Battle Snapshot / 战斗状态快照`、`Event Buffer / 事件缓冲`，同时保留 `run_basic_combat` 兼容入口）
 - Live Combat API / 实时战斗 API（Python 标准库 Local HTTP Server / 本地 HTTP 服务，提供 start/step/snapshot/events/reset 端点）
+- HTML Live Mode / HTML 实时模式（`Live Combat API / 实时战斗 API` + HTTP polling，支持 `start/step/pause/resume/reset`）
 
 Phase 1 Demo Package / 第一阶段演示包 / Phase 2 Tactical Depth notes are available at:
 
@@ -141,7 +142,7 @@ runs/demo_001/battle_report.json
 The viewer keeps manual file inputs and now shows Scenario Selector / 场景选择器, Scenario Summary / 场景摘要, Demo Load Guidance / Demo 加载引导, Battle Summary / 战斗摘要, Event Highlight / 事件高亮, Report-to-Board Link / 战报到棋盘联动, and Key Moments navigation / 关键时刻跳转 for the generated `demo_001` run.
 It also surfaces Combat System Pack / 战斗系统包 evidence: active statuses / 当前状态, skill cooldowns / 技能冷却, next action tick / 下一行动 tick, and victory explanation / 胜负解释.
 
-The simulator also exposes Live Combat Runtime / 实时战斗运行时 primitives for future hosts:
+The simulator also exposes Live Combat Runtime / 实时战斗运行时 primitives:
 
 - `BattleSession / 战斗会话`
 - `step_battle_session / 单步推进`
@@ -156,12 +157,33 @@ python tools/run_live_api.py --config config/generated --host 127.0.0.1 --port 8
 python tools/smoke_live_api.py --host 127.0.0.1 --port 8765 --battle demo_001 --seed 1001
 ```
 
-The API is a Python standard-library Local HTTP Server / 本地 HTTP 服务 for external clients. HTML live mode / HTML 实时模式, C# host / C# 宿主, Godot integration, WebSocket, movement/pathfinding, and new combat rules are not implemented.
+The API is a Python standard-library Local HTTP Server / 本地 HTTP 服务 for external clients.
+HTML Live Mode / HTML 实时模式 now consumes this API directly with HTTP polling.
+
+HTML Live Mode usage:
+
+```bash
+python tools/run_live_api.py --config config/generated --host 127.0.0.1 --port 8765
+cd web-viewer
+npm install
+npm run dev
+```
+
+Then in the Live Mode / 实时模式 panel:
+
+- click `Start Live Battle（开始实时战斗）`
+- set `Speed（速度）`
+- observe `Live Status（实时状态）` and `Session ID（会话 ID）`
+
+When the API is not running, the viewer shows:
+
+- `Live API unavailable（实时 API 不可用）`
 
 Frontend verification:
 
 ```bash
 cd web-viewer
+npm install
 npm run typecheck
 npm run build
 npx playwright install chromium

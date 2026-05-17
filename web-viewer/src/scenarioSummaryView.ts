@@ -43,9 +43,9 @@ export const renderScenarioSummary = (
     ["End Tick", formatNumber(options.report?.end_tick ?? replayResult?.end_tick)],
     ["Events", formatNumber(options.eventCount)],
     ["Total Damage", formatNumber(summary?.total_damage)],
-    ["Status Applied", formatNumber(summary?.total_status_applied)],
-    ["Skill Cooldowns", formatNumber(summary?.total_skill_cooldowns)],
-    ["Actions Scheduled", formatNumber(summary?.total_actions_scheduled)],
+    ["Status Applied（状态应用）", formatNumber(summary?.total_status_applied)],
+    ["Skill Cooldown（技能冷却）", formatNumber(summary?.total_skill_cooldowns)],
+    ["Action Scheduled（行动调度）", formatNumber(summary?.total_actions_scheduled)],
   ];
 
   container.append(title, description, statGrid(rows));

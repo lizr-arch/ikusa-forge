@@ -99,7 +99,7 @@ If a BattleSession / 战斗会话 is already finished, `step_battle_session / �
 }
 ```
 
-The snapshot intentionally exposes data, not Python objects. It is suitable for future HTML live mode / HTML 实时模式, C# host / C# 宿主, or Godot consumers, but those consumers are not implemented in this phase.
+The snapshot intentionally exposes data, not Python objects. It is consumed by HTML Live Mode / HTML 实时模式 through `Live Combat API / 实时战斗 API`, and also remains suitable for future C# host / C# 宿主 and Godot consumers.
 
 ### Event Buffer / 事件缓冲
 
@@ -162,13 +162,13 @@ config -> simulator -> snapshot/events -> viewer/host
 
 The simulator still has no dependency on the web viewer, C# UI, Godot scenes, HTTP servers, or WebSocket servers.
 
-Follow-up Live Combat API / 实时战斗 API exposes the same BattleSession / 战斗会话, Battle Snapshot / 战斗状态快照, and Event Buffer / 事件缓冲 through a Local HTTP Server / 本地 HTTP 服务 without changing combat behavior.
+The follow-up Live Combat API / 实时战斗 API exposes the same BattleSession / 战斗会话, Battle Snapshot / 战斗状态快照, and Event Buffer / 事件缓冲 through a Local HTTP Server / 本地 HTTP 服务.
+HTML Live Mode / HTML 实时模式 builds on this API contract for browser playback.
 
 ## Not in Scope / 不在范围
 
 - No HTTP server / 不做 HTTP server
 - No WebSocket server / 不做 WebSocket server
-- No HTML live mode / 不做 HTML 实时模式
 - No C# host / 不做 C# 宿主
 - No Godot / 不做 Godot
 - No xlsx adapter / 不做 xlsx 适配器

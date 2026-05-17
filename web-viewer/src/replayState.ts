@@ -1,4 +1,5 @@
-import type { BattleResult, ReplayDocument, ReplayEvent, TargetScorePayload, UnitSnapshot } from "./replayTypes";
+﻿import type { BattleResult, ReplayDocument, ReplayEvent, TargetScorePayload, UnitSnapshot } from "./replayTypes";
+import type { LiveBattleSnapshot, LiveUnitSnapshot } from "./replayTypes";
 
 export interface VisualUnit {
   instanceId: string;
@@ -198,6 +199,45 @@ export const seekToEvent = (replay: ReplayDocument, globalIndex: number): Visual
   }
   state.currentTick = target.tick;
   return state;
+};
+
+export const buildVisualStateFromSnapshot = (snapshot: LiveBattleSnapshot): VisualState => {
+  const state = createEmptyVisualState();
+  state.currentTick = snapshot.tick;
+  state.battleResult = snapshot.result
+    ? {
+      winner: readNullableString(snapshot.result.winner),
+      reason: readNullableString(snapshot.result.reason),
+      end_tick: readNullableNumber(snapshot.result.end_tick),
+      winner_alive: readNullableNumber(snapshot.result.winner_alive),
+      loser_alive: readNullableNumber(snapshot.result.loser_alive),
+      winner_total_hp: readNullableNumber(snapshot.result.winner_total_hp),
+      loser_total_hp: readNullableNumber(snapshot.result.loser_total_hp),
+      summary: readNullableString(snapshot.result.summary),
+    }
+    : null;
+  state.victory = state.battleResult;
+  for (const snapshotUnit of snapshot.units) {
+    const unit = buildLiveUnit(snapshotUnit);
+    state.units.set(unit.instanceId, unit);
+  }
+  return state;
+};
+
+export const appendLiveEvents = (
+  events: FlatReplayEvent[],
+  additions: ReplayEvent[],
+): FlatReplayEvent[] => {
+  if (additions.length === 0) {
+    return events;
+  }
+  const base = events.length;
+  const appended = additions.map((event, index) => ({
+    globalIndex: base + index,
+    tick: event.tick,
+    event,
+  }));
+  return [...events, ...appended];
 };
 
 export const applyEvent = (
@@ -444,6 +484,36 @@ const applySkillCooldown = (state: VisualState, event: ReplayEvent): void => {
     unit.lastCooldown = annotation;
   }
   state.lastCooldown = annotation;
+};
+
+const buildLiveUnit = (snapshotUnit: LiveUnitSnapshot): VisualUnit => {
+  const snapshot = snapshotUnit as Partial<LiveUnitSnapshot> & Record<string, unknown>;
+  return {
+    instanceId: readString(snapshot.instance_id),
+    side: readString(snapshot.side),
+    unitDefId: readString(snapshot.unit_def_id),
+    x: readNumber(snapshot.x, 0),
+    y: readNumber(snapshot.y, 0),
+    role: readString(snapshot.role, "unknown"),
+    name: readString(snapshot.name, readString(snapshot.instance_id)),
+    tags: readStringArray(snapshot.tags),
+    maxHp: readNumber(snapshot.base_hp, readNumber(snapshot.hp, 0)),
+    hp: readNumber(snapshot.hp, readNumber(snapshot.base_hp, 0)),
+    alive: readBoolean(snapshot.alive, true),
+    atk: readNumber(snapshot.atk, 0),
+    defense: readNumber(snapshot.defense, 0),
+    range: readNumber(snapshot.base_range, readNumber(snapshot.range, 0)),
+    guardValue: readNumber(snapshot.guard_value, 0),
+    skillIds: [],
+    statBonuses: new Map<string, number>(),
+    statuses: readStatusSnapshots(snapshot.statuses),
+    skillCooldowns: readNumberMap((snapshot as Record<string, unknown>).skill_cooldowns),
+    nextActionTick: readNullableNumber(snapshot.next_action_tick),
+    actionIntervalTicks: readNullableNumber(snapshot.action_interval_ticks),
+    lastStatus: null,
+    lastCooldown: null,
+    lastActionSchedule: null,
+  };
 };
 
 const applyActionScheduled = (state: VisualState, event: ReplayEvent): void => {

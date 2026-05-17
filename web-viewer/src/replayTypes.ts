@@ -1,4 +1,4 @@
-export type KnownReplayEventType =
+﻿export type KnownReplayEventType =
   | "battle_start"
   | "unit_spawn"
   | "attack"
@@ -15,6 +15,17 @@ export type KnownReplayEventType =
 export type UnitSide = "ally" | "enemy" | string;
 
 export interface BattleResult {
+  winner?: string | null;
+  reason?: string | null;
+  end_tick?: number | null;
+  winner_alive?: number | null;
+  loser_alive?: number | null;
+  winner_total_hp?: number | null;
+  loser_total_hp?: number | null;
+  summary?: string | null;
+}
+
+export interface LiveBattleResult {
   winner?: string | null;
   reason?: string | null;
   end_tick?: number | null;
@@ -60,6 +71,43 @@ export interface UnitSnapshot {
   skill_cooldowns?: Record<string, number>;
   atk?: number;
   defense?: number;
+}
+
+export interface LiveUnitSnapshot {
+  instance_id: string;
+  side: UnitSide;
+  unit_def_id: string;
+  name: string;
+  x: number;
+  y: number;
+  role: string;
+  hp: number;
+  base_hp: number;
+  atk: number;
+  base_atk?: number;
+  defense: number;
+  base_defense?: number;
+  range: number;
+  base_range?: number;
+  base_attack_interval?: number;
+  next_action_tick: number | null;
+  action_interval_ticks: number | null;
+  statuses?: StatusEffectSnapshot[];
+  skill_cooldowns?: Record<string, number>;
+  alive: boolean;
+  guard_value?: number;
+  tags?: string[];
+}
+
+export interface LiveBattleSnapshot {
+  schema_version: "battle_snapshot.v0.1";
+  battle_id: string;
+  seed: number;
+  tick: number;
+  finished: boolean;
+  result: LiveBattleResult | null;
+  units: LiveUnitSnapshot[];
+  event_count: number;
 }
 
 export interface StatusEffectSnapshot {
@@ -235,6 +283,52 @@ export interface BattleReport {
   units?: Record<string, UnitReport>;
   top_units?: ReportTopUnits;
   key_moments?: KeyMoment[];
+}
+
+export interface LiveApiResultErr {
+  ok: false;
+  error: string;
+}
+
+export type LiveApiResult<T> = (T & { ok: true }) | LiveApiResultErr;
+
+export interface LiveStartResponse {
+  ok: true;
+  session_id: string;
+  snapshot: LiveBattleSnapshot;
+  events: ReplayEvent[];
+  next_event_index: number;
+}
+
+export interface LiveStepResponse {
+  ok: true;
+  session_id?: string;
+  snapshot: LiveBattleSnapshot;
+  events: ReplayEvent[];
+  next_event_index: number;
+}
+
+export interface LiveSnapshotResponse {
+  ok: true;
+  session_id?: string;
+  snapshot: LiveBattleSnapshot;
+}
+
+export interface LiveEventsResponse {
+  ok: true;
+  session_id?: string;
+  events: ReplayEvent[];
+  next_event_index: number;
+}
+
+export interface LiveHealthResponse {
+  ok: true;
+  service: string;
+}
+
+export interface LiveResetResponse {
+  ok: true;
+  session_id?: string;
 }
 
 export interface ScenarioExpectedResult {

@@ -230,10 +230,11 @@ The smoke checks:
 - Snapshot / 状态快照 endpoint
 - Reset / 重置会话
 
+This contract is the transport layer currently used by HTML Live Mode / HTML 实时模式 for browser polling playback.
+
 ## Not in Scope / 不在范围
 
 - No WebSocket / 不做 WebSocket
-- No HTML live mode / 不做 HTML 实时模式
 - No C# host / 不做 C# 宿主
 - No Godot / 不做 Godot
 - No xlsx adapter / 不做 xlsx 适配器

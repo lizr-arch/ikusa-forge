@@ -31,8 +31,8 @@ test("loads curated scenario from manifest", async ({ page }) => {
   await expect(page.locator("#scenario-summary")).toContainText("ally");
   await expect(page.locator("#scenario-summary")).toContainText("enemy_eliminated");
   await expect(page.locator("#scenario-summary")).toContainText("Status Applied");
-  await expect(page.locator("#scenario-summary")).toContainText("Skill Cooldowns");
-  await expect(page.locator("#scenario-summary")).toContainText("Actions Scheduled");
+  await expect(page.locator("#scenario-summary")).toContainText("Skill Cooldown");
+  await expect(page.locator("#scenario-summary")).toContainText("Action Scheduled");
 
   await expect(page.locator("#battle-summary")).toContainText("ally");
   await expect(page.locator("#battle-summary")).toContainText("enemy_eliminated");
@@ -126,7 +126,7 @@ test("manual file input loading remains available", async ({ page }) => {
 
   await page.locator('[aria-label="ally_001"]').click();
   await expect(page.locator("#unit-detail")).toContainText("ally_001");
-  await expect(page.locator("#unit-detail")).toContainText("Active Statuses");
+  await expect(page.locator("#unit-detail")).toContainText(/Status（状态）|Active Statuses/);
   await expect(page.locator("#unit-detail")).toContainText("Next Action Tick");
 
   const initialTick = await page.locator("#tick-readout").textContent();
@@ -199,8 +199,8 @@ test("manual file input loading remains available", async ({ page }) => {
   await expect(page.locator("#report")).toContainText("Skill Target Reasons");
   await expect(page.locator("#report")).toContainText("Victory Explanation");
   await expect(page.locator("#report")).toContainText("Status Applied");
-  await expect(page.locator("#report")).toContainText("Skill Cooldowns");
-  await expect(page.locator("#report")).toContainText("Actions Scheduled");
+  await expect(page.locator("#report")).toContainText("Skill Cooldown");
+  await expect(page.locator("#report")).toContainText("Action Scheduled");
 
   await page.locator('#report .report-table .report-unit-link[data-unit-id="ally_003"]').click();
   await expect(page.locator("#unit-detail")).toContainText("ally_003");
@@ -219,6 +219,24 @@ test("manual file input loading remains available", async ({ page }) => {
   await expect(page.locator("#report")).toContainText("enemy_eliminated");
   await expect(page.locator("#report")).toContainText("Total Damage");
   await expect(page.locator("#report")).toContainText(/Top Units|Key Moments/);
+});
+
+test("live mode controls are visible and API errors are readable", async ({ page }) => {
+  await page.goto("/");
+
+  await expect(page.locator("#live-mode-heading")).toBeVisible();
+  await expect(page.locator("#start-live-battle")).toBeVisible();
+  await expect(page.locator("#live-api-url")).toBeVisible();
+  await expect(page.locator("#live-battle-id")).toBeVisible();
+  await expect(page.locator("#live-seed")).toBeVisible();
+
+  await page.locator("#live-api-url").fill("http://127.0.0.1:65535");
+  await page.locator("#live-battle-id").fill("demo_001");
+  await page.locator("#live-seed").fill("1001");
+  await page.locator("#start-live-battle").click();
+
+  await expect(page.locator("#live-status-line")).toContainText(/Live API unavailable|不可用|failed/i);
+  await expect(page.locator("#status")).toContainText(/Live API unavailable|不可用|failed/i);
 });
 
 const expectFilteredTimelineRows = async (
