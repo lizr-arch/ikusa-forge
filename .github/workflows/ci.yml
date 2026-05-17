@@ -34,6 +34,9 @@ jobs:
       - name: Static MVP smoke / MVP 冒烟验证
         run: python tools/smoke_phase1_mvp.py --run runs/demo_001 --viewer web-viewer --battle demo_001 --seed 1001
 
+      - name: Live API smoke / 实时战斗 API 冒烟验证
+        run: python tools/run_live_api_smoke.py --config config/generated --battle demo_001 --seed 1001
+
       - name: Python unittest / Python 单测
         run: python -m unittest discover -s sim-python/tests
 

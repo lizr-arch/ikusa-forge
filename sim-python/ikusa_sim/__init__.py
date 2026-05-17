@@ -32,6 +32,7 @@ from ikusa_sim.combat_rules import (
 from ikusa_sim.config_loader import ConfigLoadError, load_config
 from ikusa_sim.events import BattleEvent, event_to_dict, events_to_tick_groups
 from ikusa_sim.formation import FormationLookupError, build_role_lookup, get_slot_role
+from ikusa_sim.live_api import BattleSessionManager, LiveApiError, create_live_api_server
 from ikusa_sim.models import (
     ConfigBundle,
     Constants,
@@ -64,6 +65,7 @@ __all__ = [
     "BattleResult",
     "BattleRng",
     "BattleSession",
+    "BattleSessionManager",
     "BattleState",
     "ConfigBundle",
     "ConfigLoadError",
@@ -74,6 +76,7 @@ __all__ = [
     "FormationLookupError",
     "FormationPattern",
     "FormationSlot",
+    "LiveApiError",
     "SkillDef",
     "SynergyDef",
     "StatusEffect",
@@ -93,6 +96,7 @@ __all__ = [
     "calculate_skill_damage",
     "create_battle_state",
     "create_battle_session",
+    "create_live_api_server",
     "event_to_dict",
     "events_to_tick_groups",
     "get_ready_skills",

@@ -162,6 +162,8 @@ config -> simulator -> snapshot/events -> viewer/host
 
 The simulator still has no dependency on the web viewer, C# UI, Godot scenes, HTTP servers, or WebSocket servers.
 
+Follow-up Live Combat API / 实时战斗 API exposes the same BattleSession / 战斗会话, Battle Snapshot / 战斗状态快照, and Event Buffer / 事件缓冲 through a Local HTTP Server / 本地 HTTP 服务 without changing combat behavior.
+
 ## Not in Scope / 不在范围
 
 - No HTTP server / 不做 HTTP server

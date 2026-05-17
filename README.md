@@ -43,6 +43,7 @@ Current Python simulator status:
 - Combat System Pack / 战斗系统包（`status_apply`、`skill_cooldown`、`action_scheduled`、`victory_explanation` 可在 replay/report/viewer 中检查）
 - Demo One-Click and Scenarios / 一键 Demo 与多场景（viewer 可从静态 Scenario Manifest / 场景清单加载 Curated Fixtures / 固化样例数据，同时保留手动 file input）
 - Live Combat Runtime Foundation / 实时战斗运行时基础（`BattleSession / 战斗会话`、`step_battle_session / 单步推进`、`Battle Snapshot / 战斗状态快照`、`Event Buffer / 事件缓冲`，同时保留 `run_basic_combat` 兼容入口）
+- Live Combat API / 实时战斗 API（Python 标准库 Local HTTP Server / 本地 HTTP 服务，提供 start/step/snapshot/events/reset 端点）
 
 Phase 1 Demo Package / 第一阶段演示包 / Phase 2 Tactical Depth notes are available at:
 
@@ -54,6 +55,7 @@ Phase 1 Demo Package / 第一阶段演示包 / Phase 2 Tactical Depth notes are 
 - `docs/process/combat-system-pack-v0.1.md`
 - `docs/process/demo-one-click-and-scenarios-v0.1.md`
 - `docs/process/live-combat-runtime-foundation-v0.1.md`
+- `docs/process/live-combat-api-v0.1.md`
 
 Quick start for a full demo run / 一次完整演示最简命令:
 
@@ -64,6 +66,7 @@ python tools/run_demo_battle.py --battle demo_001 --seed 1001 --config config/ge
 python tools/smoke_phase1_mvp.py --run runs/demo_001 --viewer web-viewer --battle demo_001 --seed 1001
 python tools/generate_demo_scenarios.py --source config/source --out web-viewer/public/samples --battle demo_001 --seeds 1001 1002 1003
 python tools/smoke_demo_scenarios.py --samples web-viewer/public/samples
+python tools/run_live_api_smoke.py --config config/generated --battle demo_001 --seed 1001
 python -m unittest discover -s sim-python/tests
 cd web-viewer
 npm install
@@ -83,6 +86,7 @@ npm run test:e2e
 CI uses `npm install` now because `npm ci` can fail on optional dependency lockfile churn across Windows/Linux.
 `npm ci` is still a goal, but it remains temporarily unavailable until lockfile stabilization.
 CI also regenerates Scenario Manifest / 场景清单 and Curated Fixtures / 固化样例数据, then runs `git diff --exit-code -- web-viewer/public/samples` to prove committed samples are fresh.
+CI also runs Live Combat API / 实时战斗 API smoke with a managed local server process.
 
 Still future work:
 
@@ -145,7 +149,14 @@ The simulator also exposes Live Combat Runtime / 实时战斗运行时 primitive
 - `build_battle_snapshot / 构建战斗状态快照`
 - `get_events_since / 读取事件缓冲`
 
-These APIs are Python runtime APIs only in this phase. No HTTP server / HTTP 服务器, HTML live mode / HTML 实时模式, C# host / C# 宿主, or Godot integration is implemented.
+The simulator also exposes these runtime primitives through a local Live Combat API / 实时战斗 API:
+
+```bash
+python tools/run_live_api.py --config config/generated --host 127.0.0.1 --port 8765
+python tools/smoke_live_api.py --host 127.0.0.1 --port 8765 --battle demo_001 --seed 1001
+```
+
+The API is a Python standard-library Local HTTP Server / 本地 HTTP 服务 for external clients. HTML live mode / HTML 实时模式, C# host / C# 宿主, Godot integration, WebSocket, movement/pathfinding, and new combat rules are not implemented.
 
 Frontend verification:
 

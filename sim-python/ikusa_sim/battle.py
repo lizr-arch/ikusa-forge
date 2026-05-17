@@ -30,6 +30,7 @@ from ikusa_sim.combat_rules import (
     calculate_skill_damage,
 )
 from ikusa_sim.events import BattleEvent, event_to_dict, events_to_tick_groups
+from ikusa_sim.live_api import BattleSessionManager, LiveApiError, create_live_api_server
 from ikusa_sim.report import build_battle_report, build_battle_report_from_events
 from ikusa_sim.rng import BattleRng
 from ikusa_sim.runtime_models import BattleResult, BattleState, StatusEffect, UnitState
@@ -50,8 +51,10 @@ __all__ = [
     "BattleResult",
     "BattleRng",
     "BattleSession",
+    "BattleSessionManager",
     "BattleState",
     "UnitState",
+    "LiveApiError",
     "apply_damage",
     "attack_interval_to_ticks",
     "battle_result_to_dict",
@@ -64,6 +67,7 @@ __all__ = [
     "calculate_skill_damage",
     "create_battle_state",
     "create_battle_session",
+    "create_live_api_server",
     "event_to_dict",
     "events_to_tick_groups",
     "get_ready_skills",

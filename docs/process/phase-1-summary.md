@@ -11,6 +11,7 @@
 - Combat System Pack / 战斗系统包 explainability（`status_apply`、`skill_cooldown`、`action_scheduled`、`victory_explanation`）
 - Demo One-Click and Scenarios / 一键 Demo 与多场景（Scenario Manifest / 场景清单、Curated Fixtures / 固化样例数据、Scenario Selector / 场景选择器）
 - Live Combat Runtime Foundation / 实时战斗运行时基础（BattleSession / 战斗会话、Step Runtime / 单步运行时、Battle Snapshot / 战斗状态快照、Event Buffer / 事件缓冲）
+- Live Combat API / 实时战斗 API（Local HTTP Server / 本地 HTTP 服务、Battle Session Manager / 战斗会话管理器、start/step/snapshot/events/reset API）
 - Browser Smoke Test / 浏览器冒烟测试（Playwright 基础检查）
 - Verified real `demo_001` modifier evidence：
   - formation modifiers in report summary / 战报阵型修正数 > 0
@@ -39,6 +40,7 @@
 - `phase2/combat-system-pack`: Combat System Pack / 战斗系统包 (current / pending review)
 - `phase2/demo-one-click-and-scenarios`: Demo One-Click and Scenarios / 一键 Demo 与多场景 (current / pending review)
 - `phase2/live-combat-runtime-foundation`: Live Combat Runtime Foundation / 实时战斗运行时基础 (current / pending review)
+- `phase2/live-combat-api`: Live Combat API / 实时战斗 API (current / pending review)
 
 ## Current Commands / 当前命令
 
@@ -49,6 +51,7 @@ python tools/run_demo_battle.py --battle demo_001 --seed 1001 --config config/ge
 python tools/smoke_phase1_mvp.py --run runs/demo_001 --viewer web-viewer --battle demo_001 --seed 1001
 python tools/generate_demo_scenarios.py --source config/source --out web-viewer/public/samples --battle demo_001 --seeds 1001 1002 1003
 python tools/smoke_demo_scenarios.py --samples web-viewer/public/samples
+python tools/run_live_api_smoke.py --config config/generated --battle demo_001 --seed 1001
 python -m unittest discover -s sim-python/tests
 
 cd web-viewer
@@ -84,6 +87,11 @@ npm run test:e2e
 - `step_battle_session / 单步推进`
 - `build_battle_snapshot / 构建战斗状态快照`
 - `get_events_since / 读取事件缓冲`
+- `Live Combat API / 实时战斗 API`
+- `BattleSessionManager / 战斗会话管理器`
+- `tools/run_live_api.py`
+- `tools/smoke_live_api.py`
+- `tools/run_live_api_smoke.py`
 
 ## Known Limits / 已知限制
 
@@ -91,7 +99,8 @@ npm run test:e2e
 - 浏览器冒烟覆盖，非完整 E2E
 - 无视觉回归
 - 无 Scenario Comparison / 场景对比 side-by-side UI（当前只提供场景选择和静态样例）
-- 无 HTTP server / HTTP 服务器
+- Live Combat API / 实时战斗 API 仅提供本地 HTTP JSON 契约，不是产品化 live viewer
+- 无 WebSocket
 - 无 HTML live mode / HTML 实时模式
 - 无 C# host / C# 宿主
 - 无 Godot
@@ -109,5 +118,6 @@ npm run test:e2e
 2. `phase2/combat-system-pack`（若目标是状态、冷却、行动时间线和胜负解释可见性）
 3. `phase2/demo-one-click-and-scenarios`（若目标是降低演示和冒烟门槛）
 4. `phase2/live-combat-runtime-foundation`（若目标是从 replay 生成迈向可 step 的可移植运行时）
-5. `phase2/ci-workflow`（若目标是稳定交付）
-6. `phase1/viewer-polish`（若目标是演示稳定）
+5. `phase2/live-combat-api`（若目标是向外部客户端暴露本地 HTTP API）
+6. `phase2/ci-workflow`（若目标是稳定交付）
+7. `phase1/viewer-polish`（若目标是演示稳定）
