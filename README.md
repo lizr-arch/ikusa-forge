@@ -46,6 +46,7 @@ Phase 1 Demo Package / 第一阶段演示包 / Phase 2 Tactical Depth notes are 
 - `docs/process/phase-1-demo-package.md`
 - `docs/process/phase-1-summary.md`
 - `docs/process/tactical-depth-pack-v0.1.md`
+- `docs/process/ci-workflow-v0.1.md`
 
 Quick start for a full demo run / 一次完整演示最简命令:
 
@@ -54,11 +55,24 @@ python tools/export_xlsx_to_json.py --input config/source --output config/genera
 python tools/validate_config.py --input config/generated
 python tools/run_demo_battle.py --battle demo_001 --seed 1001 --config config/generated --out runs/demo_001 --mode basic
 python tools/smoke_phase1_mvp.py --run runs/demo_001 --viewer web-viewer --battle demo_001 --seed 1001
-
+python -m unittest discover -s sim-python/tests
 cd web-viewer
 npm install
 npm run dev
 ```
+
+Optional CI parity check / 可选 CI 对齐验证（当前 CI 使用 npm install）:
+
+```bash
+cd web-viewer
+npm install
+npm run typecheck
+npm run build
+npm run test:e2e
+```
+
+CI uses `npm install` now because `npm ci` can fail on optional dependency lockfile churn across Windows/Linux.
+`npm ci` is still a goal, but it remains temporarily unavailable until lockfile stabilization.
 
 Still future work:
 

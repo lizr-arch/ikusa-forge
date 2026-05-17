@@ -7,6 +7,7 @@ For a packaged demo flow, see:
 - `docs/process/phase-1-demo-package.md`
 - `docs/process/phase-1-summary.md`
 - `docs/process/tactical-depth-pack-v0.1.md`
+- `docs/process/ci-workflow-v0.1.md`
 
 The config pipeline, pure Python runtime model boundary, deterministic replay event stream, Basic Combat Rules / 基础战斗规则, Minimal Skill Triggers / 最小技能触发, Formation bonus / 阵型加成, Synergy application / 羁绊应用, Replay Report / 回放与战报, and read-only SVG Replay Viewer / SVG 回放调试器 exist so later tasks can add a C# subprocess host without mixing responsibilities.
 
@@ -304,6 +305,31 @@ npm run dev
 ```
 
 This smoke check validates replay/report shape and viewer entry files. It does not automate a browser.
+
+## CI workflow local parity / CI 流水线本地对齐
+
+主干门禁（Main Gate / 主干门禁）采用 PR 和 `main` push 触发。对应文档：
+
+- `docs/process/ci-workflow-v0.1.md`
+
+本地可先按 CI 对齐运行：
+
+```bash
+python tools/export_xlsx_to_json.py --input config/source --output config/generated
+python tools/validate_config.py --input config/generated
+python tools/run_demo_battle.py --battle demo_001 --seed 1001 --config config/generated --out runs/demo_001 --mode basic
+python tools/smoke_phase1_mvp.py --run runs/demo_001 --viewer web-viewer --battle demo_001 --seed 1001
+python -m unittest discover -s sim-python/tests
+
+cd web-viewer
+npm install
+npm run typecheck
+npm run build
+npx playwright install chromium --with-deps
+npm run test:e2e
+```
+
+当前 CI 对齐命令使用 `npm install`。`npm ci` 在 Windows/Linux 可选依赖锁文件噪音（optional dependency lockfile churn）场景下不稳定，故暂时下沉为后续任务的理想目标。
 
 Phase 1 review docs:
 
