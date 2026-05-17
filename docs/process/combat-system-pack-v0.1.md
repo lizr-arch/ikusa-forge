@@ -120,6 +120,8 @@ Viewer additions:
 
 Demo One-Click and Scenarios / 一键 Demo 与多场景 consumes the same contract through committed Curated Fixtures / 固化样例数据 under `web-viewer/public/samples`. Scenario Manifest / 场景清单 points the viewer at replay/report pairs, and Scenario Selector / 场景选择器 loads them without changing simulator behavior.
 
+Live Combat Runtime Foundation / 实时战斗运行时基础 keeps the same event contract while moving the basic loop behind BattleSession / 战斗会话, Step Runtime / 单步运行时, Battle Snapshot / 战斗状态快照, and Event Buffer / 事件缓冲 APIs. `run_basic_combat` remains the one-shot compatibility entry for replay/report/viewer generation.
+
 ## Determinism / 确定性
 
 All new events use the existing sequential `event_id` allocator. With the same config files, battle setup, and seed, the replay and report remain deterministic.
@@ -154,6 +156,8 @@ Current `demo_001 / seed=1001` expected key totals:
 - No combat formula changes / 不改伤害公式
 - No targeting behavior changes / 不改目标选择行为
 - No general Skill DSL / 不做通用技能 DSL
+- No HTTP server / 不做 HTTP server
+- No HTML live mode / 不做 HTML 实时模式
 
 ## Verification / 验证
 

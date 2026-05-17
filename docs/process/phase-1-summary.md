@@ -10,6 +10,7 @@
 - Targeting explainability / 目标选择可解释性（`target_reason` / `target_score`）初步链路
 - Combat System Pack / 战斗系统包 explainability（`status_apply`、`skill_cooldown`、`action_scheduled`、`victory_explanation`）
 - Demo One-Click and Scenarios / 一键 Demo 与多场景（Scenario Manifest / 场景清单、Curated Fixtures / 固化样例数据、Scenario Selector / 场景选择器）
+- Live Combat Runtime Foundation / 实时战斗运行时基础（BattleSession / 战斗会话、Step Runtime / 单步运行时、Battle Snapshot / 战斗状态快照、Event Buffer / 事件缓冲）
 - Browser Smoke Test / 浏览器冒烟测试（Playwright 基础检查）
 - Verified real `demo_001` modifier evidence：
   - formation modifiers in report summary / 战报阵型修正数 > 0
@@ -37,6 +38,7 @@
 - #13 `ci: add phase 2 validation workflow` (current / pending review)
 - `phase2/combat-system-pack`: Combat System Pack / 战斗系统包 (current / pending review)
 - `phase2/demo-one-click-and-scenarios`: Demo One-Click and Scenarios / 一键 Demo 与多场景 (current / pending review)
+- `phase2/live-combat-runtime-foundation`: Live Combat Runtime Foundation / 实时战斗运行时基础 (current / pending review)
 
 ## Current Commands / 当前命令
 
@@ -76,12 +78,21 @@ npm run test:e2e
 - `web-viewer/public/samples/demo_seed_1003/replay.json`
 - `web-viewer/public/samples/demo_seed_1003/battle_report.json`
 
+运行时 API 产物（代码接口，不是文件产物）：
+
+- `BattleSession / 战斗会话`
+- `step_battle_session / 单步推进`
+- `build_battle_snapshot / 构建战斗状态快照`
+- `get_events_since / 读取事件缓冲`
+
 ## Known Limits / 已知限制
 
 - 离散 tick/event 播放，不是平滑动画
 - 浏览器冒烟覆盖，非完整 E2E
 - 无视觉回归
 - 无 Scenario Comparison / 场景对比 side-by-side UI（当前只提供场景选择和静态样例）
+- 无 HTTP server / HTTP 服务器
+- 无 HTML live mode / HTML 实时模式
 - 无 C# host / C# 宿主
 - 无 Godot
 - 阵型加成和羁绊逻辑已应用，但尚未进入 CI 流程与可玩发布闭环
@@ -97,5 +108,6 @@ npm run test:e2e
 1. `phase2/combat-behavior-pack`（若目标是提升战斗行为可解释性）
 2. `phase2/combat-system-pack`（若目标是状态、冷却、行动时间线和胜负解释可见性）
 3. `phase2/demo-one-click-and-scenarios`（若目标是降低演示和冒烟门槛）
-4. `phase2/ci-workflow`（若目标是稳定交付）
-5. `phase1/viewer-polish`（若目标是演示稳定）
+4. `phase2/live-combat-runtime-foundation`（若目标是从 replay 生成迈向可 step 的可移植运行时）
+5. `phase2/ci-workflow`（若目标是稳定交付）
+6. `phase1/viewer-polish`（若目标是演示稳定）
