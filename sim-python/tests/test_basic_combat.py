@@ -38,11 +38,19 @@ class BasicCombatTests(unittest.TestCase):
         event_types = [event.type for event in events]
 
         self.assertIn("skill_trigger", event_types)
+        self.assertIn("status_apply", event_types)
+        self.assertIn("skill_cooldown", event_types)
+        self.assertIn("action_scheduled", event_types)
         self.assertIn("attack", event_types)
         self.assertIn("damage", event_types)
         self.assertIn("death", event_types)
         self.assertEqual("battle_end", events[-1].type)
-        self.assertEqual({"winner", "reason", "end_tick"}, set(events[-1].payload.keys()))
+        self.assertTrue({"winner", "reason", "end_tick"}.issubset(set(events[-1].payload.keys())))
+        self.assertIn("winner_alive", events[-1].payload)
+        self.assertIn("loser_alive", events[-1].payload)
+        self.assertIn("winner_total_hp", events[-1].payload)
+        self.assertIn("loser_total_hp", events[-1].payload)
+        self.assertIn("summary", events[-1].payload)
         self.assertNotEqual("timeout_no_combat", events[-1].payload["reason"])
         self.assertTrue(state.finished)
 

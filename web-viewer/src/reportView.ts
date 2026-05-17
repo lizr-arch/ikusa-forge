@@ -26,9 +26,14 @@ export const renderReport = (
       ["Total Damage", formatNumber(report.summary?.total_damage)],
       ["Total Kills", formatNumber(report.summary?.total_kills)],
       ["Skill Triggers", formatNumber(report.summary?.total_skill_triggers)],
+      ["Status Applied", formatNumber(report.summary?.total_status_applied)],
+      ["Status Expired", formatNumber(report.summary?.total_status_expired)],
+      ["Skill Cooldowns", formatNumber(report.summary?.total_skill_cooldowns)],
+      ["Actions Scheduled", formatNumber(report.summary?.total_actions_scheduled)],
       ["Total Modifiers", formatNumber(report.summary?.total_modifiers)],
       ["Formation Modifiers", formatNumber(report.summary?.formation_modifiers)],
       ["Synergy Modifiers", formatNumber(report.summary?.synergy_modifiers)],
+      ["Victory Explanation", formatValue(report.victory_explanation?.summary)],
       ["Target Reasons", formatReasonSummary(report.summary?.target_reason_counts)],
       ["Skill Target Reasons", formatReasonSummary(report.summary?.skill_target_reason_counts)],
     ]),
@@ -111,6 +116,10 @@ const renderUnitTable = (
     "Kills",
     "Deaths",
     "Skills",
+    "Statuses",
+    "Cooldowns",
+    "Actions",
+    "Next Action",
     "ATK Bonus",
     "DEF Bonus",
     "HP Bonus",
@@ -136,6 +145,10 @@ const renderUnitTable = (
     appendCell(row, formatNumber(unitReport.kills));
     appendCell(row, formatNumber(unitReport.deaths));
     appendCell(row, formatNumber(totalSkillTriggers(unitReport)));
+    appendCell(row, formatNumber(unitReport.statuses_applied));
+    appendCell(row, formatNumber(unitReport.cooldowns_started));
+    appendCell(row, formatNumber(unitReport.actions_taken));
+    appendCell(row, formatNumber(unitReport.last_next_action_tick));
     appendCell(row, formatNumber((unitReport.stat_bonuses ?? {}).atk));
     appendCell(row, formatNumber((unitReport.stat_bonuses ?? {}).defense));
     appendCell(row, formatNumber((unitReport.stat_bonuses ?? {}).hp));
@@ -146,7 +159,7 @@ const renderUnitTable = (
   if (Object.keys(units).length === 0) {
     const row = document.createElement("tr");
     const cell = document.createElement("td");
-    cell.colSpan = 11;
+    cell.colSpan = 15;
     cell.textContent = "No unit rows";
     row.append(cell);
     body.append(row);

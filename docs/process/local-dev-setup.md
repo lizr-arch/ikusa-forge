@@ -9,8 +9,9 @@ For a packaged demo flow, see:
 - `docs/process/tactical-depth-pack-v0.1.md`
 - `docs/process/ci-workflow-v0.1.md`
 - `docs/process/combat-behavior-pack-v0.1.md`
+- `docs/process/combat-system-pack-v0.1.md`
 
-The config pipeline, pure Python runtime model boundary, deterministic replay event stream, Basic Combat Rules / 基础战斗规则, Minimal Skill Triggers / 最小技能触发, Formation bonus / 阵型加成, Synergy application / 羁绊应用, Replay Report / 回放与战报, and read-only SVG Replay Viewer / SVG 回放调试器 exist so later tasks can add a C# subprocess host without mixing responsibilities.
+The config pipeline, pure Python runtime model boundary, deterministic replay event stream, Basic Combat Rules / 基础战斗规则, Minimal Skill Triggers / 最小技能触发, Formation bonus / 阵型加成, Synergy application / 羁绊应用, Combat System Pack / 战斗系统包 explainability, Replay Report / 回放与战报, and read-only SVG Replay Viewer / SVG 回放调试器 exist so later tasks can add a C# subprocess host without mixing responsibilities.
 
 ## Expected local tools
 
@@ -158,11 +159,14 @@ Current behavior:
 - Runs Targeting AI / 目标选择 AI, Basic Attack / 普通攻击, Damage / 伤害, Death / 死亡, and Victory Check / 胜负判断.
 - Runs Skill Resolver / 技能解析器, Skill Cooldown / 技能冷却, `on_battle_start / 战斗开始触发`, `on_attack / 攻击时触发`, `on_attacked / 被攻击时触发`, and `on_ally_attacked / 友军被攻击时触发`.
 - Emits `skill_trigger event / 技能触发事件`.
+- Emits Combat System Pack / 战斗系统包 explainability events: `status_apply / 状态应用`, `skill_cooldown / 技能冷却`, and `action_scheduled / 行动排期`.
 - Adds `reason / 伤害原因` to `damage / 伤害` events, using `basic_attack / 普通攻击` or `skill:<skill_id> / 技能 ID`.
+- Extends `battle_end / 战斗结束` with survivor counts, HP totals, and a summary used by `victory_explanation / 胜负解释`.
 - Writes `runs/demo_001/replay.json` with `schema_version="battle_replay.v0.1"` and tick groups containing combat events / 战斗事件.
 - Writes `runs/demo_001/debug_timeline.json` as a flat event list.
 - Writes `runs/demo_001/battle_report.json` as an event-derived report / 基于事件生成战报 with `damage_done / 输出伤害`, `damage_taken / 承受伤害`, `kills / 击杀`, `skill_triggers / 技能触发次数`, and `key_moments / 关键时刻`.
-- Writes `runs/demo_001/run_summary.md` with battle id, seed, unit count, event counts, result, total damage / 总伤害, total kills / 总击杀, total skill triggers / 总技能触发次数, and top unit summaries / 最高单位摘要.
+- Report summary / 战报汇总 includes `total_status_applied`, `total_skill_cooldowns`, `total_actions_scheduled`, and `victory_explanation`.
+- Writes `runs/demo_001/run_summary.md` with battle id, seed, unit count, event counts, result, combat-system counters / 战斗系统计数, victory explanation / 胜负解释, total damage / 总伤害, total kills / 总击杀, total skill triggers / 总技能触发次数, and top unit summaries / 最高单位摘要.
 - Ends when one side is eliminated / 一方全灭 or max tick / 最大 tick is reached.
 
 Skeleton compatibility mode / 骨架兼容模式 remains available:
@@ -180,6 +184,7 @@ See `docs/process/basic-combat-rules-v0.1.md` for Basic Combat Rules / 基础战
 See `docs/process/minimal-skill-triggers-v0.1.md` for Minimal Skill Triggers / 最小技能触发.
 See `docs/process/replay-report-v0.1.md` for Replay Report / 回放与战报.
 See `docs/process/svg-replay-viewer-v0.1.md` for SVG Replay Viewer / SVG 回放调试器.
+See `docs/process/combat-system-pack-v0.1.md` for Combat System Pack / 战斗系统包 explainability.
 
 ## Run SVG replay viewer
 
@@ -221,20 +226,20 @@ runs/demo_001/replay.json
 runs/demo_001/battle_report.json
 ```
 
-The current viewer also supports HTML Demo Complete Experience / HTML 最小 Demo 完整体验闭环 behavior for `demo_001`: Demo Load Guidance / Demo 加载引导, Battle Summary / 战斗摘要, Event Highlight / 事件高亮, Timeline Current Event / 当前事件定位, Report-to-Board Link / 战报到棋盘联动, and Key Moments navigation / 关键时刻跳转. See `docs/process/html-demo-complete-experience-v0.1.md`.
+The current viewer also supports HTML Demo Complete Experience / HTML 最小 Demo 完整体验闭环 behavior for `demo_001`: Demo Load Guidance / Demo 加载引导, Battle Summary / 战斗摘要, Event Highlight / 事件高亮, Timeline Current Event / 当前事件定位, Report-to-Board Link / 战报到棋盘联动, Key Moments navigation / 关键时刻跳转, active status visibility / 当前状态可见性, cooldown visibility / 冷却可见性, next action tick / 下一行动 tick, and victory explanation / 胜负解释. See `docs/process/html-demo-complete-experience-v0.1.md`.
 
 ## Battle skeleton module boundary
 
 The v0.1.1 skeleton is split into focused Python modules:
 
-- `runtime_models.py / 运行时模型`: `UnitState`, `BattleState`, `BattleResult`.
+- `runtime_models.py / 运行时模型`: `UnitState`, `StatusEffect`, `BattleState`, `BattleResult`.
 - `events.py / 战斗事件`: `BattleEvent`, `event_to_dict`, `events_to_tick_groups`.
 - `rng.py / 随机包装器`: `BattleRng`.
 - `battle_skeleton.py / 战斗骨架`: `create_battle_state`, `spawn_units_from_encounter`, `run_battle_skeleton`, replay document helpers, and runtime dict serializers.
 - `targeting.py / 目标选择`: Targeting AI / 目标选择 AI.
 - `combat_rules.py / 战斗规则`: Basic Attack / 普通攻击, Damage / 伤害, and Death / 死亡 helpers.
 - `basic_combat.py / 基础战斗`: Basic Combat Rules / 基础战斗规则 runner and Victory Check / 胜负判断.
-- `skills.py / 技能解析器`: Minimal Skill Triggers / 最小技能触发, Skill Cooldown / 技能冷却, and `skill_trigger event / 技能触发事件` emission.
+- `skills.py / 技能解析器`: Minimal Skill Triggers / 最小技能触发, Skill Cooldown / 技能冷却, `skill_trigger event / 技能触发事件`, `status_apply / 状态应用`, and `skill_cooldown / 技能冷却事件` emission.
 - `report.py / 战报生成器`: event-derived report / 基于事件生成战报 for `battle_report.json / 战报 JSON`.
 - `battle.py / 兼容转发层`: compatibility facade / 兼容转发层 for old imports. New code should prefer `runtime_models.py`, `events.py`, `rng.py`, `battle_skeleton.py`, `targeting.py`, `combat_rules.py`, `basic_combat.py`, `skills.py`, and `report.py`.
 
@@ -249,7 +254,7 @@ python -m unittest discover -s sim-python/tests
 The tests export sample data into a temporary directory and validate both valid and invalid generated config.
 They also verify deterministic battle skeleton unit creation, event counts, result payloads, tick grouping, and same-seed event stability.
 They verify runtime side enum / 运行时阵营枚举 values `ally/enemy` and keep `battle.py / 兼容转发层` import compatibility covered.
-They verify Targeting AI / 目标选择 AI, Basic Attack / 普通攻击, Damage / 伤害, Death / 死亡, Minimal Skill Triggers / 最小技能触发, Skill Cooldown / 技能冷却, Replay Report / 回放与战报, and Basic Combat / 基础战斗 determinism with current in-scope effects, including formation / 阵型 and synergy / 羁绊 modifiers.
+They verify Targeting AI / 目标选择 AI, Basic Attack / 普通攻击, Damage / 伤害, Death / 死亡, Minimal Skill Triggers / 最小技能触发, Skill Cooldown / 技能冷却, Combat System Pack / 战斗系统包 explainability events, Replay Report / 回放与战报, and Basic Combat / 基础战斗 determinism with current in-scope effects, including formation / 阵型 and synergy / 羁绊 modifiers.
 
 ## CSV-first note
 
@@ -291,6 +296,7 @@ Smoke-check the generated Phase 1 MVP artifacts / 第一阶段 MVP 产物:
 
 ```bash
 python tools/smoke_phase1_mvp.py --run runs/demo_001 --viewer web-viewer --battle demo_001 --seed 1001
+```
 
 Phase 1 demo package one-step flow (minimal):
 
@@ -302,7 +308,6 @@ python tools/smoke_phase1_mvp.py --run runs/demo_001 --viewer web-viewer --battl
 cd web-viewer
 npm install
 npm run dev
-```
 ```
 
 This smoke check validates replay/report shape and viewer entry files. It does not automate a browser.

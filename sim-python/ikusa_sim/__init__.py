@@ -38,7 +38,7 @@ from ikusa_sim.models import (
 )
 from ikusa_sim.report import build_battle_report, build_battle_report_from_events
 from ikusa_sim.rng import BattleRng
-from ikusa_sim.runtime_models import BattleResult, BattleState, UnitState
+from ikusa_sim.runtime_models import BattleResult, BattleState, StatusEffect, UnitState
 from ikusa_sim.skills import (
     SkillUseResult,
     get_ready_skills,
@@ -66,6 +66,7 @@ __all__ = [
     "FormationSlot",
     "SkillDef",
     "SynergyDef",
+    "StatusEffect",
     "UnitState",
     "UnitDef",
     "WeaponDef",

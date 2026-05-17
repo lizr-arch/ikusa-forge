@@ -11,6 +11,7 @@
 - 静态 MVP 冒烟
 - Python 单测
 - Web 回放器 Typecheck / Build / 浏览器冒烟
+- Combat System Pack / 战斗系统包 replay/report/viewer contract checks
 
 ## Jobs / 作业
 
@@ -25,6 +26,8 @@
 - `tools/run_demo_battle.py`
 - `tools/smoke_phase1_mvp.py`
 - `python -m unittest discover -s sim-python/tests`
+
+The smoke/unit-test layer now also checks `status_apply`, `skill_cooldown`, `action_scheduled`, extended `battle_end`, and report `victory_explanation`.
 
 ### Web viewer / Web 回放器 (web-viewer)
 
@@ -42,6 +45,8 @@
 - `npm run build`
 - `npx playwright install chromium --with-deps`
 - `npm run test:e2e`
+
+The browser smoke includes timeline filters and detail/report visibility for `status_apply`, `skill_cooldown`, `action_scheduled`, and `victory_explanation`.
 
 ## Commands / 命令
 

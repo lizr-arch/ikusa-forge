@@ -15,6 +15,7 @@
 - Replay Events / 回放事件
 - Battle Report / 战报
 - SVG Replay Viewer / SVG 回放调试器
+- Combat System Pack / 战斗系统包 explainability: status lifecycle / 状态生命周期, skill cooldown / 技能冷却, action timeline / 行动时间线, victory explanation / 胜负解释
 - Browser Smoke / 浏览器冒烟测试
 
 ## Demo Prerequisites / 演示前置条件
@@ -53,18 +54,18 @@ npm run dev -- --host 127.0.0.1
 5. 查看 Battle Summary / 战斗摘要
 6. 点击 Play / 播放
 7. 使用 Next Event / Previous Event
-8. 使用 Timeline Filter / 时间线筛选 `damage`、`skill_trigger`、`death`
-9. 点击 `ally_001` 查看 Unit Detail / 单位详情
+8. 使用 Timeline Filter / 时间线筛选 `damage`、`skill_trigger`、`death`、`status_apply`、`skill_cooldown`、`action_scheduled`
+9. 点击 `ally_001` 查看 Unit Detail / 单位详情，并查看 Active Statuses / 当前状态 与 Next Action Tick / 下一行动 tick
 10. 点击 Report Panel / 战报面板 中的 top unit 观察棋盘联动
 11. 点击 Key Moment / 关键时刻 跳到 `battle_end`
-12. 解释 `winner=ally`, `reason=enemy_eliminated`
+12. 解释 `winner=ally`, `reason=enemy_eliminated`, `winner_alive=3`, `winner_total_hp=286`
 
 ## Expected Demo Result / 预期演示结果
 
 在当前主线下，`demo_001` 预期结果如下：
 
 - units / 单位数: `12`
-- events / 事件数: `205`
+- events / 事件数: `332`
 - winner / 胜者: `ally`
 - reason / 原因: `enemy_eliminated`
 - end_tick / 结束 tick: `240`
@@ -74,6 +75,14 @@ npm run dev -- --host 127.0.0.1
 - total_modifiers / 总修正次数: `16`
 - formation_modifiers / 阵型加成次数: `8`
 - synergy_modifiers / 羁绊加成次数: `8`
+- total_status_applied / 总状态应用次数: `4`
+- total_status_expired / 总状态过期次数: `0`
+- total_skill_cooldowns / 总技能冷却次数: `48`
+- total_actions_scheduled / 总行动排期次数: `75`
+- winner_alive / 胜者存活数: `3`
+- loser_alive / 败者存活数: `0`
+- winner_total_hp / 胜者剩余总 HP: `286`
+- loser_total_hp / 败者剩余总 HP: `0`
 
 ### Supported Synergy Stats / 支持的羁绊属性
 
@@ -91,6 +100,8 @@ npm run dev -- --host 127.0.0.1
 - `battle_report.json` `summary.formation_modifiers > 0`
 - `battle_report.json` `summary.synergy_modifiers > 0`
 - `debug_timeline.json` 存在 `stat_modifier` 且 `source_type` 同时出现 `formation` 与 `synergy`
+- `debug_timeline.json` 存在 `status_apply`、`skill_cooldown`、`action_scheduled`
+- `battle_report.json` 存在 `victory_explanation`
 
 如果这些值未来因为规则调整变化，请同步更新本页、`tools/smoke_phase1_mvp.py`，以及本阶段 smoke 覆盖说明。
 
@@ -99,6 +110,7 @@ npm run dev -- --host 127.0.0.1
 - 我们先从配置生成运行时数据（`config/source -> config/generated`）。
 - 通过固定参数运行 Python simulator 进行 demo，保证确定性（`seed=1001`）。
 - `replay.json` 记录事件流，`battle_report.json` 归纳伤害、击杀和触发。
+- Combat System Pack / 战斗系统包新增事件只解释状态、冷却、行动排期与胜负摘要，不改变战斗公式。
 - Web viewer 只读取回放文件，不运行战斗逻辑。
 - 通过 board / timeline / report / unit detail 逐步回看一场战斗闭环。
 - 浏览器冒烟测试保证关键体验通路有最小自动化保障。
@@ -117,6 +129,9 @@ npm run dev -- --host 127.0.0.1
 - [ ] board shows 12 units / 棋盘显示 12 个单位
 - [ ] battle summary shows ally / enemy_eliminated / 战斗摘要显示 ally / enemy_eliminated
 - [ ] timeline filter works / 时间线筛选可用
+- [ ] combat-system timeline filters work / 战斗系统事件筛选可用
+- [ ] unit detail shows active status and next action / 单位详情显示当前状态和下一行动
+- [ ] report shows victory explanation / 战报显示胜负解释
 - [ ] report-to-board link works / 战报到棋盘联动可用
 - [ ] key moments navigation works / 关键时刻跳转可用
 

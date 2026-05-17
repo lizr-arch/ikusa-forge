@@ -10,6 +10,9 @@ const debugTimelinePath = path.join(repoRoot, "runs", "demo_001", "debug_timelin
 test("loads replay and report into the SVG replay viewer", async ({ page }) => {
   const debugTimeline = JSON.parse(fs.readFileSync(debugTimelinePath, "utf8"));
   const modifierRows = debugTimeline.filter((event: { type?: string }) => event.type === "stat_modifier");
+  const statusRows = debugTimeline.filter((event: { type?: string }) => event.type === "status_apply");
+  const cooldownRows = debugTimeline.filter((event: { type?: string }) => event.type === "skill_cooldown");
+  const actionScheduleRows = debugTimeline.filter((event: { type?: string }) => event.type === "action_scheduled");
   const modifierSourceTypes = new Set(
     debugTimeline
       .filter((event: { type?: string; payload?: { source_type?: string } }) => event.type === "stat_modifier")
@@ -18,6 +21,9 @@ test("loads replay and report into the SVG replay viewer", async ({ page }) => {
   );
 
   expect(modifierRows.length).toBeGreaterThan(0);
+  expect(statusRows.length).toBeGreaterThan(0);
+  expect(cooldownRows.length).toBeGreaterThan(0);
+  expect(actionScheduleRows.length).toBeGreaterThan(0);
   expect(modifierSourceTypes.has("formation")).toBeTruthy();
   expect(modifierSourceTypes.has("synergy")).toBeTruthy();
 
@@ -60,10 +66,15 @@ test("loads replay and report into the SVG replay viewer", async ({ page }) => {
   await expectFilteredTimelineRows(page, "skill_trigger");
   await expectFilteredTimelineRows(page, "death");
   await expectFilteredTimelineRows(page, "stat_modifier");
+  await expectFilteredTimelineRows(page, "status_apply");
+  await expectFilteredTimelineRows(page, "skill_cooldown");
+  await expectFilteredTimelineRows(page, "action_scheduled");
   await page.locator(".timeline-filter select").selectOption("all");
 
   await page.locator('[aria-label="ally_001"]').click();
   await expect(page.locator("#unit-detail")).toContainText("ally_001");
+  await expect(page.locator("#unit-detail")).toContainText("Active Statuses");
+  await expect(page.locator("#unit-detail")).toContainText("Next Action Tick");
 
   const initialTick = await page.locator("#tick-readout").textContent();
   const initialEventSummary = await page.locator("#event-highlight .event-highlight-summary").textContent();
@@ -112,8 +123,31 @@ test("loads replay and report into the SVG replay viewer", async ({ page }) => {
   await expect(page.locator("#event-highlight")).toContainText("Reason");
   await expect(page.locator("#event-highlight")).toContainText("Source Type");
 
+  await page.locator(".timeline-filter select").selectOption("status_apply");
+  const firstStatus = page.locator(".timeline-row").first();
+  await expect(firstStatus).toBeVisible();
+  await firstStatus.click();
+  await expect(page.locator("#event-highlight")).toContainText("status_apply");
+  await expect(page.locator("#event-highlight")).toContainText("Reason");
+
+  await page.locator(".timeline-filter select").selectOption("skill_cooldown");
+  const firstCooldown = page.locator(".timeline-row").first();
+  await expect(firstCooldown).toBeVisible();
+  await firstCooldown.click();
+  await expect(page.locator("#event-highlight")).toContainText("ready_tick");
+
+  await page.locator(".timeline-filter select").selectOption("action_scheduled");
+  const firstActionSchedule = page.locator(".timeline-row").first();
+  await expect(firstActionSchedule).toBeVisible();
+  await firstActionSchedule.click();
+  await expect(page.locator("#event-highlight")).toContainText("next_action_tick");
+
   await expect(page.locator("#report")).toContainText("Target Reasons");
   await expect(page.locator("#report")).toContainText("Skill Target Reasons");
+  await expect(page.locator("#report")).toContainText("Victory Explanation");
+  await expect(page.locator("#report")).toContainText("Status Applied");
+  await expect(page.locator("#report")).toContainText("Skill Cooldowns");
+  await expect(page.locator("#report")).toContainText("Actions Scheduled");
 
   await page.locator('#report .report-table .report-unit-link[data-unit-id="ally_003"]').click();
   await expect(page.locator("#unit-detail")).toContainText("ally_003");
@@ -126,7 +160,7 @@ test("loads replay and report into the SVG replay viewer", async ({ page }) => {
   await expect(page.locator("#report")).toContainText("ATK Bonus");
   await expect(page.locator("#report")).toContainText("DEF Bonus");
 
-  await page.locator(".key-moment").filter({ hasText: "Battle ended" }).click();
+  await page.locator(".key-moment").filter({ hasText: "enemy_eliminated" }).click();
   await expect(page.locator("#tick-readout")).toContainText("Tick 240");
 
   await expect(page.locator("#report")).toContainText("enemy_eliminated");

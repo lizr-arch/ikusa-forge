@@ -305,6 +305,17 @@ const unitHighlightsForEvent = (
       addHighlight(highlights, payload.source, "modifier-source");
       addHighlight(highlights, payload.target, "modifier-target");
       break;
+    case "status_apply":
+    case "status_expire":
+      addHighlight(highlights, payload.source, "modifier-source");
+      addHighlight(highlights, payload.target, "modifier-target");
+      break;
+    case "skill_cooldown":
+      addHighlight(highlights, payload.source, "skill-source");
+      break;
+    case "action_scheduled":
+      addHighlight(highlights, payload.unit, "skill-source");
+      break;
     case "battle_end":
       for (const unit of visualState.units.values()) {
         if (!unit.alive) {

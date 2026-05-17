@@ -111,8 +111,9 @@ class SkillTests(unittest.TestCase):
 
         self.assertEqual([skill], get_ready_skills(unit, config, "on_attack", 0))
 
-        mark_skill_used(unit, skill, tick=0, tick_rate=20)
+        ready_tick = mark_skill_used(unit, skill, tick=0, tick_rate=20)
 
+        self.assertEqual(40, ready_tick)
         self.assertEqual([], get_ready_skills(unit, config, "on_attack", 39))
         self.assertEqual([skill], get_ready_skills(unit, config, "on_attack", 40))
 
@@ -132,9 +133,14 @@ class SkillTests(unittest.TestCase):
         try_use_on_battle_start_skills(state, config, events)
 
         self.assertEqual(12, shield.guard_value)
-        self.assertEqual(["skill_trigger"], [event.type for event in events])
+        self.assertEqual(["skill_trigger", "status_apply", "skill_cooldown"], [event.type for event in events])
         self.assertEqual("shield_guard", events[0].payload["skill"])
         self.assertEqual(["ally_001"], events[0].payload["targets"])
+        self.assertEqual("skill:shield_guard", events[1].payload["reason"])
+        self.assertEqual("guard_value", events[1].payload["stat"])
+        self.assertEqual("self", events[1].payload["target_reason"])
+        self.assertEqual(1, len(shield.statuses))
+        self.assertEqual(20, events[2].payload["ready_tick"])
 
     def test_banner_rally_buffs_adjacent_allies(self):
         skill = make_skill(
@@ -158,6 +164,11 @@ class SkillTests(unittest.TestCase):
         self.assertEqual(10, far.atk)
         self.assertEqual(10, enemy.atk)
         self.assertEqual(["ally_adjacent"], events[0].payload["targets"])
+        self.assertEqual(["skill_trigger", "status_apply", "skill_cooldown"], [event.type for event in events])
+        self.assertEqual("atk", events[1].payload["stat"])
+        self.assertEqual(8, events[1].payload["amount"])
+        self.assertEqual("adjacent_allies", events[1].payload["target_reason"])
+        self.assertEqual(1, len(adjacent.statuses))
 
     def test_on_attack_skill_triggers_and_deals_skill_damage(self):
         skill = make_skill("katana_slash", "on_attack", effect_value=16)
@@ -171,8 +182,9 @@ class SkillTests(unittest.TestCase):
 
         self.assertTrue(result.used)
         self.assertEqual([target], result.damaged_targets)
-        self.assertEqual(["skill_trigger", "damage"], [event.type for event in events])
+        self.assertEqual(["skill_trigger", "damage", "skill_cooldown"], [event.type for event in events])
         self.assertEqual("skill:katana_slash", events[1].payload["reason"])
+        self.assertEqual("katana_slash", events[2].payload["skill"])
         self.assertEqual(11, target.hp)
 
     def test_brace_counter_reacts_without_recursive_reaction(self):
@@ -191,7 +203,7 @@ class SkillTests(unittest.TestCase):
 
         try_use_on_attacked_skills(attacker, defender, state, config, 0, events)
 
-        self.assertEqual(["skill_trigger", "damage"], [event.type for event in events])
+        self.assertEqual(["skill_trigger", "damage", "skill_cooldown"], [event.type for event in events])
         self.assertEqual("brace_counter", events[0].payload["skill"])
         self.assertEqual("skill:brace_counter", events[1].payload["reason"])
 
@@ -212,7 +224,7 @@ class SkillTests(unittest.TestCase):
 
         try_use_on_ally_attacked_skills(attacker, defender, state, config, 0, events)
 
-        self.assertEqual(["skill_trigger", "damage"], [event.type for event in events])
+        self.assertEqual(["skill_trigger", "damage", "skill_cooldown"], [event.type for event in events])
         self.assertEqual("intercept", events[0].payload["skill"])
         self.assertEqual("skill:intercept", events[1].payload["reason"])
         self.assertLess(attacker.hp, 40)

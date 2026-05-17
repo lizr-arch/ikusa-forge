@@ -17,6 +17,9 @@ REQUIRED_EVENT_TYPES = [
     "death",
     "battle_end",
     "stat_modifier",
+    "status_apply",
+    "skill_cooldown",
+    "action_scheduled",
 ]
 
 REQUIRED_VIEWER_FILES = [
@@ -77,7 +80,10 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         "- report: "
         f"total_damage={summary.get('total_damage')}, "
         f"total_kills={summary.get('total_kills')}, "
-        f"total_skill_triggers={summary.get('total_skill_triggers')}"
+        f"total_skill_triggers={summary.get('total_skill_triggers')}, "
+        f"total_status_applied={summary.get('total_status_applied')}, "
+        f"total_skill_cooldowns={summary.get('total_skill_cooldowns')}, "
+        f"total_actions_scheduled={summary.get('total_actions_scheduled')}"
     )
     return 0
 
@@ -129,11 +135,18 @@ def _check_replay(
     counts = _event_counts(events)
     attack_with_reason = _filter_events_with_reason(events, "attack")
     skill_trigger_with_reason = _filter_events_with_reason(events, "skill_trigger")
+    battle_end_events = [event for event in events if event.get("type") == "battle_end"]
 
     for event_type in REQUIRED_EVENT_TYPES:
         _expect(counts.get(event_type, 0) > 0, f"replay {event_type} events", errors)
     _expect(len(attack_with_reason) > 0, "replay attack target_reason", errors)
     _expect(len(skill_trigger_with_reason) > 0, "replay skill_trigger target_reason", errors)
+    if battle_end_events:
+        battle_end = _as_dict(battle_end_events[-1].get("payload"))
+        for field in ["winner", "reason", "end_tick", "winner_alive", "loser_alive"]:
+            _expect(field in battle_end, f"replay battle_end.{field}", errors)
+    else:
+        errors.append("expected replay battle_end payload")
     unit_count = metadata.get("unit_count")
     if isinstance(unit_count, int):
         _expect(counts.get("unit_spawn") == unit_count, "replay unit_count", errors)
@@ -163,8 +176,12 @@ def _check_report(
         "total_kills",
         "total_skill_triggers",
         "total_modifiers",
+        "total_status_applied",
+        "total_skill_cooldowns",
+        "total_actions_scheduled",
     ]:
         _expect(_positive(summary.get(field)), f"report summary.{field}", errors)
+    _expect(_non_negative(summary.get("total_status_expired")), "report summary.total_status_expired", errors)
     _expect(summary.get("formation_modifiers", 0) > 0, "report summary.formation_modifiers", errors)
     _expect(summary.get("synergy_modifiers", 0) > 0, "report summary.synergy_modifiers", errors)
     target_reasons = _as_dict(summary.get("target_reason_counts"))
@@ -177,8 +194,12 @@ def _check_report(
     if event_counts:
         _expect(summary.get("total_skill_triggers") == event_counts.get("skill_trigger"), "report trigger count", errors)
         _expect(summary.get("total_kills") == event_counts.get("death"), "report kill count", errors)
+        _expect(summary.get("total_status_applied") == event_counts.get("status_apply"), "report status count", errors)
+        _expect(summary.get("total_skill_cooldowns") == event_counts.get("skill_cooldown"), "report cooldown count", errors)
+        _expect(summary.get("total_actions_scheduled") == event_counts.get("action_scheduled"), "report action schedule count", errors)
 
     _expect(isinstance(report.get("units"), dict) and len(report.get("units", {})) >= 2, "report units", errors)
+    _expect(isinstance(report.get("victory_explanation"), dict), "report victory_explanation", errors)
     top_units = _as_dict(report.get("top_units"))
     for field in ["damage_done", "damage_taken", "skill_triggers"]:
         _expect(isinstance(top_units.get(field), list) and len(top_units.get(field, [])) > 0, f"top_units.{field}", errors)

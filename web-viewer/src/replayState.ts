@@ -18,6 +18,13 @@ export interface VisualUnit {
   guardValue: number;
   skillIds: string[];
   statBonuses: Map<string, number>;
+  statuses: VisualStatus[];
+  skillCooldowns: Map<string, number>;
+  nextActionTick: number | null;
+  actionIntervalTicks: number | null;
+  lastStatus: StatusAnnotation | null;
+  lastCooldown: CooldownAnnotation | null;
+  lastActionSchedule: ActionScheduleAnnotation | null;
 }
 
 export interface AttackAnnotation {
@@ -46,6 +53,43 @@ export interface StatModifierAnnotation {
   reason: string;
 }
 
+export interface VisualStatus {
+  id: string;
+  source: string;
+  sourceType: string;
+  target: string;
+  stat: string;
+  amount: number;
+  startTick: number;
+  expireTick: number | null;
+  reason: string;
+  targetReason: string | null;
+  active: boolean;
+}
+
+export interface StatusAnnotation extends VisualStatus {
+  tick: number;
+  eventType: "status_apply" | "status_expire";
+}
+
+export interface CooldownAnnotation {
+  tick: number;
+  source: string;
+  skill: string;
+  startTick: number;
+  readyTick: number;
+  cooldownTicks: number;
+}
+
+export interface ActionScheduleAnnotation {
+  tick: number;
+  unit: string;
+  currentTick: number;
+  nextActionTick: number;
+  actionIntervalTicks: number;
+  reason: string;
+}
+
 export interface SkillAnnotation {
   tick: number;
   source: string;
@@ -62,8 +106,12 @@ export interface VisualState {
   lastAttack: AttackAnnotation | null;
   lastDamage: DamageAnnotation | null;
   lastModifier: StatModifierAnnotation | null;
+  lastStatus: StatusAnnotation | null;
+  lastCooldown: CooldownAnnotation | null;
+  lastActionSchedule: ActionScheduleAnnotation | null;
   lastSkill: SkillAnnotation | null;
   battleResult: BattleResult | null;
+  victory: BattleResult | null;
   appliedEventId: string | null;
   appliedEventIndex: number | null;
 }
@@ -80,8 +128,12 @@ export const createEmptyVisualState = (): VisualState => ({
   lastAttack: null,
   lastDamage: null,
   lastModifier: null,
+  lastStatus: null,
+  lastCooldown: null,
+  lastActionSchedule: null,
   lastSkill: null,
   battleResult: null,
+  victory: null,
   appliedEventId: null,
   appliedEventIndex: null,
 });
@@ -187,6 +239,18 @@ export const applyEvent = (
     case "stat_modifier":
       applyStatModifier(state, event);
       return;
+    case "status_apply":
+      applyStatusApply(state, event);
+      return;
+    case "status_expire":
+      applyStatusExpire(state, event);
+      return;
+    case "skill_cooldown":
+      applySkillCooldown(state, event);
+      return;
+    case "action_scheduled":
+      applyActionScheduled(state, event);
+      return;
     case "death":
       applyDeath(state, event);
       return;
@@ -195,7 +259,13 @@ export const applyEvent = (
         winner: readNullableString(event.payload.winner),
         reason: readNullableString(event.payload.reason),
         end_tick: readNullableNumber(event.payload.end_tick),
+        winner_alive: readNullableNumber(event.payload.winner_alive),
+        loser_alive: readNullableNumber(event.payload.loser_alive),
+        winner_total_hp: readNullableNumber(event.payload.winner_total_hp),
+        loser_total_hp: readNullableNumber(event.payload.loser_total_hp),
+        summary: readNullableString(event.payload.summary),
       };
+      state.victory = state.battleResult;
       return;
     case "battle_start":
       return;
@@ -246,6 +316,13 @@ const applyUnitSpawn = (state: VisualState, event: ReplayEvent): void => {
     guardValue: readNumber(snapshot.guard_value, 0),
     skillIds: readStringArray(snapshot.skill_ids),
     statBonuses: new Map<string, number>(),
+    statuses: readStatusSnapshots(snapshot.statuses),
+    skillCooldowns: readNumberMap(snapshot.skill_cooldowns),
+    nextActionTick: readNullableNumber(snapshot.next_action_tick),
+    actionIntervalTicks: readNullableNumber(snapshot.action_interval_ticks),
+    lastStatus: null,
+    lastCooldown: null,
+    lastActionSchedule: null,
   });
 };
 
@@ -299,6 +376,93 @@ const applyStatModifier = (state: VisualState, event: ReplayEvent): void => {
     amount,
     reason: readString(event.payload.reason),
   };
+};
+
+const applyStatusApply = (state: VisualState, event: ReplayEvent): void => {
+  const status = readStatus(event.payload, event.tick, "status_apply", true);
+  if (!status) {
+    return;
+  }
+
+  const unit = state.units.get(status.target);
+  if (unit) {
+    unit.statuses = [
+      ...unit.statuses.filter((candidate) => candidate.id !== status.id),
+      status,
+    ];
+    applyStatusStat(unit, status.stat, status.amount);
+    unit.lastStatus = status;
+  }
+  state.lastStatus = status;
+};
+
+const applyStatusExpire = (state: VisualState, event: ReplayEvent): void => {
+  const target = readString(event.payload.target);
+  const statusId = readString(event.payload.id, readString(event.payload.status_id));
+  const unit = state.units.get(target);
+  const expiredStatus = readStatus(event.payload, event.tick, "status_expire", false);
+
+  if (unit) {
+    unit.statuses = unit.statuses.map((status) => {
+      if (statusId && status.id !== statusId) {
+        return status;
+      }
+      if (!statusId && expiredStatus && status.stat !== expiredStatus.stat) {
+        return status;
+      }
+      return {
+        ...status,
+        active: false,
+        expireTick: expiredStatus?.expireTick ?? event.tick,
+      };
+    });
+    if (expiredStatus) {
+      unit.lastStatus = expiredStatus;
+    }
+  }
+  if (expiredStatus) {
+    state.lastStatus = expiredStatus;
+  }
+};
+
+const applySkillCooldown = (state: VisualState, event: ReplayEvent): void => {
+  const source = readString(event.payload.source);
+  const skill = readString(event.payload.skill);
+  const annotation: CooldownAnnotation = {
+    tick: event.tick,
+    source,
+    skill,
+    startTick: readNumber(event.payload.start_tick, event.tick),
+    readyTick: readNumber(event.payload.ready_tick, event.tick),
+    cooldownTicks: readNumber(event.payload.cooldown_ticks, 0),
+  };
+  const unit = state.units.get(source);
+  if (unit) {
+    const cooldowns = new Map(unit.skillCooldowns);
+    cooldowns.set(skill, annotation.readyTick);
+    unit.skillCooldowns = cooldowns;
+    unit.lastCooldown = annotation;
+  }
+  state.lastCooldown = annotation;
+};
+
+const applyActionScheduled = (state: VisualState, event: ReplayEvent): void => {
+  const unitId = readString(event.payload.unit);
+  const annotation: ActionScheduleAnnotation = {
+    tick: event.tick,
+    unit: unitId,
+    currentTick: readNumber(event.payload.current_tick, event.tick),
+    nextActionTick: readNumber(event.payload.next_action_tick, event.tick),
+    actionIntervalTicks: readNumber(event.payload.action_interval_ticks, 0),
+    reason: readString(event.payload.reason),
+  };
+  const unit = state.units.get(unitId);
+  if (unit) {
+    unit.nextActionTick = annotation.nextActionTick;
+    unit.actionIntervalTicks = annotation.actionIntervalTicks;
+    unit.lastActionSchedule = annotation;
+  }
+  state.lastActionSchedule = annotation;
 };
 
 const applyDeath = (state: VisualState, event: ReplayEvent): void => {
@@ -359,6 +523,71 @@ const readTargetScore = (value: unknown): TargetScorePayload | null => {
     role: readValue("role"),
     tie_break: readValue("tie_break"),
   };
+};
+
+const readStatus = (
+  payload: Record<string, unknown>,
+  tick: number,
+  eventType: "status_apply" | "status_expire",
+  active: boolean,
+): StatusAnnotation | null => {
+  const target = readString(payload.target);
+  if (!target) {
+    return null;
+  }
+  return {
+    tick,
+    eventType,
+    id: readString(payload.id, readString(payload.status_id, `${target}:${tick}:${eventType}`)),
+    source: readString(payload.source),
+    sourceType: readString(payload.source_type),
+    target,
+    stat: readString(payload.stat),
+    amount: readNumber(payload.amount, 0),
+    startTick: readNumber(payload.start_tick, tick),
+    expireTick: readNullableNumber(payload.expire_tick),
+    reason: readString(payload.reason),
+    targetReason: readNullableString(payload.target_reason),
+    active,
+  };
+};
+
+const readStatusSnapshots = (value: unknown): VisualStatus[] => {
+  if (!Array.isArray(value)) {
+    return [];
+  }
+  return value
+    .map((item) => (typeof item === "object" && item !== null ? readStatus(item as Record<string, unknown>, 0, "status_apply", true) : null))
+    .filter((status): status is StatusAnnotation => status !== null)
+    .map(({ tick: _tick, eventType: _eventType, ...status }) => status);
+};
+
+const readNumberMap = (value: unknown): Map<string, number> => {
+  const map = new Map<string, number>();
+  if (typeof value !== "object" || value === null || Array.isArray(value)) {
+    return map;
+  }
+  for (const [key, item] of Object.entries(value)) {
+    if (typeof item === "number" && Number.isFinite(item)) {
+      map.set(key, item);
+    }
+  }
+  return map;
+};
+
+const applyStatusStat = (unit: VisualUnit, stat: string, amount: number): void => {
+  if (stat === "atk") {
+    unit.atk += amount;
+  } else if (stat === "defense") {
+    unit.defense += amount;
+  } else if (stat === "range") {
+    unit.range += amount;
+  } else if (stat === "hp") {
+    unit.maxHp += amount;
+    unit.hp += amount;
+  } else if (stat === "guard_value") {
+    unit.guardValue += amount;
+  }
 };
 
 const readNullableNumber = (value: unknown): number | null => {

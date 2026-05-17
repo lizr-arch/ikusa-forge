@@ -26,6 +26,10 @@ def build_battle_report_from_events(
     total_modifiers = 0
     formation_modifiers = 0
     synergy_modifiers = 0
+    total_status_applied = 0
+    total_status_expired = 0
+    total_skill_cooldowns = 0
+    total_actions_scheduled = 0
     target_reason_counts = {}  # type: Dict[str, int]
     skill_target_reason_counts = {}  # type: Dict[str, int]
 
@@ -100,11 +104,42 @@ def build_battle_report_from_events(
                     synergy_modifiers += 1
             continue
 
+        if event_type == "status_apply":
+            target = payload.get("target")
+            if target:
+                _ensure_unit(units, target)["statuses_applied"] += 1
+                total_status_applied += 1
+            continue
+
+        if event_type == "status_expire":
+            target = payload.get("target")
+            if target:
+                _ensure_unit(units, target)["statuses_expired"] += 1
+                total_status_expired += 1
+            continue
+
+        if event_type == "skill_cooldown":
+            source = payload.get("source")
+            if source:
+                _ensure_unit(units, source)["cooldowns_started"] += 1
+                total_skill_cooldowns += 1
+            continue
+
+        if event_type == "action_scheduled":
+            unit_id = payload.get("unit")
+            if unit_id:
+                unit = _ensure_unit(units, unit_id)
+                unit["actions_taken"] += 1
+                unit["last_next_action_tick"] = _as_optional_int(payload.get("next_action_tick"))
+                total_actions_scheduled += 1
+            continue
+
         if event_type == "battle_end":
             battle_end = payload
             key_moments.append(_battle_end_key_moment(event, payload))
 
     result = _report_result(metadata, battle_end)
+    victory_explanation = _victory_explanation(result, battle_end)
     return {
         "schema_version": "battle_report.v0.1",
         "battle_id": metadata.get("battle_id"),
@@ -119,9 +154,14 @@ def build_battle_report_from_events(
             "total_modifiers": total_modifiers,
             "formation_modifiers": formation_modifiers,
             "synergy_modifiers": synergy_modifiers,
+            "total_status_applied": total_status_applied,
+            "total_status_expired": total_status_expired,
+            "total_skill_cooldowns": total_skill_cooldowns,
+            "total_actions_scheduled": total_actions_scheduled,
             "target_reason_counts": target_reason_counts,
             "skill_target_reason_counts": skill_target_reason_counts,
         },
+        "victory_explanation": victory_explanation,
         "units": units,
         "top_units": {
             "damage_done": _top_units(units, "damage_done"),
@@ -142,6 +182,11 @@ def _ensure_unit(units: Dict[str, Dict[str, Any]], unit_id: str) -> Dict[str, An
             "skill_triggers": {},
             "modifiers_received": 0,
             "stat_bonuses": {},
+            "statuses_applied": 0,
+            "statuses_expired": 0,
+            "cooldowns_started": 0,
+            "actions_taken": 0,
+            "last_next_action_tick": None,
         }
     return units[unit_id]
 
@@ -197,7 +242,30 @@ def _battle_end_key_moment(
         "winner": winner,
         "reason": reason,
         "end_tick": end_tick,
-        "summary": f"Battle ended with winner {winner} by {reason}",
+        "summary": payload.get("summary") or f"Battle ended with winner {winner} by {reason}",
+    }
+
+
+def _victory_explanation(
+    result: Dict[str, Any],
+    battle_end: Optional[Dict[str, Any]],
+) -> Dict[str, Any]:
+    payload = battle_end or {}
+    summary = payload.get("summary")
+    if not isinstance(summary, str) or not summary:
+        summary = (
+            f"Battle ended with winner {result.get('winner')} by {result.get('reason')} "
+            f"at tick {result.get('end_tick')}"
+        )
+    return {
+        "winner": result.get("winner"),
+        "reason": result.get("reason"),
+        "end_tick": result.get("end_tick"),
+        "winner_alive": payload.get("winner_alive"),
+        "loser_alive": payload.get("loser_alive"),
+        "winner_total_hp": payload.get("winner_total_hp"),
+        "loser_total_hp": payload.get("loser_total_hp"),
+        "summary": summary,
     }
 
 
@@ -232,6 +300,16 @@ def _as_int(value: Any) -> int:
     if isinstance(value, float):
         return int(value)
     return 0
+
+
+def _as_optional_int(value: Any) -> Optional[int]:
+    if isinstance(value, bool):
+        return int(value)
+    if isinstance(value, int):
+        return value
+    if isinstance(value, float):
+        return int(value)
+    return None
 
 
 def _as_number(value: Any) -> float:
