@@ -1,4 +1,4 @@
-import type { BattleResult, ReplayDocument, ReplayEvent, UnitSnapshot } from "./replayTypes";
+import type { BattleResult, ReplayDocument, ReplayEvent, TargetScorePayload, UnitSnapshot } from "./replayTypes";
 
 export interface VisualUnit {
   instanceId: string;
@@ -24,6 +24,8 @@ export interface AttackAnnotation {
   tick: number;
   source: string;
   target: string;
+  targetReason: string | null;
+  targetScore: TargetScorePayload | null;
 }
 
 export interface DamageAnnotation {
@@ -50,6 +52,8 @@ export interface SkillAnnotation {
   skill: string;
   trigger: string;
   targets: string[];
+  targetReason: string | null;
+  targetScore: TargetScorePayload | null;
 }
 
 export interface VisualState {
@@ -162,6 +166,8 @@ export const applyEvent = (
         tick: event.tick,
         source: readString(event.payload.attacker),
         target: readString(event.payload.target),
+        targetReason: readNullableString(event.payload.target_reason),
+        targetScore: readTargetScore(event.payload.target_score),
       };
       return;
     case "skill_trigger":
@@ -171,6 +177,8 @@ export const applyEvent = (
         skill: readString(event.payload.skill),
         trigger: readString(event.payload.trigger),
         targets: readStringArray(event.payload.targets),
+        targetReason: readNullableString(event.payload.target_reason),
+        targetScore: readTargetScore(event.payload.target_score),
       };
       return;
     case "damage":
@@ -330,6 +338,27 @@ const readNullableString = (value: unknown): string | null => {
 
 const readNumber = (value: unknown, fallback: number): number => {
   return typeof value === "number" && Number.isFinite(value) ? value : fallback;
+};
+
+const readTargetScore = (value: unknown): TargetScorePayload | null => {
+  if (typeof value !== "object" || value === null) {
+    return null;
+  }
+  const payload = value as Record<string, unknown>;
+  const readValue = (key: string): number => {
+    const item = payload[key];
+    return typeof item === "number" && Number.isFinite(item) ? item : 0;
+  };
+
+  return {
+    final: readValue("final"),
+    exposure: readValue("exposure"),
+    column: readValue("column"),
+    low_hp: readValue("low_hp"),
+    threat: readValue("threat"),
+    role: readValue("role"),
+    tie_break: readValue("tie_break"),
+  };
 };
 
 const readNullableNumber = (value: unknown): number | null => {

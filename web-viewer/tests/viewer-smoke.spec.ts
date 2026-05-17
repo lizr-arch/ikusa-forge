@@ -46,7 +46,7 @@ test("loads replay and report into the SVG replay viewer", async ({ page }) => {
   await expect(page.locator("#battle-summary")).toContainText("ally");
   await expect(page.locator("#battle-summary")).toContainText("enemy_eliminated");
   await expect(page.locator("#battle-summary")).toContainText(/end tick|end_tick/i);
-  await expect(page.locator("#battle-summary")).toContainText("224");
+  await expect(page.locator("#battle-summary")).toContainText("240");
 
   await expect(page.getByRole("img", { name: "Replay board" })).toBeVisible();
   await expect(page.locator(".unit-token")).toHaveCount(12);
@@ -90,6 +90,20 @@ test("loads replay and report into the SVG replay viewer", async ({ page }) => {
   await expect(page.locator("#event-highlight")).toContainText("Reason");
   await expect(page.locator("#event-highlight")).toContainText(/basic_attack|skill:/);
 
+  await page.locator(".timeline-filter select").selectOption("attack");
+  const attackRow = page.locator(".timeline-row").first();
+  await expect(attackRow).toBeVisible();
+  await attackRow.click();
+  await expect(page.locator("#event-highlight")).toContainText("Target Reason");
+  await expect(page.locator("#event-highlight")).toContainText("Target Score");
+
+  await page.locator(".timeline-filter select").selectOption("skill_trigger");
+  const skillRow = page.locator(".timeline-row").first();
+  await expect(skillRow).toBeVisible();
+  await skillRow.click();
+  await expect(page.locator("#event-highlight")).toContainText("Target Reason");
+  await expect(page.locator("#event-highlight")).toContainText("Target Score");
+
   await page.locator(".timeline-filter select").selectOption("stat_modifier");
   const firstModifier = page.locator(".timeline-row").first();
   await expect(firstModifier).toBeVisible();
@@ -97,6 +111,9 @@ test("loads replay and report into the SVG replay viewer", async ({ page }) => {
   await expect(page.locator("#event-highlight")).toContainText("modifies");
   await expect(page.locator("#event-highlight")).toContainText("Reason");
   await expect(page.locator("#event-highlight")).toContainText("Source Type");
+
+  await expect(page.locator("#report")).toContainText("Target Reasons");
+  await expect(page.locator("#report")).toContainText("Skill Target Reasons");
 
   await page.locator('#report .report-table .report-unit-link[data-unit-id="ally_003"]').click();
   await expect(page.locator("#unit-detail")).toContainText("ally_003");
@@ -110,7 +127,7 @@ test("loads replay and report into the SVG replay viewer", async ({ page }) => {
   await expect(page.locator("#report")).toContainText("DEF Bonus");
 
   await page.locator(".key-moment").filter({ hasText: "Battle ended" }).click();
-  await expect(page.locator("#tick-readout")).toContainText("Tick 224");
+  await expect(page.locator("#tick-readout")).toContainText("Tick 240");
 
   await expect(page.locator("#report")).toContainText("enemy_eliminated");
   await expect(page.locator("#report")).toContainText("Total Damage");

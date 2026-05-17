@@ -108,9 +108,9 @@ Handler map currently includes:
 - `debug_timeline.json` 的 `stat_modifier` 至少包含：
   - `source_type: formation`
   - `source_type: synergy`
-- `total_damage / 总伤害` 为 `1192`
-- `total_kills / 总击杀` 为 `8`
-- `total_skill_triggers / 总技能触发` 为 `50`
+  - `total_damage / 总伤害` 为 `1189`
+  - `total_kills / 总击杀` 为 `9`
+  - `total_skill_triggers / 总技能触发` 为 `48`
 
 ## Not in Scope / 不在范围
 
@@ -120,6 +120,10 @@ Handler map currently includes:
 - No general-purpose DSL / 不做通用战斗修正 DSL
 - No complex animation system / 不做复杂动画系统
 - No visual regression suite / 不做视觉回归矩阵
+
+## Next Recommended / 下一阶段建议
+
+- `phase2/combat-behavior-pack`：完善 `attack` / `skill_trigger` 的决策可解释性（目标原因、评分与汇总显示），形成可验证的行为链路。
 
 ## Demo Verification / 演示验证
 

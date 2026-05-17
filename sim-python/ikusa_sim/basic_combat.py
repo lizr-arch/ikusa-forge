@@ -29,7 +29,7 @@ from ikusa_sim.skills import (
     try_use_on_attacked_skills,
     try_use_on_battle_start_skills,
 )
-from ikusa_sim.targeting import select_target
+from ikusa_sim.targeting import TargetDecision, select_target_decision
 
 
 def run_basic_combat(
@@ -75,14 +75,32 @@ def _run_tick(
         if attacker is None:
             return None
 
-        target = select_target(attacker, state.units)
+        decision = select_target_decision(attacker, state.units)
+        target = decision.target
         if target is None:
             return _build_victory_result(state, tick)
 
-        skill_result = try_use_on_attack_skill(attacker, target, state, config, tick, events)
+        skill_result = try_use_on_attack_skill(
+            attacker,
+            target,
+            state,
+            config,
+            tick,
+            events,
+            decision,
+        )
         damaged_targets = skill_result.damaged_targets
         if not skill_result.used:
-            damaged_targets = [_apply_basic_attack(state, events, tick, attacker, target)]
+            damaged_targets = [
+                _apply_basic_attack(
+                    state,
+                    events,
+                    tick,
+                    attacker,
+                    target,
+                    decision,
+                )
+            ]
 
         _trigger_reactions(state, config, events, tick, attacker, damaged_targets)
 
@@ -99,16 +117,31 @@ def _apply_basic_attack(
     tick: int,
     attacker: UnitState,
     target: UnitState,
+    decision: Optional[TargetDecision] = None,
 ) -> UnitState:
+    payload = {
+        "attacker": attacker.instance_id,
+        "target": target.instance_id,
+        "target_reason": "current_target",
+    }
+    if decision is not None:
+        payload["target_reason"] = decision.reason
+        if decision.score is not None:
+            payload["target_score"] = {
+                "final": decision.score.final_score,
+                "exposure": decision.score.exposure_score,
+                "column": decision.score.column_score,
+                "low_hp": decision.score.low_hp_score,
+                "threat": decision.score.threat_score,
+                "role": decision.score.role_score,
+                "tie_break": decision.score.tie_break,
+            }
     events.append(
         BattleEvent(
             tick=tick,
             event_id=_next_event_id(state),
             type="attack",
-            payload={
-                "attacker": attacker.instance_id,
-                "target": target.instance_id,
-            },
+            payload=payload,
         )
     )
 

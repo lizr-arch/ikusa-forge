@@ -59,6 +59,17 @@ def make_events():
                 "skill": "katana_slash",
                 "trigger": "on_attack",
                 "targets": ["enemy_001"],
+                "target_reason": "current_target",
+            },
+        },
+        {
+            "tick": 10,
+            "event_id": "evt_000003_1",
+            "type": "attack",
+            "payload": {
+                "attacker": "ally_001",
+                "target": "enemy_001",
+                "target_reason": "frontline_exposed_same_column",
             },
         },
         {
@@ -152,6 +163,18 @@ class BattleReportTests(unittest.TestCase):
             report["units"]["ally_001"]["skill_triggers"],
         )
         self.assertEqual(1, report["summary"]["total_skill_triggers"])
+
+    def test_target_reason_counts_are_aggregated(self):
+        report = self.build_report()
+
+        self.assertIn("target_reason_counts", report["summary"])
+        self.assertEqual({"frontline_exposed_same_column": 1}, report["summary"]["target_reason_counts"])
+
+    def test_skill_target_reason_counts_are_aggregated(self):
+        report = self.build_report()
+
+        self.assertIn("skill_target_reason_counts", report["summary"])
+        self.assertEqual({"current_target": 1}, report["summary"]["skill_target_reason_counts"])
 
     def test_battle_end_result_goes_to_top_level_report(self):
         report = self.build_report()

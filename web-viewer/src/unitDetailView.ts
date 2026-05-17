@@ -66,6 +66,12 @@ const renderLastMarkers = (unit: VisualUnit, state: VisualState): HTMLElement =>
       "Attack",
       `T${state.lastAttack.tick} ${state.lastAttack.source} -> ${state.lastAttack.target}`,
     ]);
+    if (state.lastAttack.targetReason) {
+      rows.push(["Attack Target Reason", state.lastAttack.targetReason]);
+    }
+    if (state.lastAttack.targetScore) {
+      rows.push(["Attack Target Score", formatTargetScore(state.lastAttack.targetScore)]);
+    }
   }
   if (
     state.lastSkill &&
@@ -75,6 +81,12 @@ const renderLastMarkers = (unit: VisualUnit, state: VisualState): HTMLElement =>
       "Skill",
       `T${state.lastSkill.tick} ${state.lastSkill.source} ${state.lastSkill.skill}`,
     ]);
+    if (state.lastSkill.targetReason) {
+      rows.push(["Skill Target Reason", state.lastSkill.targetReason]);
+    }
+    if (state.lastSkill.targetScore) {
+      rows.push(["Skill Target Score", formatTargetScore(state.lastSkill.targetScore)]);
+    }
   }
   if (
     state.lastModifier &&
@@ -97,6 +109,17 @@ const renderLastMarkers = (unit: VisualUnit, state: VisualState): HTMLElement =>
 
   block.append(rows.length > 0 ? detailGrid(rows) : empty("No active marker"));
   return block;
+};
+
+const formatTargetScore = (score: { final: number; exposure: number; column: number; low_hp: number; threat: number; role: number }): string => {
+  return [
+    `final=${score.final ?? "-"}`,
+    `exposure=${score.exposure ?? "-"}`,
+    `column=${score.column ?? "-"}`,
+    `low_hp=${score.low_hp ?? "-"}`,
+    `threat=${score.threat ?? "-"}`,
+    `role=${score.role ?? "-"}`,
+  ].join(", ");
 };
 
 const detailGrid = (rows: [string, string][]): HTMLElement => {

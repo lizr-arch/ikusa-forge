@@ -29,6 +29,8 @@ export const renderReport = (
       ["Total Modifiers", formatNumber(report.summary?.total_modifiers)],
       ["Formation Modifiers", formatNumber(report.summary?.formation_modifiers)],
       ["Synergy Modifiers", formatNumber(report.summary?.synergy_modifiers)],
+      ["Target Reasons", formatReasonSummary(report.summary?.target_reason_counts)],
+      ["Skill Target Reasons", formatReasonSummary(report.summary?.skill_target_reason_counts)],
     ]),
   );
 
@@ -152,6 +154,27 @@ const renderUnitTable = (
   table.append(body);
   wrapper.append(table);
   return wrapper;
+};
+
+const formatReasonSummary = (counts: Record<string, number> | undefined): string => {
+  if (!counts) {
+    return "-";
+  }
+  const entries = Object.entries(counts)
+    .filter(([, value]) => value > 0)
+    .sort((left, right) => {
+      if (right[1] !== left[1]) {
+        return right[1] - left[1];
+      }
+      return left[0].localeCompare(right[0]);
+    });
+  if (entries.length === 0) {
+    return "-";
+  }
+  return entries
+    .slice(0, 3)
+    .map(([reason, count]) => `${reason}:${count}`)
+    .join(" | ");
 };
 
 const renderKeyMoments = (report: BattleReport, options: ReportRenderOptions): HTMLElement => {

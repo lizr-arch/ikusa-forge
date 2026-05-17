@@ -65,9 +65,21 @@ export interface UnitSpawnPayload {
   unit: UnitSnapshot;
 }
 
+export interface TargetScorePayload {
+  final: number;
+  exposure: number;
+  column: number;
+  low_hp: number;
+  threat: number;
+  role: number;
+  tie_break: number;
+}
+
 export interface AttackPayload {
   attacker: string;
   target: string;
+  target_reason?: string;
+  target_score?: TargetScorePayload;
 }
 
 export interface SkillTriggerPayload {
@@ -75,6 +87,8 @@ export interface SkillTriggerPayload {
   skill: string;
   trigger?: string;
   targets: string[];
+  target_reason?: string;
+  target_score?: TargetScorePayload;
 }
 
 export interface DamagePayload {
@@ -126,6 +140,8 @@ export interface ReportSummary {
   total_modifiers?: number;
   formation_modifiers?: number;
   synergy_modifiers?: number;
+  target_reason_counts?: Record<string, number>;
+  skill_target_reason_counts?: Record<string, number>;
 }
 
 export interface ReportTopUnits {
