@@ -127,9 +127,13 @@ def _check_replay(
         and isinstance(event["payload"].get("source_type"), str)
     }
     counts = _event_counts(events)
+    attack_with_reason = _filter_events_with_reason(events, "attack")
+    skill_trigger_with_reason = _filter_events_with_reason(events, "skill_trigger")
 
     for event_type in REQUIRED_EVENT_TYPES:
         _expect(counts.get(event_type, 0) > 0, f"replay {event_type} events", errors)
+    _expect(len(attack_with_reason) > 0, "replay attack target_reason", errors)
+    _expect(len(skill_trigger_with_reason) > 0, "replay skill_trigger target_reason", errors)
     unit_count = metadata.get("unit_count")
     if isinstance(unit_count, int):
         _expect(counts.get("unit_spawn") == unit_count, "replay unit_count", errors)
@@ -163,6 +167,10 @@ def _check_report(
         _expect(_positive(summary.get(field)), f"report summary.{field}", errors)
     _expect(summary.get("formation_modifiers", 0) > 0, "report summary.formation_modifiers", errors)
     _expect(summary.get("synergy_modifiers", 0) > 0, "report summary.synergy_modifiers", errors)
+    target_reasons = _as_dict(summary.get("target_reason_counts"))
+    skill_target_reasons = _as_dict(summary.get("skill_target_reason_counts"))
+    _expect(_non_empty_dict(target_reasons), "report target_reason_counts", errors)
+    _expect(_non_empty_dict(skill_target_reasons), "report skill_target_reason_counts", errors)
     _expect(summary.get("total_modifiers") == event_counts.get("stat_modifier"), "report modifier count", errors)
     _expect("formation" in modifier_source_types, "replay has formation modifier source", errors)
     _expect("synergy" in modifier_source_types, "replay has synergy modifier source", errors)
@@ -175,6 +183,21 @@ def _check_report(
     for field in ["damage_done", "damage_taken", "skill_triggers"]:
         _expect(isinstance(top_units.get(field), list) and len(top_units.get(field, [])) > 0, f"top_units.{field}", errors)
     _expect(isinstance(report.get("key_moments"), list) and len(report.get("key_moments", [])) > 0, "report key_moments", errors)
+
+
+def _filter_events_with_reason(events: Sequence[Dict[str, Any]], event_type: str) -> List[Dict[str, Any]]:
+    return [
+        event
+        for event in events
+        if event.get("type") == event_type
+        and isinstance(event.get("payload"), dict)
+        and isinstance(event["payload"].get("target_reason"), str)
+        and event["payload"]["target_reason"]
+    ]
+
+
+def _non_empty_dict(value: Dict[str, Any]) -> bool:
+    return any(value.values()) if value else False
 
 
 def _check_viewer(viewer_dir: Path, errors: List[str]) -> None:

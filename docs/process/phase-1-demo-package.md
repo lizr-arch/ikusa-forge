@@ -64,13 +64,13 @@ npm run dev -- --host 127.0.0.1
 在当前主线下，`demo_001` 预期结果如下：
 
 - units / 单位数: `12`
-- events / 事件数: `210`
+- events / 事件数: `205`
 - winner / 胜者: `ally`
 - reason / 原因: `enemy_eliminated`
-- end_tick / 结束 tick: `224`
-- total_damage / 总伤害: `1192`
-- total_kills / 总击杀: `8`
-- total_skill_triggers / 总技能触发: `50`
+- end_tick / 结束 tick: `240`
+- total_damage / 总伤害: `1189`
+- total_kills / 总击杀: `9`
+- total_skill_triggers / 总技能触发: `48`
 - total_modifiers / 总修正次数: `16`
 - formation_modifiers / 阵型加成次数: `8`
 - synergy_modifiers / 羁绊加成次数: `8`
@@ -134,19 +134,21 @@ npm run dev -- --host 127.0.0.1
 
 下一步方向优先级建议（含简短对比）：
 
-1. Viewer polish / 回放器打磨  
+1. Combat Behavior Pack / 战斗行为包
+   目标是目标选择与技能选择可解释：记录 `target_reason`、`target_score`，并把决策原因在战报与回放器里可见。
+2. Viewer polish / 回放器打磨
    目标是提升可展示性、联动体验和讲述清晰度；最小风险，最短交付。
-2. CI workflow / CI 流水线  
+3. CI workflow / CI 流水线
    目标是把当前 Python + Web 验证命令收敛为提交门禁；涉及工程自动化，收益中等。
-3. Formation bonus / 阵型加成  
+4. Formation bonus / 阵型加成
    目标是补齐策略深度；会带来玩法行为改变，需要新增校验和回归评估。
-4. Synergy application / 羁绊应用  
+5. Synergy application / 羁绊应用
    目标是增强单位关系策略；与阵型加成同为核心玩法改动，需先收敛报告与冒烟。
-5. C# host / C# 宿主  
+6. C# host / C# 宿主
    目标是完成跨语言调用链；属于工程边界推进，不改变战斗公式。
-6. Godot shell / Godot 外壳  
+7. Godot shell / Godot 外壳
    目标是外壳与演示入口；会暴露当前展示层缺口，适合作为阶段末目标。
-7. xlsx adapter / xlsx 适配器  
+8. xlsx adapter / xlsx 适配器
    目标是直接运行 xlsx 输入；目前仍不在 Phase 1 主线范围。
 
 优先建议：Phase 1 演示包交付后，优先做 `CI workflow / CI 流水线` 或 `Viewer polish / 回放器打磨`。若目标是玩法深度，再进入 `formation bonus / 阵型加成` 与 `synergy / 羁绊应用`。

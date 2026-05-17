@@ -8,6 +8,7 @@ For a packaged demo flow, see:
 - `docs/process/phase-1-summary.md`
 - `docs/process/tactical-depth-pack-v0.1.md`
 - `docs/process/ci-workflow-v0.1.md`
+- `docs/process/combat-behavior-pack-v0.1.md`
 
 The config pipeline, pure Python runtime model boundary, deterministic replay event stream, Basic Combat Rules / 基础战斗规则, Minimal Skill Triggers / 最小技能触发, Formation bonus / 阵型加成, Synergy application / 羁绊应用, Replay Report / 回放与战报, and read-only SVG Replay Viewer / SVG 回放调试器 exist so later tasks can add a C# subprocess host without mixing responsibilities.
 
@@ -337,5 +338,6 @@ Phase 1 review docs:
 - `docs/process/viewer-smoke-checklist.md`
 - `docs/process/viewer-browser-smoke-v0.1.md`
 - `docs/process/html-demo-complete-experience-v0.1.md`
+- `docs/process/combat-behavior-pack-v0.1.md`
 
 C# host commands are still future work.

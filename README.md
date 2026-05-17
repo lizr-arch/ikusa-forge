@@ -47,6 +47,7 @@ Phase 1 Demo Package / 第一阶段演示包 / Phase 2 Tactical Depth notes are 
 - `docs/process/phase-1-summary.md`
 - `docs/process/tactical-depth-pack-v0.1.md`
 - `docs/process/ci-workflow-v0.1.md`
+- `docs/process/combat-behavior-pack-v0.1.md`
 
 Quick start for a full demo run / 一次完整演示最简命令:
 

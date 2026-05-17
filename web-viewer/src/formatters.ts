@@ -21,11 +21,11 @@ export const eventSummary = (event: ReplayEvent): string => {
     case "unit_spawn":
       return `spawn ${unitIdFromSpawn(event)}`;
     case "attack":
-      return `${text(event.payload.attacker)} attacks ${text(event.payload.target)}`;
+      return `${text(event.payload.attacker)} attacks ${text(event.payload.target)} (${text(event.payload.target_reason)})`;
     case "skill_trigger":
       return `${text(event.payload.source)} uses ${text(event.payload.skill)} -> ${arrayText(
         event.payload.targets,
-      )}`;
+      )} (${text(event.payload.target_reason)})`;
     case "damage":
       return `${text(event.payload.source)} deals ${text(event.payload.amount)} to ${text(
         event.payload.target,

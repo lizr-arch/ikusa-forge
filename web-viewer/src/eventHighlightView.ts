@@ -52,6 +52,8 @@ const eventDetailRows = (
       return [
         ["Source", formatValue(readValue(event.payload.attacker))],
         ["Target", formatValue(readValue(event.payload.target))],
+        ["Target Reason", formatValue(readValue(event.payload.target_reason))],
+        ["Target Score", formatTargetScore(event.payload.target_score)],
       ];
     case "skill_trigger":
       return [
@@ -59,6 +61,8 @@ const eventDetailRows = (
         ["Skill", formatValue(readValue(event.payload.skill))],
         ["Trigger", formatValue(readValue(event.payload.trigger))],
         ["Targets", readArray(event.payload.targets).join(", ") || "-"],
+        ["Target Reason", formatValue(readValue(event.payload.target_reason))],
+        ["Target Score", formatTargetScore(event.payload.target_score)],
       ];
     case "damage":
       return [
@@ -136,6 +140,35 @@ const readNumber = (value: unknown): number | null => {
 
 const readArray = (value: unknown): string[] => {
   return Array.isArray(value) ? value.map((item) => String(item)) : [];
+};
+
+const formatTargetScore = (value: unknown): string => {
+  if (typeof value !== "object" || value === null) {
+    return "-";
+  }
+  const payload = value as Record<string, number>;
+  const final = formatMaybeNumber(payload.final);
+  const exposure = formatMaybeNumber(payload.exposure);
+  const column = formatMaybeNumber(payload.column);
+  const lowHp = formatMaybeNumber(payload.low_hp);
+  const threat = formatMaybeNumber(payload.threat);
+  const role = formatMaybeNumber(payload.role);
+  if (!Number.isFinite(final) && !Number.isFinite(exposure) && !Number.isFinite(column)) {
+    return "-";
+  }
+  const parts = [
+    `final=${final}`,
+    `exposure=${exposure}`,
+    `column=${column}`,
+    `low_hp=${lowHp}`,
+    `threat=${threat}`,
+    `role=${role}`,
+  ];
+  return parts.filter((value) => value.endsWith("=NaN") === false).join(", ");
+};
+
+const formatMaybeNumber = (value: unknown): number => {
+  return typeof value === "number" && Number.isFinite(value) ? value : Number.NaN;
 };
 
 const asRecord = (value: unknown): Record<string, unknown> => {

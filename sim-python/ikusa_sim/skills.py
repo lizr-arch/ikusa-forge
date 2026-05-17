@@ -1,12 +1,12 @@
 """Minimal skill trigger resolver for Ikusa Forge Phase 1.
 
-This module uses a fixed handler map for sample skills. It intentionally does
-not implement a general-purpose skill DSL, synergies, formation bonuses,
+This module uses a fixed handler map for sample skills. It intentionally does not
+implement a general-purpose skill DSL, synergies, formation bonuses,
 battle reports, viewers, host integration, or Godot logic.
 """
 
 from dataclasses import dataclass
-from typing import Callable, Dict, List, Optional, Sequence
+from typing import Callable, Dict, List, Mapping, Optional, Sequence
 
 from ikusa_sim.combat_rules import (
     apply_damage,
@@ -16,16 +16,29 @@ from ikusa_sim.combat_rules import (
 from ikusa_sim.events import BattleEvent
 from ikusa_sim.models import ConfigBundle, SkillDef
 from ikusa_sim.runtime_models import BattleState, UnitState
+from ikusa_sim.targeting import TargetDecision
 
 
 @dataclass(frozen=True)
 class SkillUseResult:
     used: bool
     damaged_targets: List[UnitState]
+    target_reason: Optional[str] = None
+    target_score: Optional[Mapping[str, int]] = None
 
 
 SkillHandler = Callable[
-    [UnitState, Optional[UnitState], BattleState, ConfigBundle, int, List[BattleEvent], SkillDef],
+    [
+        UnitState,
+        Optional[UnitState],
+        BattleState,
+        ConfigBundle,
+        int,
+        List[BattleEvent],
+        SkillDef,
+        Optional[str],
+        Optional[Mapping[str, int]],
+    ],
     SkillUseResult,
 ]
 
@@ -60,7 +73,17 @@ def try_use_on_battle_start_skills(
         if not unit.alive:
             continue
         for skill in get_ready_skills(unit, config, "on_battle_start", tick):
-            result = _use_skill(unit, None, state, config, tick, events, skill)
+            result = _use_skill(
+                unit,
+                None,
+                state,
+                config,
+                tick,
+                events,
+                skill,
+                _derive_skill_target_reason(skill),
+                None,
+            )
             if result.used:
                 mark_skill_used(unit, skill, tick, state.tick_rate)
 
@@ -72,12 +95,28 @@ def try_use_on_attack_skill(
     config: ConfigBundle,
     tick: int,
     events: List[BattleEvent],
+    target_decision: Optional[TargetDecision] = None,
 ) -> SkillUseResult:
     if not attacker.alive:
         return SkillUseResult(used=False, damaged_targets=[])
 
     for skill in get_ready_skills(attacker, config, "on_attack", tick):
-        result = _use_skill(attacker, target, state, config, tick, events, skill)
+        reason = _derive_skill_target_reason(skill)
+        score_payload = _target_score_payload(target_decision)
+        # 当前目标类技能保留 winner 决策评分，便于后续解释；非当前目标技能通常使用自定义选择逻辑。
+        if reason != "current_target":
+            score_payload = None
+        result = _use_skill(
+            attacker,
+            target,
+            state,
+            config,
+            tick,
+            events,
+            skill,
+            reason,
+            score_payload,
+        )
         if result.used:
             mark_skill_used(attacker, skill, tick, state.tick_rate)
             return result
@@ -96,7 +135,18 @@ def try_use_on_attacked_skills(
         return
 
     for skill in get_ready_skills(defender, config, "on_attacked", tick):
-        result = _use_skill(defender, attacker, state, config, tick, events, skill)
+        reason = _derive_skill_target_reason(skill)
+        result = _use_skill(
+            defender,
+            attacker,
+            state,
+            config,
+            tick,
+            events,
+            skill,
+            reason,
+            None,
+        )
         if result.used:
             mark_skill_used(defender, skill, tick, state.tick_rate)
         if not attacker.alive:
@@ -125,7 +175,17 @@ def try_use_on_ally_attacked_skills(
 
     for reactor in reactors:
         for skill in get_ready_skills(reactor, config, "on_ally_attacked", tick):
-            result = _use_skill(reactor, attacker, state, config, tick, events, skill)
+            result = _use_skill(
+                reactor,
+                attacker,
+                state,
+                config,
+                tick,
+                events,
+                skill,
+                _derive_skill_target_reason(skill),
+                None,
+            )
             if result.used:
                 mark_skill_used(reactor, skill, tick, state.tick_rate)
             if not attacker.alive:
@@ -140,11 +200,23 @@ def _use_skill(
     tick: int,
     events: List[BattleEvent],
     skill: SkillDef,
+    target_reason: Optional[str] = None,
+    target_score: Optional[Mapping[str, int]] = None,
 ) -> SkillUseResult:
     handler = SKILL_HANDLERS.get(skill.id)
     if handler is None:
         return SkillUseResult(used=False, damaged_targets=[])
-    return handler(source, current_target, state, config, tick, events, skill)
+    return handler(
+        source,
+        current_target,
+        state,
+        config,
+        tick,
+        events,
+        skill,
+        target_reason,
+        target_score,
+    )
 
 
 def _handle_current_target_damage(
@@ -155,11 +227,22 @@ def _handle_current_target_damage(
     tick: int,
     events: List[BattleEvent],
     skill: SkillDef,
+    target_reason: Optional[str],
+    target_score: Optional[Mapping[str, int]],
 ) -> SkillUseResult:
     _ = config
     if current_target is None or not current_target.alive:
         return SkillUseResult(used=False, damaged_targets=[])
-    return _resolve_damage_skill(source, skill, [current_target], state, tick, events)
+    return _resolve_damage_skill(
+        source,
+        skill,
+        [current_target],
+        state,
+        tick,
+        events,
+        target_reason,
+        target_score,
+    )
 
 
 def _handle_lowest_hp_enemy_damage(
@@ -170,13 +253,24 @@ def _handle_lowest_hp_enemy_damage(
     tick: int,
     events: List[BattleEvent],
     skill: SkillDef,
+    target_reason: Optional[str],
+    target_score: Optional[Mapping[str, int]],
 ) -> SkillUseResult:
     _ = current_target
     _ = config
     target = _lowest_hp_enemy(source, state.units)
     if target is None:
         return SkillUseResult(used=False, damaged_targets=[])
-    return _resolve_damage_skill(source, skill, [target], state, tick, events)
+    return _resolve_damage_skill(
+        source,
+        skill,
+        [target],
+        state,
+        tick,
+        events,
+        target_reason,
+        target_score,
+    )
 
 
 def _handle_guard(
@@ -187,11 +281,23 @@ def _handle_guard(
     tick: int,
     events: List[BattleEvent],
     skill: SkillDef,
+    target_reason: Optional[str],
+    target_score: Optional[Mapping[str, int]],
 ) -> SkillUseResult:
     _ = current_target
     _ = config
+    _ = tick
     source.guard_value += int(round(skill.effect_value))
-    _emit_skill_trigger(state, events, tick, source, skill, [source])
+    _emit_skill_trigger(
+        state,
+        events,
+        tick,
+        source,
+        skill,
+        [source],
+        target_reason,
+        target_score,
+    )
     return SkillUseResult(used=True, damaged_targets=[])
 
 
@@ -203,6 +309,8 @@ def _handle_banner_rally(
     tick: int,
     events: List[BattleEvent],
     skill: SkillDef,
+    target_reason: Optional[str],
+    target_score: Optional[Mapping[str, int]],
 ) -> SkillUseResult:
     _ = current_target
     _ = config
@@ -213,7 +321,16 @@ def _handle_banner_rally(
     bonus = int(round(skill.effect_value))
     for target in targets:
         target.atk += bonus
-    _emit_skill_trigger(state, events, tick, source, skill, targets)
+    _emit_skill_trigger(
+        state,
+        events,
+        tick,
+        source,
+        skill,
+        targets,
+        target_reason,
+        target_score,
+    )
     return SkillUseResult(used=True, damaged_targets=[])
 
 
@@ -224,12 +341,23 @@ def _resolve_damage_skill(
     state: BattleState,
     tick: int,
     events: List[BattleEvent],
+    target_reason: Optional[str],
+    target_score: Optional[Mapping[str, int]],
 ) -> SkillUseResult:
     live_targets = [target for target in targets if target.alive]
     if not live_targets:
         return SkillUseResult(used=False, damaged_targets=[])
 
-    _emit_skill_trigger(state, events, tick, source, skill, live_targets)
+    _emit_skill_trigger(
+        state,
+        events,
+        tick,
+        source,
+        skill,
+        live_targets,
+        target_reason,
+        target_score,
+    )
     damaged_targets = []  # type: List[UnitState]
     for target in live_targets:
         amount = calculate_skill_damage(source, target, skill)
@@ -259,7 +387,12 @@ def _resolve_damage_skill(
                     payload={"unit": target.instance_id},
                 )
             )
-    return SkillUseResult(used=True, damaged_targets=damaged_targets)
+    return SkillUseResult(
+        used=True,
+        damaged_targets=damaged_targets,
+        target_reason=target_reason,
+        target_score=target_score,
+    )
 
 
 def _emit_skill_trigger(
@@ -269,18 +402,26 @@ def _emit_skill_trigger(
     source: UnitState,
     skill: SkillDef,
     targets: Sequence[UnitState],
+    target_reason: Optional[str],
+    target_score: Optional[Mapping[str, int]],
 ) -> None:
+    payload: Dict[str, object] = {
+        "source": source.instance_id,
+        "skill": skill.id,
+        "trigger": skill.trigger,
+        "targets": [target.instance_id for target in targets],
+    }
+    if target_reason is not None:
+        payload["target_reason"] = target_reason
+    if target_score is not None:
+        payload["target_score"] = dict(target_score)
+
     events.append(
         BattleEvent(
             tick=tick,
             event_id=_next_event_id(state),
             type="skill_trigger",
-            payload={
-                "source": source.instance_id,
-                "skill": skill.id,
-                "trigger": skill.trigger,
-                "targets": [target.instance_id for target in targets],
-            },
+            payload=payload,
         )
     )
 
@@ -309,6 +450,39 @@ def _adjacent_allies(source: UnitState, units: Sequence[UnitState]) -> List[Unit
     ]
     allies.sort(key=lambda unit: unit.instance_id)
     return allies
+
+
+def _derive_skill_target_reason(
+    skill: SkillDef,
+) -> str:
+    if skill.target_rule == "lowest_hp_enemy":
+        return "lowest_hp_enemy"
+    if skill.target_rule == "current_target":
+        return "current_target"
+    if skill.target_rule == "attacker":
+        return "current_target"
+    if skill.target_rule == "adjacent_allies":
+        return "adjacent_allies"
+    if skill.target_rule == "self":
+        return "self"
+    return "current_target"
+
+
+def _target_score_payload(
+    target_decision: Optional[TargetDecision],
+) -> Optional[Mapping[str, int]]:
+    if target_decision is None or target_decision.score is None:
+        return None
+    score = target_decision.score
+    return {
+        "final": score.final_score,
+        "exposure": score.exposure_score,
+        "column": score.column_score,
+        "low_hp": score.low_hp_score,
+        "threat": score.threat_score,
+        "role": score.role_score,
+        "tie_break": score.tie_break,
+    }
 
 
 def _hp_ratio(unit: UnitState) -> float:

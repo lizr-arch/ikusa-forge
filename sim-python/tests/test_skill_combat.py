@@ -143,6 +143,27 @@ class SkillCombatTests(unittest.TestCase):
         self.assertEqual(["enemy_low_hp"], events[0].payload["targets"])
         self.assertEqual("enemy_low_hp", events[1].payload["target"])
         self.assertEqual("skill:focus_fire", events[1].payload["reason"])
+        self.assertEqual("lowest_hp_enemy", events[0].payload["target_reason"])
+
+    def test_current_target_attack_skill_marks_target_reason(self):
+        skill = make_skill(
+            "katana_slash",
+            "on_attack",
+            target_rule="current_target",
+        )
+        config = make_config(skill)
+        attacker = make_unit("ally_001", x=0, y=0, hp=90, skill_ids=["katana_slash"])
+        target = make_unit("enemy_001", side="enemy", x=0, y=0, hp=40)
+        target.next_action_tick = 999
+        state = make_state([attacker, target])
+        events = []
+
+        _run_tick(state, config, events, tick=0)
+
+        self.assertEqual("skill_trigger", events[0].type)
+        self.assertEqual("current_target", events[0].payload["target_reason"])
+        self.assertEqual(["enemy_001"], events[0].payload["targets"])
+        self.assertIsInstance(events[0].payload.get("target_score"), dict)
 
     def test_basic_attack_fallback_emits_matching_attack_and_damage_events(self):
         config = make_config()
@@ -157,6 +178,7 @@ class SkillCombatTests(unittest.TestCase):
         self.assertEqual(["attack", "damage"], [event.type for event in events])
         self.assertEqual("basic_attack", events[1].payload["reason"])
         self.assertEqual(events[0].payload["target"], events[1].payload["target"])
+        self.assertEqual("frontline_exposed_same_column", events[0].payload["target_reason"])
 
     def test_demo_basic_mode_emits_skill_trigger_events(self):
         state, events = self.run_demo()

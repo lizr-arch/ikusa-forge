@@ -7,6 +7,7 @@
 - Replay and report output / 回放与战报输出
 - SVG Replay Viewer / SVG 回放调试器（read-only 本地回放查看）
 - Formation bonus / 阵型加成（推荐规则）与 Synergy application / 羁绊应用（推荐规则）在 tick 0 一次性应用并可追踪
+- Targeting explainability / 目标选择可解释性（`target_reason` / `target_score`）初步链路
 - Browser Smoke Test / 浏览器冒烟测试（Playwright 基础检查）
 - Verified real `demo_001` modifier evidence：
   - formation modifiers in report summary / 战报阵型修正数 > 0
@@ -27,6 +28,7 @@
 - #10 `feat(viewer): improve html demo experience`
 - #11 `docs(process): add phase 1 demo package` (current / pending review)
 - #12 `feat(sim): add tactical depth pack` (current / pending review)
+- #13 `ci: add phase 2 validation workflow` (current / pending review)
 
 ## Current Commands / 当前命令
 
@@ -65,10 +67,12 @@ npm run test:e2e
 - `opening_damage` / `formation_slots` 等字段在当前 phase 内未映射到可解释修正链路
 - 无 generated artifact commit / 不提交生成文件
 - `attack_interval_delta` 在 `synergy` 下当前仅在 `targeting/actions` schedule 初始化前更新；未做额外 DSL 扩展
+- 目标选择解释还未作为独立 Phase 1 交付线收敛；当前仅在 `combat-behavior-pack` 中扩展 `attack` 与 `skill_trigger` 原因字段
 
 ## Recommended Next Branch / 推荐下一阶段分支
 
 优先关注交付可展示闭环与交付稳定性：
 
-1. `phase1/ci-hardening`（若目标是稳定交付）
-2. `phase1/viewer-polish`（若目标是演示稳定）
+1. `phase2/combat-behavior-pack`（若目标是提升战斗行为可解释性）
+2. `phase2/ci-workflow`（若目标是稳定交付）
+3. `phase1/viewer-polish`（若目标是演示稳定）

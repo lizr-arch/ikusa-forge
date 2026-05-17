@@ -81,6 +81,32 @@ class BasicCombatTests(unittest.TestCase):
             any(event.payload["reason"].startswith("skill:") for event in damage_events)
         )
 
+    def test_basic_attack_events_include_target_reason(self):
+        _, events = self.run_demo()
+        attack_events = [event for event in events if event.type == "attack"]
+
+        self.assertTrue(attack_events)
+        self.assertTrue(all("target_reason" in event.payload for event in attack_events))
+        self.assertTrue(any(isinstance(event.payload.get("target_reason"), str) for event in attack_events))
+
+    def test_basic_attack_events_include_target_score_when_available(self):
+        _, events = self.run_demo()
+        score_events = [
+            event
+            for event in events
+            if event.type == "attack" and isinstance(event.payload.get("target_score"), dict)
+        ]
+
+        self.assertTrue(len(score_events) > 0)
+        sample = score_events[0]
+        self.assertIn("final", sample.payload["target_score"])
+        self.assertIn("exposure", sample.payload["target_score"])
+        self.assertIn("column", sample.payload["target_score"])
+        self.assertIn("low_hp", sample.payload["target_score"])
+        self.assertIn("threat", sample.payload["target_score"])
+        self.assertIn("role", sample.payload["target_score"])
+        self.assertIn("tie_break", sample.payload["target_score"])
+
     def test_basic_replay_metadata_keeps_result_object(self):
         state, events = self.run_demo()
         metadata_result = build_replay_document(state, events)["metadata"]["result"]

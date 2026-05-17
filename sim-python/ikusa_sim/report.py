@@ -26,6 +26,8 @@ def build_battle_report_from_events(
     total_modifiers = 0
     formation_modifiers = 0
     synergy_modifiers = 0
+    target_reason_counts = {}  # type: Dict[str, int]
+    skill_target_reason_counts = {}  # type: Dict[str, int]
 
     for event in events:
         event_type = event.get("type")
@@ -61,9 +63,18 @@ def build_battle_report_from_events(
             key_moments.append(_death_key_moment(event, dead_unit, killer))
             continue
 
+        if event_type == "attack":
+            reason = payload.get("target_reason")
+            if isinstance(reason, str) and reason:
+                target_reason_counts[reason] = target_reason_counts.get(reason, 0) + 1
+            continue
+
         if event_type == "skill_trigger":
             source = payload.get("source")
             skill = payload.get("skill")
+            reason = payload.get("target_reason")
+            if isinstance(reason, str) and reason:
+                skill_target_reason_counts[reason] = skill_target_reason_counts.get(reason, 0) + 1
             if source and skill:
                 unit = _ensure_unit(units, source)
                 skill_triggers = unit["skill_triggers"]
@@ -108,6 +119,8 @@ def build_battle_report_from_events(
             "total_modifiers": total_modifiers,
             "formation_modifiers": formation_modifiers,
             "synergy_modifiers": synergy_modifiers,
+            "target_reason_counts": target_reason_counts,
+            "skill_target_reason_counts": skill_target_reason_counts,
         },
         "units": units,
         "top_units": {
