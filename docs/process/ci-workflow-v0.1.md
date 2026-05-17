@@ -13,6 +13,7 @@
 - Web 回放器 Typecheck / Build / 浏览器冒烟
 - Combat System Pack / 战斗系统包 replay/report/viewer contract checks
 - Demo One-Click and Scenarios / 一键 Demo 与多场景 fixture freshness checks
+- Live Combat Runtime Foundation / 实时战斗运行时基础 unittest checks for BattleSession / 战斗会话, Battle Snapshot / 战斗状态快照, and Event Buffer / 事件缓冲
 
 ## Jobs / 作业
 
@@ -28,7 +29,7 @@
 - `tools/smoke_phase1_mvp.py`
 - `python -m unittest discover -s sim-python/tests`
 
-The smoke/unit-test layer now also checks `status_apply`, `skill_cooldown`, `action_scheduled`, extended `battle_end`, and report `victory_explanation`.
+The smoke/unit-test layer now also checks `status_apply`, `skill_cooldown`, `action_scheduled`, extended `battle_end`, report `victory_explanation`, and Live Combat Runtime / 实时战斗运行时 compatibility through BattleSession / 战斗会话 tests.
 
 ### Web viewer / Web 回放器 (web-viewer)
 
@@ -122,3 +123,4 @@ CI 的浏览器冒烟只跑 Chromium，一点说明：
 - CI 不证明完整产品可玩链路（只保护 MVP 验证链）
 - CI 不做 xlsx adapter / xlsx 适配器
 - CI 不改变战斗逻辑，不改 viewer 功能，不引入新框架
+- CI 不启动 HTTP server / HTTP 服务器，也不覆盖 HTML live mode / HTML 实时模式

@@ -17,6 +17,7 @@
 - SVG Replay Viewer / SVG 回放调试器
 - Combat System Pack / 战斗系统包 explainability: status lifecycle / 状态生命周期, skill cooldown / 技能冷却, action timeline / 行动时间线, victory explanation / 胜负解释
 - Demo One-Click / 一键 Demo and Scenario Selector / 场景选择器 powered by Scenario Manifest / 场景清单
+- Live Combat Runtime / 实时战斗运行时 compatibility: `run_basic_combat` still generates the same replay/report while BattleSession / 战斗会话 can be stepped in tests.
 - Browser Smoke / 浏览器冒烟测试
 
 ## Demo Prerequisites / 演示前置条件
@@ -124,6 +125,7 @@ runs/demo_001/battle_report.json
 - `replay.json` 记录事件流，`battle_report.json` 归纳伤害、击杀和触发。
 - Combat System Pack / 战斗系统包新增事件只解释状态、冷却、行动排期与胜负摘要，不改变战斗公式。
 - Demo One-Click / 一键 Demo 通过 Scenario Manifest / 场景清单 加载静态 replay/report，不需要后端。
+- Live Combat Runtime Foundation / 实时战斗运行时基础 把一次性战斗循环封装成 BattleSession / 战斗会话、Step Runtime / 单步运行时、Battle Snapshot / 战斗状态快照 和 Event Buffer / 事件缓冲，但 demo 仍通过同一个 `run_basic_combat` 入口生成 replay/report。
 - Web viewer 只读取回放文件，不运行战斗逻辑。
 - 通过 board / timeline / report / unit detail 逐步回看一场战斗闭环。
 - 浏览器冒烟测试保证关键体验通路有最小自动化保障。
@@ -136,6 +138,7 @@ runs/demo_001/battle_report.json
 - [ ] static MVP smoke passed / MVP 静态冒烟通过
 - [ ] scenario smoke passed / 场景冒烟通过
 - [ ] Python unittest passed / Python 单测通过
+- [ ] BattleSession tests passed / 战斗会话测试通过
 - [ ] web typecheck passed / 前端类型检查通过
 - [ ] web build passed / 前端构建通过
 - [ ] browser smoke passed / 浏览器冒烟通过
@@ -156,6 +159,8 @@ runs/demo_001/battle_report.json
 - 离散 tick/event 播放，不是平滑动画
 - 无视觉回归
 - 无跨浏览器矩阵
+- 无 HTTP server / HTTP 服务器
+- 无 HTML live mode / HTML 实时模式
 - 无 C# host / C# 宿主
 - 无 Godot
 - xlsx adapter / xlsx 适配器

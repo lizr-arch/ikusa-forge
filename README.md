@@ -42,6 +42,7 @@ Current Python simulator status:
 - Report explainability / 报表可解释性（`stat_modifier` 计入回放与战报）
 - Combat System Pack / 战斗系统包（`status_apply`、`skill_cooldown`、`action_scheduled`、`victory_explanation` 可在 replay/report/viewer 中检查）
 - Demo One-Click and Scenarios / 一键 Demo 与多场景（viewer 可从静态 Scenario Manifest / 场景清单加载 Curated Fixtures / 固化样例数据，同时保留手动 file input）
+- Live Combat Runtime Foundation / 实时战斗运行时基础（`BattleSession / 战斗会话`、`step_battle_session / 单步推进`、`Battle Snapshot / 战斗状态快照`、`Event Buffer / 事件缓冲`，同时保留 `run_basic_combat` 兼容入口）
 
 Phase 1 Demo Package / 第一阶段演示包 / Phase 2 Tactical Depth notes are available at:
 
@@ -52,6 +53,7 @@ Phase 1 Demo Package / 第一阶段演示包 / Phase 2 Tactical Depth notes are 
 - `docs/process/combat-behavior-pack-v0.1.md`
 - `docs/process/combat-system-pack-v0.1.md`
 - `docs/process/demo-one-click-and-scenarios-v0.1.md`
+- `docs/process/live-combat-runtime-foundation-v0.1.md`
 
 Quick start for a full demo run / 一次完整演示最简命令:
 
@@ -134,6 +136,16 @@ runs/demo_001/battle_report.json
 
 The viewer keeps manual file inputs and now shows Scenario Selector / 场景选择器, Scenario Summary / 场景摘要, Demo Load Guidance / Demo 加载引导, Battle Summary / 战斗摘要, Event Highlight / 事件高亮, Report-to-Board Link / 战报到棋盘联动, and Key Moments navigation / 关键时刻跳转 for the generated `demo_001` run.
 It also surfaces Combat System Pack / 战斗系统包 evidence: active statuses / 当前状态, skill cooldowns / 技能冷却, next action tick / 下一行动 tick, and victory explanation / 胜负解释.
+
+The simulator also exposes Live Combat Runtime / 实时战斗运行时 primitives for future hosts:
+
+- `BattleSession / 战斗会话`
+- `step_battle_session / 单步推进`
+- `step_until_finished / 推进到结束`
+- `build_battle_snapshot / 构建战斗状态快照`
+- `get_events_since / 读取事件缓冲`
+
+These APIs are Python runtime APIs only in this phase. No HTTP server / HTTP 服务器, HTML live mode / HTML 实时模式, C# host / C# 宿主, or Godot integration is implemented.
 
 Frontend verification:
 
