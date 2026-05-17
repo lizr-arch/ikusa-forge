@@ -111,6 +111,9 @@ def _build_run_summary(state, events, mode, battle_report) -> str:
             f"- battle_start events: `{event_counts.get('battle_start', 0)}`",
             f"- unit_spawn events: `{event_counts.get('unit_spawn', 0)}`",
             f"- skill_trigger events: `{event_counts.get('skill_trigger', 0)}`",
+            f"- status_apply events: `{event_counts.get('status_apply', 0)}`",
+            f"- skill_cooldown events: `{event_counts.get('skill_cooldown', 0)}`",
+            f"- action_scheduled events: `{event_counts.get('action_scheduled', 0)}`",
             f"- attack events: `{event_counts.get('attack', 0)}`",
             f"- damage events: `{event_counts.get('damage', 0)}`",
             f"- death events: `{event_counts.get('death', 0)}`",
@@ -118,6 +121,10 @@ def _build_run_summary(state, events, mode, battle_report) -> str:
             f"- total_damage: `{summary.get('total_damage', 0)}`",
             f"- total_kills: `{summary.get('total_kills', 0)}`",
             f"- total_skill_triggers: `{summary.get('total_skill_triggers', 0)}`",
+            f"- total_status_applied: `{summary.get('total_status_applied', 0)}`",
+            f"- total_skill_cooldowns: `{summary.get('total_skill_cooldowns', 0)}`",
+            f"- total_actions_scheduled: `{summary.get('total_actions_scheduled', 0)}`",
+            f"- victory_explanation: `{_format_victory_explanation(battle_report.get('victory_explanation', {}))}`",
             f"- top_damage_done: `{_format_top_units(top_units.get('damage_done', []))}`",
             f"- top_damage_taken: `{_format_top_units(top_units.get('damage_taken', []))}`",
             "",
@@ -137,6 +144,13 @@ def _format_top_units(unit_ids) -> str:
     if not unit_ids:
         return ""
     return ", ".join(unit_ids)
+
+
+def _format_victory_explanation(explanation) -> str:
+    if not isinstance(explanation, dict):
+        return ""
+    summary = explanation.get("summary")
+    return str(summary) if summary else ""
 
 
 if __name__ == "__main__":

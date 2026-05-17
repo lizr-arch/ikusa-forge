@@ -16,6 +16,7 @@ Implemented:
 - `kills / 击杀`.
 - `deaths / 死亡次数`.
 - `skill_triggers / 技能触发次数`.
+- Combat System Pack / 战斗系统包 counters: `statuses_applied`, `cooldowns_started`, `actions_taken`, and `victory_explanation`.
 - `key_moments / 关键时刻`.
 - `run_summary.md / 运行摘要` report totals / 战报汇总.
 
@@ -64,7 +65,21 @@ Current schema version / 当前 schema 版本:
   "summary": {
     "total_damage": 1234,
     "total_kills": 9,
-    "total_skill_triggers": 54
+    "total_skill_triggers": 54,
+    "total_status_applied": 4,
+    "total_status_expired": 0,
+    "total_skill_cooldowns": 54,
+    "total_actions_scheduled": 80
+  },
+  "victory_explanation": {
+    "winner": "ally",
+    "reason": "enemy_eliminated",
+    "end_tick": 260,
+    "winner_alive": 3,
+    "loser_alive": 0,
+    "winner_total_hp": 286,
+    "loser_total_hp": 0,
+    "summary": "ally won by enemy_eliminated at tick 260"
   },
   "units": {
     "ally_001": {
@@ -74,7 +89,11 @@ Current schema version / 当前 schema 版本:
       "deaths": 0,
       "skill_triggers": {
         "katana_slash": 3
-      }
+      },
+      "statuses_applied": 1,
+      "cooldowns_started": 3,
+      "actions_taken": 5,
+      "last_next_action_tick": 280
     }
   },
   "top_units": {
@@ -107,6 +126,18 @@ Current schema version / 当前 schema 版本:
 `skill_triggers / 技能触发次数`:
 
 - Count `skill_trigger / 技能触发事件` by source unit / 来源单位 and skill id / 技能 ID.
+
+`statuses_applied / 状态应用次数`:
+
+- Count `status_apply / 状态应用` by target unit / 目标单位.
+
+`cooldowns_started / 冷却开始次数`:
+
+- Count `skill_cooldown / 技能冷却` by source unit / 来源单位.
+
+`actions_taken / 行动次数`:
+
+- Count `action_scheduled / 行动排期` by acting unit / 行动单位 and keep `last_next_action_tick / 最后下一行动 tick`.
 
 `top_units / 最高单位`:
 

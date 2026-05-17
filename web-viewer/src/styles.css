@@ -366,6 +366,14 @@ select {
   background: var(--accent-soft);
 }
 
+.event-type-status_apply,
+.event-type-status_expire,
+.event-type-skill_cooldown,
+.event-type-action_scheduled {
+  border-color: #8cc4b3;
+  background: var(--ally-soft);
+}
+
 .event-type-battle_end,
 .event-type-death {
   border-color: #b7bfc0;

@@ -106,6 +106,7 @@ def _run_tick(
 
         if attacker.alive:
             attacker.next_action_tick = tick + attacker.action_interval_ticks
+            _emit_action_scheduled(state, events, tick, attacker)
         result = _build_victory_result(state, tick)
         if result:
             return result
@@ -251,9 +252,95 @@ def _finish_battle(
             tick=result.end_tick,
             event_id=_next_event_id(state),
             type="battle_end",
-            payload=battle_result_to_dict(result),
+            payload=_battle_end_payload(state, result),
         )
     )
+
+
+def _emit_action_scheduled(
+    state: BattleState,
+    events: List[BattleEvent],
+    tick: int,
+    unit: UnitState,
+) -> None:
+    events.append(
+        BattleEvent(
+            tick=tick,
+            event_id=_next_event_id(state),
+            type="action_scheduled",
+            payload={
+                "unit": unit.instance_id,
+                "current_tick": tick,
+                "next_action_tick": unit.next_action_tick,
+                "action_interval_ticks": unit.action_interval_ticks,
+                "reason": "after_action",
+            },
+        )
+    )
+
+
+def _battle_end_payload(state: BattleState, result: BattleResult) -> dict:
+    payload = battle_result_to_dict(result)
+    side_stats = {
+        "ally": _side_survival_stats(state, "ally"),
+        "enemy": _side_survival_stats(state, "enemy"),
+    }
+
+    winner_side = result.winner if result.winner in side_stats else None
+    loser_side = _opposing_side(winner_side) if winner_side else None
+    winner_alive = side_stats[winner_side]["alive"] if winner_side else 0
+    loser_alive = side_stats[loser_side]["alive"] if loser_side else 0
+    winner_total_hp = side_stats[winner_side]["total_hp"] if winner_side else 0
+    loser_total_hp = side_stats[loser_side]["total_hp"] if loser_side else 0
+
+    payload.update(
+        {
+            "winner_alive": winner_alive,
+            "loser_alive": loser_alive,
+            "winner_total_hp": winner_total_hp,
+            "loser_total_hp": loser_total_hp,
+            "summary": _victory_summary(
+                result,
+                winner_alive,
+                loser_alive,
+                winner_total_hp,
+                loser_total_hp,
+            ),
+        }
+    )
+    return payload
+
+
+def _side_survival_stats(state: BattleState, side: str) -> dict:
+    alive_units = [unit for unit in state.units if unit.side == side and unit.alive]
+    return {
+        "alive": len(alive_units),
+        "total_hp": sum(max(0, unit.hp) for unit in alive_units),
+    }
+
+
+def _opposing_side(side: Optional[str]) -> Optional[str]:
+    if side == "ally":
+        return "enemy"
+    if side == "enemy":
+        return "ally"
+    return None
+
+
+def _victory_summary(
+    result: BattleResult,
+    winner_alive: int,
+    loser_alive: int,
+    winner_total_hp: int,
+    loser_total_hp: int,
+) -> str:
+    if result.winner in {"ally", "enemy"}:
+        return (
+            f"{result.winner} won by {result.reason} at tick {result.end_tick}; "
+            f"winner_alive={winner_alive}, loser_alive={loser_alive}, "
+            f"winner_total_hp={winner_total_hp}, loser_total_hp={loser_total_hp}"
+        )
+    return f"Battle ended as {result.winner} by {result.reason} at tick {result.end_tick}"
 
 
 def _format_event_id(sequence_number: int) -> str:

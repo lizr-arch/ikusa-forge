@@ -8,11 +8,16 @@
 - SVG Replay Viewer / SVG 回放调试器（read-only 本地回放查看）
 - Formation bonus / 阵型加成（推荐规则）与 Synergy application / 羁绊应用（推荐规则）在 tick 0 一次性应用并可追踪
 - Targeting explainability / 目标选择可解释性（`target_reason` / `target_score`）初步链路
+- Combat System Pack / 战斗系统包 explainability（`status_apply`、`skill_cooldown`、`action_scheduled`、`victory_explanation`）
 - Browser Smoke Test / 浏览器冒烟测试（Playwright 基础检查）
 - Verified real `demo_001` modifier evidence：
   - formation modifiers in report summary / 战报阵型修正数 > 0
   - synergy modifiers in report summary / 战报羁绊修正数 > 0
   - `stat_modifier` events with both `source_type=formation` and `source_type=synergy`
+  - `status_apply` events for `shield_guard` and `banner_rally`
+  - `skill_cooldown` events for successful skill use
+  - `action_scheduled` events after actual unit actions
+  - report `victory_explanation` derived from `battle_end`
 
 ## Major PRs / 主要 PR
 
@@ -29,6 +34,7 @@
 - #11 `docs(process): add phase 1 demo package` (current / pending review)
 - #12 `feat(sim): add tactical depth pack` (current / pending review)
 - #13 `ci: add phase 2 validation workflow` (current / pending review)
+- `phase2/combat-system-pack`: Combat System Pack / 战斗系统包 (current / pending review)
 
 ## Current Commands / 当前命令
 
@@ -74,5 +80,6 @@ npm run test:e2e
 优先关注交付可展示闭环与交付稳定性：
 
 1. `phase2/combat-behavior-pack`（若目标是提升战斗行为可解释性）
-2. `phase2/ci-workflow`（若目标是稳定交付）
-3. `phase1/viewer-polish`（若目标是演示稳定）
+2. `phase2/combat-system-pack`（若目标是状态、冷却、行动时间线和胜负解释可见性）
+3. `phase2/ci-workflow`（若目标是稳定交付）
+4. `phase1/viewer-polish`（若目标是演示稳定）

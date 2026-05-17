@@ -95,6 +95,8 @@
   - 战报面板显示目标原因统计摘要
   - 单位详情显示最近目标原因/评分标记
 
+Combat System Pack / 战斗系统包 is a separate follow-up explainability layer. It adds `status_apply`, `skill_cooldown`, `action_scheduled`, and `victory_explanation` without changing this document's targeting behavior rules. See `docs/process/combat-system-pack-v0.1.md`.
+
 示例事件聚合（来自真实 demo）用于审查：
 
 - `summary.target_reason_counts`：包含非空目标原因
@@ -132,7 +134,7 @@ npm run test:e2e
 
 在同配置 `demo_001 / seed=1001` 下，当前预期变化链路已收敛（见 `tactical-depth-pack-v0.1.md` 与 `phase-1-summary.md`）：
 
-- events / 事件数：`205`
+- events / 事件数：`332`
 - end_tick / 结束 tick：`240`
 - total_damage / 总伤害：`1189`
 - total_kills / 总击杀：`9`
@@ -140,3 +142,6 @@ npm run test:e2e
 - total_modifiers / 总修正数：`16`
 - formation_modifiers / 阵型修正：`8`
 - synergy_modifiers / 羁绊修正：`8`
+- total_status_applied / 状态应用：`4`
+- total_skill_cooldowns / 技能冷却：`48`
+- total_actions_scheduled / 行动排期：`75`

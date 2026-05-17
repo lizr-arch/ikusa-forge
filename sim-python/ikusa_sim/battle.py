@@ -23,7 +23,7 @@ from ikusa_sim.combat_rules import (
 from ikusa_sim.events import BattleEvent, event_to_dict, events_to_tick_groups
 from ikusa_sim.report import build_battle_report, build_battle_report_from_events
 from ikusa_sim.rng import BattleRng
-from ikusa_sim.runtime_models import BattleResult, BattleState, UnitState
+from ikusa_sim.runtime_models import BattleResult, BattleState, StatusEffect, UnitState
 from ikusa_sim.skills import (
     SkillUseResult,
     get_ready_skills,
@@ -61,6 +61,7 @@ __all__ = [
     "select_target",
     "spawn_units_from_encounter",
     "SkillUseResult",
+    "StatusEffect",
     "try_use_on_ally_attacked_skills",
     "try_use_on_attack_skill",
     "try_use_on_attacked_skills",

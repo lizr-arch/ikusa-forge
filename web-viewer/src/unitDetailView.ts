@@ -34,6 +34,10 @@ export const renderUnitDetail = (
       ["DEF", formatNumber(unit.defense)],
       ["Range", formatNumber(unit.range)],
       ["Guard", formatNumber(unit.guardValue)],
+      ["Next Action Tick", formatNumber(unit.nextActionTick)],
+      ["Active Statuses", formatStatuses(unit)],
+      ["Last Cooldown", formatCooldown(unit)],
+      ["Last Action Schedule", formatActionSchedule(unit)],
       ["Skills", unit.skillIds.length > 0 ? unit.skillIds.join(", ") : "-"],
       ["ATK Bonus", formatNumber(unit.statBonuses.get("atk"))],
       ["DEF Bonus", formatNumber(unit.statBonuses.get("defense"))],
@@ -41,6 +45,10 @@ export const renderUnitDetail = (
       ["HP Bonus", formatNumber(unit.statBonuses.get("hp"))],
       ["ATKSPD Bonus", formatNumber(unit.statBonuses.get("attack_interval_delta"))],
       ["Modifiers", formatNumber(unitReport?.modifiers_received)],
+      ["Statuses Applied", formatNumber(unitReport?.statuses_applied)],
+      ["Cooldowns Started", formatNumber(unitReport?.cooldowns_started)],
+      ["Actions Taken", formatNumber(unitReport?.actions_taken)],
+      ["Report Next Action", formatNumber(unitReport?.last_next_action_tick)],
       ["Damage Done", formatNumber(unitReport?.damage_done)],
       ["Damage Taken", formatNumber(unitReport?.damage_taken)],
       ["Kills", formatNumber(unitReport?.kills)],
@@ -98,6 +106,27 @@ const renderLastMarkers = (unit: VisualUnit, state: VisualState): HTMLElement =>
     ]);
   }
   if (
+    state.lastStatus &&
+    [state.lastStatus.source, state.lastStatus.target].includes(unit.instanceId)
+  ) {
+    rows.push([
+      "Status",
+      `T${state.lastStatus.tick} ${state.lastStatus.eventType} ${state.lastStatus.stat} ${state.lastStatus.amount >= 0 ? "+" : ""}${state.lastStatus.amount}`,
+    ]);
+  }
+  if (state.lastCooldown && state.lastCooldown.source === unit.instanceId) {
+    rows.push([
+      "Cooldown",
+      `T${state.lastCooldown.tick} ${state.lastCooldown.skill} ready ${state.lastCooldown.readyTick}`,
+    ]);
+  }
+  if (state.lastActionSchedule && state.lastActionSchedule.unit === unit.instanceId) {
+    rows.push([
+      "Action Schedule",
+      `T${state.lastActionSchedule.tick} next ${state.lastActionSchedule.nextActionTick}`,
+    ]);
+  }
+  if (
     state.lastDamage &&
     [state.lastDamage.source, state.lastDamage.target].includes(unit.instanceId)
   ) {
@@ -120,6 +149,30 @@ const formatTargetScore = (score: { final: number; exposure: number; column: num
     `threat=${score.threat ?? "-"}`,
     `role=${score.role ?? "-"}`,
   ].join(", ");
+};
+
+const formatStatuses = (unit: VisualUnit): string => {
+  const active = unit.statuses.filter((status) => status.active);
+  if (active.length === 0) {
+    return "-";
+  }
+  return active
+    .map((status) => `${status.stat}${status.amount >= 0 ? "+" : ""}${status.amount} (${status.reason})`)
+    .join(" | ");
+};
+
+const formatCooldown = (unit: VisualUnit): string => {
+  if (!unit.lastCooldown) {
+    return "-";
+  }
+  return `${unit.lastCooldown.skill} ready ${unit.lastCooldown.readyTick}`;
+};
+
+const formatActionSchedule = (unit: VisualUnit): string => {
+  if (!unit.lastActionSchedule) {
+    return "-";
+  }
+  return `next ${unit.lastActionSchedule.nextActionTick} (${unit.lastActionSchedule.reason})`;
 };
 
 const detailGrid = (rows: [string, string][]): HTMLElement => {

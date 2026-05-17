@@ -34,6 +34,16 @@ export const eventSummary = (event: ReplayEvent): string => {
       return `${text(event.payload.unit)} dies`;
     case "stat_modifier":
       return `${text(event.payload.source)} modifies ${text(event.payload.target)} ${text(event.payload.stat)} ${text(event.payload.amount)} (${text(event.payload.reason)})`;
+    case "status_apply":
+      return `${text(event.payload.source)} applies ${text(event.payload.stat)} ${text(event.payload.amount)} to ${text(
+        event.payload.target,
+      )} (${text(event.payload.reason)})`;
+    case "status_expire":
+      return `${text(event.payload.target)} expires ${text(event.payload.stat)} (${text(event.payload.reason)})`;
+    case "skill_cooldown":
+      return `${text(event.payload.source)} cooldown ${text(event.payload.skill)} ready ${text(event.payload.ready_tick)}`;
+    case "action_scheduled":
+      return `${text(event.payload.unit)} next action ${text(event.payload.next_action_tick)}`;
     case "battle_end":
       return `winner ${text(event.payload.winner)} by ${text(event.payload.reason)}`;
     default:

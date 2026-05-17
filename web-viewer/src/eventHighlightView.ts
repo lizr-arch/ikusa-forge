@@ -33,9 +33,9 @@ export const renderEventHighlight = (
   if (event.type === "battle_end") {
     const end = document.createElement("div");
     end.className = "battle-end-banner";
-    end.textContent = `Battle ended: ${formatValue(readValue(event.payload.winner))} / ${formatValue(
-      readValue(event.payload.reason),
-    )}`;
+    const summaryText = readValue(event.payload.summary)
+      ?? `${formatValue(readValue(event.payload.winner))} / ${formatValue(readValue(event.payload.reason))}`;
+    end.textContent = `Battle ended: ${formatValue(summaryText)}`;
     block.append(end);
   }
 
@@ -80,6 +80,33 @@ const eventDetailRows = (
         ["Amount", formatNumber(readNumber(event.payload.amount))],
         ["Reason", formatValue(readValue(event.payload.reason))],
       ];
+    case "status_apply":
+    case "status_expire":
+      return [
+        ["ID", formatValue(readValue(event.payload.id) ?? readValue(event.payload.status_id))],
+        ["Source", formatValue(readValue(event.payload.source))],
+        ["Target", formatValue(readValue(event.payload.target))],
+        ["Stat", formatValue(readValue(event.payload.stat))],
+        ["Amount", formatNumber(readNumber(event.payload.amount))],
+        ["Reason", formatValue(readValue(event.payload.reason))],
+        ["Target Reason", formatValue(readValue(event.payload.target_reason))],
+      ];
+    case "skill_cooldown":
+      return [
+        ["Source", formatValue(readValue(event.payload.source))],
+        ["Skill", formatValue(readValue(event.payload.skill))],
+        ["start_tick", formatNumber(readNumber(event.payload.start_tick))],
+        ["ready_tick", formatNumber(readNumber(event.payload.ready_tick))],
+        ["cooldown_ticks", formatNumber(readNumber(event.payload.cooldown_ticks))],
+      ];
+    case "action_scheduled":
+      return [
+        ["Unit", formatValue(readValue(event.payload.unit))],
+        ["current_tick", formatNumber(readNumber(event.payload.current_tick))],
+        ["next_action_tick", formatNumber(readNumber(event.payload.next_action_tick))],
+        ["action_interval_ticks", formatNumber(readNumber(event.payload.action_interval_ticks))],
+        ["Reason", formatValue(readValue(event.payload.reason))],
+      ];
     case "death":
       return [["Unit", formatValue(readValue(event.payload.unit))]];
     case "battle_end":
@@ -87,6 +114,11 @@ const eventDetailRows = (
         ["Winner", formatValue(readValue(event.payload.winner))],
         ["Reason", formatValue(readValue(event.payload.reason))],
         ["End Tick", formatNumber(readNumber(event.payload.end_tick))],
+        ["winner_alive", formatNumber(readNumber(event.payload.winner_alive))],
+        ["loser_alive", formatNumber(readNumber(event.payload.loser_alive))],
+        ["winner_total_hp", formatNumber(readNumber(event.payload.winner_total_hp))],
+        ["loser_total_hp", formatNumber(readNumber(event.payload.loser_total_hp))],
+        ["Summary", formatValue(readValue(event.payload.summary))],
       ];
     case "unit_spawn": {
       const unit = asRecord(event.payload.unit);

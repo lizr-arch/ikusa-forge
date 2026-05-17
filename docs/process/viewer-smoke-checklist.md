@@ -46,6 +46,7 @@ Expected / 预期:
 - metadata / 元数据显示 `demo_001`, seed `1001`, and event count.
 - Demo Load Guidance / Demo 加载引导 shows the generation commands and expected files.
 - Battle Summary / 战斗摘要 shows winner / 胜者, reason / 原因, end_tick / 结束 tick, total_damage / 总伤害, total_kills / 总击杀, and total_skill_triggers / 总技能触发次数.
+- Battle Summary / 战斗摘要 also shows status applied / 状态应用, skill cooldowns / 技能冷却, and actions scheduled / 行动排期.
 - no backend request / 无后端请求 is needed.
 
 ## Board Checks / 棋盘检查
@@ -69,6 +70,9 @@ Confirm / 确认:
   - skill_trigger / 技能触发
   - damage / 伤害
   - death / 死亡
+  - status_apply / 状态应用
+  - skill_cooldown / 技能冷却
+  - action_scheduled / 行动排期
   - battle_end / 战斗结束
 - Clicking an event / 点击事件 seeks to that tick / 跳转到该 tick.
 - The selected event row / 选中事件行 stays visibly highlighted and scrolls into view.
@@ -82,6 +86,10 @@ Confirm / 确认:
 - `damage / 伤害` highlights the target / 目标 and shows reason / 伤害原因.
 - `death / 死亡` makes the dead unit / 死亡单位 visually stronger.
 - `battle_end / 战斗结束` shows the final winner / 胜者 and reason / 原因.
+- `status_apply / 状态应用` shows source / 来源, target / 目标, stat / 属性, amount / 数值, and reason / 原因.
+- `skill_cooldown / 技能冷却` shows `ready_tick`.
+- `action_scheduled / 行动排期` shows `next_action_tick`.
+- `battle_end / 战斗结束` shows victory explanation / 胜负解释 fields.
 
 ## Playback Checks / 播放检查
 
@@ -103,6 +111,7 @@ Confirm / 确认:
 
 - Battle Report / 战报 shows winner / 胜者, reason / 原因, and end_tick / 结束 tick.
 - Summary / 汇总 shows total_damage / 总伤害, total_kills / 总击杀, and total_skill_triggers / 总技能触发次数.
+- Summary / 汇总 shows total_status_applied / 总状态应用, total_skill_cooldowns / 总技能冷却, total_actions_scheduled / 总行动排期, and victory_explanation / 胜负解释.
 - Top Units / 最高单位 lists damage_done / 输出伤害, damage_taken / 承受伤害, and skill_triggers / 技能触发次数.
 - Unit Reports / 单位战报 table shows per-unit stats / 单位统计.
 - Key Moments / 关键时刻 includes death / 死亡 and battle_end / 战斗结束 entries.
@@ -115,6 +124,7 @@ Confirm / 确认:
 
 - Clicking a unit / 点击单位 updates Unit Detail Panel / 单位详情面板.
 - Unit Detail Panel / 单位详情面板 shows side / 阵营, role / 角色, position / 坐标, HP / 血量, alive state / 存活状态, and report stats / 战报统计.
+- Unit Detail Panel / 单位详情面板 shows Active Statuses / 当前状态, Next Action Tick / 下一行动 tick, Last Cooldown / 最近冷却, and Last Action Schedule / 最近行动排期.
 - Selecting a dead unit / 选择死亡单位 still shows its final report stats / 最终战报统计.
 
 ## Pass Record / 通过记录
@@ -127,8 +137,10 @@ Viewer Smoke / 回放器冒烟:
 - report loaded: yes/no
 - board shows 12 units: yes/no
 - timeline filters work: yes/no
+- combat-system filters work: yes/no
 - playback controls work: yes/no
 - report panel matches battle_report.json: yes/no
+- victory explanation visible: yes/no
 - report-to-board link works: yes/no
 - key moments seek tick: yes/no
 - event highlight shows current event: yes/no

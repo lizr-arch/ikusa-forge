@@ -40,6 +40,7 @@ Current Python simulator status:
 - HTML Demo Complete Experience / HTML 最小 Demo 完整体验闭环
 - Formation bonus / 阵型加成 与 Synergy application / 羁绊应用（当前 demo 已按 tick 0 一次性应用）
 - Report explainability / 报表可解释性（`stat_modifier` 计入回放与战报）
+- Combat System Pack / 战斗系统包（`status_apply`、`skill_cooldown`、`action_scheduled`、`victory_explanation` 可在 replay/report/viewer 中检查）
 
 Phase 1 Demo Package / 第一阶段演示包 / Phase 2 Tactical Depth notes are available at:
 
@@ -48,6 +49,7 @@ Phase 1 Demo Package / 第一阶段演示包 / Phase 2 Tactical Depth notes are 
 - `docs/process/tactical-depth-pack-v0.1.md`
 - `docs/process/ci-workflow-v0.1.md`
 - `docs/process/combat-behavior-pack-v0.1.md`
+- `docs/process/combat-system-pack-v0.1.md`
 
 Quick start for a full demo run / 一次完整演示最简命令:
 
@@ -118,6 +120,7 @@ runs/demo_001/battle_report.json
 ```
 
 The viewer keeps manual file inputs and now shows Demo Load Guidance / Demo 加载引导, Battle Summary / 战斗摘要, Event Highlight / 事件高亮, Report-to-Board Link / 战报到棋盘联动, and Key Moments navigation / 关键时刻跳转 for the generated `demo_001` run.
+It also surfaces Combat System Pack / 战斗系统包 evidence: active statuses / 当前状态, skill cooldowns / 技能冷却, next action tick / 下一行动 tick, and victory explanation / 胜负解释.
 
 Frontend verification:
 

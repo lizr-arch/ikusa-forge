@@ -64,6 +64,23 @@ def make_events():
         },
         {
             "tick": 10,
+            "event_id": "evt_000003_status",
+            "type": "status_apply",
+            "payload": {
+                "id": "status_ally_001_katana_slash_001",
+                "source": "ally_001",
+                "source_type": "skill",
+                "target": "ally_001",
+                "stat": "atk",
+                "amount": 3,
+                "start_tick": 10,
+                "expire_tick": None,
+                "reason": "skill:katana_slash",
+                "target_reason": "self",
+            },
+        },
+        {
+            "tick": 10,
             "event_id": "evt_000003_1",
             "type": "attack",
             "payload": {
@@ -82,6 +99,30 @@ def make_events():
                 "amount": 30,
                 "target_hp_after": 20,
                 "reason": "skill:katana_slash",
+            },
+        },
+        {
+            "tick": 10,
+            "event_id": "evt_000004_cooldown",
+            "type": "skill_cooldown",
+            "payload": {
+                "source": "ally_001",
+                "skill": "katana_slash",
+                "start_tick": 10,
+                "ready_tick": 30,
+                "cooldown_ticks": 20,
+            },
+        },
+        {
+            "tick": 10,
+            "event_id": "evt_000004_action",
+            "type": "action_scheduled",
+            "payload": {
+                "unit": "ally_001",
+                "current_tick": 10,
+                "next_action_tick": 30,
+                "action_interval_ticks": 20,
+                "reason": "after_action",
             },
         },
         {
@@ -122,6 +163,11 @@ def make_events():
                 "winner": "ally",
                 "reason": "enemy_eliminated",
                 "end_tick": 42,
+                "winner_alive": 1,
+                "loser_alive": 0,
+                "winner_total_hp": 95,
+                "loser_total_hp": 0,
+                "summary": "ally won by enemy_eliminated at tick 42",
             },
         },
     ]
@@ -163,6 +209,8 @@ class BattleReportTests(unittest.TestCase):
             report["units"]["ally_001"]["skill_triggers"],
         )
         self.assertEqual(1, report["summary"]["total_skill_triggers"])
+        self.assertEqual(1, report["summary"]["total_skill_cooldowns"])
+        self.assertEqual(1, report["units"]["ally_001"]["cooldowns_started"])
 
     def test_target_reason_counts_are_aggregated(self):
         report = self.build_report()
@@ -186,6 +234,19 @@ class BattleReportTests(unittest.TestCase):
         self.assertEqual("enemy_eliminated", report["reason"])
         self.assertEqual(42, report["end_tick"])
         self.assertEqual("ally", battle_end_moment["winner"])
+        self.assertEqual("ally", report["victory_explanation"]["winner"])
+        self.assertEqual(1, report["victory_explanation"]["winner_alive"])
+        self.assertIn("ally won", report["victory_explanation"]["summary"])
+
+    def test_status_and_action_counts_are_aggregated(self):
+        report = self.build_report()
+
+        self.assertEqual(1, report["summary"]["total_status_applied"])
+        self.assertEqual(0, report["summary"]["total_status_expired"])
+        self.assertEqual(1, report["summary"]["total_actions_scheduled"])
+        self.assertEqual(1, report["units"]["ally_001"]["statuses_applied"])
+        self.assertEqual(1, report["units"]["ally_001"]["actions_taken"])
+        self.assertEqual(30, report["units"]["ally_001"]["last_next_action_tick"])
 
     def test_demo_run_writes_basic_and_skeleton_reports(self):
         with TemporaryDirectory() as temp_dir:
@@ -237,13 +298,20 @@ class BattleReportTests(unittest.TestCase):
         self.assertEqual("ally", basic_report["winner"])
         self.assertGreater(basic_report["summary"]["total_damage"], 0)
         self.assertGreater(basic_report["summary"]["total_skill_triggers"], 0)
+        self.assertGreater(basic_report["summary"]["total_status_applied"], 0)
+        self.assertGreater(basic_report["summary"]["total_skill_cooldowns"], 0)
+        self.assertGreater(basic_report["summary"]["total_actions_scheduled"], 0)
         self.assertGreater(basic_report["summary"]["total_modifiers"], 0)
         self.assertGreater(basic_report["summary"]["formation_modifiers"], 0)
         self.assertGreater(basic_report["summary"]["synergy_modifiers"], 0)
+        self.assertIn("victory_explanation", basic_report)
         self.assertTrue(basic_report["key_moments"])
         self.assertEqual(0, skeleton_report["summary"]["total_damage"])
         self.assertEqual(0, skeleton_report["summary"]["total_kills"])
         self.assertEqual(0, skeleton_report["summary"]["total_skill_triggers"])
+        self.assertEqual(0, skeleton_report["summary"].get("total_status_applied", 0))
+        self.assertEqual(0, skeleton_report["summary"].get("total_skill_cooldowns", 0))
+        self.assertEqual(0, skeleton_report["summary"].get("total_actions_scheduled", 0))
         self.assertEqual(0, skeleton_report["summary"].get("total_modifiers", 0))
         self.assertEqual(0, skeleton_report["summary"].get("formation_modifiers", 0))
         self.assertEqual(0, skeleton_report["summary"].get("synergy_modifiers", 0))

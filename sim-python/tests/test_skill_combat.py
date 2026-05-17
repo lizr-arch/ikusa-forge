@@ -139,11 +139,13 @@ class SkillCombatTests(unittest.TestCase):
 
         _run_tick(state, config, events, tick=0)
 
-        self.assertEqual(["skill_trigger", "damage"], [event.type for event in events])
+        self.assertEqual(["skill_trigger", "damage", "skill_cooldown", "action_scheduled"], [event.type for event in events])
         self.assertEqual(["enemy_low_hp"], events[0].payload["targets"])
         self.assertEqual("enemy_low_hp", events[1].payload["target"])
         self.assertEqual("skill:focus_fire", events[1].payload["reason"])
         self.assertEqual("lowest_hp_enemy", events[0].payload["target_reason"])
+        self.assertEqual("focus_fire", events[2].payload["skill"])
+        self.assertEqual("ally_001", events[3].payload["unit"])
 
     def test_current_target_attack_skill_marks_target_reason(self):
         skill = make_skill(
@@ -175,16 +177,21 @@ class SkillCombatTests(unittest.TestCase):
 
         _run_tick(state, config, events, tick=0)
 
-        self.assertEqual(["attack", "damage"], [event.type for event in events])
+        self.assertEqual(["attack", "damage", "action_scheduled"], [event.type for event in events])
         self.assertEqual("basic_attack", events[1].payload["reason"])
         self.assertEqual(events[0].payload["target"], events[1].payload["target"])
         self.assertEqual("frontline_exposed_same_column", events[0].payload["target_reason"])
+        self.assertEqual(20, events[2].payload["next_action_tick"])
+        self.assertEqual("after_action", events[2].payload["reason"])
 
     def test_demo_basic_mode_emits_skill_trigger_events(self):
         state, events = self.run_demo()
         event_types = [event.type for event in events]
 
         self.assertIn("skill_trigger", event_types)
+        self.assertIn("status_apply", event_types)
+        self.assertIn("skill_cooldown", event_types)
+        self.assertIn("action_scheduled", event_types)
         self.assertEqual("battle_end", events[-1].type)
         self.assertTrue(state.finished)
 
@@ -229,7 +236,12 @@ class SkillCombatTests(unittest.TestCase):
         battle_end = events[-1]
 
         self.assertEqual("battle_end", battle_end.type)
-        self.assertEqual({"winner", "reason", "end_tick"}, set(battle_end.payload.keys()))
+        self.assertTrue({"winner", "reason", "end_tick"}.issubset(set(battle_end.payload.keys())))
+        self.assertIn("winner_alive", battle_end.payload)
+        self.assertIn("loser_alive", battle_end.payload)
+        self.assertIn("winner_total_hp", battle_end.payload)
+        self.assertIn("loser_total_hp", battle_end.payload)
+        self.assertIn("summary", battle_end.payload)
 
 
 if __name__ == "__main__":

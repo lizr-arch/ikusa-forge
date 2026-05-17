@@ -4,6 +4,19 @@ from dataclasses import dataclass, field
 from typing import Dict, List, Optional
 
 
+@dataclass(frozen=True)
+class StatusEffect:
+    id: str
+    source: str
+    source_type: str
+    target: str
+    stat: str
+    amount: int
+    start_tick: int
+    expire_tick: Optional[int]
+    reason: str
+
+
 @dataclass
 class UnitState:
     instance_id: str
@@ -27,6 +40,7 @@ class UnitState:
     next_action_tick: int = 0
     action_interval_ticks: int = 0
     guard_value: int = 0
+    statuses: List[StatusEffect] = field(default_factory=list)
     skill_cooldowns: Dict[str, int] = field(default_factory=dict)
     atk: int = field(init=False)
     defense: int = field(init=False)

@@ -6,7 +6,11 @@ export type KnownReplayEventType =
   | "damage"
   | "death"
   | "battle_end"
-  | "stat_modifier";
+  | "stat_modifier"
+  | "status_apply"
+  | "status_expire"
+  | "skill_cooldown"
+  | "action_scheduled";
 
 export type UnitSide = "ally" | "enemy" | string;
 
@@ -14,6 +18,11 @@ export interface BattleResult {
   winner?: string | null;
   reason?: string | null;
   end_tick?: number | null;
+  winner_alive?: number | null;
+  loser_alive?: number | null;
+  winner_total_hp?: number | null;
+  loser_total_hp?: number | null;
+  summary?: string | null;
 }
 
 export interface ReplayMetadata {
@@ -47,9 +56,23 @@ export interface UnitSnapshot {
   next_action_tick?: number;
   action_interval_ticks?: number;
   guard_value?: number;
+  statuses?: StatusEffectSnapshot[];
   skill_cooldowns?: Record<string, number>;
   atk?: number;
   defense?: number;
+}
+
+export interface StatusEffectSnapshot {
+  id: string;
+  source: string;
+  source_type?: string;
+  target: string;
+  stat: string;
+  amount: number;
+  start_tick: number;
+  expire_tick?: number | null;
+  reason?: string;
+  target_reason?: string;
 }
 
 export interface BattleStartPayload {
@@ -89,6 +112,34 @@ export interface SkillTriggerPayload {
   targets: string[];
   target_reason?: string;
   target_score?: TargetScorePayload;
+}
+
+export interface StatusApplyPayload extends StatusEffectSnapshot {}
+
+export interface StatusExpirePayload {
+  id?: string;
+  status_id?: string;
+  source?: string;
+  target: string;
+  stat?: string;
+  expire_tick?: number | null;
+  reason?: string;
+}
+
+export interface SkillCooldownPayload {
+  source: string;
+  skill: string;
+  start_tick: number;
+  ready_tick: number;
+  cooldown_ticks: number;
+}
+
+export interface ActionScheduledPayload {
+  unit: string;
+  current_tick: number;
+  next_action_tick: number;
+  action_interval_ticks: number;
+  reason?: string;
 }
 
 export interface DamagePayload {
@@ -131,6 +182,11 @@ export interface UnitReport {
   skill_triggers: Record<string, number>;
   modifiers_received?: number;
   stat_bonuses?: Record<string, number>;
+  statuses_applied?: number;
+  statuses_expired?: number;
+  cooldowns_started?: number;
+  actions_taken?: number;
+  last_next_action_tick?: number | null;
 }
 
 export interface ReportSummary {
@@ -140,9 +196,15 @@ export interface ReportSummary {
   total_modifiers?: number;
   formation_modifiers?: number;
   synergy_modifiers?: number;
+  total_status_applied?: number;
+  total_status_expired?: number;
+  total_skill_cooldowns?: number;
+  total_actions_scheduled?: number;
   target_reason_counts?: Record<string, number>;
   skill_target_reason_counts?: Record<string, number>;
 }
+
+export interface VictoryExplanation extends BattleResult {}
 
 export interface ReportTopUnits {
   damage_done?: string[];
@@ -169,6 +231,7 @@ export interface BattleReport {
   reason?: string | null;
   end_tick?: number | null;
   summary?: ReportSummary;
+  victory_explanation?: VictoryExplanation;
   units?: Record<string, UnitReport>;
   top_units?: ReportTopUnits;
   key_moments?: KeyMoment[];

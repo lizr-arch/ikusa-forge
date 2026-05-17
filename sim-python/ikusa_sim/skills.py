@@ -5,7 +5,7 @@ implement a general-purpose skill DSL, synergies, formation bonuses,
 battle reports, viewers, host integration, or Godot logic.
 """
 
-from dataclasses import dataclass
+from dataclasses import asdict, dataclass
 from typing import Callable, Dict, List, Mapping, Optional, Sequence
 
 from ikusa_sim.combat_rules import (
@@ -15,7 +15,7 @@ from ikusa_sim.combat_rules import (
 )
 from ikusa_sim.events import BattleEvent
 from ikusa_sim.models import ConfigBundle, SkillDef
-from ikusa_sim.runtime_models import BattleState, UnitState
+from ikusa_sim.runtime_models import BattleState, StatusEffect, UnitState
 from ikusa_sim.targeting import TargetDecision
 
 
@@ -59,8 +59,10 @@ def get_ready_skills(
     return ready
 
 
-def mark_skill_used(unit: UnitState, skill: SkillDef, tick: int, tick_rate: int) -> None:
-    unit.skill_cooldowns[skill.id] = tick + attack_interval_to_ticks(skill.cooldown, tick_rate)
+def mark_skill_used(unit: UnitState, skill: SkillDef, tick: int, tick_rate: int) -> int:
+    ready_tick = tick + attack_interval_to_ticks(skill.cooldown, tick_rate)
+    unit.skill_cooldowns[skill.id] = ready_tick
+    return ready_tick
 
 
 def try_use_on_battle_start_skills(
@@ -85,7 +87,7 @@ def try_use_on_battle_start_skills(
                 None,
             )
             if result.used:
-                mark_skill_used(unit, skill, tick, state.tick_rate)
+                _mark_skill_used_and_emit_cooldown(unit, skill, state, tick, events)
 
 
 def try_use_on_attack_skill(
@@ -118,7 +120,7 @@ def try_use_on_attack_skill(
             score_payload,
         )
         if result.used:
-            mark_skill_used(attacker, skill, tick, state.tick_rate)
+            _mark_skill_used_and_emit_cooldown(attacker, skill, state, tick, events)
             return result
     return SkillUseResult(used=False, damaged_targets=[])
 
@@ -148,7 +150,7 @@ def try_use_on_attacked_skills(
             None,
         )
         if result.used:
-            mark_skill_used(defender, skill, tick, state.tick_rate)
+            _mark_skill_used_and_emit_cooldown(defender, skill, state, tick, events)
         if not attacker.alive:
             return
 
@@ -187,7 +189,7 @@ def try_use_on_ally_attacked_skills(
                 None,
             )
             if result.used:
-                mark_skill_used(reactor, skill, tick, state.tick_rate)
+                _mark_skill_used_and_emit_cooldown(reactor, skill, state, tick, events)
             if not attacker.alive:
                 return
 
@@ -286,7 +288,6 @@ def _handle_guard(
 ) -> SkillUseResult:
     _ = current_target
     _ = config
-    _ = tick
     source.guard_value += int(round(skill.effect_value))
     _emit_skill_trigger(
         state,
@@ -297,6 +298,17 @@ def _handle_guard(
         [source],
         target_reason,
         target_score,
+    )
+    _apply_status(
+        state,
+        events,
+        tick,
+        source,
+        source,
+        skill,
+        stat="guard_value",
+        amount=int(round(skill.effect_value)),
+        target_reason=target_reason,
     )
     return SkillUseResult(used=True, damaged_targets=[])
 
@@ -331,6 +343,18 @@ def _handle_banner_rally(
         target_reason,
         target_score,
     )
+    for target in targets:
+        _apply_status(
+            state,
+            events,
+            tick,
+            source,
+            target,
+            skill,
+            stat="atk",
+            amount=bonus,
+            target_reason=target_reason,
+        )
     return SkillUseResult(used=True, damaged_targets=[])
 
 
@@ -424,6 +448,73 @@ def _emit_skill_trigger(
             payload=payload,
         )
     )
+
+
+def _apply_status(
+    state: BattleState,
+    events: List[BattleEvent],
+    tick: int,
+    source: UnitState,
+    target: UnitState,
+    skill: SkillDef,
+    *,
+    stat: str,
+    amount: int,
+    target_reason: Optional[str],
+) -> None:
+    status = StatusEffect(
+        id=_status_id(target, skill),
+        source=source.instance_id,
+        source_type="skill",
+        target=target.instance_id,
+        stat=stat,
+        amount=amount,
+        start_tick=tick,
+        expire_tick=None,
+        reason=f"skill:{skill.id}",
+    )
+    target.statuses.append(status)
+
+    payload: Dict[str, object] = asdict(status)
+    if target_reason is not None:
+        payload["target_reason"] = target_reason
+
+    events.append(
+        BattleEvent(
+            tick=tick,
+            event_id=_next_event_id(state),
+            type="status_apply",
+            payload=payload,
+        )
+    )
+
+
+def _mark_skill_used_and_emit_cooldown(
+    unit: UnitState,
+    skill: SkillDef,
+    state: BattleState,
+    tick: int,
+    events: List[BattleEvent],
+) -> None:
+    ready_tick = mark_skill_used(unit, skill, tick, state.tick_rate)
+    events.append(
+        BattleEvent(
+            tick=tick,
+            event_id=_next_event_id(state),
+            type="skill_cooldown",
+            payload={
+                "source": unit.instance_id,
+                "skill": skill.id,
+                "start_tick": tick,
+                "ready_tick": ready_tick,
+                "cooldown_ticks": ready_tick - tick,
+            },
+        )
+    )
+
+
+def _status_id(target: UnitState, skill: SkillDef) -> str:
+    return f"status_{target.instance_id}_{skill.id}_{len(target.statuses) + 1:03d}"
 
 
 def _lowest_hp_enemy(source: UnitState, units: Sequence[UnitState]) -> Optional[UnitState]:
