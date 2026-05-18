@@ -402,7 +402,7 @@ def _update_spatial_engagements(
                 )
             )
 
-        if distance_before <= unit.attack_range:
+        if _in_attack_range(unit, target):
             unit.velocity_x = 0.0
             unit.velocity_y = 0.0
             unit.facing_angle = _angle_to(unit, target)
@@ -414,7 +414,7 @@ def _update_spatial_engagements(
         _move_toward_target(state, events, tick, unit, target)
 
         distance_after = _distance_between(unit, target)
-        if distance_after <= unit.attack_range and (previous_intent != "engaged" or previous_target != target.instance_id):
+        if _in_attack_range(unit, target) and (previous_intent != "engaged" or previous_target != target.instance_id):
             unit.movement_intent = "engaged"
             unit.velocity_x = 0.0
             unit.velocity_y = 0.0
@@ -451,7 +451,7 @@ def _move_toward_target(
     unit.movement_intent = "move_to_attack_range" if actual_step > 0 else "engaged"
 
     distance_after = _distance_between(unit, target)
-    if actual_step > 0 and (tick % 5 == 0 or distance_after <= unit.attack_range):
+    if actual_step > 0 and (tick % 5 == 0 or distance_after <= unit.attack_range + 0.001):
         events.append(
             BattleEvent(
                 tick=tick,

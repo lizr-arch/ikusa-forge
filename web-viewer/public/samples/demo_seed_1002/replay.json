@@ -5165,6 +5165,49 @@
         {
           "event_id": "evt_000281",
           "payload": {
+            "distance_to_target": 110.0,
+            "from_x": 88.023,
+            "from_y": 318.386,
+            "move_speed": 18.0,
+            "reason": "move_to_attack_range",
+            "target": "enemy_003",
+            "to_x": 88.298,
+            "to_y": 317.679,
+            "unit": "ally_005",
+            "velocity_x": 6.543,
+            "velocity_y": -16.769
+          },
+          "tick": 84,
+          "type": "unit_move"
+        },
+        {
+          "event_id": "evt_000282",
+          "payload": {
+            "attack_range": 110.0,
+            "distance": 110.0,
+            "engagement_range": 110.0,
+            "target": "enemy_003",
+            "unit": "ally_005"
+          },
+          "tick": 84,
+          "type": "enter_range"
+        },
+        {
+          "event_id": "evt_000283",
+          "payload": {
+            "attack_range": 110.0,
+            "distance": 110.0,
+            "engagement_range": 110.0,
+            "reason": "attack_range_reached",
+            "target": "enemy_003",
+            "unit": "ally_005"
+          },
+          "tick": 84,
+          "type": "engage_start"
+        },
+        {
+          "event_id": "evt_000284",
+          "payload": {
             "skill": "bow_shot",
             "source": "ally_005",
             "target_reason": "current_target",
@@ -5186,7 +5229,7 @@
           "type": "skill_trigger"
         },
         {
-          "event_id": "evt_000282",
+          "event_id": "evt_000285",
           "payload": {
             "amount": 20,
             "reason": "skill:bow_shot",
@@ -5198,7 +5241,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_000283",
+          "event_id": "evt_000286",
           "payload": {
             "cooldown_ticks": 30,
             "ready_tick": 114,
@@ -5210,7 +5253,7 @@
           "type": "skill_cooldown"
         },
         {
-          "event_id": "evt_000284",
+          "event_id": "evt_000287",
           "payload": {
             "action_interval_ticks": 28,
             "current_tick": 84,
@@ -5227,7 +5270,7 @@
     {
       "events": [
         {
-          "event_id": "evt_000285",
+          "event_id": "evt_000288",
           "payload": {
             "distance_to_target": 29.999,
             "from_x": 124.341,
@@ -5245,7 +5288,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_000286",
+          "event_id": "evt_000289",
           "payload": {
             "distance_to_target": 40.303,
             "from_x": 123.448,
@@ -5263,32 +5306,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_000287",
-          "payload": {
-            "attack_range": 110.0,
-            "distance": 108.837,
-            "engagement_range": 110.0,
-            "target": "enemy_003",
-            "unit": "ally_005"
-          },
-          "tick": 85,
-          "type": "enter_range"
-        },
-        {
-          "event_id": "evt_000288",
-          "payload": {
-            "attack_range": 110.0,
-            "distance": 108.837,
-            "engagement_range": 110.0,
-            "reason": "attack_range_reached",
-            "target": "enemy_003",
-            "unit": "ally_005"
-          },
-          "tick": 85,
-          "type": "engage_start"
-        },
-        {
-          "event_id": "evt_000289",
+          "event_id": "evt_000290",
           "payload": {
             "distance_to_target": 96.453,
             "from_x": 237.456,
@@ -5306,7 +5324,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_000290",
+          "event_id": "evt_000291",
           "payload": {
             "distance_to_target": 95.605,
             "from_x": 96.971,
@@ -5324,7 +5342,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_000291",
+          "event_id": "evt_000292",
           "payload": {
             "distance_to_target": 68.573,
             "from_x": 224.395,
@@ -5342,7 +5360,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_000292",
+          "event_id": "evt_000293",
           "payload": {
             "distance_to_target": 28.799,
             "from_x": 128.133,
@@ -5365,7 +5383,7 @@
     {
       "events": [
         {
-          "event_id": "evt_000293",
+          "event_id": "evt_000294",
           "payload": {
             "attacker": "enemy_004",
             "target": "ally_002",
@@ -5384,7 +5402,7 @@
           "type": "attack"
         },
         {
-          "event_id": "evt_000294",
+          "event_id": "evt_000295",
           "payload": {
             "amount": 17,
             "reason": "basic_attack",
@@ -5396,7 +5414,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_000295",
+          "event_id": "evt_000296",
           "payload": {
             "action_interval_ticks": 18,
             "current_tick": 88,
@@ -5413,7 +5431,7 @@
     {
       "events": [
         {
-          "event_id": "evt_000296",
+          "event_id": "evt_000297",
           "payload": {
             "attacker": "ally_002",
             "target": "enemy_004",
@@ -5432,7 +5450,7 @@
           "type": "attack"
         },
         {
-          "event_id": "evt_000297",
+          "event_id": "evt_000298",
           "payload": {
             "amount": 14,
             "reason": "basic_attack",
@@ -5444,7 +5462,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_000298",
+          "event_id": "evt_000299",
           "payload": {
             "unit": "enemy_004"
           },
@@ -5452,7 +5470,7 @@
           "type": "death"
         },
         {
-          "event_id": "evt_000299",
+          "event_id": "evt_000300",
           "payload": {
             "action_interval_ticks": 24,
             "current_tick": 89,
@@ -5469,7 +5487,7 @@
     {
       "events": [
         {
-          "event_id": "evt_000300",
+          "event_id": "evt_000301",
           "payload": {
             "distance_to_target": 19.499,
             "from_x": 124.893,
@@ -5487,7 +5505,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_000301",
+          "event_id": "evt_000302",
           "payload": {
             "distance": 40.0,
             "reason": "nearest_enemy",
@@ -5498,7 +5516,7 @@
           "type": "target_acquired"
         },
         {
-          "event_id": "evt_000302",
+          "event_id": "evt_000303",
           "payload": {
             "distance_to_target": 38.8,
             "from_x": 204.991,
@@ -5516,7 +5534,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_000303",
+          "event_id": "evt_000304",
           "payload": {
             "distance_to_target": 28.304,
             "from_x": 124.122,
@@ -5534,7 +5552,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_000304",
+          "event_id": "evt_000305",
           "payload": {
             "distance": 39.985,
             "reason": "nearest_enemy",
@@ -5545,7 +5563,7 @@
           "type": "target_acquired"
         },
         {
-          "event_id": "evt_000305",
+          "event_id": "evt_000306",
           "payload": {
             "distance_to_target": 38.385,
             "from_x": 205.014,
@@ -5563,7 +5581,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_000306",
+          "event_id": "evt_000307",
           "payload": {
             "distance": 103.644,
             "reason": "nearest_enemy",
@@ -5574,7 +5592,7 @@
           "type": "target_acquired"
         },
         {
-          "event_id": "evt_000307",
+          "event_id": "evt_000308",
           "payload": {
             "distance_to_target": 102.744,
             "from_x": 235.833,
@@ -5592,7 +5610,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_000308",
+          "event_id": "evt_000309",
           "payload": {
             "distance_to_target": 86.999,
             "from_x": 98.286,
@@ -5610,7 +5628,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_000309",
+          "event_id": "evt_000310",
           "payload": {
             "distance_to_target": 61.027,
             "from_x": 222.728,
@@ -5628,7 +5646,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_000310",
+          "event_id": "evt_000311",
           "payload": {
             "distance_to_target": 18.299,
             "from_x": 127.397,
@@ -5651,7 +5669,75 @@
     {
       "events": [
         {
-          "event_id": "evt_000311",
+          "event_id": "evt_000312",
+          "payload": {
+            "distance_to_target": 18.0,
+            "from_x": 125.003,
+            "from_y": 241.7,
+            "move_speed": 18.0,
+            "reason": "move_to_attack_range",
+            "target": "enemy_003",
+            "to_x": 125.04,
+            "to_y": 241.403,
+            "unit": "ally_001",
+            "velocity_x": 2.209,
+            "velocity_y": -17.864
+          },
+          "tick": 91,
+          "type": "unit_move"
+        },
+        {
+          "event_id": "evt_000313",
+          "payload": {
+            "attack_range": 18.0,
+            "distance": 18.0,
+            "engagement_range": 22.0,
+            "target": "enemy_003",
+            "unit": "ally_001"
+          },
+          "tick": 91,
+          "type": "enter_range"
+        },
+        {
+          "event_id": "evt_000314",
+          "payload": {
+            "attack_range": 18.0,
+            "distance": 18.0,
+            "engagement_range": 22.0,
+            "reason": "attack_range_reached",
+            "target": "enemy_003",
+            "unit": "ally_001"
+          },
+          "tick": 91,
+          "type": "engage_start"
+        },
+        {
+          "event_id": "evt_000315",
+          "payload": {
+            "attack_range": 18.0,
+            "distance": 18.0,
+            "engagement_range": 22.0,
+            "target": "ally_001",
+            "unit": "enemy_003"
+          },
+          "tick": 91,
+          "type": "enter_range"
+        },
+        {
+          "event_id": "evt_000316",
+          "payload": {
+            "attack_range": 18.0,
+            "distance": 18.0,
+            "engagement_range": 22.0,
+            "reason": "attack_range_reached",
+            "target": "ally_001",
+            "unit": "enemy_003"
+          },
+          "tick": 91,
+          "type": "engage_start"
+        },
+        {
+          "event_id": "evt_000317",
           "payload": {
             "skill": "katana_slash",
             "source": "enemy_003",
@@ -5674,7 +5760,7 @@
           "type": "skill_trigger"
         },
         {
-          "event_id": "evt_000312",
+          "event_id": "evt_000318",
           "payload": {
             "amount": 11,
             "reason": "skill:katana_slash",
@@ -5686,7 +5772,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_000313",
+          "event_id": "evt_000319",
           "payload": {
             "cooldown_ticks": 20,
             "ready_tick": 111,
@@ -5698,7 +5784,7 @@
           "type": "skill_cooldown"
         },
         {
-          "event_id": "evt_000314",
+          "event_id": "evt_000320",
           "payload": {
             "action_interval_ticks": 20,
             "current_tick": 91,
@@ -5710,7 +5796,7 @@
           "type": "action_scheduled"
         },
         {
-          "event_id": "evt_000315",
+          "event_id": "evt_000321",
           "payload": {
             "attacker": "ally_001",
             "target": "enemy_003",
@@ -5729,7 +5815,7 @@
           "type": "attack"
         },
         {
-          "event_id": "evt_000316",
+          "event_id": "evt_000322",
           "payload": {
             "amount": 8,
             "reason": "basic_attack",
@@ -5741,7 +5827,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_000317",
+          "event_id": "evt_000323",
           "payload": {
             "action_interval_ticks": 32,
             "current_tick": 91,
@@ -5758,7 +5844,7 @@
     {
       "events": [
         {
-          "event_id": "evt_000318",
+          "event_id": "evt_000324",
           "payload": {
             "skill": "bow_shot",
             "source": "enemy_005",
@@ -5781,7 +5867,7 @@
           "type": "skill_trigger"
         },
         {
-          "event_id": "evt_000319",
+          "event_id": "evt_000325",
           "payload": {
             "amount": 2,
             "reason": "skill:bow_shot",
@@ -5793,7 +5879,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_000320",
+          "event_id": "evt_000326",
           "payload": {
             "cooldown_ticks": 30,
             "ready_tick": 124,
@@ -5805,7 +5891,7 @@
           "type": "skill_cooldown"
         },
         {
-          "event_id": "evt_000321",
+          "event_id": "evt_000327",
           "payload": {
             "action_interval_ticks": 28,
             "current_tick": 94,
@@ -5822,25 +5908,7 @@
     {
       "events": [
         {
-          "event_id": "evt_000322",
-          "payload": {
-            "distance_to_target": 18.0,
-            "from_x": 125.04,
-            "from_y": 241.403,
-            "move_speed": 18.0,
-            "reason": "move_to_attack_range",
-            "target": "enemy_003",
-            "to_x": 125.04,
-            "to_y": 241.403,
-            "unit": "ally_001",
-            "velocity_x": 2.209,
-            "velocity_y": -17.864
-          },
-          "tick": 95,
-          "type": "unit_move"
-        },
-        {
-          "event_id": "evt_000323",
+          "event_id": "evt_000328",
           "payload": {
             "distance_to_target": 32.8,
             "from_x": 208.071,
@@ -5858,7 +5926,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_000324",
+          "event_id": "evt_000329",
           "payload": {
             "distance_to_target": 21.104,
             "from_x": 124.785,
@@ -5876,7 +5944,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_000325",
+          "event_id": "evt_000330",
           "payload": {
             "distance_to_target": 30.385,
             "from_x": 209.117,
@@ -5894,7 +5962,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_000326",
+          "event_id": "evt_000331",
           "payload": {
             "distance_to_target": 98.244,
             "from_x": 235.385,
@@ -5912,7 +5980,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_000327",
+          "event_id": "evt_000332",
           "payload": {
             "distance_to_target": 82.228,
             "from_x": 99.659,
@@ -5930,7 +5998,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_000328",
+          "event_id": "evt_000333",
           "payload": {
             "distance_to_target": 47.345,
             "from_x": 221.187,
@@ -5946,24 +6014,6 @@
           },
           "tick": 95,
           "type": "unit_move"
-        },
-        {
-          "event_id": "evt_000329",
-          "payload": {
-            "distance_to_target": 18.0,
-            "from_x": 127.25,
-            "from_y": 223.539,
-            "move_speed": 24.0,
-            "reason": "move_to_attack_range",
-            "target": "ally_001",
-            "to_x": 127.25,
-            "to_y": 223.539,
-            "unit": "enemy_003",
-            "velocity_x": -2.946,
-            "velocity_y": 23.819
-          },
-          "tick": 95,
-          "type": "unit_move"
         }
       ],
       "tick": 95
@@ -5971,7 +6021,7 @@
     {
       "events": [
         {
-          "event_id": "evt_000330",
+          "event_id": "evt_000334",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 125.183,
@@ -5989,7 +6039,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_000331",
+          "event_id": "evt_000335",
           "payload": {
             "attack_range": 18.0,
             "distance": 18.0,
@@ -6001,7 +6051,7 @@
           "type": "enter_range"
         },
         {
-          "event_id": "evt_000332",
+          "event_id": "evt_000336",
           "payload": {
             "attack_range": 18.0,
             "distance": 18.0,
@@ -6014,7 +6064,7 @@
           "type": "engage_start"
         },
         {
-          "event_id": "evt_000333",
+          "event_id": "evt_000337",
           "payload": {
             "distance": 18.0,
             "reason": "nearest_enemy",
@@ -6025,7 +6075,7 @@
           "type": "target_acquired"
         },
         {
-          "event_id": "evt_000334",
+          "event_id": "evt_000338",
           "payload": {
             "attack_range": 18.0,
             "distance": 18.0,
@@ -6037,7 +6087,7 @@
           "type": "enter_range"
         },
         {
-          "event_id": "evt_000335",
+          "event_id": "evt_000339",
           "payload": {
             "attack_range": 18.0,
             "distance": 18.0,
@@ -6050,7 +6100,7 @@
           "type": "engage_start"
         },
         {
-          "event_id": "evt_000336",
+          "event_id": "evt_000340",
           "payload": {
             "skill": "katana_slash",
             "source": "ally_003",
@@ -6073,7 +6123,7 @@
           "type": "skill_trigger"
         },
         {
-          "event_id": "evt_000337",
+          "event_id": "evt_000341",
           "payload": {
             "amount": 33,
             "reason": "skill:katana_slash",
@@ -6085,7 +6135,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_000338",
+          "event_id": "evt_000342",
           "payload": {
             "cooldown_ticks": 20,
             "ready_tick": 118,
@@ -6097,7 +6147,7 @@
           "type": "skill_cooldown"
         },
         {
-          "event_id": "evt_000339",
+          "event_id": "evt_000343",
           "payload": {
             "action_interval_ticks": 20,
             "current_tick": 98,
@@ -6114,25 +6164,7 @@
     {
       "events": [
         {
-          "event_id": "evt_000340",
-          "payload": {
-            "distance_to_target": 18.0,
-            "from_x": 125.04,
-            "from_y": 241.403,
-            "move_speed": 18.0,
-            "reason": "move_to_attack_range",
-            "target": "enemy_003",
-            "to_x": 125.04,
-            "to_y": 241.403,
-            "unit": "ally_001",
-            "velocity_x": 2.209,
-            "velocity_y": -17.864
-          },
-          "tick": 100,
-          "type": "unit_move"
-        },
-        {
-          "event_id": "evt_000341",
+          "event_id": "evt_000344",
           "payload": {
             "distance_to_target": 26.8,
             "from_x": 211.15,
@@ -6150,7 +6182,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_000342",
+          "event_id": "evt_000345",
           "payload": {
             "distance_to_target": 22.385,
             "from_x": 213.22,
@@ -6168,7 +6200,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_000343",
+          "event_id": "evt_000346",
           "payload": {
             "distance_to_target": 93.744,
             "from_x": 234.937,
@@ -6186,7 +6218,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_000344",
+          "event_id": "evt_000347",
           "payload": {
             "distance_to_target": 77.728,
             "from_x": 101.033,
@@ -6204,7 +6236,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_000345",
+          "event_id": "evt_000348",
           "payload": {
             "distance_to_target": 33.789,
             "from_x": 219.933,
@@ -6227,7 +6259,55 @@
     {
       "events": [
         {
-          "event_id": "evt_000346",
+          "event_id": "evt_000349",
+          "payload": {
+            "distance_to_target": 26.0,
+            "from_x": 211.766,
+            "from_y": 233.654,
+            "move_speed": 24.0,
+            "reason": "move_to_attack_range",
+            "target": "enemy_006",
+            "to_x": 212.177,
+            "to_y": 232.968,
+            "unit": "ally_002",
+            "velocity_x": 12.317,
+            "velocity_y": -20.598
+          },
+          "tick": 101,
+          "type": "unit_move"
+        },
+        {
+          "event_id": "evt_000350",
+          "payload": {
+            "attack_range": 26.0,
+            "distance": 26.0,
+            "engagement_range": 30.0,
+            "target": "enemy_006",
+            "unit": "ally_002"
+          },
+          "tick": 101,
+          "type": "enter_range"
+        },
+        {
+          "event_id": "evt_000351",
+          "payload": {
+            "attack_range": 26.0,
+            "distance": 26.0,
+            "engagement_range": 30.0,
+            "reason": "attack_range_reached",
+            "target": "enemy_006",
+            "unit": "ally_002"
+          },
+          "tick": 101,
+          "type": "engage_start"
+        }
+      ],
+      "tick": 101
+    },
+    {
+      "events": [
+        {
+          "event_id": "evt_000352",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 215.681,
@@ -6245,7 +6325,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_000347",
+          "event_id": "evt_000353",
           "payload": {
             "attack_range": 18.0,
             "distance": 18.0,
@@ -6257,7 +6337,7 @@
           "type": "enter_range"
         },
         {
-          "event_id": "evt_000348",
+          "event_id": "evt_000354",
           "payload": {
             "attack_range": 18.0,
             "distance": 18.0,
@@ -6270,7 +6350,7 @@
           "type": "engage_start"
         },
         {
-          "event_id": "evt_000349",
+          "event_id": "evt_000355",
           "payload": {
             "attacker": "ally_004",
             "target": "enemy_006",
@@ -6289,7 +6369,7 @@
           "type": "attack"
         },
         {
-          "event_id": "evt_000350",
+          "event_id": "evt_000356",
           "payload": {
             "amount": 23,
             "reason": "basic_attack",
@@ -6301,7 +6381,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_000351",
+          "event_id": "evt_000357",
           "payload": {
             "action_interval_ticks": 18,
             "current_tick": 103,
@@ -6318,7 +6398,50 @@
     {
       "events": [
         {
-          "event_id": "evt_000352",
+          "event_id": "evt_000358",
+          "payload": {
+            "distance_to_target": 26.0,
+            "from_x": 219.257,
+            "from_y": 200.132,
+            "move_speed": 24.0,
+            "reason": "move_to_attack_range",
+            "target": "ally_004",
+            "to_x": 219.241,
+            "to_y": 200.274,
+            "unit": "enemy_002",
+            "velocity_x": -2.724,
+            "velocity_y": 23.845
+          },
+          "tick": 104,
+          "type": "unit_move"
+        },
+        {
+          "event_id": "evt_000359",
+          "payload": {
+            "attack_range": 26.0,
+            "distance": 26.0,
+            "engagement_range": 30.0,
+            "target": "ally_004",
+            "unit": "enemy_002"
+          },
+          "tick": 104,
+          "type": "enter_range"
+        },
+        {
+          "event_id": "evt_000360",
+          "payload": {
+            "attack_range": 26.0,
+            "distance": 26.0,
+            "engagement_range": 30.0,
+            "reason": "attack_range_reached",
+            "target": "ally_004",
+            "unit": "enemy_002"
+          },
+          "tick": 104,
+          "type": "engage_start"
+        },
+        {
+          "event_id": "evt_000361",
           "payload": {
             "skill": "spear_thrust",
             "source": "enemy_002",
@@ -6341,7 +6464,7 @@
           "type": "skill_trigger"
         },
         {
-          "event_id": "evt_000353",
+          "event_id": "evt_000362",
           "payload": {
             "amount": 27,
             "reason": "skill:spear_thrust",
@@ -6353,7 +6476,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_000354",
+          "event_id": "evt_000363",
           "payload": {
             "cooldown_ticks": 26,
             "ready_tick": 130,
@@ -6365,7 +6488,7 @@
           "type": "skill_cooldown"
         },
         {
-          "event_id": "evt_000355",
+          "event_id": "evt_000364",
           "payload": {
             "action_interval_ticks": 24,
             "current_tick": 104,
@@ -6382,43 +6505,7 @@
     {
       "events": [
         {
-          "event_id": "evt_000356",
-          "payload": {
-            "distance_to_target": 18.0,
-            "from_x": 125.04,
-            "from_y": 241.403,
-            "move_speed": 18.0,
-            "reason": "move_to_attack_range",
-            "target": "enemy_003",
-            "to_x": 125.04,
-            "to_y": 241.403,
-            "unit": "ally_001",
-            "velocity_x": 2.209,
-            "velocity_y": -17.864
-          },
-          "tick": 105,
-          "type": "unit_move"
-        },
-        {
-          "event_id": "evt_000357",
-          "payload": {
-            "distance_to_target": 26.0,
-            "from_x": 212.177,
-            "from_y": 232.968,
-            "move_speed": 24.0,
-            "reason": "move_to_attack_range",
-            "target": "enemy_006",
-            "to_x": 212.177,
-            "to_y": 232.968,
-            "unit": "ally_002",
-            "velocity_x": 12.317,
-            "velocity_y": -20.598
-          },
-          "tick": 105,
-          "type": "unit_move"
-        },
-        {
-          "event_id": "evt_000358",
+          "event_id": "evt_000365",
           "payload": {
             "distance_to_target": 89.244,
             "from_x": 234.489,
@@ -6436,7 +6523,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_000359",
+          "event_id": "evt_000366",
           "payload": {
             "distance_to_target": 73.228,
             "from_x": 102.407,
@@ -6452,24 +6539,6 @@
           },
           "tick": 105,
           "type": "unit_move"
-        },
-        {
-          "event_id": "evt_000360",
-          "payload": {
-            "distance_to_target": 26.0,
-            "from_x": 219.241,
-            "from_y": 200.274,
-            "move_speed": 24.0,
-            "reason": "move_to_attack_range",
-            "target": "ally_004",
-            "to_x": 219.241,
-            "to_y": 200.274,
-            "unit": "enemy_002",
-            "velocity_x": -2.724,
-            "velocity_y": 23.845
-          },
-          "tick": 105,
-          "type": "unit_move"
         }
       ],
       "tick": 105
@@ -6477,7 +6546,7 @@
     {
       "events": [
         {
-          "event_id": "evt_000361",
+          "event_id": "evt_000367",
           "payload": {
             "attacker": "enemy_006",
             "target": "ally_004",
@@ -6496,7 +6565,7 @@
           "type": "attack"
         },
         {
-          "event_id": "evt_000362",
+          "event_id": "evt_000368",
           "payload": {
             "amount": 6,
             "reason": "basic_attack",
@@ -6508,7 +6577,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_000363",
+          "event_id": "evt_000369",
           "payload": {
             "action_interval_ticks": 36,
             "current_tick": 106,
@@ -6525,43 +6594,7 @@
     {
       "events": [
         {
-          "event_id": "evt_000364",
-          "payload": {
-            "distance_to_target": 18.0,
-            "from_x": 125.04,
-            "from_y": 241.403,
-            "move_speed": 18.0,
-            "reason": "move_to_attack_range",
-            "target": "enemy_003",
-            "to_x": 125.04,
-            "to_y": 241.403,
-            "unit": "ally_001",
-            "velocity_x": 2.209,
-            "velocity_y": -17.864
-          },
-          "tick": 110,
-          "type": "unit_move"
-        },
-        {
-          "event_id": "evt_000365",
-          "payload": {
-            "distance_to_target": 26.0,
-            "from_x": 212.177,
-            "from_y": 232.968,
-            "move_speed": 24.0,
-            "reason": "move_to_attack_range",
-            "target": "enemy_006",
-            "to_x": 212.177,
-            "to_y": 232.968,
-            "unit": "ally_002",
-            "velocity_x": 12.317,
-            "velocity_y": -20.598
-          },
-          "tick": 110,
-          "type": "unit_move"
-        },
-        {
-          "event_id": "evt_000366",
+          "event_id": "evt_000370",
           "payload": {
             "distance_to_target": 84.744,
             "from_x": 234.042,
@@ -6579,7 +6612,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_000367",
+          "event_id": "evt_000371",
           "payload": {
             "distance_to_target": 68.728,
             "from_x": 103.781,
@@ -6595,24 +6628,6 @@
           },
           "tick": 110,
           "type": "unit_move"
-        },
-        {
-          "event_id": "evt_000368",
-          "payload": {
-            "distance_to_target": 26.0,
-            "from_x": 219.241,
-            "from_y": 200.274,
-            "move_speed": 24.0,
-            "reason": "move_to_attack_range",
-            "target": "ally_004",
-            "to_x": 219.241,
-            "to_y": 200.274,
-            "unit": "enemy_002",
-            "velocity_x": -2.724,
-            "velocity_y": 23.845
-          },
-          "tick": 110,
-          "type": "unit_move"
         }
       ],
       "tick": 110
@@ -6620,7 +6635,7 @@
     {
       "events": [
         {
-          "event_id": "evt_000369",
+          "event_id": "evt_000372",
           "payload": {
             "skill": "katana_slash",
             "source": "enemy_003",
@@ -6643,7 +6658,7 @@
           "type": "skill_trigger"
         },
         {
-          "event_id": "evt_000370",
+          "event_id": "evt_000373",
           "payload": {
             "amount": 28,
             "reason": "skill:katana_slash",
@@ -6655,7 +6670,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_000371",
+          "event_id": "evt_000374",
           "payload": {
             "cooldown_ticks": 20,
             "ready_tick": 131,
@@ -6667,7 +6682,7 @@
           "type": "skill_cooldown"
         },
         {
-          "event_id": "evt_000372",
+          "event_id": "evt_000375",
           "payload": {
             "action_interval_ticks": 20,
             "current_tick": 111,
@@ -6684,7 +6699,7 @@
     {
       "events": [
         {
-          "event_id": "evt_000373",
+          "event_id": "evt_000376",
           "payload": {
             "skill": "focus_fire",
             "source": "ally_005",
@@ -6698,7 +6713,7 @@
           "type": "skill_trigger"
         },
         {
-          "event_id": "evt_000374",
+          "event_id": "evt_000377",
           "payload": {
             "amount": 27,
             "reason": "skill:focus_fire",
@@ -6710,7 +6725,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_000375",
+          "event_id": "evt_000378",
           "payload": {
             "cooldown_ticks": 100,
             "ready_tick": 212,
@@ -6722,7 +6737,7 @@
           "type": "skill_cooldown"
         },
         {
-          "event_id": "evt_000376",
+          "event_id": "evt_000379",
           "payload": {
             "action_interval_ticks": 28,
             "current_tick": 112,
@@ -6739,7 +6754,7 @@
     {
       "events": [
         {
-          "event_id": "evt_000377",
+          "event_id": "evt_000380",
           "payload": {
             "skill": "spear_thrust",
             "source": "ally_002",
@@ -6762,7 +6777,7 @@
           "type": "skill_trigger"
         },
         {
-          "event_id": "evt_000378",
+          "event_id": "evt_000381",
           "payload": {
             "amount": 28,
             "reason": "skill:spear_thrust",
@@ -6774,7 +6789,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_000379",
+          "event_id": "evt_000382",
           "payload": {
             "cooldown_ticks": 26,
             "ready_tick": 139,
@@ -6786,7 +6801,7 @@
           "type": "skill_cooldown"
         },
         {
-          "event_id": "evt_000380",
+          "event_id": "evt_000383",
           "payload": {
             "action_interval_ticks": 24,
             "current_tick": 113,
@@ -6803,43 +6818,7 @@
     {
       "events": [
         {
-          "event_id": "evt_000381",
-          "payload": {
-            "distance_to_target": 18.0,
-            "from_x": 125.04,
-            "from_y": 241.403,
-            "move_speed": 18.0,
-            "reason": "move_to_attack_range",
-            "target": "enemy_003",
-            "to_x": 125.04,
-            "to_y": 241.403,
-            "unit": "ally_001",
-            "velocity_x": 2.209,
-            "velocity_y": -17.864
-          },
-          "tick": 115,
-          "type": "unit_move"
-        },
-        {
-          "event_id": "evt_000382",
-          "payload": {
-            "distance_to_target": 26.0,
-            "from_x": 212.177,
-            "from_y": 232.968,
-            "move_speed": 24.0,
-            "reason": "move_to_attack_range",
-            "target": "enemy_006",
-            "to_x": 212.177,
-            "to_y": 232.968,
-            "unit": "ally_002",
-            "velocity_x": 12.317,
-            "velocity_y": -20.598
-          },
-          "tick": 115,
-          "type": "unit_move"
-        },
-        {
-          "event_id": "evt_000383",
+          "event_id": "evt_000384",
           "payload": {
             "distance_to_target": 80.244,
             "from_x": 233.594,
@@ -6857,7 +6836,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_000384",
+          "event_id": "evt_000385",
           "payload": {
             "distance_to_target": 64.228,
             "from_x": 105.155,
@@ -6870,24 +6849,6 @@
             "unit": "enemy_001",
             "velocity_x": 5.496,
             "velocity_y": 17.14
-          },
-          "tick": 115,
-          "type": "unit_move"
-        },
-        {
-          "event_id": "evt_000385",
-          "payload": {
-            "distance_to_target": 26.0,
-            "from_x": 219.241,
-            "from_y": 200.274,
-            "move_speed": 24.0,
-            "reason": "move_to_attack_range",
-            "target": "ally_004",
-            "to_x": 219.241,
-            "to_y": 200.274,
-            "unit": "enemy_002",
-            "velocity_x": -2.724,
-            "velocity_y": 23.845
           },
           "tick": 115,
           "type": "unit_move"
@@ -7075,24 +7036,6 @@
         {
           "event_id": "evt_000399",
           "payload": {
-            "distance_to_target": 26.0,
-            "from_x": 212.177,
-            "from_y": 232.968,
-            "move_speed": 24.0,
-            "reason": "move_to_attack_range",
-            "target": "enemy_006",
-            "to_x": 212.177,
-            "to_y": 232.968,
-            "unit": "ally_002",
-            "velocity_x": 12.317,
-            "velocity_y": -20.598
-          },
-          "tick": 120,
-          "type": "unit_move"
-        },
-        {
-          "event_id": "evt_000400",
-          "payload": {
             "distance_to_target": 58.32,
             "from_x": 124.891,
             "from_y": 240.288,
@@ -7109,7 +7052,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_000401",
+          "event_id": "evt_000400",
           "payload": {
             "distance_to_target": 132.307,
             "from_x": 88.313,
@@ -7127,7 +7070,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_000402",
+          "event_id": "evt_000401",
           "payload": {
             "distance_to_target": 75.744,
             "from_x": 233.146,
@@ -7145,7 +7088,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_000403",
+          "event_id": "evt_000402",
           "payload": {
             "distance_to_target": 57.42,
             "from_x": 106.531,
@@ -7161,24 +7104,6 @@
           },
           "tick": 120,
           "type": "unit_move"
-        },
-        {
-          "event_id": "evt_000404",
-          "payload": {
-            "distance_to_target": 26.0,
-            "from_x": 219.241,
-            "from_y": 200.274,
-            "move_speed": 24.0,
-            "reason": "move_to_attack_range",
-            "target": "ally_004",
-            "to_x": 219.241,
-            "to_y": 200.274,
-            "unit": "enemy_002",
-            "velocity_x": -2.724,
-            "velocity_y": 23.845
-          },
-          "tick": 120,
-          "type": "unit_move"
         }
       ],
       "tick": 120
@@ -7186,7 +7111,7 @@
     {
       "events": [
         {
-          "event_id": "evt_000405",
+          "event_id": "evt_000403",
           "payload": {
             "attacker": "ally_004",
             "target": "enemy_006",
@@ -7205,7 +7130,7 @@
           "type": "attack"
         },
         {
-          "event_id": "evt_000406",
+          "event_id": "evt_000404",
           "payload": {
             "amount": 23,
             "reason": "basic_attack",
@@ -7217,7 +7142,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_000407",
+          "event_id": "evt_000405",
           "payload": {
             "action_interval_ticks": 18,
             "current_tick": 121,
@@ -7234,7 +7159,7 @@
     {
       "events": [
         {
-          "event_id": "evt_000408",
+          "event_id": "evt_000406",
           "payload": {
             "distance": 130.946,
             "reason": "nearest_enemy",
@@ -7245,7 +7170,7 @@
           "type": "target_acquired"
         },
         {
-          "event_id": "evt_000409",
+          "event_id": "evt_000407",
           "payload": {
             "attacker": "enemy_005",
             "target": "ally_003",
@@ -7264,7 +7189,7 @@
           "type": "attack"
         },
         {
-          "event_id": "evt_000410",
+          "event_id": "evt_000408",
           "payload": {
             "amount": 6,
             "reason": "basic_attack",
@@ -7276,7 +7201,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_000411",
+          "event_id": "evt_000409",
           "payload": {
             "action_interval_ticks": 28,
             "current_tick": 122,
@@ -7293,7 +7218,7 @@
     {
       "events": [
         {
-          "event_id": "evt_000412",
+          "event_id": "evt_000410",
           "payload": {
             "distance_to_target": 49.828,
             "from_x": 123.392,
@@ -7311,25 +7236,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_000413",
-          "payload": {
-            "distance_to_target": 26.0,
-            "from_x": 212.177,
-            "from_y": 232.968,
-            "move_speed": 24.0,
-            "reason": "move_to_attack_range",
-            "target": "enemy_006",
-            "to_x": 212.177,
-            "to_y": 232.968,
-            "unit": "ally_002",
-            "velocity_x": 12.317,
-            "velocity_y": -20.598
-          },
-          "tick": 125,
-          "type": "unit_move"
-        },
-        {
-          "event_id": "evt_000414",
+          "event_id": "evt_000411",
           "payload": {
             "distance_to_target": 47.82,
             "from_x": 123.04,
@@ -7347,7 +7254,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_000415",
+          "event_id": "evt_000412",
           "payload": {
             "distance_to_target": 124.929,
             "from_x": 88.738,
@@ -7365,7 +7272,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_000416",
+          "event_id": "evt_000413",
           "payload": {
             "distance_to_target": 71.244,
             "from_x": 232.699,
@@ -7383,7 +7290,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_000417",
+          "event_id": "evt_000414",
           "payload": {
             "distance_to_target": 46.92,
             "from_x": 107.92,
@@ -7399,24 +7306,6 @@
           },
           "tick": 125,
           "type": "unit_move"
-        },
-        {
-          "event_id": "evt_000418",
-          "payload": {
-            "distance_to_target": 26.0,
-            "from_x": 219.241,
-            "from_y": 200.274,
-            "move_speed": 24.0,
-            "reason": "move_to_attack_range",
-            "target": "ally_004",
-            "to_x": 219.241,
-            "to_y": 200.274,
-            "unit": "enemy_002",
-            "velocity_x": -2.724,
-            "velocity_y": 23.845
-          },
-          "tick": 125,
-          "type": "unit_move"
         }
       ],
       "tick": 125
@@ -7424,7 +7313,7 @@
     {
       "events": [
         {
-          "event_id": "evt_000419",
+          "event_id": "evt_000415",
           "payload": {
             "attacker": "enemy_002",
             "target": "ally_004",
@@ -7443,7 +7332,7 @@
           "type": "attack"
         },
         {
-          "event_id": "evt_000420",
+          "event_id": "evt_000416",
           "payload": {
             "amount": 12,
             "reason": "basic_attack",
@@ -7455,7 +7344,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_000421",
+          "event_id": "evt_000417",
           "payload": {
             "action_interval_ticks": 24,
             "current_tick": 128,
@@ -7472,7 +7361,7 @@
     {
       "events": [
         {
-          "event_id": "evt_000422",
+          "event_id": "evt_000418",
           "payload": {
             "distance_to_target": 40.828,
             "from_x": 122.02,
@@ -7490,25 +7379,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_000423",
-          "payload": {
-            "distance_to_target": 26.0,
-            "from_x": 212.177,
-            "from_y": 232.968,
-            "move_speed": 24.0,
-            "reason": "move_to_attack_range",
-            "target": "enemy_006",
-            "to_x": 212.177,
-            "to_y": 232.968,
-            "unit": "ally_002",
-            "velocity_x": 12.317,
-            "velocity_y": -20.598
-          },
-          "tick": 130,
-          "type": "unit_move"
-        },
-        {
-          "event_id": "evt_000424",
+          "event_id": "evt_000419",
           "payload": {
             "distance_to_target": 37.32,
             "from_x": 121.189,
@@ -7526,7 +7397,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_000425",
+          "event_id": "evt_000420",
           "payload": {
             "distance_to_target": 116.427,
             "from_x": 89.453,
@@ -7544,7 +7415,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_000426",
+          "event_id": "evt_000421",
           "payload": {
             "distance_to_target": 66.744,
             "from_x": 232.251,
@@ -7562,7 +7433,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_000427",
+          "event_id": "evt_000422",
           "payload": {
             "distance_to_target": 36.42,
             "from_x": 109.308,
@@ -7578,24 +7449,6 @@
           },
           "tick": 130,
           "type": "unit_move"
-        },
-        {
-          "event_id": "evt_000428",
-          "payload": {
-            "distance_to_target": 26.0,
-            "from_x": 219.241,
-            "from_y": 200.274,
-            "move_speed": 24.0,
-            "reason": "move_to_attack_range",
-            "target": "ally_004",
-            "to_x": 219.241,
-            "to_y": 200.274,
-            "unit": "enemy_002",
-            "velocity_x": -2.724,
-            "velocity_y": 23.845
-          },
-          "tick": 130,
-          "type": "unit_move"
         }
       ],
       "tick": 130
@@ -7603,7 +7456,55 @@
     {
       "events": [
         {
-          "event_id": "evt_000429",
+          "event_id": "evt_000423",
+          "payload": {
+            "distance_to_target": 110.0,
+            "from_x": 90.082,
+            "from_y": 304.321,
+            "move_speed": 18.0,
+            "reason": "move_to_attack_range",
+            "target": "enemy_001",
+            "to_x": 90.184,
+            "to_y": 303.779,
+            "unit": "ally_005",
+            "velocity_x": 3.311,
+            "velocity_y": -17.693
+          },
+          "tick": 134,
+          "type": "unit_move"
+        },
+        {
+          "event_id": "evt_000424",
+          "payload": {
+            "attack_range": 110.0,
+            "distance": 110.0,
+            "engagement_range": 110.0,
+            "target": "enemy_001",
+            "unit": "ally_005"
+          },
+          "tick": 134,
+          "type": "enter_range"
+        },
+        {
+          "event_id": "evt_000425",
+          "payload": {
+            "attack_range": 110.0,
+            "distance": 110.0,
+            "engagement_range": 110.0,
+            "reason": "attack_range_reached",
+            "target": "enemy_001",
+            "unit": "ally_005"
+          },
+          "tick": 134,
+          "type": "engage_start"
+        }
+      ],
+      "tick": 134
+    },
+    {
+      "events": [
+        {
+          "event_id": "evt_000426",
           "payload": {
             "distance_to_target": 31.828,
             "from_x": 120.65,
@@ -7621,25 +7522,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_000430",
-          "payload": {
-            "distance_to_target": 26.0,
-            "from_x": 212.177,
-            "from_y": 232.968,
-            "move_speed": 24.0,
-            "reason": "move_to_attack_range",
-            "target": "enemy_006",
-            "to_x": 212.177,
-            "to_y": 232.968,
-            "unit": "ally_002",
-            "velocity_x": 12.317,
-            "velocity_y": -20.598
-          },
-          "tick": 135,
-          "type": "unit_move"
-        },
-        {
-          "event_id": "evt_000431",
+          "event_id": "evt_000427",
           "payload": {
             "distance_to_target": 26.82,
             "from_x": 119.338,
@@ -7657,32 +7540,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_000432",
-          "payload": {
-            "attack_range": 110.0,
-            "distance": 109.21,
-            "engagement_range": 110.0,
-            "target": "enemy_001",
-            "unit": "ally_005"
-          },
-          "tick": 135,
-          "type": "enter_range"
-        },
-        {
-          "event_id": "evt_000433",
-          "payload": {
-            "attack_range": 110.0,
-            "distance": 109.21,
-            "engagement_range": 110.0,
-            "reason": "attack_range_reached",
-            "target": "enemy_001",
-            "unit": "ally_005"
-          },
-          "tick": 135,
-          "type": "engage_start"
-        },
-        {
-          "event_id": "evt_000434",
+          "event_id": "evt_000428",
           "payload": {
             "distance_to_target": 62.244,
             "from_x": 231.803,
@@ -7700,7 +7558,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_000435",
+          "event_id": "evt_000429",
           "payload": {
             "distance_to_target": 25.92,
             "from_x": 110.696,
@@ -7716,24 +7574,6 @@
           },
           "tick": 135,
           "type": "unit_move"
-        },
-        {
-          "event_id": "evt_000436",
-          "payload": {
-            "distance_to_target": 26.0,
-            "from_x": 219.241,
-            "from_y": 200.274,
-            "move_speed": 24.0,
-            "reason": "move_to_attack_range",
-            "target": "ally_004",
-            "to_x": 219.241,
-            "to_y": 200.274,
-            "unit": "enemy_002",
-            "velocity_x": -2.724,
-            "velocity_y": 23.845
-          },
-          "tick": 135,
-          "type": "unit_move"
         }
       ],
       "tick": 135
@@ -7741,7 +7581,7 @@
     {
       "events": [
         {
-          "event_id": "evt_000437",
+          "event_id": "evt_000430",
           "payload": {
             "attacker": "ally_002",
             "target": "enemy_006",
@@ -7760,7 +7600,7 @@
           "type": "attack"
         },
         {
-          "event_id": "evt_000438",
+          "event_id": "evt_000431",
           "payload": {
             "amount": 13,
             "reason": "basic_attack",
@@ -7772,7 +7612,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_000439",
+          "event_id": "evt_000432",
           "payload": {
             "action_interval_ticks": 24,
             "current_tick": 137,
@@ -7789,7 +7629,7 @@
     {
       "events": [
         {
-          "event_id": "evt_000440",
+          "event_id": "evt_000433",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 111.806,
@@ -7807,7 +7647,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_000441",
+          "event_id": "evt_000434",
           "payload": {
             "attack_range": 18.0,
             "distance": 18.0,
@@ -7819,7 +7659,7 @@
           "type": "enter_range"
         },
         {
-          "event_id": "evt_000442",
+          "event_id": "evt_000435",
           "payload": {
             "attack_range": 18.0,
             "distance": 18.0,
@@ -7832,7 +7672,7 @@
           "type": "engage_start"
         },
         {
-          "event_id": "evt_000443",
+          "event_id": "evt_000436",
           "payload": {
             "attacker": "enemy_001",
             "target": "ally_003",
@@ -7851,7 +7691,7 @@
           "type": "attack"
         },
         {
-          "event_id": "evt_000444",
+          "event_id": "evt_000437",
           "payload": {
             "amount": 5,
             "reason": "basic_attack",
@@ -7863,7 +7703,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_000445",
+          "event_id": "evt_000438",
           "payload": {
             "action_interval_ticks": 32,
             "current_tick": 139,
@@ -7875,7 +7715,7 @@
           "type": "action_scheduled"
         },
         {
-          "event_id": "evt_000446",
+          "event_id": "evt_000439",
           "payload": {
             "skill": "katana_slash",
             "source": "ally_003",
@@ -7898,7 +7738,7 @@
           "type": "skill_trigger"
         },
         {
-          "event_id": "evt_000447",
+          "event_id": "evt_000440",
           "payload": {
             "amount": 15,
             "reason": "skill:katana_slash",
@@ -7910,7 +7750,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_000448",
+          "event_id": "evt_000441",
           "payload": {
             "cooldown_ticks": 20,
             "ready_tick": 159,
@@ -7922,7 +7762,7 @@
           "type": "skill_cooldown"
         },
         {
-          "event_id": "evt_000449",
+          "event_id": "evt_000442",
           "payload": {
             "action_interval_ticks": 20,
             "current_tick": 139,
@@ -7934,7 +7774,7 @@
           "type": "action_scheduled"
         },
         {
-          "event_id": "evt_000450",
+          "event_id": "evt_000443",
           "payload": {
             "skill": "smoke_strike",
             "source": "ally_004",
@@ -7957,7 +7797,7 @@
           "type": "skill_trigger"
         },
         {
-          "event_id": "evt_000451",
+          "event_id": "evt_000444",
           "payload": {
             "amount": 45,
             "reason": "skill:smoke_strike",
@@ -7969,7 +7809,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_000452",
+          "event_id": "evt_000445",
           "payload": {
             "unit": "enemy_006"
           },
@@ -7977,7 +7817,7 @@
           "type": "death"
         },
         {
-          "event_id": "evt_000453",
+          "event_id": "evt_000446",
           "payload": {
             "cooldown_ticks": 60,
             "ready_tick": 199,
@@ -7989,7 +7829,7 @@
           "type": "skill_cooldown"
         },
         {
-          "event_id": "evt_000454",
+          "event_id": "evt_000447",
           "payload": {
             "action_interval_ticks": 18,
             "current_tick": 139,
@@ -8006,7 +7846,7 @@
     {
       "events": [
         {
-          "event_id": "evt_000455",
+          "event_id": "evt_000448",
           "payload": {
             "distance_to_target": 23.308,
             "from_x": 119.282,
@@ -8024,7 +7864,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_000456",
+          "event_id": "evt_000449",
           "payload": {
             "distance": 33.448,
             "reason": "nearest_enemy",
@@ -8035,7 +7875,7 @@
           "type": "target_acquired"
         },
         {
-          "event_id": "evt_000457",
+          "event_id": "evt_000450",
           "payload": {
             "distance_to_target": 32.248,
             "from_x": 212.177,
@@ -8053,7 +7893,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_000458",
+          "event_id": "evt_000451",
           "payload": {
             "attack_range": 18.0,
             "distance": 18.0,
@@ -8065,7 +7905,7 @@
           "type": "enter_range"
         },
         {
-          "event_id": "evt_000459",
+          "event_id": "evt_000452",
           "payload": {
             "attack_range": 18.0,
             "distance": 18.0,
@@ -8078,7 +7918,7 @@
           "type": "engage_start"
         },
         {
-          "event_id": "evt_000460",
+          "event_id": "evt_000453",
           "payload": {
             "distance": 26.0,
             "reason": "nearest_enemy",
@@ -8089,7 +7929,7 @@
           "type": "target_acquired"
         },
         {
-          "event_id": "evt_000461",
+          "event_id": "evt_000454",
           "payload": {
             "distance_to_target": 24.4,
             "from_x": 216.289,
@@ -8107,7 +7947,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_000462",
+          "event_id": "evt_000455",
           "payload": {
             "distance": 69.792,
             "reason": "nearest_enemy",
@@ -8118,7 +7958,7 @@
           "type": "target_acquired"
         },
         {
-          "event_id": "evt_000463",
+          "event_id": "evt_000456",
           "payload": {
             "distance_to_target": 68.892,
             "from_x": 231.355,
@@ -8136,32 +7976,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_000464",
-          "payload": {
-            "attack_range": 26.0,
-            "distance": 24.4,
-            "engagement_range": 30.0,
-            "target": "ally_004",
-            "unit": "enemy_002"
-          },
-          "tick": 140,
-          "type": "enter_range"
-        },
-        {
-          "event_id": "evt_000465",
-          "payload": {
-            "attack_range": 26.0,
-            "distance": 24.4,
-            "engagement_range": 30.0,
-            "reason": "attack_range_reached",
-            "target": "ally_004",
-            "unit": "enemy_002"
-          },
-          "tick": 140,
-          "type": "engage_start"
-        },
-        {
-          "event_id": "evt_000466",
+          "event_id": "evt_000457",
           "payload": {
             "skill": "bow_shot",
             "source": "ally_005",
@@ -8184,7 +7999,7 @@
           "type": "skill_trigger"
         },
         {
-          "event_id": "evt_000467",
+          "event_id": "evt_000458",
           "payload": {
             "amount": 2,
             "reason": "skill:bow_shot",
@@ -8196,7 +8011,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_000468",
+          "event_id": "evt_000459",
           "payload": {
             "cooldown_ticks": 30,
             "ready_tick": 170,
@@ -8208,7 +8023,7 @@
           "type": "skill_cooldown"
         },
         {
-          "event_id": "evt_000469",
+          "event_id": "evt_000460",
           "payload": {
             "action_interval_ticks": 28,
             "current_tick": 140,
@@ -8225,7 +8040,7 @@
     {
       "events": [
         {
-          "event_id": "evt_000470",
+          "event_id": "evt_000461",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 217.016,
@@ -8243,7 +8058,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_000471",
+          "event_id": "evt_000462",
           "payload": {
             "attack_range": 18.0,
             "distance": 18.0,
@@ -8255,7 +8070,7 @@
           "type": "enter_range"
         },
         {
-          "event_id": "evt_000472",
+          "event_id": "evt_000463",
           "payload": {
             "attack_range": 18.0,
             "distance": 18.0,
@@ -8273,7 +8088,7 @@
     {
       "events": [
         {
-          "event_id": "evt_000473",
+          "event_id": "evt_000464",
           "payload": {
             "distance_to_target": 18.808,
             "from_x": 117.917,
@@ -8291,7 +8106,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_000474",
+          "event_id": "evt_000465",
           "payload": {
             "distance_to_target": 26.248,
             "from_x": 213.444,
@@ -8309,7 +8124,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_000475",
+          "event_id": "evt_000466",
           "payload": {
             "distance_to_target": 64.392,
             "from_x": 230.574,
@@ -8332,7 +8147,7 @@
     {
       "events": [
         {
-          "event_id": "evt_000476",
+          "event_id": "evt_000467",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 117.644,
@@ -8350,7 +8165,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_000477",
+          "event_id": "evt_000468",
           "payload": {
             "attack_range": 18.0,
             "distance": 18.0,
@@ -8362,7 +8177,7 @@
           "type": "enter_range"
         },
         {
-          "event_id": "evt_000478",
+          "event_id": "evt_000469",
           "payload": {
             "attack_range": 18.0,
             "distance": 18.0,
@@ -8375,7 +8190,7 @@
           "type": "engage_start"
         },
         {
-          "event_id": "evt_000479",
+          "event_id": "evt_000470",
           "payload": {
             "distance_to_target": 26.0,
             "from_x": 213.697,
@@ -8393,7 +8208,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_000480",
+          "event_id": "evt_000471",
           "payload": {
             "attack_range": 26.0,
             "distance": 26.0,
@@ -8405,7 +8220,7 @@
           "type": "enter_range"
         },
         {
-          "event_id": "evt_000481",
+          "event_id": "evt_000472",
           "payload": {
             "attack_range": 26.0,
             "distance": 26.0,
@@ -8418,7 +8233,7 @@
           "type": "engage_start"
         },
         {
-          "event_id": "evt_000482",
+          "event_id": "evt_000473",
           "payload": {
             "distance": 18.0,
             "reason": "nearest_enemy",
@@ -8429,7 +8244,7 @@
           "type": "target_acquired"
         },
         {
-          "event_id": "evt_000483",
+          "event_id": "evt_000474",
           "payload": {
             "attack_range": 18.0,
             "distance": 18.0,
@@ -8441,7 +8256,7 @@
           "type": "enter_range"
         },
         {
-          "event_id": "evt_000484",
+          "event_id": "evt_000475",
           "payload": {
             "attack_range": 18.0,
             "distance": 18.0,
@@ -8454,7 +8269,7 @@
           "type": "engage_start"
         },
         {
-          "event_id": "evt_000485",
+          "event_id": "evt_000476",
           "payload": {
             "distance": 43.253,
             "reason": "nearest_enemy",
@@ -8465,7 +8280,7 @@
           "type": "target_acquired"
         },
         {
-          "event_id": "evt_000486",
+          "event_id": "evt_000477",
           "payload": {
             "attack_range": 110.0,
             "distance": 43.253,
@@ -8477,7 +8292,7 @@
           "type": "enter_range"
         },
         {
-          "event_id": "evt_000487",
+          "event_id": "evt_000478",
           "payload": {
             "attack_range": 110.0,
             "distance": 43.253,
@@ -8490,7 +8305,7 @@
           "type": "engage_start"
         },
         {
-          "event_id": "evt_000488",
+          "event_id": "evt_000479",
           "payload": {
             "attacker": "ally_001",
             "target": "enemy_001",
@@ -8509,7 +8324,7 @@
           "type": "attack"
         },
         {
-          "event_id": "evt_000489",
+          "event_id": "evt_000480",
           "payload": {
             "amount": 1,
             "reason": "basic_attack",
@@ -8521,7 +8336,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_000490",
+          "event_id": "evt_000481",
           "payload": {
             "action_interval_ticks": 32,
             "current_tick": 146,
@@ -8538,7 +8353,7 @@
     {
       "events": [
         {
-          "event_id": "evt_000491",
+          "event_id": "evt_000482",
           "payload": {
             "distance_to_target": 59.892,
             "from_x": 229.793,
@@ -8556,7 +8371,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_000492",
+          "event_id": "evt_000483",
           "payload": {
             "skill": "bow_shot",
             "source": "enemy_005",
@@ -8579,7 +8394,7 @@
           "type": "skill_trigger"
         },
         {
-          "event_id": "evt_000493",
+          "event_id": "evt_000484",
           "payload": {
             "amount": 2,
             "reason": "skill:bow_shot",
@@ -8591,7 +8406,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_000494",
+          "event_id": "evt_000485",
           "payload": {
             "cooldown_ticks": 30,
             "ready_tick": 180,
@@ -8603,7 +8418,7 @@
           "type": "skill_cooldown"
         },
         {
-          "event_id": "evt_000495",
+          "event_id": "evt_000486",
           "payload": {
             "action_interval_ticks": 28,
             "current_tick": 150,
@@ -8620,7 +8435,7 @@
     {
       "events": [
         {
-          "event_id": "evt_000496",
+          "event_id": "evt_000487",
           "payload": {
             "skill": "spear_thrust",
             "source": "enemy_002",
@@ -8643,7 +8458,7 @@
           "type": "skill_trigger"
         },
         {
-          "event_id": "evt_000497",
+          "event_id": "evt_000488",
           "payload": {
             "amount": 27,
             "reason": "skill:spear_thrust",
@@ -8655,7 +8470,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_000498",
+          "event_id": "evt_000489",
           "payload": {
             "cooldown_ticks": 26,
             "ready_tick": 178,
@@ -8667,7 +8482,7 @@
           "type": "skill_cooldown"
         },
         {
-          "event_id": "evt_000499",
+          "event_id": "evt_000490",
           "payload": {
             "skill": "intercept",
             "source": "ally_001",
@@ -8681,7 +8496,7 @@
           "type": "skill_trigger"
         },
         {
-          "event_id": "evt_000500",
+          "event_id": "evt_000491",
           "payload": {
             "amount": 16,
             "reason": "skill:intercept",
@@ -8693,7 +8508,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_000501",
+          "event_id": "evt_000492",
           "payload": {
             "cooldown_ticks": 80,
             "ready_tick": 232,
@@ -8705,7 +8520,7 @@
           "type": "skill_cooldown"
         },
         {
-          "event_id": "evt_000502",
+          "event_id": "evt_000493",
           "payload": {
             "action_interval_ticks": 24,
             "current_tick": 152,
@@ -8722,7 +8537,7 @@
     {
       "events": [
         {
-          "event_id": "evt_000503",
+          "event_id": "evt_000494",
           "payload": {
             "distance_to_target": 55.392,
             "from_x": 229.012,
@@ -8745,7 +8560,7 @@
     {
       "events": [
         {
-          "event_id": "evt_000504",
+          "event_id": "evt_000495",
           "payload": {
             "attacker": "ally_004",
             "target": "enemy_002",
@@ -8764,7 +8579,7 @@
           "type": "attack"
         },
         {
-          "event_id": "evt_000505",
+          "event_id": "evt_000496",
           "payload": {
             "amount": 21,
             "reason": "basic_attack",
@@ -8776,7 +8591,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_000506",
+          "event_id": "evt_000497",
           "payload": {
             "skill": "brace_counter",
             "source": "enemy_002",
@@ -8790,7 +8605,7 @@
           "type": "skill_trigger"
         },
         {
-          "event_id": "evt_000507",
+          "event_id": "evt_000498",
           "payload": {
             "amount": 30,
             "reason": "skill:brace_counter",
@@ -8802,7 +8617,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_000508",
+          "event_id": "evt_000499",
           "payload": {
             "unit": "ally_004"
           },
@@ -8810,7 +8625,7 @@
           "type": "death"
         },
         {
-          "event_id": "evt_000509",
+          "event_id": "evt_000500",
           "payload": {
             "cooldown_ticks": 60,
             "ready_tick": 217,
@@ -8827,7 +8642,7 @@
     {
       "events": [
         {
-          "event_id": "evt_000510",
+          "event_id": "evt_000501",
           "payload": {
             "distance": 26.0,
             "reason": "nearest_enemy",
@@ -8838,7 +8653,7 @@
           "type": "target_acquired"
         },
         {
-          "event_id": "evt_000511",
+          "event_id": "evt_000502",
           "payload": {
             "attack_range": 26.0,
             "distance": 26.0,
@@ -8850,7 +8665,7 @@
           "type": "enter_range"
         },
         {
-          "event_id": "evt_000512",
+          "event_id": "evt_000503",
           "payload": {
             "attack_range": 26.0,
             "distance": 26.0,
@@ -8868,7 +8683,7 @@
     {
       "events": [
         {
-          "event_id": "evt_000513",
+          "event_id": "evt_000504",
           "payload": {
             "skill": "katana_slash",
             "source": "ally_003",
@@ -8891,7 +8706,7 @@
           "type": "skill_trigger"
         },
         {
-          "event_id": "evt_000514",
+          "event_id": "evt_000505",
           "payload": {
             "amount": 15,
             "reason": "skill:katana_slash",
@@ -8903,7 +8718,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_000515",
+          "event_id": "evt_000506",
           "payload": {
             "cooldown_ticks": 20,
             "ready_tick": 179,
@@ -8915,7 +8730,7 @@
           "type": "skill_cooldown"
         },
         {
-          "event_id": "evt_000516",
+          "event_id": "evt_000507",
           "payload": {
             "action_interval_ticks": 20,
             "current_tick": 159,
@@ -8932,7 +8747,7 @@
     {
       "events": [
         {
-          "event_id": "evt_000517",
+          "event_id": "evt_000508",
           "payload": {
             "distance_to_target": 50.892,
             "from_x": 228.231,
@@ -8955,7 +8770,7 @@
     {
       "events": [
         {
-          "event_id": "evt_000518",
+          "event_id": "evt_000509",
           "payload": {
             "skill": "spear_thrust",
             "source": "ally_002",
@@ -8978,7 +8793,7 @@
           "type": "skill_trigger"
         },
         {
-          "event_id": "evt_000519",
+          "event_id": "evt_000510",
           "payload": {
             "amount": 26,
             "reason": "skill:spear_thrust",
@@ -8990,7 +8805,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_000520",
+          "event_id": "evt_000511",
           "payload": {
             "cooldown_ticks": 26,
             "ready_tick": 187,
@@ -9002,7 +8817,7 @@
           "type": "skill_cooldown"
         },
         {
-          "event_id": "evt_000521",
+          "event_id": "evt_000512",
           "payload": {
             "skill": "intercept",
             "source": "enemy_001",
@@ -9016,7 +8831,7 @@
           "type": "skill_trigger"
         },
         {
-          "event_id": "evt_000522",
+          "event_id": "evt_000513",
           "payload": {
             "amount": 14,
             "reason": "skill:intercept",
@@ -9028,7 +8843,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_000523",
+          "event_id": "evt_000514",
           "payload": {
             "cooldown_ticks": 80,
             "ready_tick": 241,
@@ -9040,7 +8855,7 @@
           "type": "skill_cooldown"
         },
         {
-          "event_id": "evt_000524",
+          "event_id": "evt_000515",
           "payload": {
             "action_interval_ticks": 24,
             "current_tick": 161,
@@ -9057,7 +8872,7 @@
     {
       "events": [
         {
-          "event_id": "evt_000525",
+          "event_id": "evt_000516",
           "payload": {
             "distance_to_target": 46.392,
             "from_x": 227.45,
@@ -9080,7 +8895,7 @@
     {
       "events": [
         {
-          "event_id": "evt_000526",
+          "event_id": "evt_000517",
           "payload": {
             "attacker": "ally_005",
             "target": "enemy_001",
@@ -9099,7 +8914,7 @@
           "type": "attack"
         },
         {
-          "event_id": "evt_000527",
+          "event_id": "evt_000518",
           "payload": {
             "amount": 1,
             "reason": "basic_attack",
@@ -9111,7 +8926,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_000528",
+          "event_id": "evt_000519",
           "payload": {
             "action_interval_ticks": 28,
             "current_tick": 168,
@@ -9128,7 +8943,7 @@
     {
       "events": [
         {
-          "event_id": "evt_000529",
+          "event_id": "evt_000520",
           "payload": {
             "distance_to_target": 41.892,
             "from_x": 226.669,
@@ -9151,7 +8966,7 @@
     {
       "events": [
         {
-          "event_id": "evt_000530",
+          "event_id": "evt_000521",
           "payload": {
             "attacker": "enemy_001",
             "target": "ally_001",
@@ -9170,7 +8985,7 @@
           "type": "attack"
         },
         {
-          "event_id": "evt_000531",
+          "event_id": "evt_000522",
           "payload": {
             "amount": 1,
             "reason": "basic_attack",
@@ -9182,7 +8997,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_000532",
+          "event_id": "evt_000523",
           "payload": {
             "action_interval_ticks": 32,
             "current_tick": 171,
@@ -9199,7 +9014,50 @@
     {
       "events": [
         {
-          "event_id": "evt_000533",
+          "event_id": "evt_000524",
+          "payload": {
+            "distance_to_target": 40.0,
+            "from_x": 226.2,
+            "from_y": 239.757,
+            "move_speed": 18.0,
+            "reason": "move_to_attack_range",
+            "target": "enemy_002",
+            "to_x": 226.184,
+            "to_y": 239.667,
+            "unit": "ally_006",
+            "velocity_x": -3.124,
+            "velocity_y": -17.727
+          },
+          "tick": 173,
+          "type": "unit_move"
+        },
+        {
+          "event_id": "evt_000525",
+          "payload": {
+            "attack_range": 40.0,
+            "distance": 40.0,
+            "engagement_range": 44.0,
+            "target": "enemy_002",
+            "unit": "ally_006"
+          },
+          "tick": 173,
+          "type": "enter_range"
+        },
+        {
+          "event_id": "evt_000526",
+          "payload": {
+            "attack_range": 40.0,
+            "distance": 40.0,
+            "engagement_range": 44.0,
+            "reason": "attack_range_reached",
+            "target": "enemy_002",
+            "unit": "ally_006"
+          },
+          "tick": 173,
+          "type": "engage_start"
+        },
+        {
+          "event_id": "evt_000527",
           "payload": {
             "attacker": "ally_006",
             "target": "enemy_002",
@@ -9218,7 +9076,7 @@
           "type": "attack"
         },
         {
-          "event_id": "evt_000534",
+          "event_id": "evt_000528",
           "payload": {
             "amount": 2,
             "reason": "basic_attack",
@@ -9230,7 +9088,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_000535",
+          "event_id": "evt_000529",
           "payload": {
             "action_interval_ticks": 36,
             "current_tick": 173,
@@ -9247,30 +9105,7 @@
     {
       "events": [
         {
-          "event_id": "evt_000536",
-          "payload": {
-            "distance_to_target": 40.0,
-            "from_x": 226.184,
-            "from_y": 239.667,
-            "move_speed": 18.0,
-            "reason": "move_to_attack_range",
-            "target": "enemy_002",
-            "to_x": 226.184,
-            "to_y": 239.667,
-            "unit": "ally_006",
-            "velocity_x": -3.124,
-            "velocity_y": -17.727
-          },
-          "tick": 175,
-          "type": "unit_move"
-        }
-      ],
-      "tick": 175
-    },
-    {
-      "events": [
-        {
-          "event_id": "evt_000537",
+          "event_id": "evt_000530",
           "payload": {
             "attacker": "enemy_002",
             "target": "ally_002",
@@ -9289,7 +9124,7 @@
           "type": "attack"
         },
         {
-          "event_id": "evt_000538",
+          "event_id": "evt_000531",
           "payload": {
             "amount": 9,
             "reason": "basic_attack",
@@ -9301,7 +9136,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_000539",
+          "event_id": "evt_000532",
           "payload": {
             "skill": "brace_counter",
             "source": "ally_002",
@@ -9315,7 +9150,7 @@
           "type": "skill_trigger"
         },
         {
-          "event_id": "evt_000540",
+          "event_id": "evt_000533",
           "payload": {
             "amount": 29,
             "reason": "skill:brace_counter",
@@ -9327,7 +9162,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_000541",
+          "event_id": "evt_000534",
           "payload": {
             "cooldown_ticks": 60,
             "ready_tick": 236,
@@ -9339,7 +9174,7 @@
           "type": "skill_cooldown"
         },
         {
-          "event_id": "evt_000542",
+          "event_id": "evt_000535",
           "payload": {
             "action_interval_ticks": 24,
             "current_tick": 176,
@@ -9356,7 +9191,7 @@
     {
       "events": [
         {
-          "event_id": "evt_000543",
+          "event_id": "evt_000536",
           "payload": {
             "attacker": "ally_001",
             "target": "enemy_001",
@@ -9375,7 +9210,7 @@
           "type": "attack"
         },
         {
-          "event_id": "evt_000544",
+          "event_id": "evt_000537",
           "payload": {
             "amount": 1,
             "reason": "basic_attack",
@@ -9387,7 +9222,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_000545",
+          "event_id": "evt_000538",
           "payload": {
             "action_interval_ticks": 32,
             "current_tick": 178,
@@ -9399,7 +9234,7 @@
           "type": "action_scheduled"
         },
         {
-          "event_id": "evt_000546",
+          "event_id": "evt_000539",
           "payload": {
             "skill": "focus_fire",
             "source": "enemy_005",
@@ -9413,7 +9248,7 @@
           "type": "skill_trigger"
         },
         {
-          "event_id": "evt_000547",
+          "event_id": "evt_000540",
           "payload": {
             "amount": 25,
             "reason": "skill:focus_fire",
@@ -9425,7 +9260,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_000548",
+          "event_id": "evt_000541",
           "payload": {
             "unit": "ally_002"
           },
@@ -9433,7 +9268,7 @@
           "type": "death"
         },
         {
-          "event_id": "evt_000549",
+          "event_id": "evt_000542",
           "payload": {
             "cooldown_ticks": 100,
             "ready_tick": 278,
@@ -9445,7 +9280,7 @@
           "type": "skill_cooldown"
         },
         {
-          "event_id": "evt_000550",
+          "event_id": "evt_000543",
           "payload": {
             "action_interval_ticks": 28,
             "current_tick": 178,
@@ -9462,7 +9297,7 @@
     {
       "events": [
         {
-          "event_id": "evt_000551",
+          "event_id": "evt_000544",
           "payload": {
             "distance": 40.0,
             "reason": "nearest_enemy",
@@ -9473,7 +9308,7 @@
           "type": "target_acquired"
         },
         {
-          "event_id": "evt_000552",
+          "event_id": "evt_000545",
           "payload": {
             "skill": "katana_slash",
             "source": "ally_003",
@@ -9496,7 +9331,7 @@
           "type": "skill_trigger"
         },
         {
-          "event_id": "evt_000553",
+          "event_id": "evt_000546",
           "payload": {
             "amount": 15,
             "reason": "skill:katana_slash",
@@ -9508,7 +9343,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_000554",
+          "event_id": "evt_000547",
           "payload": {
             "cooldown_ticks": 20,
             "ready_tick": 199,
@@ -9520,7 +9355,7 @@
           "type": "skill_cooldown"
         },
         {
-          "event_id": "evt_000555",
+          "event_id": "evt_000548",
           "payload": {
             "action_interval_ticks": 20,
             "current_tick": 179,
@@ -9537,32 +9372,7 @@
     {
       "events": [
         {
-          "event_id": "evt_000556",
-          "payload": {
-            "attack_range": 40.0,
-            "distance": 38.8,
-            "engagement_range": 44.0,
-            "target": "enemy_002",
-            "unit": "ally_006"
-          },
-          "tick": 180,
-          "type": "enter_range"
-        },
-        {
-          "event_id": "evt_000557",
-          "payload": {
-            "attack_range": 40.0,
-            "distance": 38.8,
-            "engagement_range": 44.0,
-            "reason": "attack_range_reached",
-            "target": "enemy_002",
-            "unit": "ally_006"
-          },
-          "tick": 180,
-          "type": "engage_start"
-        },
-        {
-          "event_id": "evt_000558",
+          "event_id": "evt_000549",
           "payload": {
             "distance_to_target": 37.6,
             "from_x": 219.449,
@@ -9585,7 +9395,7 @@
     {
       "events": [
         {
-          "event_id": "evt_000559",
+          "event_id": "evt_000550",
           "payload": {
             "distance_to_target": 31.6,
             "from_x": 220.49,
@@ -9608,7 +9418,7 @@
     {
       "events": [
         {
-          "event_id": "evt_000560",
+          "event_id": "evt_000551",
           "payload": {
             "distance_to_target": 26.0,
             "from_x": 221.532,
@@ -9626,7 +9436,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_000561",
+          "event_id": "evt_000552",
           "payload": {
             "attack_range": 26.0,
             "distance": 26.0,
@@ -9638,7 +9448,7 @@
           "type": "enter_range"
         },
         {
-          "event_id": "evt_000562",
+          "event_id": "evt_000553",
           "payload": {
             "attack_range": 26.0,
             "distance": 26.0,
@@ -9656,7 +9466,7 @@
     {
       "events": [
         {
-          "event_id": "evt_000563",
+          "event_id": "evt_000554",
           "payload": {
             "skill": "bow_shot",
             "source": "ally_005",
@@ -9679,7 +9489,7 @@
           "type": "skill_trigger"
         },
         {
-          "event_id": "evt_000564",
+          "event_id": "evt_000555",
           "payload": {
             "amount": 2,
             "reason": "skill:bow_shot",
@@ -9691,7 +9501,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_000565",
+          "event_id": "evt_000556",
           "payload": {
             "cooldown_ticks": 30,
             "ready_tick": 226,
@@ -9703,7 +9513,7 @@
           "type": "skill_cooldown"
         },
         {
-          "event_id": "evt_000566",
+          "event_id": "evt_000557",
           "payload": {
             "action_interval_ticks": 28,
             "current_tick": 196,
@@ -9720,7 +9530,7 @@
     {
       "events": [
         {
-          "event_id": "evt_000567",
+          "event_id": "evt_000558",
           "payload": {
             "skill": "katana_slash",
             "source": "ally_003",
@@ -9743,7 +9553,7 @@
           "type": "skill_trigger"
         },
         {
-          "event_id": "evt_000568",
+          "event_id": "evt_000559",
           "payload": {
             "amount": 15,
             "reason": "skill:katana_slash",
@@ -9755,7 +9565,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_000569",
+          "event_id": "evt_000560",
           "payload": {
             "cooldown_ticks": 20,
             "ready_tick": 219,
@@ -9767,7 +9577,7 @@
           "type": "skill_cooldown"
         },
         {
-          "event_id": "evt_000570",
+          "event_id": "evt_000561",
           "payload": {
             "action_interval_ticks": 20,
             "current_tick": 199,
@@ -9784,7 +9594,7 @@
     {
       "events": [
         {
-          "event_id": "evt_000571",
+          "event_id": "evt_000562",
           "payload": {
             "skill": "spear_thrust",
             "source": "enemy_002",
@@ -9807,7 +9617,7 @@
           "type": "skill_trigger"
         },
         {
-          "event_id": "evt_000572",
+          "event_id": "evt_000563",
           "payload": {
             "amount": 26,
             "reason": "skill:spear_thrust",
@@ -9819,7 +9629,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_000573",
+          "event_id": "evt_000564",
           "payload": {
             "cooldown_ticks": 26,
             "ready_tick": 226,
@@ -9831,7 +9641,7 @@
           "type": "skill_cooldown"
         },
         {
-          "event_id": "evt_000574",
+          "event_id": "evt_000565",
           "payload": {
             "action_interval_ticks": 24,
             "current_tick": 200,
@@ -9848,7 +9658,7 @@
     {
       "events": [
         {
-          "event_id": "evt_000575",
+          "event_id": "evt_000566",
           "payload": {
             "attacker": "enemy_001",
             "target": "ally_001",
@@ -9867,7 +9677,7 @@
           "type": "attack"
         },
         {
-          "event_id": "evt_000576",
+          "event_id": "evt_000567",
           "payload": {
             "amount": 1,
             "reason": "basic_attack",
@@ -9879,7 +9689,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_000577",
+          "event_id": "evt_000568",
           "payload": {
             "action_interval_ticks": 32,
             "current_tick": 203,
@@ -9896,7 +9706,7 @@
     {
       "events": [
         {
-          "event_id": "evt_000578",
+          "event_id": "evt_000569",
           "payload": {
             "skill": "bow_shot",
             "source": "enemy_005",
@@ -9919,7 +9729,7 @@
           "type": "skill_trigger"
         },
         {
-          "event_id": "evt_000579",
+          "event_id": "evt_000570",
           "payload": {
             "amount": 2,
             "reason": "skill:bow_shot",
@@ -9931,7 +9741,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_000580",
+          "event_id": "evt_000571",
           "payload": {
             "cooldown_ticks": 30,
             "ready_tick": 236,
@@ -9943,7 +9753,7 @@
           "type": "skill_cooldown"
         },
         {
-          "event_id": "evt_000581",
+          "event_id": "evt_000572",
           "payload": {
             "action_interval_ticks": 28,
             "current_tick": 206,
@@ -9960,7 +9770,7 @@
     {
       "events": [
         {
-          "event_id": "evt_000582",
+          "event_id": "evt_000573",
           "payload": {
             "attacker": "ally_006",
             "target": "enemy_002",
@@ -9979,7 +9789,7 @@
           "type": "attack"
         },
         {
-          "event_id": "evt_000583",
+          "event_id": "evt_000574",
           "payload": {
             "amount": 2,
             "reason": "basic_attack",
@@ -9991,7 +9801,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_000584",
+          "event_id": "evt_000575",
           "payload": {
             "action_interval_ticks": 36,
             "current_tick": 209,
@@ -10008,7 +9818,7 @@
     {
       "events": [
         {
-          "event_id": "evt_000585",
+          "event_id": "evt_000576",
           "payload": {
             "attacker": "ally_001",
             "target": "enemy_001",
@@ -10027,7 +9837,7 @@
           "type": "attack"
         },
         {
-          "event_id": "evt_000586",
+          "event_id": "evt_000577",
           "payload": {
             "amount": 1,
             "reason": "basic_attack",
@@ -10039,7 +9849,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_000587",
+          "event_id": "evt_000578",
           "payload": {
             "action_interval_ticks": 32,
             "current_tick": 210,
@@ -10056,7 +9866,7 @@
     {
       "events": [
         {
-          "event_id": "evt_000588",
+          "event_id": "evt_000579",
           "payload": {
             "skill": "katana_slash",
             "source": "ally_003",
@@ -10079,7 +9889,7 @@
           "type": "skill_trigger"
         },
         {
-          "event_id": "evt_000589",
+          "event_id": "evt_000580",
           "payload": {
             "amount": 15,
             "reason": "skill:katana_slash",
@@ -10091,7 +9901,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_000590",
+          "event_id": "evt_000581",
           "payload": {
             "cooldown_ticks": 20,
             "ready_tick": 239,
@@ -10103,7 +9913,7 @@
           "type": "skill_cooldown"
         },
         {
-          "event_id": "evt_000591",
+          "event_id": "evt_000582",
           "payload": {
             "action_interval_ticks": 20,
             "current_tick": 219,
@@ -10120,7 +9930,7 @@
     {
       "events": [
         {
-          "event_id": "evt_000592",
+          "event_id": "evt_000583",
           "payload": {
             "skill": "focus_fire",
             "source": "ally_005",
@@ -10134,7 +9944,7 @@
           "type": "skill_trigger"
         },
         {
-          "event_id": "evt_000593",
+          "event_id": "evt_000584",
           "payload": {
             "amount": 25,
             "reason": "skill:focus_fire",
@@ -10146,7 +9956,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_000594",
+          "event_id": "evt_000585",
           "payload": {
             "cooldown_ticks": 100,
             "ready_tick": 324,
@@ -10158,7 +9968,7 @@
           "type": "skill_cooldown"
         },
         {
-          "event_id": "evt_000595",
+          "event_id": "evt_000586",
           "payload": {
             "skill": "brace_counter",
             "source": "enemy_002",
@@ -10172,7 +9982,7 @@
           "type": "skill_trigger"
         },
         {
-          "event_id": "evt_000596",
+          "event_id": "evt_000587",
           "payload": {
             "amount": 30,
             "reason": "skill:brace_counter",
@@ -10184,7 +9994,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_000597",
+          "event_id": "evt_000588",
           "payload": {
             "cooldown_ticks": 60,
             "ready_tick": 284,
@@ -10196,7 +10006,7 @@
           "type": "skill_cooldown"
         },
         {
-          "event_id": "evt_000598",
+          "event_id": "evt_000589",
           "payload": {
             "action_interval_ticks": 28,
             "current_tick": 224,
@@ -10208,7 +10018,7 @@
           "type": "action_scheduled"
         },
         {
-          "event_id": "evt_000599",
+          "event_id": "evt_000590",
           "payload": {
             "attacker": "enemy_002",
             "target": "ally_006",
@@ -10227,7 +10037,7 @@
           "type": "attack"
         },
         {
-          "event_id": "evt_000600",
+          "event_id": "evt_000591",
           "payload": {
             "amount": 11,
             "reason": "basic_attack",
@@ -10239,7 +10049,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_000601",
+          "event_id": "evt_000592",
           "payload": {
             "action_interval_ticks": 24,
             "current_tick": 224,
@@ -10256,7 +10066,7 @@
     {
       "events": [
         {
-          "event_id": "evt_000602",
+          "event_id": "evt_000593",
           "payload": {
             "attacker": "enemy_005",
             "target": "ally_001",
@@ -10275,7 +10085,7 @@
           "type": "attack"
         },
         {
-          "event_id": "evt_000603",
+          "event_id": "evt_000594",
           "payload": {
             "amount": 1,
             "reason": "basic_attack",
@@ -10287,7 +10097,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_000604",
+          "event_id": "evt_000595",
           "payload": {
             "action_interval_ticks": 28,
             "current_tick": 234,
@@ -10304,7 +10114,7 @@
     {
       "events": [
         {
-          "event_id": "evt_000605",
+          "event_id": "evt_000596",
           "payload": {
             "attacker": "enemy_001",
             "target": "ally_001",
@@ -10323,7 +10133,7 @@
           "type": "attack"
         },
         {
-          "event_id": "evt_000606",
+          "event_id": "evt_000597",
           "payload": {
             "amount": 1,
             "reason": "basic_attack",
@@ -10335,7 +10145,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_000607",
+          "event_id": "evt_000598",
           "payload": {
             "action_interval_ticks": 32,
             "current_tick": 235,
@@ -10352,7 +10162,7 @@
     {
       "events": [
         {
-          "event_id": "evt_000608",
+          "event_id": "evt_000599",
           "payload": {
             "skill": "katana_slash",
             "source": "ally_003",
@@ -10375,7 +10185,7 @@
           "type": "skill_trigger"
         },
         {
-          "event_id": "evt_000609",
+          "event_id": "evt_000600",
           "payload": {
             "amount": 15,
             "reason": "skill:katana_slash",
@@ -10387,7 +10197,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_000610",
+          "event_id": "evt_000601",
           "payload": {
             "cooldown_ticks": 20,
             "ready_tick": 259,
@@ -10399,7 +10209,7 @@
           "type": "skill_cooldown"
         },
         {
-          "event_id": "evt_000611",
+          "event_id": "evt_000602",
           "payload": {
             "action_interval_ticks": 20,
             "current_tick": 239,
@@ -10416,7 +10226,7 @@
     {
       "events": [
         {
-          "event_id": "evt_000612",
+          "event_id": "evt_000603",
           "payload": {
             "attacker": "ally_001",
             "target": "enemy_001",
@@ -10435,7 +10245,7 @@
           "type": "attack"
         },
         {
-          "event_id": "evt_000613",
+          "event_id": "evt_000604",
           "payload": {
             "amount": 1,
             "reason": "basic_attack",
@@ -10447,7 +10257,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_000614",
+          "event_id": "evt_000605",
           "payload": {
             "action_interval_ticks": 32,
             "current_tick": 242,
@@ -10464,7 +10274,7 @@
     {
       "events": [
         {
-          "event_id": "evt_000615",
+          "event_id": "evt_000606",
           "payload": {
             "attacker": "ally_006",
             "target": "enemy_002",
@@ -10483,7 +10293,7 @@
           "type": "attack"
         },
         {
-          "event_id": "evt_000616",
+          "event_id": "evt_000607",
           "payload": {
             "amount": 2,
             "reason": "basic_attack",
@@ -10495,7 +10305,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_000617",
+          "event_id": "evt_000608",
           "payload": {
             "skill": "intercept",
             "source": "enemy_001",
@@ -10509,7 +10319,7 @@
           "type": "skill_trigger"
         },
         {
-          "event_id": "evt_000618",
+          "event_id": "evt_000609",
           "payload": {
             "amount": 16,
             "reason": "skill:intercept",
@@ -10521,7 +10331,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_000619",
+          "event_id": "evt_000610",
           "payload": {
             "cooldown_ticks": 80,
             "ready_tick": 325,
@@ -10533,7 +10343,7 @@
           "type": "skill_cooldown"
         },
         {
-          "event_id": "evt_000620",
+          "event_id": "evt_000611",
           "payload": {
             "action_interval_ticks": 36,
             "current_tick": 245,
@@ -10550,7 +10360,7 @@
     {
       "events": [
         {
-          "event_id": "evt_000621",
+          "event_id": "evt_000612",
           "payload": {
             "skill": "spear_thrust",
             "source": "enemy_002",
@@ -10573,7 +10383,7 @@
           "type": "skill_trigger"
         },
         {
-          "event_id": "evt_000622",
+          "event_id": "evt_000613",
           "payload": {
             "amount": 26,
             "reason": "skill:spear_thrust",
@@ -10585,7 +10395,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_000623",
+          "event_id": "evt_000614",
           "payload": {
             "cooldown_ticks": 26,
             "ready_tick": 274,
@@ -10597,7 +10407,7 @@
           "type": "skill_cooldown"
         },
         {
-          "event_id": "evt_000624",
+          "event_id": "evt_000615",
           "payload": {
             "skill": "intercept",
             "source": "ally_001",
@@ -10611,7 +10421,7 @@
           "type": "skill_trigger"
         },
         {
-          "event_id": "evt_000625",
+          "event_id": "evt_000616",
           "payload": {
             "amount": 16,
             "reason": "skill:intercept",
@@ -10623,7 +10433,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_000626",
+          "event_id": "evt_000617",
           "payload": {
             "unit": "enemy_002"
           },
@@ -10631,7 +10441,7 @@
           "type": "death"
         },
         {
-          "event_id": "evt_000627",
+          "event_id": "evt_000618",
           "payload": {
             "cooldown_ticks": 80,
             "ready_tick": 328,
@@ -10648,7 +10458,7 @@
     {
       "events": [
         {
-          "event_id": "evt_000628",
+          "event_id": "evt_000619",
           "payload": {
             "distance": 120.829,
             "reason": "nearest_enemy",
@@ -10664,7 +10474,7 @@
     {
       "events": [
         {
-          "event_id": "evt_000629",
+          "event_id": "evt_000620",
           "payload": {
             "distance_to_target": 119.029,
             "from_x": 225.333,
@@ -10687,7 +10497,7 @@
     {
       "events": [
         {
-          "event_id": "evt_000630",
+          "event_id": "evt_000621",
           "payload": {
             "skill": "bow_shot",
             "source": "ally_005",
@@ -10710,7 +10520,7 @@
           "type": "skill_trigger"
         },
         {
-          "event_id": "evt_000631",
+          "event_id": "evt_000622",
           "payload": {
             "amount": 2,
             "reason": "skill:bow_shot",
@@ -10722,7 +10532,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_000632",
+          "event_id": "evt_000623",
           "payload": {
             "cooldown_ticks": 30,
             "ready_tick": 282,
@@ -10734,7 +10544,7 @@
           "type": "skill_cooldown"
         },
         {
-          "event_id": "evt_000633",
+          "event_id": "evt_000624",
           "payload": {
             "action_interval_ticks": 28,
             "current_tick": 252,
@@ -10751,7 +10561,7 @@
     {
       "events": [
         {
-          "event_id": "evt_000634",
+          "event_id": "evt_000625",
           "payload": {
             "distance_to_target": 114.529,
             "from_x": 221.078,
@@ -10774,7 +10584,7 @@
     {
       "events": [
         {
-          "event_id": "evt_000635",
+          "event_id": "evt_000626",
           "payload": {
             "skill": "katana_slash",
             "source": "ally_003",
@@ -10797,7 +10607,7 @@
           "type": "skill_trigger"
         },
         {
-          "event_id": "evt_000636",
+          "event_id": "evt_000627",
           "payload": {
             "amount": 15,
             "reason": "skill:katana_slash",
@@ -10809,7 +10619,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_000637",
+          "event_id": "evt_000628",
           "payload": {
             "cooldown_ticks": 20,
             "ready_tick": 279,
@@ -10821,7 +10631,7 @@
           "type": "skill_cooldown"
         },
         {
-          "event_id": "evt_000638",
+          "event_id": "evt_000629",
           "payload": {
             "action_interval_ticks": 20,
             "current_tick": 259,
@@ -10838,7 +10648,7 @@
     {
       "events": [
         {
-          "event_id": "evt_000639",
+          "event_id": "evt_000630",
           "payload": {
             "distance_to_target": 110.029,
             "from_x": 216.823,
@@ -10861,7 +10671,7 @@
     {
       "events": [
         {
-          "event_id": "evt_000640",
+          "event_id": "evt_000631",
           "payload": {
             "skill": "bow_shot",
             "source": "enemy_005",
@@ -10884,7 +10694,7 @@
           "type": "skill_trigger"
         },
         {
-          "event_id": "evt_000641",
+          "event_id": "evt_000632",
           "payload": {
             "amount": 2,
             "reason": "skill:bow_shot",
@@ -10896,7 +10706,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_000642",
+          "event_id": "evt_000633",
           "payload": {
             "cooldown_ticks": 30,
             "ready_tick": 292,
@@ -10908,7 +10718,7 @@
           "type": "skill_cooldown"
         },
         {
-          "event_id": "evt_000643",
+          "event_id": "evt_000634",
           "payload": {
             "action_interval_ticks": 28,
             "current_tick": 262,
@@ -10925,7 +10735,7 @@
     {
       "events": [
         {
-          "event_id": "evt_000644",
+          "event_id": "evt_000635",
           "payload": {
             "distance_to_target": 105.529,
             "from_x": 212.568,
@@ -10948,7 +10758,7 @@
     {
       "events": [
         {
-          "event_id": "evt_000645",
+          "event_id": "evt_000636",
           "payload": {
             "attacker": "enemy_001",
             "target": "ally_001",
@@ -10967,7 +10777,7 @@
           "type": "attack"
         },
         {
-          "event_id": "evt_000646",
+          "event_id": "evt_000637",
           "payload": {
             "amount": 1,
             "reason": "basic_attack",
@@ -10979,7 +10789,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_000647",
+          "event_id": "evt_000638",
           "payload": {
             "action_interval_ticks": 32,
             "current_tick": 267,
@@ -10996,7 +10806,7 @@
     {
       "events": [
         {
-          "event_id": "evt_000648",
+          "event_id": "evt_000639",
           "payload": {
             "distance_to_target": 101.029,
             "from_x": 208.313,
@@ -11019,7 +10829,7 @@
     {
       "events": [
         {
-          "event_id": "evt_000649",
+          "event_id": "evt_000640",
           "payload": {
             "attacker": "ally_001",
             "target": "enemy_001",
@@ -11038,7 +10848,7 @@
           "type": "attack"
         },
         {
-          "event_id": "evt_000650",
+          "event_id": "evt_000641",
           "payload": {
             "amount": 1,
             "reason": "basic_attack",
@@ -11050,7 +10860,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_000651",
+          "event_id": "evt_000642",
           "payload": {
             "action_interval_ticks": 32,
             "current_tick": 274,
@@ -11067,7 +10877,7 @@
     {
       "events": [
         {
-          "event_id": "evt_000652",
+          "event_id": "evt_000643",
           "payload": {
             "distance_to_target": 96.529,
             "from_x": 204.058,
@@ -11090,7 +10900,7 @@
     {
       "events": [
         {
-          "event_id": "evt_000653",
+          "event_id": "evt_000644",
           "payload": {
             "skill": "katana_slash",
             "source": "ally_003",
@@ -11113,7 +10923,7 @@
           "type": "skill_trigger"
         },
         {
-          "event_id": "evt_000654",
+          "event_id": "evt_000645",
           "payload": {
             "amount": 15,
             "reason": "skill:katana_slash",
@@ -11125,7 +10935,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_000655",
+          "event_id": "evt_000646",
           "payload": {
             "cooldown_ticks": 20,
             "ready_tick": 299,
@@ -11137,7 +10947,7 @@
           "type": "skill_cooldown"
         },
         {
-          "event_id": "evt_000656",
+          "event_id": "evt_000647",
           "payload": {
             "action_interval_ticks": 20,
             "current_tick": 279,
@@ -11154,7 +10964,7 @@
     {
       "events": [
         {
-          "event_id": "evt_000657",
+          "event_id": "evt_000648",
           "payload": {
             "distance_to_target": 92.029,
             "from_x": 199.803,
@@ -11172,7 +10982,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_000658",
+          "event_id": "evt_000649",
           "payload": {
             "attacker": "ally_005",
             "target": "enemy_001",
@@ -11191,7 +11001,7 @@
           "type": "attack"
         },
         {
-          "event_id": "evt_000659",
+          "event_id": "evt_000650",
           "payload": {
             "amount": 1,
             "reason": "basic_attack",
@@ -11203,7 +11013,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_000660",
+          "event_id": "evt_000651",
           "payload": {
             "action_interval_ticks": 28,
             "current_tick": 280,
@@ -11220,7 +11030,7 @@
     {
       "events": [
         {
-          "event_id": "evt_000661",
+          "event_id": "evt_000652",
           "payload": {
             "distance_to_target": 87.529,
             "from_x": 195.548,
@@ -11243,7 +11053,7 @@
     {
       "events": [
         {
-          "event_id": "evt_000662",
+          "event_id": "evt_000653",
           "payload": {
             "distance_to_target": 83.029,
             "from_x": 191.294,
@@ -11261,7 +11071,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_000663",
+          "event_id": "evt_000654",
           "payload": {
             "skill": "focus_fire",
             "source": "enemy_005",
@@ -11275,7 +11085,7 @@
           "type": "skill_trigger"
         },
         {
-          "event_id": "evt_000664",
+          "event_id": "evt_000655",
           "payload": {
             "amount": 27,
             "reason": "skill:focus_fire",
@@ -11287,7 +11097,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_000665",
+          "event_id": "evt_000656",
           "payload": {
             "unit": "ally_006"
           },
@@ -11295,7 +11105,7 @@
           "type": "death"
         },
         {
-          "event_id": "evt_000666",
+          "event_id": "evt_000657",
           "payload": {
             "cooldown_ticks": 100,
             "ready_tick": 390,
@@ -11307,7 +11117,7 @@
           "type": "skill_cooldown"
         },
         {
-          "event_id": "evt_000667",
+          "event_id": "evt_000658",
           "payload": {
             "action_interval_ticks": 28,
             "current_tick": 290,
@@ -11324,7 +11134,7 @@
     {
       "events": [
         {
-          "event_id": "evt_000668",
+          "event_id": "evt_000659",
           "payload": {
             "skill": "katana_slash",
             "source": "ally_003",
@@ -11347,7 +11157,7 @@
           "type": "skill_trigger"
         },
         {
-          "event_id": "evt_000669",
+          "event_id": "evt_000660",
           "payload": {
             "amount": 15,
             "reason": "skill:katana_slash",
@@ -11359,7 +11169,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_000670",
+          "event_id": "evt_000661",
           "payload": {
             "cooldown_ticks": 20,
             "ready_tick": 319,
@@ -11371,7 +11181,7 @@
           "type": "skill_cooldown"
         },
         {
-          "event_id": "evt_000671",
+          "event_id": "evt_000662",
           "payload": {
             "action_interval_ticks": 20,
             "current_tick": 299,
@@ -11383,7 +11193,7 @@
           "type": "action_scheduled"
         },
         {
-          "event_id": "evt_000672",
+          "event_id": "evt_000663",
           "payload": {
             "attacker": "enemy_001",
             "target": "ally_001",
@@ -11402,7 +11212,7 @@
           "type": "attack"
         },
         {
-          "event_id": "evt_000673",
+          "event_id": "evt_000664",
           "payload": {
             "amount": 1,
             "reason": "basic_attack",
@@ -11414,7 +11224,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_000674",
+          "event_id": "evt_000665",
           "payload": {
             "action_interval_ticks": 32,
             "current_tick": 299,
@@ -11431,7 +11241,7 @@
     {
       "events": [
         {
-          "event_id": "evt_000675",
+          "event_id": "evt_000666",
           "payload": {
             "attacker": "ally_001",
             "target": "enemy_001",
@@ -11450,7 +11260,7 @@
           "type": "attack"
         },
         {
-          "event_id": "evt_000676",
+          "event_id": "evt_000667",
           "payload": {
             "amount": 1,
             "reason": "basic_attack",
@@ -11462,7 +11272,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_000677",
+          "event_id": "evt_000668",
           "payload": {
             "action_interval_ticks": 32,
             "current_tick": 306,
@@ -11479,7 +11289,7 @@
     {
       "events": [
         {
-          "event_id": "evt_000678",
+          "event_id": "evt_000669",
           "payload": {
             "skill": "bow_shot",
             "source": "ally_005",
@@ -11502,7 +11312,7 @@
           "type": "skill_trigger"
         },
         {
-          "event_id": "evt_000679",
+          "event_id": "evt_000670",
           "payload": {
             "amount": 2,
             "reason": "skill:bow_shot",
@@ -11514,7 +11324,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_000680",
+          "event_id": "evt_000671",
           "payload": {
             "cooldown_ticks": 30,
             "ready_tick": 338,
@@ -11526,7 +11336,7 @@
           "type": "skill_cooldown"
         },
         {
-          "event_id": "evt_000681",
+          "event_id": "evt_000672",
           "payload": {
             "action_interval_ticks": 28,
             "current_tick": 308,
@@ -11543,7 +11353,7 @@
     {
       "events": [
         {
-          "event_id": "evt_000682",
+          "event_id": "evt_000673",
           "payload": {
             "skill": "bow_shot",
             "source": "enemy_005",
@@ -11566,7 +11376,7 @@
           "type": "skill_trigger"
         },
         {
-          "event_id": "evt_000683",
+          "event_id": "evt_000674",
           "payload": {
             "amount": 2,
             "reason": "skill:bow_shot",
@@ -11578,7 +11388,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_000684",
+          "event_id": "evt_000675",
           "payload": {
             "cooldown_ticks": 30,
             "ready_tick": 348,
@@ -11590,7 +11400,7 @@
           "type": "skill_cooldown"
         },
         {
-          "event_id": "evt_000685",
+          "event_id": "evt_000676",
           "payload": {
             "action_interval_ticks": 28,
             "current_tick": 318,
@@ -11607,7 +11417,7 @@
     {
       "events": [
         {
-          "event_id": "evt_000686",
+          "event_id": "evt_000677",
           "payload": {
             "skill": "katana_slash",
             "source": "ally_003",
@@ -11630,7 +11440,7 @@
           "type": "skill_trigger"
         },
         {
-          "event_id": "evt_000687",
+          "event_id": "evt_000678",
           "payload": {
             "amount": 15,
             "reason": "skill:katana_slash",
@@ -11642,7 +11452,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_000688",
+          "event_id": "evt_000679",
           "payload": {
             "unit": "enemy_001"
           },
@@ -11650,7 +11460,7 @@
           "type": "death"
         },
         {
-          "event_id": "evt_000689",
+          "event_id": "evt_000680",
           "payload": {
             "cooldown_ticks": 20,
             "ready_tick": 339,
@@ -11662,7 +11472,7 @@
           "type": "skill_cooldown"
         },
         {
-          "event_id": "evt_000690",
+          "event_id": "evt_000681",
           "payload": {
             "action_interval_ticks": 20,
             "current_tick": 319,
@@ -11679,7 +11489,7 @@
     {
       "events": [
         {
-          "event_id": "evt_000691",
+          "event_id": "evt_000682",
           "payload": {
             "distance": 43.253,
             "reason": "nearest_enemy",
@@ -11690,7 +11500,7 @@
           "type": "target_acquired"
         },
         {
-          "event_id": "evt_000692",
+          "event_id": "evt_000683",
           "payload": {
             "distance_to_target": 42.353,
             "from_x": 117.398,
@@ -11708,7 +11518,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_000693",
+          "event_id": "evt_000684",
           "payload": {
             "distance": 43.286,
             "reason": "nearest_enemy",
@@ -11719,7 +11529,7 @@
           "type": "target_acquired"
         },
         {
-          "event_id": "evt_000694",
+          "event_id": "evt_000685",
           "payload": {
             "distance_to_target": 42.086,
             "from_x": 117.488,
@@ -11737,7 +11547,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_000695",
+          "event_id": "evt_000686",
           "payload": {
             "distance": 120.188,
             "reason": "nearest_enemy",
@@ -11748,7 +11558,7 @@
           "type": "target_acquired"
         },
         {
-          "event_id": "evt_000696",
+          "event_id": "evt_000687",
           "payload": {
             "distance_to_target": 119.288,
             "from_x": 90.184,
@@ -11766,7 +11576,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_000697",
+          "event_id": "evt_000688",
           "payload": {
             "distance": 42.086,
             "reason": "nearest_enemy",
@@ -11777,7 +11587,7 @@
           "type": "target_acquired"
         },
         {
-          "event_id": "evt_000698",
+          "event_id": "evt_000689",
           "payload": {
             "attack_range": 110.0,
             "distance": 42.086,
@@ -11789,7 +11599,7 @@
           "type": "enter_range"
         },
         {
-          "event_id": "evt_000699",
+          "event_id": "evt_000690",
           "payload": {
             "attack_range": 110.0,
             "distance": 42.086,
@@ -11807,7 +11617,7 @@
     {
       "events": [
         {
-          "event_id": "evt_000700",
+          "event_id": "evt_000691",
           "payload": {
             "distance_to_target": 37.853,
             "from_x": 114.603,
@@ -11825,7 +11635,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_000701",
+          "event_id": "evt_000692",
           "payload": {
             "distance_to_target": 36.086,
             "from_x": 113.751,
@@ -11843,7 +11653,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_000702",
+          "event_id": "evt_000693",
           "payload": {
             "distance_to_target": 114.788,
             "from_x": 90.197,
@@ -11866,7 +11676,7 @@
     {
       "events": [
         {
-          "event_id": "evt_000703",
+          "event_id": "evt_000694",
           "payload": {
             "distance_to_target": 33.353,
             "from_x": 111.808,
@@ -11884,7 +11694,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_000704",
+          "event_id": "evt_000695",
           "payload": {
             "distance_to_target": 30.086,
             "from_x": 110.014,
@@ -11902,7 +11712,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_000705",
+          "event_id": "evt_000696",
           "payload": {
             "distance_to_target": 110.288,
             "from_x": 90.21,
@@ -11925,7 +11735,7 @@
     {
       "events": [
         {
-          "event_id": "evt_000706",
+          "event_id": "evt_000697",
           "payload": {
             "distance_to_target": 110.0,
             "from_x": 90.212,
@@ -11943,7 +11753,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_000707",
+          "event_id": "evt_000698",
           "payload": {
             "attack_range": 110.0,
             "distance": 110.0,
@@ -11955,7 +11765,7 @@
           "type": "enter_range"
         },
         {
-          "event_id": "evt_000708",
+          "event_id": "evt_000699",
           "payload": {
             "attack_range": 110.0,
             "distance": 110.0,
@@ -11973,7 +11783,7 @@
     {
       "events": [
         {
-          "event_id": "evt_000709",
+          "event_id": "evt_000700",
           "payload": {
             "distance_to_target": 28.853,
             "from_x": 109.012,
@@ -11991,7 +11801,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_000710",
+          "event_id": "evt_000701",
           "payload": {
             "distance_to_target": 24.086,
             "from_x": 106.278,
@@ -12014,7 +11824,7 @@
     {
       "events": [
         {
-          "event_id": "evt_000711",
+          "event_id": "evt_000702",
           "payload": {
             "skill": "focus_fire",
             "source": "ally_005",
@@ -12028,7 +11838,7 @@
           "type": "skill_trigger"
         },
         {
-          "event_id": "evt_000712",
+          "event_id": "evt_000703",
           "payload": {
             "amount": 28,
             "reason": "skill:focus_fire",
@@ -12040,7 +11850,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_000713",
+          "event_id": "evt_000704",
           "payload": {
             "cooldown_ticks": 100,
             "ready_tick": 436,
@@ -12052,7 +11862,7 @@
           "type": "skill_cooldown"
         },
         {
-          "event_id": "evt_000714",
+          "event_id": "evt_000705",
           "payload": {
             "action_interval_ticks": 28,
             "current_tick": 336,
@@ -12069,7 +11879,7 @@
     {
       "events": [
         {
-          "event_id": "evt_000715",
+          "event_id": "evt_000706",
           "payload": {
             "distance_to_target": 24.353,
             "from_x": 106.217,
@@ -12087,7 +11897,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_000716",
+          "event_id": "evt_000707",
           "payload": {
             "distance_to_target": 18.086,
             "from_x": 102.541,
@@ -12110,7 +11920,7 @@
     {
       "events": [
         {
-          "event_id": "evt_000717",
+          "event_id": "evt_000708",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 101.794,
@@ -12128,7 +11938,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_000718",
+          "event_id": "evt_000709",
           "payload": {
             "attack_range": 18.0,
             "distance": 18.0,
@@ -12140,7 +11950,7 @@
           "type": "enter_range"
         },
         {
-          "event_id": "evt_000719",
+          "event_id": "evt_000710",
           "payload": {
             "attack_range": 18.0,
             "distance": 18.0,
@@ -12153,7 +11963,7 @@
           "type": "engage_start"
         },
         {
-          "event_id": "evt_000720",
+          "event_id": "evt_000711",
           "payload": {
             "skill": "katana_slash",
             "source": "ally_003",
@@ -12176,7 +11986,7 @@
           "type": "skill_trigger"
         },
         {
-          "event_id": "evt_000721",
+          "event_id": "evt_000712",
           "payload": {
             "amount": 34,
             "reason": "skill:katana_slash",
@@ -12188,7 +11998,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_000722",
+          "event_id": "evt_000713",
           "payload": {
             "unit": "enemy_005"
           },
@@ -12196,7 +12006,7 @@
           "type": "death"
         },
         {
-          "event_id": "evt_000723",
+          "event_id": "evt_000714",
           "payload": {
             "cooldown_ticks": 20,
             "ready_tick": 361,
@@ -12208,7 +12018,7 @@
           "type": "skill_cooldown"
         },
         {
-          "event_id": "evt_000724",
+          "event_id": "evt_000715",
           "payload": {
             "action_interval_ticks": 20,
             "current_tick": 341,
@@ -12220,7 +12030,7 @@
           "type": "action_scheduled"
         },
         {
-          "event_id": "evt_000725",
+          "event_id": "evt_000716",
           "payload": {
             "end_tick": 341,
             "loser_alive": 0,

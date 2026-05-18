@@ -139,7 +139,7 @@ The public signature does not change. Existing tools keep using it:
 
 For `demo_001 / seed=1001`, the compatibility target remains:
 
-- events: `332`
+- events: `716`
 - winner: `ally`
 - reason: `enemy_eliminated`
 - end_tick: `240`
