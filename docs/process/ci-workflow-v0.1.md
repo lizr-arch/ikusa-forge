@@ -15,6 +15,7 @@
 - Demo One-Click and Scenarios / 一键 Demo 与多场景 fixture freshness checks
 - Live Combat Runtime Foundation / 实时战斗运行时基础 unittest checks for BattleSession / 战斗会话, Battle Snapshot / 战斗状态快照, and Event Buffer / 事件缓冲
 - Live Combat API / 实时战斗 API managed server smoke for Local HTTP Server / 本地 HTTP 服务 endpoints
+- HTML Live Mode / HTML 实时模式 smoke checks in browser for API start/controls/readouts
 
 ## Jobs / 作业
 
@@ -56,6 +57,7 @@ It also starts the Live Combat API / 实时战斗 API in a managed subprocess an
 
 The browser smoke includes timeline filters and detail/report visibility for `status_apply`, `skill_cooldown`, `action_scheduled`, and `victory_explanation`.
 It also checks Scenario Selector / 场景选择器, One-click Demo / 一键 Demo loading from Scenario Manifest / 场景清单, and manual File Input Loading / 文件输入加载 availability.
+It additionally verifies Live mode controls and error handling when API health is unavailable.
 
 ## Commands / 命令
 
@@ -127,4 +129,5 @@ CI 的浏览器冒烟只跑 Chromium，一点说明：
 - CI 不证明完整产品可玩链路（只保护 MVP 验证链）
 - CI 不做 xlsx adapter / xlsx 适配器
 - CI 不改变战斗逻辑，不改 viewer 功能，不引入新框架
-- CI 只为 Live Combat API / 实时战斗 API 冒烟短暂启动 Local HTTP Server / 本地 HTTP 服务；不覆盖 HTML live mode / HTML 实时模式或 WebSocket
+- CI for Web viewer includes Live mode control rendering, but API polling behavior is still covered by Python API smoke and not fully deterministic in browser.
+- CI 不覆盖 WebSocket

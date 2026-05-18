@@ -1,8 +1,14 @@
 import json
+import threading
 import sys
 import unittest
 from pathlib import Path
+from http.server import HTTPServer
+from typing import Any, Dict, Optional, Tuple
+from urllib.error import HTTPError
+from urllib.request import Request, urlopen
 from tempfile import TemporaryDirectory
+import time
 
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
@@ -14,9 +20,48 @@ for path in (SIM_DIR, TOOLS_DIR):
 
 from export_xlsx_to_json import export_tables  # noqa: E402
 from ikusa_sim.live_api import BattleSessionManager, LiveApiError  # noqa: E402
+from ikusa_sim.live_api import create_live_api_server  # noqa: E402
 
 
 class LiveApiManagerTests(unittest.TestCase):
+    @staticmethod
+    def _start_server(manager: BattleSessionManager) -> Tuple[HTTPServer, int]:
+        server = create_live_api_server("127.0.0.1", 0, manager)
+        thread = threading.Thread(target=server.serve_forever, daemon=True)
+        thread.start()
+
+        # ensure background thread has started
+        time.sleep(0.01)
+        return server, server.server_address[1]
+
+    @staticmethod
+    def _stop_server(server: HTTPServer) -> None:
+        server.shutdown()
+        server.server_close()
+
+    @staticmethod
+    def _send_request(
+        method: str,
+        url: str,
+        body: Optional[Dict[str, Any]] = None,
+    ) -> Tuple[int, Dict[str, str], Optional[Any]]:
+        payload = json.dumps(body).encode("utf-8") if body is not None else None
+        request = Request(url=url, data=payload, method=method)
+        request.add_header("Content-Type", "application/json")
+        try:
+            with urlopen(request, timeout=5) as response:
+                status = response.getcode()
+                headers = {key: value for key, value in response.headers.items()}
+                raw = response.read().decode("utf-8")
+        except HTTPError as exc:
+            status = exc.code
+            headers = {key: value for key, value in exc.headers.items()}
+            raw = exc.read().decode("utf-8")
+        if not raw:
+            return status, headers, None
+        parsed = json.loads(raw)
+        return status, headers, parsed
+
     def export_sample_config(self):
         temp_dir = TemporaryDirectory()
         self.addCleanup(temp_dir.cleanup)
@@ -27,6 +72,44 @@ class LiveApiManagerTests(unittest.TestCase):
 
     def create_manager(self):
         return BattleSessionManager(self.export_sample_config())
+
+    def test_options_preflight_returns_cors_headers(self):
+        manager = self.create_manager()
+        server, port = self._start_server(manager)
+        self.addCleanup(lambda: self._stop_server(server))
+
+        status, headers, payload = self._send_request("OPTIONS", f"http://127.0.0.1:{port}/api/battle/start")
+        self.assertIn(status, (200, 204))
+        self.assertEqual("*", headers.get("Access-Control-Allow-Origin"))
+        self.assertEqual("GET, POST, OPTIONS", headers.get("Access-Control-Allow-Methods"))
+        self.assertEqual("Content-Type", headers.get("Access-Control-Allow-Headers"))
+        # allow both preflight bodies to return either no body or JSON error envelope.
+        if payload is not None:
+            self.assertIn("ok", payload)
+
+    def test_health_response_includes_cors_headers(self):
+        manager = self.create_manager()
+        server, port = self._start_server(manager)
+        self.addCleanup(lambda: self._stop_server(server))
+
+        status, headers, payload = self._send_request("GET", f"http://127.0.0.1:{port}/api/health")
+        self.assertEqual(200, status)
+        self.assertEqual("*", headers.get("Access-Control-Allow-Origin"))
+        self.assertIsInstance(payload, dict)
+        self.assertEqual("ikusa-live-api", payload["service"])
+        self.assertTrue(payload["ok"])
+
+    def test_bad_route_returns_json_error_with_cors(self):
+        manager = self.create_manager()
+        server, port = self._start_server(manager)
+        self.addCleanup(lambda: self._stop_server(server))
+
+        status, headers, payload = self._send_request("GET", f"http://127.0.0.1:{port}/api/does_not_exist")
+        self.assertEqual(404, status)
+        self.assertEqual("*", headers.get("Access-Control-Allow-Origin"))
+        self.assertIsInstance(payload, dict)
+        self.assertFalse(payload["ok"])
+        self.assertIn("error", payload)
 
     def test_create_session_returns_initialized_snapshot_and_events(self):
         manager = self.create_manager()

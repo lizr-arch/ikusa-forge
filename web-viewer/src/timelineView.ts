@@ -48,7 +48,7 @@ export const renderTimeline = (container: HTMLElement, options: TimelineRenderOp
   const label = document.createElement("label");
   label.className = "timeline-filter";
   const labelText = document.createElement("span");
-  labelText.textContent = "Filter";
+  labelText.textContent = "Filter（过滤）";
   const select = document.createElement("select");
   for (const filter of TIMELINE_FILTERS) {
     const option = document.createElement("option");

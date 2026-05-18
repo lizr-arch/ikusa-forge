@@ -1,10 +1,14 @@
 import { formatNumber, formatValue, totalSkillTriggers } from "./formatters";
-import type { BattleReport, KeyMoment, UnitReport } from "./replayTypes";
+import type { BattleReport, KeyMoment, LiveBattleResult, UnitReport } from "./replayTypes";
 
 interface ReportRenderOptions {
   selectedUnitId: string | null;
   onSelectUnit: (unitId: string) => void;
   onSeekTick: (tick: number) => void;
+  liveMode?: boolean;
+  isFinished?: boolean;
+  liveResult?: LiveBattleResult | null;
+  liveCurrentTick?: number;
 }
 
 export const renderReport = (
@@ -13,6 +17,23 @@ export const renderReport = (
   options: ReportRenderOptions,
 ): void => {
   container.replaceChildren();
+  if (options.liveMode && !options.isFinished && !report) {
+    container.append(empty("Live battle in progress（实时战斗进行中）"));
+    return;
+  }
+  if (options.liveMode && options.isFinished && options.liveResult && !report) {
+    container.append(
+      statGrid([
+        ["Snapshot Tick", formatNumber(options.liveCurrentTick)],
+        ["Winner", formatValue(options.liveResult.winner)],
+        ["Reason", formatValue(options.liveResult.reason)],
+        ["End Tick", formatNumber(options.liveResult.end_tick)],
+        ["Victory Explanation（胜负解释）", formatValue(options.liveResult.summary)],
+      ]),
+    );
+    return;
+  }
+
   if (!report) {
     container.append(empty("No battle report loaded"));
     return;
@@ -26,14 +47,14 @@ export const renderReport = (
       ["Total Damage", formatNumber(report.summary?.total_damage)],
       ["Total Kills", formatNumber(report.summary?.total_kills)],
       ["Skill Triggers", formatNumber(report.summary?.total_skill_triggers)],
-      ["Status Applied", formatNumber(report.summary?.total_status_applied)],
+      ["Status Applied（状态应用）", formatNumber(report.summary?.total_status_applied)],
       ["Status Expired", formatNumber(report.summary?.total_status_expired)],
-      ["Skill Cooldowns", formatNumber(report.summary?.total_skill_cooldowns)],
-      ["Actions Scheduled", formatNumber(report.summary?.total_actions_scheduled)],
+      ["Skill Cooldown（技能冷却）", formatNumber(report.summary?.total_skill_cooldowns)],
+      ["Action Scheduled（行动调度）", formatNumber(report.summary?.total_actions_scheduled)],
       ["Total Modifiers", formatNumber(report.summary?.total_modifiers)],
       ["Formation Modifiers", formatNumber(report.summary?.formation_modifiers)],
       ["Synergy Modifiers", formatNumber(report.summary?.synergy_modifiers)],
-      ["Victory Explanation", formatValue(report.victory_explanation?.summary)],
+      ["Victory Explanation（胜负解释）", formatValue(report.victory_explanation?.summary)],
       ["Target Reasons", formatReasonSummary(report.summary?.target_reason_counts)],
       ["Skill Target Reasons", formatReasonSummary(report.summary?.skill_target_reason_counts)],
     ]),

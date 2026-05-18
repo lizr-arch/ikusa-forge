@@ -12,6 +12,7 @@
 - Demo One-Click and Scenarios / 一键 Demo 与多场景（Scenario Manifest / 场景清单、Curated Fixtures / 固化样例数据、Scenario Selector / 场景选择器）
 - Live Combat Runtime Foundation / 实时战斗运行时基础（BattleSession / 战斗会话、Step Runtime / 单步运行时、Battle Snapshot / 战斗状态快照、Event Buffer / 事件缓冲）
 - Live Combat API / 实时战斗 API（Local HTTP Server / 本地 HTTP 服务、Battle Session Manager / 战斗会话管理器、start/step/snapshot/events/reset API）
+- HTML Live Mode / HTML 实时模式（Live Combat API / 实时战斗 API 直连回放，定时调用 step 并消费 snapshot + events）
 - Browser Smoke Test / 浏览器冒烟测试（Playwright 基础检查）
 - Verified real `demo_001` modifier evidence：
   - formation modifiers in report summary / 战报阵型修正数 > 0
@@ -41,6 +42,7 @@
 - `phase2/demo-one-click-and-scenarios`: Demo One-Click and Scenarios / 一键 Demo 与多场景 (current / pending review)
 - `phase2/live-combat-runtime-foundation`: Live Combat Runtime Foundation / 实时战斗运行时基础 (current / pending review)
 - `phase2/live-combat-api`: Live Combat API / 实时战斗 API (current / pending review)
+- `phase2/html-live-mode`: HTML Live Mode / HTML 实时模式 (current / pending review)
 
 ## Current Commands / 当前命令
 
@@ -88,6 +90,7 @@ npm run test:e2e
 - `build_battle_snapshot / 构建战斗状态快照`
 - `get_events_since / 读取事件缓冲`
 - `Live Combat API / 实时战斗 API`
+- `HTML Live Mode / HTML 实时模式`
 - `BattleSessionManager / 战斗会话管理器`
 - `tools/run_live_api.py`
 - `tools/smoke_live_api.py`
@@ -101,7 +104,7 @@ npm run test:e2e
 - 无 Scenario Comparison / 场景对比 side-by-side UI（当前只提供场景选择和静态样例）
 - Live Combat API / 实时战斗 API 仅提供本地 HTTP JSON 契约，不是产品化 live viewer
 - 无 WebSocket
-- 无 HTML live mode / HTML 实时模式
+- `HTML live mode / HTML 实时模式` 已支持浏览器端手动接入 API 播放，仍有功能收口空间（如状态历史持久化、历史重放与并发会话展示）
 - 无 C# host / C# 宿主
 - 无 Godot
 - 阵型加成和羁绊逻辑已应用，但尚未进入 CI 流程与可玩发布闭环

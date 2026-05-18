@@ -293,11 +293,40 @@ h3 {
 .file-label,
 .range-label,
 .select-label,
+.input-grid,
 .timeline-filter {
   display: grid;
   gap: 5px;
   color: var(--text-muted);
   font-size: 0.82rem;
+}
+
+.control-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.input-grid input {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 0.45rem;
+  background: #ffffff;
+}
+
+.live-inline-value {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 0.45rem 0.55rem;
+  background: #fbfcfb;
+  min-height: 2.1rem;
+  display: flex;
+  align-items: center;
+}
+
+.live-mode-block .control-row {
+  grid-template-columns: 1fr 1fr;
 }
 
 .file-label input {

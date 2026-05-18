@@ -230,10 +230,28 @@ The smoke checks:
 - Snapshot / 状态快照 endpoint
 - Reset / 重置会话
 
+This contract is the transport layer currently used by HTML Live Mode / HTML 实时模式 for browser polling playback.
+
+### Local development CORS / 本地开发 CORS
+
+`Live API / 实时 API` is intentionally local-first:
+
+- `Access-Control-Allow-Origin: *` is returned for API JSON responses during local development.
+- `Access-Control-Allow-Methods: GET, POST, OPTIONS`
+- `Access-Control-Allow-Headers: Content-Type`
+
+This is suitable for local demo playback on `http://127.0.0.1:5173` and `http://localhost:5173`.
+
+**Boundary / 边界说明（当前实现）**
+This CORS policy is for local development only and should not be exposed on untrusted networks.
+For public deployment, add origin allowlist + auth + stricter config path validation.
+
+- 服务器默认监听 `127.0.0.1`（本地绑定）并由本机浏览器消费。
+- 若未来对外服务，需补充认证、CORS 策略与 `config` 路径校验强化。
+
 ## Not in Scope / 不在范围
 
 - No WebSocket / 不做 WebSocket
-- No HTML live mode / 不做 HTML 实时模式
 - No C# host / 不做 C# 宿主
 - No Godot / 不做 Godot
 - No xlsx adapter / 不做 xlsx 适配器

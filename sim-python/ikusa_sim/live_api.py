@@ -181,6 +181,21 @@ def build_live_api_handler(manager: BattleSessionManager):
             except Exception as exc:  # pragma: no cover - defensive HTTP boundary
                 self._send_error(LiveApiError(str(exc), 500))
 
+        def do_OPTIONS(self) -> None:
+            if self.path not in {
+                "/api/health",
+                "/api/battle/start",
+                "/api/battle/step",
+                "/api/battle/reset",
+                "/api/battle/snapshot",
+                "/api/battle/events",
+            }:
+                self._send_json(404, {"ok": False, "error": f"unsupported route: OPTIONS {self.path}"})
+                return
+            self.send_response(204)
+            self._send_cors_headers()
+            self.end_headers()
+
         def _handle_start(self, body: Dict[str, Any]) -> None:
             battle_id = _required_str(body, "battle_id")
             seed = _required_int(body, "seed")
@@ -230,10 +245,16 @@ def build_live_api_handler(manager: BattleSessionManager):
         def _send_json(self, status: int, payload: Dict[str, Any]) -> None:
             encoded = json.dumps(payload, ensure_ascii=False, sort_keys=True).encode("utf-8")
             self.send_response(status)
+            self._send_cors_headers()
             self.send_header("Content-Type", "application/json; charset=utf-8")
             self.send_header("Content-Length", str(len(encoded)))
             self.end_headers()
             self.wfile.write(encoded)
+
+        def _send_cors_headers(self) -> None:
+            self.send_header("Access-Control-Allow-Origin", "*")
+            self.send_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
+            self.send_header("Access-Control-Allow-Headers", "Content-Type")
 
         def log_message(self, format: str, *args: Any) -> None:
             return
