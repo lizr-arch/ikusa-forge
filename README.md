@@ -45,6 +45,7 @@ Current Python simulator status:
 - Live Combat Runtime Foundation / 实时战斗运行时基础（`BattleSession / 战斗会话`、`step_battle_session / 单步推进`、`Battle Snapshot / 战斗状态快照`、`Event Buffer / 事件缓冲`，同时保留 `run_basic_combat` 兼容入口）
 - Live Combat API / 实时战斗 API（Python 标准库 Local HTTP Server / 本地 HTTP 服务，提供 start/step/snapshot/events/reset 端点）
 - HTML Live Mode / HTML 实时模式（`Live Combat API / 实时战斗 API` + HTTP polling，支持 `start/step/pause/resume/reset`）
+- Live Battle Visual Polish / 实时战斗视觉打磨（战场优先布局 / Battlefied-first layout，HP 条、行动条、伤害跳字、胜负横幅）
 
 Phase 1 Demo Package / 第一阶段演示包 / Phase 2 Tactical Depth notes are available at:
 
@@ -57,6 +58,7 @@ Phase 1 Demo Package / 第一阶段演示包 / Phase 2 Tactical Depth notes are 
 - `docs/process/demo-one-click-and-scenarios-v0.1.md`
 - `docs/process/live-combat-runtime-foundation-v0.1.md`
 - `docs/process/live-combat-api-v0.1.md`
+- `docs/process/live-battle-visual-polish-v0.1.md`
 
 Quick start for a full demo run / 一次完整演示最简命令:
 
@@ -88,6 +90,7 @@ CI uses `npm install` now because `npm ci` can fail on optional dependency lockf
 `npm ci` is still a goal, but it remains temporarily unavailable until lockfile stabilization.
 CI also regenerates Scenario Manifest / 场景清单 and Curated Fixtures / 固化样例数据, then runs `git diff --exit-code -- web-viewer/public/samples` to prove committed samples are fresh.
 CI also runs Live Combat API / 实时战斗 API smoke with a managed local server process.
+- Viewer smoke now also checks Live Battle Visual Polish / 实时战斗视觉打磨（unit tokens、HP bar / 血条、action bar / 行动条、可见效果、胜负横幅）。
 
 Still future work:
 

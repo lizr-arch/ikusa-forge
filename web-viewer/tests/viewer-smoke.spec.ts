@@ -270,14 +270,27 @@ test("live mode can start and step with local API", async ({ page }) => {
     await expect(page.locator("#metadata")).toContainText("battle demo_001");
     await expect(page.locator("#metadata")).toContainText("seed 1001");
     await expect(page.locator("#metadata")).toContainText("events ");
+    await expect(page.locator("#board")).toBeVisible();
     await expect(page.locator(".unit-token")).toHaveCount(12, { timeout: 10_000 });
+    await expect(page.locator(".health-fill")).toHaveCount(12, { timeout: 10_000 });
+    await expect(page.locator(".action-bar-bg")).toHaveCount(12, { timeout: 10_000 });
+    await expect(page.locator(".unit-status-count")).toHaveCount(12, { timeout: 10_000 });
+    await expect(page.locator(".unit-cooldown-count")).toHaveCount(12, { timeout: 10_000 });
+    await expect(page.locator("#live-current-tick")).toHaveText(/\d+/);
 
-    const beforeCursor = Number((await page.locator("#live-event-cursor").textContent()) ?? "0");
-    const beforeTick = (await page.locator("#tick-readout").textContent()) ?? "Tick 0";
-    const beforeTimelineRows = await countTimelineRows(page);
-    await page.locator("#step-live-battle").click();
-
-    await waitForLiveProgress(page, beforeCursor, beforeTick, beforeTimelineRows);
+    let beforeCursor = Number((await page.locator("#live-event-cursor").textContent()) ?? "0");
+    let beforeTick = (await page.locator("#tick-readout").textContent()) ?? "Tick 0";
+    let beforeTimelineRows = await countTimelineRows(page);
+    let effectFound = false;
+    for (let attempt = 0; attempt < 6 && !effectFound; attempt += 1) {
+      await page.locator("#step-live-battle").click();
+      await waitForLiveProgress(page, beforeCursor, beforeTick, beforeTimelineRows);
+      effectFound = await hasLiveVisualEffect(page);
+      beforeCursor = Number((await page.locator("#live-event-cursor").textContent()) ?? "0");
+      beforeTick = (await page.locator("#tick-readout").textContent()) ?? "Tick 0";
+      beforeTimelineRows = await countTimelineRows(page);
+    }
+    expect(effectFound).toBeTruthy();
 
     await page.locator("#reset-live-battle").click();
     await expect(page.locator("#live-session-id")).toContainText("-", { timeout: 10_000 });
@@ -374,4 +387,24 @@ const waitForLiveProgress = async (
     await wait(100);
   }
   throw new Error("Live step produced no visible progress");
+};
+
+const hasLiveVisualEffect = async (page: Page): Promise<boolean> => {
+  const hasAttackLine = await page.locator(".attack-line").count() > 0;
+  const hasUnitEventRing = await page.locator(".unit-event-ring").count() > 0;
+  const hasDamage = await page.locator(".damage-label").count() > 0;
+  const hasSkill = await page.locator(".skill-label").count() > 0;
+  const hasStatus = await page.locator(".status-badge").count() > 0;
+  const hasCooldown = await page.locator(".cooldown-badge").count() > 0;
+  const hasVictory = await page.locator(".victory-banner, .battle-end-banner").count() > 0;
+  const hasModifierRing = await page.locator(".modifier-ring").count() > 0;
+
+  return hasAttackLine
+    || hasUnitEventRing
+    || hasDamage
+    || hasSkill
+    || hasStatus
+    || hasCooldown
+    || hasVictory
+    || hasModifierRing;
 };

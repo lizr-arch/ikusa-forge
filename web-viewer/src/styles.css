@@ -137,7 +137,7 @@ h3 {
 
 .workspace {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(320px, 390px);
+  grid-template-columns: minmax(520px, 3fr) minmax(360px, 1.25fr);
   gap: 14px;
   min-height: 0;
 }
@@ -146,7 +146,7 @@ h3 {
   display: grid;
   grid-template-rows: auto minmax(0, 1fr);
   min-width: 0;
-  min-height: 520px;
+  min-height: 640px;
 }
 
 .panel-heading {
@@ -161,8 +161,9 @@ h3 {
 .board-host {
   display: grid;
   min-height: 0;
-  padding: 12px;
+  padding: 16px;
   place-items: center;
+  overflow: auto;
 }
 
 .board-host svg {
@@ -177,6 +178,20 @@ h3 {
   gap: 0;
   min-height: 0;
   overflow: hidden;
+}
+
+.control-root {
+  display: grid;
+  gap: 10px;
+}
+
+.panel-subblock {
+  display: grid;
+  gap: 8px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 0.75rem;
+  background: #fbfcfb;
 }
 
 .panel-block {
@@ -319,10 +334,20 @@ h3 {
   border: 1px solid var(--line);
   border-radius: 8px;
   padding: 0.45rem 0.55rem;
-  background: #fbfcfb;
+  background: #ffffff;
   min-height: 2.1rem;
   display: flex;
   align-items: center;
+}
+
+.live-status-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.live-inline-value {
+  min-height: 2rem;
 }
 
 .live-mode-block .control-row {
@@ -629,12 +654,20 @@ select {
 .unit-token {
   cursor: pointer;
   outline: none;
+  transition:
+    transform 140ms ease,
+    opacity 140ms ease;
+}
+
+.unit-token:hover {
+  transform: translateY(-1px);
 }
 
 .unit-rect {
   fill: #ffffff;
   stroke: var(--line-strong);
   stroke-width: 1.5;
+  transition: all 140ms ease;
 }
 
 .unit-ally .unit-rect {
@@ -683,11 +716,20 @@ select {
   stroke: #98a19b;
 }
 
+.unit-dead {
+  opacity: 0.65;
+}
+
 .unit-id,
 .unit-role,
 .unit-hp,
+.unit-meta-text,
+.unit-action-text,
+.unit-status-count,
+.unit-cooldown-count,
 .skill-label,
-.damage-label {
+.damage-label,
+.action-bar-text {
   text-anchor: middle;
 }
 
@@ -705,6 +747,27 @@ select {
 .unit-hp {
   fill: #1f2623;
   font-size: 10px;
+  font-variant-numeric: tabular-nums;
+}
+
+.unit-meta-text {
+  fill: #44514a;
+  font-size: 8px;
+  font-variant-numeric: tabular-nums;
+}
+
+.unit-action-text {
+  fill: #2e3d46;
+  font-size: 8px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.unit-status-count,
+.unit-cooldown-count {
+  fill: #27322d;
+  font-size: 9px;
+  font-weight: 700;
   font-variant-numeric: tabular-nums;
 }
 
@@ -765,6 +828,7 @@ select {
   stroke-dasharray: 8 7;
   stroke-linecap: round;
   stroke-width: 3;
+  animation: attack-flash 400ms ease-out;
 }
 
 .skill-ring {
@@ -795,6 +859,78 @@ select {
   font-size: 10px;
   font-weight: 700;
   text-anchor: middle;
+}
+
+.status-badge {
+  fill: #5f84c2;
+  stroke: #3d5f98;
+  stroke-width: 2;
+}
+
+.status-badge-text {
+  fill: #fff;
+  font-size: 9px;
+  font-weight: 700;
+  text-anchor: middle;
+  dominant-baseline: middle;
+}
+
+.cooldown-badge {
+  fill: #f5bf46;
+  stroke: #a06f18;
+  stroke-width: 2;
+}
+
+.cooldown-text {
+  fill: #2b2b2b;
+  font-size: 8px;
+  font-weight: 700;
+  text-anchor: middle;
+  dominant-baseline: middle;
+}
+
+.action-bar-bg {
+  fill: #d8dddb;
+}
+
+.action-bar-fill {
+  fill: #4f86c6;
+}
+
+.action-bar-text {
+  fill: #27332f;
+  font-size: 9px;
+  text-anchor: middle;
+  dominant-baseline: middle;
+  font-variant-numeric: tabular-nums;
+}
+
+.victory-banner {
+  fill: #ffefcf;
+  stroke: #be8f24;
+  stroke-width: 3;
+}
+
+.victory-banner-text {
+  fill: #4a3606;
+  font-size: 13px;
+  font-weight: 700;
+  text-anchor: middle;
+  dominant-baseline: middle;
+}
+
+@keyframes attack-flash {
+  from {
+    opacity: 0.1;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0.95;
+  }
 }
 
 .modifier-ring {

@@ -25,6 +25,12 @@ The viewer supports three modes simultaneously:
 - Scenario Mode / 场景模式（静态文件样例）
 - File Replay Mode / 文件回放模式（手动上传）
 
+Live rendering behavior is now Battlefield-first / 战场优先:
+
+- Battlefield（战场） is the dominant visual zone for live playback
+- Timeline（事件日志） and Report（战报） remain secondary
+- Replay / 场景 controls stay available and unchanged for non-live work
+
 Mode switching keeps old workflows intact:
 
 - Live mode disables replay timer controls.
@@ -76,6 +82,31 @@ Examples shown in UI:
 - `Reset（重置）`
 - `Speed（速度）`
 - `Live API unavailable（实时 API 不可用）`
+
+## Battlefield First Layout / 战场优先布局
+
+- Battlefield（战场） is the top-level focus in desktop layout.
+- Units now show battlefield-first status overlays:
+  - HP Bar / 血条
+  - Action Bar / 行动条
+  - status count / 状态数量
+  - cooldown count / 冷却数量
+  - selected / highlighted styles / 选中与高亮样式
+- Live status metadata now includes:
+  - Current Tick（当前 Tick）
+  - Unit Alive（存活单位）
+  - Latest Event（最新事件）
+  - Transport（传输方式）
+
+Live visual effects in this phase:
+
+- Attack Line / 攻击线
+- Floating Damage / 伤害跳字
+- Skill Callout / 技能提示
+- Status Badge / 状态标记
+- Cooldown Badge / 冷却标记
+- Death Marker / 死亡标记
+- Victory Banner / 胜负横幅
 
 ## Not in Scope / 不在范围
 

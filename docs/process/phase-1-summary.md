@@ -13,6 +13,7 @@
 - Live Combat Runtime Foundation / 实时战斗运行时基础（BattleSession / 战斗会话、Step Runtime / 单步运行时、Battle Snapshot / 战斗状态快照、Event Buffer / 事件缓冲）
 - Live Combat API / 实时战斗 API（Local HTTP Server / 本地 HTTP 服务、Battle Session Manager / 战斗会话管理器、start/step/snapshot/events/reset API）
 - HTML Live Mode / HTML 实时模式（Live Combat API / 实时战斗 API 直连回放，定时调用 step 并消费 snapshot + events）
+- Live Battle Visual Polish / 实时战斗视觉打磨（战场优先布局、HP bar / 血条、行动条、攻击线、伤害跳字、胜负横幅）
 - Browser Smoke Test / 浏览器冒烟测试（Playwright 基础检查）
 - Verified real `demo_001` modifier evidence：
   - formation modifiers in report summary / 战报阵型修正数 > 0
@@ -43,6 +44,7 @@
 - `phase2/live-combat-runtime-foundation`: Live Combat Runtime Foundation / 实时战斗运行时基础 (current / pending review)
 - `phase2/live-combat-api`: Live Combat API / 实时战斗 API (current / pending review)
 - `phase2/html-live-mode`: HTML Live Mode / HTML 实时模式 (current / pending review)
+- `phase2/live-battle-visual-polish`: Live Battle Visual Polish / 实时战斗视觉打磨 (current / pending review)
 
 ## Current Commands / 当前命令
 
@@ -112,6 +114,7 @@ npm run test:e2e
 - 无 generated artifact commit / 不提交生成文件
 - `attack_interval_delta` 在 `synergy` 下当前仅在 `targeting/actions` schedule 初始化前更新；未做额外 DSL 扩展
 - 目标选择解释还未作为独立 Phase 1 交付线收敛；当前仅在 `combat-behavior-pack` 中扩展 `attack` 与 `skill_trigger` 原因字段
+- 可视化仍偏调试风格，当前无复杂动画与高级回放特效
 
 ## Recommended Next Branch / 推荐下一阶段分支
 
@@ -122,5 +125,6 @@ npm run test:e2e
 3. `phase2/demo-one-click-and-scenarios`（若目标是降低演示和冒烟门槛）
 4. `phase2/live-combat-runtime-foundation`（若目标是从 replay 生成迈向可 step 的可移植运行时）
 5. `phase2/live-combat-api`（若目标是向外部客户端暴露本地 HTTP API）
-6. `phase2/ci-workflow`（若目标是稳定交付）
-7. `phase1/viewer-polish`（若目标是演示稳定）
+6. `phase2/live-battle-visual-polish`（若目标是提升展示观感）
+7. `phase2/ci-workflow`（若目标是稳定交付）
+8. `phase1/viewer-polish`（若目标是演示稳定）

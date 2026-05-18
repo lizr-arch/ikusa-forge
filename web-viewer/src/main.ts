@@ -76,6 +76,10 @@ const liveStatusLine = element<HTMLElement>("live-status-line");
 const liveStatusValue = element<HTMLElement>("live-status");
 const liveSessionIdValue = element<HTMLElement>("live-session-id");
 const liveEventCursorValue = element<HTMLElement>("live-event-cursor");
+const liveCurrentTickValue = element<HTMLElement>("live-current-tick");
+const liveUnitAliveValue = element<HTMLElement>("live-unit-alive");
+const liveLatestEventValue = element<HTMLElement>("live-latest-event");
+const liveTransportValue = element<HTMLElement>("live-transport");
 
 const boardContainer = element<HTMLDivElement>("board");
 const scenarioSummaryContainer = element<HTMLDivElement>("scenario-summary");
@@ -580,6 +584,10 @@ const resetLiveStateForNewSession = (): void => {
   liveSessionIdValue.textContent = "-";
   liveEventCursorValue.textContent = "0";
   liveStatusValue.textContent = "ready";
+  liveCurrentTickValue.textContent = "0";
+  liveUnitAliveValue.textContent = "0/0";
+  liveLatestEventValue.textContent = "-";
+  liveTransportValue.textContent = "-";
 };
 
 const clearLiveState = (message: string): void => {
@@ -722,6 +730,13 @@ const renderLivePanel = (): void => {
   liveSeedInput.value = String(liveSeed);
   liveSessionIdValue.textContent = liveSessionId ?? "-";
   liveEventCursorValue.textContent = String(liveEventCursor);
+  liveCurrentTickValue.textContent = String(visualState.currentTick);
+  const alive = [...visualState.units.values()].filter((unit) => unit.alive).length;
+  const total = visualState.units.size;
+  liveUnitAliveValue.textContent = `${alive}/${total}`;
+  const latestEvent = currentEventEntry();
+  liveLatestEventValue.textContent = latestEvent ? `T${latestEvent.event.tick} ${latestEvent.event.type}` : "-";
+  liveTransportValue.textContent = "HTTP Polling（HTTP 轮询）";
   if (!liveStatusLine.textContent) {
     liveStatusLine.textContent = "Live API not checked";
   }

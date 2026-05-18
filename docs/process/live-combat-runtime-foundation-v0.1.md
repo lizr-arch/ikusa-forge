@@ -11,7 +11,9 @@ The goal is to make the combat core portable beyond replay generation:
 - Event Buffer / 事件缓冲 for reading new events since a known integer cursor.
 - Runtime Contract / 运行时契约 that keeps replay/report/viewer behavior compatible.
 
-This phase is a runtime shape refactor. It does not add combat rules, skills, AI, movement, HTTP serving, C# host, Godot, or HTML live mode.
+This phase is a runtime shape refactor. It does not add combat rules, skills, AI, movement, HTTP serving, C# host, Godot, or new combat logic.
+
+HTML Live Mode / HTML 实时模式 consumes `Battle Snapshot / 战斗状态快照` and `event stream / 事件流` from this contract and applies battlefield visualization at the client.
 
 ## Runtime Contract / 运行时契约
 

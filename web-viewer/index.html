@@ -10,7 +10,7 @@
     <div id="app" class="app-shell">
       <header class="topbar">
         <div>
-          <h1>SVG Replay Viewer（SVG 回放查看器）</h1>
+          <h1>Ikusa Forge SVG Replay Viewer（SVG 回放查看器）</h1>
           <div id="metadata" class="metadata">No replay loaded</div>
         </div>
         <div id="status" class="status-line" role="status">Ready</div>
@@ -26,97 +26,145 @@
         </section>
 
         <aside class="side-panel" aria-label="Replay tools">
-          <section class="panel-block" aria-labelledby="loader-heading">
-            <h2 id="loader-heading">Loader / 加载器</h2>
-            <div id="scenario-loader" class="scenario-loader" hidden aria-label="Scenario Selector">
-              <div class="scenario-loader-heading">
-                <h3>Scenario Selector（场景选择器）</h3>
-                <span id="scenario-manifest-state">Manifest not loaded</span>
+          <section class="panel-block control-root" aria-labelledby="controls-heading">
+            <h2 id="controls-heading">Battle Control（战斗控制）</h2>
+
+            <section class="panel-subblock" aria-labelledby="loader-heading">
+              <h3 id="loader-heading">Loader / 加载器</h3>
+              <div id="scenario-loader" class="scenario-loader" hidden aria-label="Scenario Selector">
+                <div class="scenario-loader-heading">
+                  <h3>Scenario Selector（场景选择器）</h3>
+                  <span id="scenario-manifest-state">Manifest not loaded</span>
+                </div>
+                <label class="select-label">
+                  <span>Scenario / 场景</span>
+                  <select id="scenario-select"></select>
+                </label>
+                <div class="control-row">
+                  <button id="load-baseline-demo" type="button" class="primary-button">Load Baseline Demo（加载默认 Demo）</button>
+                  <button id="load-scenario" type="button">Load Scenario（加载场景）</button>
+                </div>
               </div>
-              <label class="select-label">
-                <span>Scenario / 场景</span>
-                <select id="scenario-select"></select>
-              </label>
-              <div class="control-row">
-                <button id="load-baseline-demo" type="button" class="primary-button">Load Baseline Demo（加载默认 Demo）</button>
-                <button id="load-scenario" type="button">Load Scenario（加载场景）</button>
-              </div>
-            </div>
-            <div id="demo-guidance" class="demo-guidance" aria-label="Demo Load Guidance / Demo 加载引导">
-              <h3>Demo Load Guidance（Demo 加载引导）</h3>
-              <p>Generate demo files first:</p>
-              <pre><code>python tools/export_xlsx_to_json.py --input config/source --output config/generated
+              <div id="demo-guidance" class="demo-guidance" aria-label="Demo Load Guidance / Demo 加载引导">
+                <h3>Demo Load Guidance（Demo 加载引导）</h3>
+                <p>Generate demo files first:</p>
+                <pre><code>python tools/export_xlsx_to_json.py --input config/source --output config/generated
 python tools/validate_config.py --input config/generated
 python tools/run_demo_battle.py --battle demo_001 --seed 1001 --config config/generated --out runs/demo_001 --mode basic</code></pre>
-              <p>Demo files expected:</p>
-              <ul>
-                <li>runs/demo_001/replay.json</li>
-                <li>runs/demo_001/battle_report.json</li>
-              </ul>
-              <div class="load-state-grid" aria-label="Demo file load state">
-                <span>Replay <strong id="replay-load-state">not loaded</strong></span>
-                <span>Report <strong id="report-load-state">not loaded</strong></span>
+                <p>Demo files expected:</p>
+                <ul>
+                  <li>runs/demo_001/replay.json</li>
+                  <li>runs/demo_001/battle_report.json</li>
+                </ul>
+                <div class="load-state-grid" aria-label="Demo file load state">
+                  <span>Replay <strong id="replay-load-state">not loaded</strong></span>
+                  <span>Report <strong id="report-load-state">not loaded</strong></span>
+                </div>
               </div>
-            </div>
-            <label class="file-label">
-              <span>replay.json</span>
-              <input id="replay-file" type="file" accept="application/json,.json" />
-            </label>
-            <label class="file-label">
-              <span>battle_report.json</span>
-              <input id="report-file" type="file" accept="application/json,.json" />
-            </label>
-            <button id="load-files" type="button" class="primary-button">Load Files（加载文件）</button>
-          </section>
+              <label class="file-label">
+                <span>replay.json</span>
+                <input id="replay-file" type="file" accept="application/json,.json" />
+              </label>
+              <label class="file-label">
+                <span>battle_report.json</span>
+                <input id="report-file" type="file" accept="application/json,.json" />
+              </label>
+              <button id="load-files" type="button" class="primary-button">Load Files（加载文件）</button>
+            </section>
 
-          <section class="panel-block live-mode-block" aria-labelledby="live-mode-heading">
-            <h2 id="live-mode-heading">Live Mode（实时模式）</h2>
-            <div id="live-status-line" class="empty-state">Live API not checked</div>
-            <label class="input-grid">
-              <span>API URL（API 地址）</span>
-              <input id="live-api-url" type="text" value="http://127.0.0.1:8765" />
-            </label>
-            <div class="control-grid">
+            <section class="panel-subblock live-mode-block" aria-labelledby="live-mode-heading">
+              <h3 id="live-mode-heading">Live Mode（实时模式）</h3>
+              <div id="live-status-line" class="empty-state">Live API not checked</div>
               <label class="input-grid">
-                <span>Battle ID（战斗 ID）</span>
-                <input id="live-battle-id" type="text" value="demo_001" />
+                <span>API URL（API 地址）</span>
+                <input id="live-api-url" type="text" value="http://127.0.0.1:8765" />
               </label>
-              <label class="input-grid">
-                <span>Seed（种子）</span>
-                <input id="live-seed" type="number" value="1001" />
+              <div class="control-grid">
+                <label class="input-grid">
+                  <span>Battle ID（战斗 ID）</span>
+                  <input id="live-battle-id" type="text" value="demo_001" />
+                </label>
+                <label class="input-grid">
+                  <span>Seed（种子）</span>
+                  <input id="live-seed" type="number" value="1001" />
+                </label>
+              </div>
+              <div class="control-row">
+                <button id="start-live-battle" type="button">Start Live Battle（开始实时战斗）</button>
+                <button id="pause-live-battle" type="button">Pause（暂停）</button>
+              </div>
+              <div class="control-row">
+                <button id="resume-live-battle" type="button">Resume（继续）</button>
+                <button id="step-live-battle" type="button">Step（单步）</button>
+              </div>
+              <div class="control-row">
+                <button id="reset-live-battle" type="button">Reset（重置）</button>
+              </div>
+              <label class="select-label">
+                <span>Speed（速度）</span>
+                <select id="live-speed-select">
+                  <option value="1" selected>1x</option>
+                  <option value="2">2x</option>
+                  <option value="4">4x</option>
+                </select>
               </label>
-            </div>
-            <div class="control-row">
-              <button id="start-live-battle" type="button">Start Live Battle（开始实时战斗）</button>
-              <button id="pause-live-battle" type="button">Pause（暂停）</button>
-            </div>
-            <div class="control-row">
-              <button id="resume-live-battle" type="button">Resume（继续）</button>
-              <button id="step-live-battle" type="button">Step（单步）</button>
-            </div>
-            <div class="control-row">
-              <button id="reset-live-battle" type="button">Reset（重置）</button>
-            </div>
-            <label class="select-label">
-              <span>Speed（速度）</span>
-              <select id="live-speed-select">
-                <option value="1" selected>1x</option>
-                <option value="2">2x</option>
-                <option value="4">4x</option>
-              </select>
-            </label>
-            <label class="select-label">
-              <span>Live Status（实时状态）</span>
-              <span id="live-status" class="live-inline-value">idle</span>
-            </label>
-            <label class="select-label">
-              <span>Session ID（会话 ID）</span>
-              <span id="live-session-id" class="live-inline-value">-</span>
-            </label>
-            <label class="select-label">
-              <span>Event Cursor（事件游标）</span>
-              <span id="live-event-cursor" class="live-inline-value">0</span>
-            </label>
+              <label class="select-label">
+                <span>Live Status（实时状态）</span>
+                <span id="live-status" class="live-inline-value">idle</span>
+              </label>
+              <div class="live-status-grid">
+                <label class="select-label">
+                  <span>Session ID（会话 ID）</span>
+                  <span id="live-session-id" class="live-inline-value">-</span>
+                </label>
+                <label class="select-label">
+                  <span>Event Cursor（事件游标）</span>
+                  <span id="live-event-cursor" class="live-inline-value">0</span>
+                </label>
+                <label class="select-label">
+                  <span>Current Tick（当前 Tick）</span>
+                  <span id="live-current-tick" class="live-inline-value">0</span>
+                </label>
+                <label class="select-label">
+                  <span>Unit Alive（存活单位）</span>
+                  <span id="live-unit-alive" class="live-inline-value">0/0</span>
+                </label>
+                <label class="select-label">
+                  <span>Latest Event（最新事件）</span>
+                  <span id="live-latest-event" class="live-inline-value">-</span>
+                </label>
+                <label class="select-label">
+                  <span>Transport（传输方式）</span>
+                  <span id="live-transport" class="live-inline-value">-</span>
+                </label>
+              </div>
+            </section>
+
+            <section class="panel-subblock" aria-labelledby="replay-controls-heading">
+              <h3 id="replay-controls-heading">Playback Controls（播放控制）</h3>
+              <div id="event-readout" class="event-readout">Event -</div>
+              <div class="control-row">
+                <button id="play-pause" type="button">Play（播放）</button>
+                <button id="step-tick" type="button">Step Tick（单步）</button>
+              </div>
+              <div class="control-row">
+                <button id="previous-event" type="button">Previous Event（上一个事件）</button>
+                <button id="next-event" type="button">Next Event（下一个事件）</button>
+              </div>
+              <label class="range-label">
+                <span>Tick / 回合</span>
+                <input id="tick-slider" type="range" min="0" max="0" value="0" />
+              </label>
+              <label class="select-label">
+                <span>Speed（速度）</span>
+                <select id="speed-select">
+                  <option value="0.5">0.5x</option>
+                  <option value="1" selected>1x</option>
+                  <option value="2">2x</option>
+                  <option value="4">4x</option>
+                </select>
+              </label>
+            </section>
           </section>
 
           <section class="panel-block" aria-labelledby="scenario-summary-heading">
@@ -134,34 +182,8 @@ python tools/run_demo_battle.py --battle demo_001 --seed 1001 --config config/ge
             <div id="event-highlight"></div>
           </section>
 
-          <section class="panel-block" aria-labelledby="controls-heading">
-            <h2 id="controls-heading">Playback Controls（播放控制）</h2>
-            <div id="event-readout" class="event-readout">Event -</div>
-            <div class="control-row">
-              <button id="play-pause" type="button">Play（播放）</button>
-              <button id="step-tick" type="button">Step Tick（单步）</button>
-            </div>
-            <div class="control-row">
-              <button id="previous-event" type="button">Previous Event（上一个事件）</button>
-              <button id="next-event" type="button">Next Event（下一个事件）</button>
-            </div>
-            <label class="range-label">
-              <span>Tick / 回合</span>
-              <input id="tick-slider" type="range" min="0" max="0" value="0" />
-            </label>
-            <label class="select-label">
-              <span>Speed（速度）</span>
-              <select id="speed-select">
-                <option value="0.5">0.5x</option>
-                <option value="1" selected>1x</option>
-                <option value="2">2x</option>
-                <option value="4">4x</option>
-              </select>
-            </label>
-          </section>
-
           <section class="panel-block" aria-labelledby="unit-heading">
-            <h2 id="unit-heading">Unit Detail（单位详情）</h2>
+            <h2 id="unit-heading">Selected Unit（选中单位）</h2>
             <div id="unit-detail"></div>
           </section>
 
@@ -174,7 +196,7 @@ python tools/run_demo_battle.py --battle demo_001 --seed 1001 --config config/ge
 
       <section class="timeline-panel" aria-labelledby="timeline-heading">
         <div class="panel-heading">
-          <h2 id="timeline-heading">Timeline（时间线）</h2>
+          <h2 id="timeline-heading">Event Log（事件日志）</h2>
         </div>
         <div id="timeline"></div>
       </section>
