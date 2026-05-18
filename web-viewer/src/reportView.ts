@@ -24,10 +24,10 @@ export const renderReport = (
   if (options.liveMode && options.isFinished && options.liveResult && !report) {
     container.append(
       statGrid([
-        ["Snapshot Tick", formatNumber(options.liveCurrentTick)],
-        ["Winner", formatValue(options.liveResult.winner)],
-        ["Reason", formatValue(options.liveResult.reason)],
-        ["End Tick", formatNumber(options.liveResult.end_tick)],
+        ["Snapshot Tick（快照回合）", formatNumber(options.liveCurrentTick)],
+        ["Winner（胜利）", formatValue(options.liveResult.winner)],
+        ["Reason（原因）", formatValue(options.liveResult.reason)],
+        ["End Tick（终止回合）", formatNumber(options.liveResult.end_tick)],
         ["Victory Explanation（胜负解释）", formatValue(options.liveResult.summary)],
       ]),
     );
@@ -35,34 +35,34 @@ export const renderReport = (
   }
 
   if (!report) {
-    container.append(empty("No battle report loaded"));
+    container.append(empty("No battle report loaded（未加载战报）"));
     return;
   }
 
   container.append(
     statGrid([
-      ["Winner", formatValue(report.winner)],
-      ["Reason", formatValue(report.reason)],
-      ["End Tick", formatNumber(report.end_tick)],
-      ["Total Damage", formatNumber(report.summary?.total_damage)],
-      ["Total Kills", formatNumber(report.summary?.total_kills)],
-      ["Skill Triggers", formatNumber(report.summary?.total_skill_triggers)],
+      ["Winner（胜利）", formatValue(report.winner)],
+      ["Reason（原因）", formatValue(report.reason)],
+      ["End Tick（终止回合）", formatNumber(report.end_tick)],
+      ["Total Damage（总伤害）", formatNumber(report.summary?.total_damage)],
+      ["Total Kills（总击杀）", formatNumber(report.summary?.total_kills)],
+      ["Skill Triggers（技能触发）", formatNumber(report.summary?.total_skill_triggers)],
       ["Status Applied（状态应用）", formatNumber(report.summary?.total_status_applied)],
-      ["Status Expired", formatNumber(report.summary?.total_status_expired)],
+      ["Status Expired（状态到期）", formatNumber(report.summary?.total_status_expired)],
       ["Skill Cooldown（技能冷却）", formatNumber(report.summary?.total_skill_cooldowns)],
       ["Action Scheduled（行动调度）", formatNumber(report.summary?.total_actions_scheduled)],
-      ["Total Modifiers", formatNumber(report.summary?.total_modifiers)],
-      ["Formation Modifiers", formatNumber(report.summary?.formation_modifiers)],
-      ["Synergy Modifiers", formatNumber(report.summary?.synergy_modifiers)],
+      ["Total Modifiers（总修正）", formatNumber(report.summary?.total_modifiers)],
+      ["Formation Modifiers（编队修正）", formatNumber(report.summary?.formation_modifiers)],
+      ["Synergy Modifiers（协同修正）", formatNumber(report.summary?.synergy_modifiers)],
       ["Victory Explanation（胜负解释）", formatValue(report.victory_explanation?.summary)],
-      ["Target Reasons", formatReasonSummary(report.summary?.target_reason_counts)],
-      ["Skill Target Reasons", formatReasonSummary(report.summary?.skill_target_reason_counts)],
+      ["Target Reasons（目标原因）", formatReasonSummary(report.summary?.target_reason_counts)],
+      ["Skill Target Reasons（技能目标原因）", formatReasonSummary(report.summary?.skill_target_reason_counts)],
     ]),
   );
 
-  container.append(section("Top Units", renderTopUnits(report, options)));
-  container.append(section("Unit Reports", renderUnitTable(report.units ?? {}, options)));
-  container.append(section("Key Moments", renderKeyMoments(report, options)));
+  container.append(section("Top Units（最优单位）", renderTopUnits(report, options)));
+  container.append(section("Unit Reports（单位报表）", renderUnitTable(report.units ?? {}, options)));
+  container.append(section("Key Moments（关键时刻）", renderKeyMoments(report, options)));
 };
 
 const renderTopUnits = (report: BattleReport, options: ReportRenderOptions): HTMLElement => {
@@ -72,19 +72,19 @@ const renderTopUnits = (report: BattleReport, options: ReportRenderOptions): HTM
   const topUnits = report.top_units ?? {};
   list.append(
     topUnitRow(
-      "Damage Done",
+      "Damage Done（伤害输出）",
       topUnits.damage_done ?? [],
       (unit) => units[unit]?.damage_done ?? 0,
       options,
     ),
     topUnitRow(
-      "Damage Taken",
+      "Damage Taken（承受伤害）",
       topUnits.damage_taken ?? [],
       (unit) => units[unit]?.damage_taken ?? 0,
       options,
     ),
     topUnitRow(
-      "Skill Triggers",
+      "Skill Triggers（技能触发）",
       topUnits.skill_triggers ?? [],
       (unit) => totalSkillTriggers(units[unit]),
       options,
@@ -131,21 +131,21 @@ const renderUnitTable = (
   const head = document.createElement("thead");
   const headRow = document.createElement("tr");
   for (const title of [
-    "Unit",
-    "Done",
-    "Taken",
-    "Kills",
-    "Deaths",
-    "Skills",
-    "Statuses",
-    "Cooldowns",
-    "Actions",
-    "Next Action",
-    "ATK Bonus",
-    "DEF Bonus",
-    "HP Bonus",
-    "ATKSPD Bonus",
-    "Modifiers",
+    "Unit（单位）",
+    "Done（完成）",
+    "Taken（承受）",
+    "Kills（击杀）",
+    "Deaths（死亡）",
+    "Skills（技能）",
+    "Statuses（状态）",
+    "Cooldowns（冷却）",
+    "Actions（行动）",
+    "Next Action（下次行动）",
+    "ATK Bonus（攻击加成）",
+    "DEF Bonus（防御加成）",
+    "HP Bonus（生命加成）",
+    "ATKSPD Bonus（攻速加成）",
+    "Modifiers（修正）",
   ]) {
     const th = document.createElement("th");
     th.textContent = title;
@@ -181,7 +181,7 @@ const renderUnitTable = (
     const row = document.createElement("tr");
     const cell = document.createElement("td");
     cell.colSpan = 15;
-    cell.textContent = "No unit rows";
+    cell.textContent = "No unit rows（无单位行）";
     row.append(cell);
     body.append(row);
   }
@@ -216,7 +216,7 @@ const renderKeyMoments = (report: BattleReport, options: ReportRenderOptions): H
   list.className = "key-moment-list";
   const keyMoments = report.key_moments ?? [];
   if (keyMoments.length === 0) {
-    list.append(empty("No key moments"));
+    list.append(empty("No key moments（无关键时刻）"));
     return list;
   }
   for (const moment of keyMoments) {

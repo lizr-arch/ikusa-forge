@@ -8,7 +8,7 @@ export const renderEventHighlight = (
 ): void => {
   container.replaceChildren();
   if (!currentEvent) {
-    container.append(empty("No current event"));
+    container.append(empty("No current event（无当前事件）"));
     return;
   }
 
@@ -23,9 +23,9 @@ export const renderEventHighlight = (
 
   block.append(
     detailGrid([
-      ["Event ID", formatValue(event.event_id)],
-      ["Type", formatValue(event.type)],
-      ["Tick", formatNumber(event.tick)],
+      ["Event ID（事件 ID）", formatValue(event.event_id)],
+      ["Type（类型）", formatValue(event.type)],
+      ["Tick（回合）", formatNumber(event.tick)],
       ...eventDetailRows(currentEvent, state),
     ]),
   );
@@ -35,7 +35,7 @@ export const renderEventHighlight = (
     end.className = "battle-end-banner";
     const summaryText = readValue(event.payload.summary)
       ?? `${formatValue(readValue(event.payload.winner))} / ${formatValue(readValue(event.payload.reason))}`;
-    end.textContent = `Battle ended: ${formatValue(summaryText)}`;
+    end.textContent = `Battle ended（战斗结束）: ${formatValue(summaryText)}`;
     block.append(end);
   }
 
@@ -50,88 +50,88 @@ const eventDetailRows = (
   switch (event.type) {
     case "attack":
       return [
-        ["Source", formatValue(readValue(event.payload.attacker))],
-        ["Target", formatValue(readValue(event.payload.target))],
-        ["Target Reason", formatValue(readValue(event.payload.target_reason))],
-        ["Target Score", formatTargetScore(event.payload.target_score)],
+        ["Source（来源）", formatValue(readValue(event.payload.attacker))],
+        ["Target（目标）", formatValue(readValue(event.payload.target))],
+        ["Target Reason（目标原因）", formatValue(readValue(event.payload.target_reason))],
+        ["Target Score（目标评分）", formatTargetScore(event.payload.target_score)],
       ];
     case "skill_trigger":
       return [
-        ["Source", formatValue(readValue(event.payload.source))],
-        ["Skill", formatValue(readValue(event.payload.skill))],
-        ["Trigger", formatValue(readValue(event.payload.trigger))],
-        ["Targets", readArray(event.payload.targets).join(", ") || "-"],
-        ["Target Reason", formatValue(readValue(event.payload.target_reason))],
-        ["Target Score", formatTargetScore(event.payload.target_score)],
+        ["Source（来源）", formatValue(readValue(event.payload.source))],
+        ["Skill（技能）", formatValue(readValue(event.payload.skill))],
+        ["Trigger（触发）", formatValue(readValue(event.payload.trigger))],
+        ["Targets（目标）", readArray(event.payload.targets).join(", ") || "-"],
+        ["Target Reason（目标原因）", formatValue(readValue(event.payload.target_reason))],
+        ["Target Score（目标评分）", formatTargetScore(event.payload.target_score)],
       ];
     case "damage":
       return [
-        ["Source", formatValue(readValue(event.payload.source))],
-        ["Target", formatValue(readValue(event.payload.target))],
-        ["Amount", formatNumber(readNumber(event.payload.amount))],
-        ["Reason", formatValue(readValue(event.payload.reason))],
+        ["Source（来源）", formatValue(readValue(event.payload.source))],
+        ["Target（目标）", formatValue(readValue(event.payload.target))],
+        ["Amount（数值）", formatNumber(readNumber(event.payload.amount))],
+        ["Reason（原因）", formatValue(readValue(event.payload.reason))],
       ];
     case "stat_modifier":
       return [
-        ["Source", formatValue(readValue(event.payload.source))],
-        ["Source Type", formatValue(readValue(event.payload.source_type))],
-        ["Target", formatValue(readValue(event.payload.target))],
-        ["Stat", formatValue(readValue(event.payload.stat))],
-        ["Amount", formatNumber(readNumber(event.payload.amount))],
-        ["Reason", formatValue(readValue(event.payload.reason))],
+        ["Source（来源）", formatValue(readValue(event.payload.source))],
+        ["Source Type（来源类型）", formatValue(readValue(event.payload.source_type))],
+        ["Target（目标）", formatValue(readValue(event.payload.target))],
+        ["Stat（属性）", formatValue(readValue(event.payload.stat))],
+        ["Amount（数值）", formatNumber(readNumber(event.payload.amount))],
+        ["Reason（原因）", formatValue(readValue(event.payload.reason))],
       ];
     case "status_apply":
     case "status_expire":
       return [
-        ["ID", formatValue(readValue(event.payload.id) ?? readValue(event.payload.status_id))],
-        ["Source", formatValue(readValue(event.payload.source))],
-        ["Target", formatValue(readValue(event.payload.target))],
-        ["Stat", formatValue(readValue(event.payload.stat))],
-        ["Amount", formatNumber(readNumber(event.payload.amount))],
-        ["Reason", formatValue(readValue(event.payload.reason))],
-        ["Target Reason", formatValue(readValue(event.payload.target_reason))],
+        ["ID（ID）", formatValue(readValue(event.payload.id) ?? readValue(event.payload.status_id))],
+        ["Source（来源）", formatValue(readValue(event.payload.source))],
+        ["Target（目标）", formatValue(readValue(event.payload.target))],
+        ["Stat（属性）", formatValue(readValue(event.payload.stat))],
+        ["Amount（数值）", formatNumber(readNumber(event.payload.amount))],
+        ["Reason（原因）", formatValue(readValue(event.payload.reason))],
+        ["Target Reason（目标原因）", formatValue(readValue(event.payload.target_reason))],
       ];
     case "skill_cooldown":
       return [
-        ["Source", formatValue(readValue(event.payload.source))],
-        ["Skill", formatValue(readValue(event.payload.skill))],
-        ["start_tick", formatNumber(readNumber(event.payload.start_tick))],
-        ["ready_tick", formatNumber(readNumber(event.payload.ready_tick))],
-        ["cooldown_ticks", formatNumber(readNumber(event.payload.cooldown_ticks))],
+        ["Source（来源）", formatValue(readValue(event.payload.source))],
+        ["Skill（技能）", formatValue(readValue(event.payload.skill))],
+        ["Start Tick（开始回合）", formatNumber(readNumber(event.payload.start_tick))],
+        ["Ready Tick（就绪回合）", formatNumber(readNumber(event.payload.ready_tick))],
+        ["Cooldown Ticks（冷却回合）", formatNumber(readNumber(event.payload.cooldown_ticks))],
       ];
     case "action_scheduled":
       return [
-        ["Unit", formatValue(readValue(event.payload.unit))],
-        ["current_tick", formatNumber(readNumber(event.payload.current_tick))],
-        ["next_action_tick", formatNumber(readNumber(event.payload.next_action_tick))],
-        ["action_interval_ticks", formatNumber(readNumber(event.payload.action_interval_ticks))],
-        ["Reason", formatValue(readValue(event.payload.reason))],
+        ["Unit（单位）", formatValue(readValue(event.payload.unit))],
+        ["Current Tick（当前回合）", formatNumber(readNumber(event.payload.current_tick))],
+        ["Next Action Tick（下次行动回合）", formatNumber(readNumber(event.payload.next_action_tick))],
+        ["Action Interval（行动间隔）", formatNumber(readNumber(event.payload.action_interval_ticks))],
+        ["Reason（原因）", formatValue(readValue(event.payload.reason))],
       ];
     case "death":
-      return [["Unit", formatValue(readValue(event.payload.unit))]];
+      return [["Unit（单位）", formatValue(readValue(event.payload.unit))]];
     case "battle_end":
       return [
-        ["Winner", formatValue(readValue(event.payload.winner))],
-        ["Reason", formatValue(readValue(event.payload.reason))],
-        ["End Tick", formatNumber(readNumber(event.payload.end_tick))],
-        ["winner_alive", formatNumber(readNumber(event.payload.winner_alive))],
-        ["loser_alive", formatNumber(readNumber(event.payload.loser_alive))],
-        ["winner_total_hp", formatNumber(readNumber(event.payload.winner_total_hp))],
-        ["loser_total_hp", formatNumber(readNumber(event.payload.loser_total_hp))],
-        ["Summary", formatValue(readValue(event.payload.summary))],
+        ["Winner（胜利）", formatValue(readValue(event.payload.winner))],
+        ["Reason（原因）", formatValue(readValue(event.payload.reason))],
+        ["End Tick（终止回合）", formatNumber(readNumber(event.payload.end_tick))],
+        ["Winner Alive（胜利方存活）", formatNumber(readNumber(event.payload.winner_alive))],
+        ["Loser Alive（失败方存活）", formatNumber(readNumber(event.payload.loser_alive))],
+        ["Winner Total HP（胜利方总血量）", formatNumber(readNumber(event.payload.winner_total_hp))],
+        ["Loser Total HP（失败方总血量）", formatNumber(readNumber(event.payload.loser_total_hp))],
+        ["Summary（总结）", formatValue(readValue(event.payload.summary))],
       ];
     case "unit_spawn": {
       const unit = asRecord(event.payload.unit);
       return [
-        ["Unit", formatValue(readValue(unit.instance_id))],
-        ["Side", formatValue(readValue(unit.side))],
-        ["Role", formatValue(readValue(unit.role))],
+        ["Unit（单位）", formatValue(readValue(unit.instance_id))],
+        ["Side（阵营）", formatValue(readValue(unit.side))],
+        ["Role（角色）", formatValue(readValue(unit.role))],
       ];
     }
     default:
       return [
-        ["Applied Event", formatValue(state.appliedEventId)],
-        ["Applied Index", formatNumber(state.appliedEventIndex)],
+        ["Applied Event（已应用事件）", formatValue(state.appliedEventId)],
+        ["Applied Index（应用序号）", formatNumber(state.appliedEventIndex)],
       ];
   }
 };

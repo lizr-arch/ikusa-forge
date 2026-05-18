@@ -57,6 +57,7 @@ It also starts the Live Combat API / 实时战斗 API in a managed subprocess an
 
 The browser smoke includes timeline filters and detail/report visibility for `status_apply`, `skill_cooldown`, `action_scheduled`, and `victory_explanation`.
 It also checks Scenario Selector / 场景选择器, One-click Demo / 一键 Demo loading from Scenario Manifest / 场景清单, and manual File Input Loading / 文件输入加载 availability.
+Live smoke additionally validates battlefield-first live-mode rendering, including unit token count, HP bars, action bars, step-driven visual updates, and victory message readiness.
 It additionally verifies Live mode controls and error handling when API health is unavailable.
 
 ## Commands / 命令

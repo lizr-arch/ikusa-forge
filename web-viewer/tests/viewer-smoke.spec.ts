@@ -22,11 +22,18 @@ test("loads curated scenario from manifest", async ({ page }) => {
 
   await page.locator("#load-baseline-demo").click();
 
-  await expect(page.locator("#status")).toContainText("scenario loaded: demo_001");
+  await expect(page.locator("#status")).toContainText("scenario loaded（场景已加载）");
+  await expect(page.locator("#board-heading")).toContainText("Battlefield（战场）");
+  await expect(page.locator("#controls-heading")).toContainText("Battle Control（战斗控制）");
+  await expect(page.locator("#live-mode-heading")).toContainText("Live Mode（实时模式）");
+  await expect(page.locator("#timeline-heading")).toContainText("Event Log（事件日志）");
+  await expect(page.locator("#report-heading")).toContainText("Report Panel（战报面板）");
+  await expect(page.locator("text=Ally（友军）")).toBeVisible();
+  await expect(page.locator("text=Enemy（敌军）")).toBeVisible();
   await expect(page.locator("#metadata")).toContainText("demo_001");
-  await expect(page.locator("#metadata")).toContainText("seed 1001");
-  await expect(page.locator("#replay-load-state")).toContainText("/samples/demo_001/replay.json loaded");
-  await expect(page.locator("#report-load-state")).toContainText("/samples/demo_001/battle_report.json loaded");
+  await expect(page.locator("#metadata")).toContainText(/seed（种子）\s*1001|seed 1001/);
+  await expect(page.locator("#replay-load-state")).toContainText(/samples\/demo_001\/replay\.json loaded/);
+  await expect(page.locator("#report-load-state")).toContainText(/samples\/demo_001\/battle_report\.json loaded/);
 
   await expect(page.locator("#scenario-summary")).toContainText("Baseline Tactical Demo");
   await expect(page.locator("#scenario-summary")).toContainText("demo_001");
@@ -51,13 +58,13 @@ test("loads curated scenario from manifest", async ({ page }) => {
 
   await page.locator(".timeline-filter select").selectOption("skill_cooldown");
   await page.locator(".timeline-row").first().click();
-  await expect(page.locator("#event-highlight")).toContainText("ready_tick");
+    await expect(page.locator("#event-highlight")).toContainText(/Ready Tick（就绪回合）|ready_tick/);
   await page.locator(".timeline-filter select").selectOption("action_scheduled");
   await page.locator(".timeline-row").first().click();
-  await expect(page.locator("#event-highlight")).toContainText("next_action_tick");
+    await expect(page.locator("#event-highlight")).toContainText(/Next Action Tick（下次行动回合）|next_action_tick/);
 
   await page.locator('[aria-label="ally_001"]').click();
-  await expect(page.locator("#unit-detail")).toContainText("Next Action Tick");
+  await expect(page.locator("#unit-detail")).toContainText(/Next Action Tick（下次行动）|Next Action/);
   await expect(page.locator("#report")).toContainText("Victory Explanation");
   await expect(page.locator("#report")).toContainText("enemy_eliminated");
 });
@@ -95,13 +102,13 @@ test("manual file input loading remains available", async ({ page }) => {
   await page.locator("#report-file").setInputFiles(reportPath);
   await page.locator("#load-files").click();
 
-  await expect(page.locator("#status")).toContainText("replay.json loaded");
-  await expect(page.locator("#status")).toContainText("battle_report.json loaded");
+  await expect(page.locator("#status")).toContainText("replay.json loaded（已加载）");
+  await expect(page.locator("#status")).toContainText("battle_report.json loaded（已加载）");
   await expect(page.locator("#metadata")).toContainText("demo_001");
-  await expect(page.locator("#metadata")).toContainText("seed 1001");
-  await expect(page.locator("#metadata")).toContainText("events ");
-  await expect(page.locator("#replay-load-state")).toContainText("replay.json loaded");
-  await expect(page.locator("#report-load-state")).toContainText("battle_report.json loaded");
+  await expect(page.locator("#metadata")).toContainText(/seed（种子）\s*1001|seed 1001/);
+  await expect(page.locator("#metadata")).toContainText(/events（事件）|events/);
+  await expect(page.locator("#replay-load-state")).toContainText(/replay\.json loaded/);
+  await expect(page.locator("#report-load-state")).toContainText(/battle_report\.json loaded/);
 
   await expect(page.locator("#battle-summary")).toContainText("demo_001");
   await expect(page.locator("#battle-summary")).toContainText("ally");
@@ -129,7 +136,9 @@ test("manual file input loading remains available", async ({ page }) => {
   await page.locator('[aria-label="ally_001"]').click();
   await expect(page.locator("#unit-detail")).toContainText("ally_001");
   await expect(page.locator("#unit-detail")).toContainText(/Status（状态）|Active Statuses/);
-  await expect(page.locator("#unit-detail")).toContainText("Next Action Tick");
+  await expect(page.locator("#unit-detail")).toContainText(/HP（生命）|HP/);
+  await expect(page.locator("#unit-detail")).toContainText(/Cooldown（冷却）|Cooldowns/);
+  await expect(page.locator("#unit-detail")).toContainText(/Next Action（下次行动）|Next Action Tick/);
 
   const initialTick = await page.locator("#tick-readout").textContent();
   const initialEventSummary = await page.locator("#event-highlight .event-highlight-summary").textContent();
@@ -138,7 +147,7 @@ test("manual file input loading remains available", async ({ page }) => {
   const nextEventSummary = await page.locator("#event-highlight .event-highlight-summary").textContent();
   expect(nextTick).not.toBe(initialTick);
   expect(nextEventSummary).not.toBe(initialEventSummary);
-  await expect(page.locator("#event-readout")).toContainText("Event evt_");
+  await expect(page.locator("#event-readout")).toContainText(/Event（事件） evt_|Event evt_/);
   await expect(page.locator(".timeline-row.selected")).toBeVisible();
 
   await page.locator("#previous-event").click();
@@ -149,7 +158,7 @@ test("manual file input loading remains available", async ({ page }) => {
     input.value = "56";
     input.dispatchEvent(new Event("input", { bubbles: true }));
   });
-  await expect(page.locator("#tick-readout")).toContainText("Tick 56");
+  await expect(page.locator("#tick-readout")).toContainText(/Tick（回合） 56|Tick 56/);
 
   await page.locator(".timeline-filter select").selectOption("damage");
   await page.locator(".timeline-row").first().click();
@@ -189,13 +198,13 @@ test("manual file input loading remains available", async ({ page }) => {
   const firstCooldown = page.locator(".timeline-row").first();
   await expect(firstCooldown).toBeVisible();
   await firstCooldown.click();
-  await expect(page.locator("#event-highlight")).toContainText("ready_tick");
+  await expect(page.locator("#event-highlight")).toContainText(/Ready Tick（就绪回合）|ready_tick/);
 
   await page.locator(".timeline-filter select").selectOption("action_scheduled");
   const firstActionSchedule = page.locator(".timeline-row").first();
   await expect(firstActionSchedule).toBeVisible();
   await firstActionSchedule.click();
-  await expect(page.locator("#event-highlight")).toContainText("next_action_tick");
+  await expect(page.locator("#event-highlight")).toContainText(/Next Action Tick（下次行动回合）|next_action_tick/);
 
   await expect(page.locator("#report")).toContainText("Target Reasons");
   await expect(page.locator("#report")).toContainText("Skill Target Reasons");
@@ -209,18 +218,18 @@ test("manual file input loading remains available", async ({ page }) => {
   await expect(page.locator('[aria-label="ally_003"].unit-selected')).toBeVisible();
 
   await expect(page.locator("#battle-summary")).toContainText("Total Modifiers");
-  await expect(page.locator("#report")).toContainText("Total Modifiers");
-  await expect(page.locator("#report")).toContainText("Formation Modifiers");
-  await expect(page.locator("#report")).toContainText("Synergy Modifiers");
-  await expect(page.locator("#report")).toContainText("ATK Bonus");
-  await expect(page.locator("#report")).toContainText("DEF Bonus");
+  await expect(page.locator("#report")).toContainText(/Total Modifiers（总修正）|Total Modifiers/);
+  await expect(page.locator("#report")).toContainText(/Formation Modifiers（编队修正）|Formation Modifiers/);
+  await expect(page.locator("#report")).toContainText(/Synergy Modifiers（协同修正）|Synergy Modifiers/);
+  await expect(page.locator("#report")).toContainText(/ATK Bonus（攻击加成）|ATK Bonus/);
+  await expect(page.locator("#report")).toContainText(/DEF Bonus（防御加成）|DEF Bonus/);
 
   await page.locator(".key-moment").filter({ hasText: "enemy_eliminated" }).click();
-  await expect(page.locator("#tick-readout")).toContainText("Tick 240");
+  await expect(page.locator("#tick-readout")).toContainText(/Tick（回合） 240|Tick 240/);
 
   await expect(page.locator("#report")).toContainText("enemy_eliminated");
   await expect(page.locator("#report")).toContainText("Total Damage");
-  await expect(page.locator("#report")).toContainText(/Top Units|Key Moments/);
+  await expect(page.locator("#report")).toContainText(/Top Units（最优单位）|Key Moments（关键时刻）/);
 });
 
 test("live mode controls are visible and API errors are readable", async ({ page }) => {
@@ -237,8 +246,8 @@ test("live mode controls are visible and API errors are readable", async ({ page
   await page.locator("#live-seed").fill("1001");
   await page.locator("#start-live-battle").click();
 
-  await expect(page.locator("#live-status-line")).toContainText(/Live API unavailable|不可用|failed/i);
-  await expect(page.locator("#status")).toContainText(/Live API unavailable|不可用|failed/i);
+  await expect(page.locator("#live-status-line")).toContainText(/Live API unavailable（实时 API 不可用）|不可用|Live API unavailable/i);
+  await expect(page.locator("#status")).toContainText(/Live API unavailable（实时 API 不可用）|不可用|Live API unavailable|failed/i);
 });
 
 test("live mode can start and step with local API", async ({ page }) => {
@@ -267,17 +276,30 @@ test("live mode can start and step with local API", async ({ page }) => {
 
     await expect(page.locator("#live-session-id")).not.toHaveText("-", { timeout: 10_000 });
     await expect(page.locator("#live-status-line")).toContainText(/connected|running|运行/i, { timeout: 10_000 });
-    await expect(page.locator("#metadata")).toContainText("battle demo_001");
-    await expect(page.locator("#metadata")).toContainText("seed 1001");
+    await expect(page.locator("#metadata")).toContainText(/battle（战斗）\s*demo_001|battle demo_001/);
+    await expect(page.locator("#metadata")).toContainText(/seed（种子）\s*1001|seed 1001/);
     await expect(page.locator("#metadata")).toContainText("events ");
+    await expect(page.locator("#board")).toBeVisible();
     await expect(page.locator(".unit-token")).toHaveCount(12, { timeout: 10_000 });
+    await expect(page.locator(".health-fill")).toHaveCount(12, { timeout: 10_000 });
+    await expect(page.locator(".action-bar-bg")).toHaveCount(12, { timeout: 10_000 });
+    await expect(page.locator(".unit-status-count")).toHaveCount(12, { timeout: 10_000 });
+    await expect(page.locator(".unit-cooldown-count")).toHaveCount(12, { timeout: 10_000 });
+    await expect(page.locator("#live-current-tick")).toHaveText(/\d+/);
 
-    const beforeCursor = Number((await page.locator("#live-event-cursor").textContent()) ?? "0");
-    const beforeTick = (await page.locator("#tick-readout").textContent()) ?? "Tick 0";
-    const beforeTimelineRows = await countTimelineRows(page);
-    await page.locator("#step-live-battle").click();
-
-    await waitForLiveProgress(page, beforeCursor, beforeTick, beforeTimelineRows);
+    let beforeCursor = Number((await page.locator("#live-event-cursor").textContent()) ?? "0");
+    let beforeTick = (await page.locator("#tick-readout").textContent()) ?? "Tick 0";
+    let beforeTimelineRows = await countTimelineRows(page);
+    let effectFound = false;
+    for (let attempt = 0; attempt < 6 && !effectFound; attempt += 1) {
+      await page.locator("#step-live-battle").click();
+      await waitForLiveProgress(page, beforeCursor, beforeTick, beforeTimelineRows);
+      effectFound = await hasLiveVisualEffect(page);
+      beforeCursor = Number((await page.locator("#live-event-cursor").textContent()) ?? "0");
+      beforeTick = (await page.locator("#tick-readout").textContent()) ?? "Tick 0";
+      beforeTimelineRows = await countTimelineRows(page);
+    }
+    expect(effectFound).toBeTruthy();
 
     await page.locator("#reset-live-battle").click();
     await expect(page.locator("#live-session-id")).toContainText("-", { timeout: 10_000 });
@@ -374,4 +396,24 @@ const waitForLiveProgress = async (
     await wait(100);
   }
   throw new Error("Live step produced no visible progress");
+};
+
+const hasLiveVisualEffect = async (page: Page): Promise<boolean> => {
+  const hasAttackLine = await page.locator(".attack-line").count() > 0;
+  const hasUnitEventRing = await page.locator(".unit-event-ring").count() > 0;
+  const hasDamage = await page.locator(".damage-label").count() > 0;
+  const hasSkill = await page.locator(".skill-label").count() > 0;
+  const hasStatus = await page.locator(".status-badge").count() > 0;
+  const hasCooldown = await page.locator(".cooldown-badge").count() > 0;
+  const hasVictory = await page.locator(".victory-banner, .battle-end-banner").count() > 0;
+  const hasModifierRing = await page.locator(".modifier-ring").count() > 0;
+
+  return hasAttackLine
+    || hasUnitEventRing
+    || hasDamage
+    || hasSkill
+    || hasStatus
+    || hasCooldown
+    || hasVictory
+    || hasModifierRing;
 };

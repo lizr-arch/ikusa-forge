@@ -35,6 +35,9 @@ const SIDE_GAP = 70;
 const ALLY_Y = ENEMY_Y + ROWS * CELL_HEIGHT + SIDE_GAP;
 const WIDTH = ORIGIN_X * 2 + COLS * CELL_WIDTH;
 const HEIGHT = ALLY_Y + ROWS * CELL_HEIGHT + 48;
+const UNIT_WIDTH = 102;
+const UNIT_HEIGHT = 60;
+const UNIT_PADDING = 8;
 
 export const renderBoard = (container: HTMLElement, options: BoardRenderOptions): void => {
   container.replaceChildren();
@@ -51,13 +54,14 @@ export const renderBoard = (container: HTMLElement, options: BoardRenderOptions)
   const centers = buildUnitCenters(options.state);
   drawAnnotations(svg, options.state, centers);
   drawUnits(svg, options, centers);
+  drawVictoryBanner(svg, options.state);
 
   container.append(svg);
 };
 
 const drawSideCells = (svg: SVGSVGElement, side: "ally" | "enemy", originY: number): void => {
   const label = svgElement("text");
-  label.textContent = side === "ally" ? "Ally" : "Enemy";
+  label.textContent = side === "ally" ? "Ally（友军）" : "Enemy（敌军）";
   setAttrs(label, {
     x: 12,
     y: originY - 18,
@@ -212,6 +216,51 @@ const drawAnnotations = (
       }
     }
   }
+
+  if (state.lastStatus) {
+    const target = centers.get(state.lastStatus.target);
+    if (target) {
+      const marker = svgElement("circle");
+      setAttrs(marker, {
+        cx: target.x - 24,
+        cy: target.y - 24,
+        r: 14,
+        class: "status-badge",
+      });
+      const markerLabel = svgElement("text");
+      markerLabel.textContent = state.lastStatus.eventType === "status_apply" ? "S+" : "SE";
+      setAttrs(markerLabel, {
+        x: target.x - 24,
+        y: target.y - 20,
+        class: "status-badge-text",
+      });
+      svg.append(marker, markerLabel);
+    }
+  }
+
+  if (state.lastCooldown) {
+    const source = centers.get(state.lastCooldown.source);
+    if (source) {
+      const cooldown = svgElement("rect");
+      const remaining = Math.max(0, state.lastCooldown.readyTick - state.lastCooldown.tick);
+      setAttrs(cooldown, {
+        x: source.x + 26,
+        y: source.y - 22,
+        width: 24,
+        height: 14,
+        rx: 4,
+        class: "cooldown-badge",
+      });
+      const label = svgElement("text");
+      label.textContent = `CD ${remaining}`;
+      setAttrs(label, {
+        x: source.x + 38,
+        y: source.y - 11,
+        class: "cooldown-text",
+      });
+      svg.append(cooldown, label);
+    }
+  }
 };
 
 const drawUnits = (
@@ -263,14 +312,14 @@ const drawUnit = (
     }
   });
 
-  const x = center.x - 50;
-  const y = center.y - 28;
+  const x = center.x - UNIT_WIDTH / 2;
+  const y = center.y - UNIT_HEIGHT / 2;
   const rect = svgElement("rect");
   setAttrs(rect, {
     x,
     y,
-    width: 100,
-    height: 56,
+    width: UNIT_WIDTH,
+    height: UNIT_HEIGHT,
     rx: 8,
     class: "unit-rect",
   });
@@ -278,42 +327,59 @@ const drawUnit = (
 
   const healthBackground = svgElement("rect");
   setAttrs(healthBackground, {
-    x: x + 8,
+    x: x + UNIT_PADDING,
     y: y + 40,
-    width: 84,
+    width: UNIT_WIDTH - UNIT_PADDING * 2,
     height: 6,
     rx: 3,
     class: "health-background",
   });
   group.append(healthBackground);
 
-  const health = svgElement("rect");
   const hpRatio = unit.maxHp > 0 ? Math.max(0, Math.min(1, unit.hp / unit.maxHp)) : 0;
+  const health = svgElement("rect");
   setAttrs(health, {
-    x: x + 8,
+    x: x + UNIT_PADDING,
     y: y + 40,
-    width: 84 * hpRatio,
+    width: (UNIT_WIDTH - UNIT_PADDING * 2) * hpRatio,
     height: 6,
     rx: 3,
     class: "health-fill",
   });
   group.append(health);
 
-  appendText(group, unit.instanceId, center.x, y + 15, "unit-id");
-  appendText(group, `${shorten(unit.name, 12)} / ${shorten(unit.role, 8)}`, center.x, y + 29, "unit-role");
+  const statusCount = unit.statuses.filter((status) => status.active).length;
+  const cooldownCount = unit.skillCooldowns.size;
+  appendText(group, unit.instanceId, center.x, y + 16, "unit-id");
+  appendText(group, `${shorten(unit.name, 12)} / ${shorten(unit.role, 8)}`, center.x, y + 30, "unit-role");
   appendText(group, `${unit.hp}/${unit.maxHp}`, center.x, y + 54, "unit-hp");
+  appendText(group, `Status（状态）${statusCount}`, center.x - 28, y - 4, "unit-status-count");
+  appendText(group, `Cooldown（冷却）${cooldownCount}`, center.x + 28, y - 4, "unit-cooldown-count");
+  appendActionBar(group, x, y + 48, unit, options.state.currentTick);
 
   if (!unit.alive) {
     const slash = svgElement("line");
     setAttrs(slash, {
       x1: x + 12,
-      y1: y + 10,
-      x2: x + 88,
-      y2: y + 46,
+      y1: y + 12,
+      x2: x + UNIT_WIDTH - 12,
+      y2: y + UNIT_HEIGHT - 12,
       class: "death-slash",
     });
     group.append(slash);
   }
+
+  const nextActionTick = unit.nextActionTick;
+  const actionIntervalTicks = unit.actionIntervalTicks;
+  const nextActionText = nextActionTick === null
+    ? "Next Action（下次行动）: -"
+    : actionIntervalTicks === null
+      ? `Next Action（下次行动）: ${nextActionTick}`
+      : `Next Action（下次行动）: ${nextActionTick}/${actionIntervalTicks}`;
+  appendText(group, nextActionText, center.x, y + UNIT_HEIGHT + 10, "unit-action-text");
+
+  const meta = `ATK（攻击） ${unit.atk} / DEF（防御） ${unit.defense}`;
+  appendText(group, meta, center.x, y + UNIT_HEIGHT + 22, "unit-meta-text");
 
   const highlight = options.unitHighlights.get(unit.instanceId);
   if (highlight) {
@@ -321,8 +387,8 @@ const drawUnit = (
     setAttrs(ring, {
       x: x - 5,
       y: y - 5,
-      width: 110,
-      height: 66,
+      width: UNIT_WIDTH + 10,
+      height: UNIT_HEIGHT + 10,
       rx: 11,
       class: `unit-event-ring unit-event-ring-${highlight}`,
     });
@@ -368,8 +434,89 @@ const shorten = (value: string, length: number): string => {
   return `${value.slice(0, Math.max(0, length - 1))}.`;
 };
 
+const appendActionBar = (
+  parent: SVGElement,
+  x: number,
+  y: number,
+  unit: VisualUnit,
+  currentTick: number,
+): void => {
+  const actionBarWidth = UNIT_WIDTH - UNIT_PADDING * 2;
+  const ratio = getActionRatio(unit, currentTick);
+  const progress = Math.max(0, Math.min(actionBarWidth, actionBarWidth * ratio));
+  const background = svgElement("rect");
+  setAttrs(background, {
+    x: x + UNIT_PADDING,
+    y,
+    width: actionBarWidth,
+    height: 4,
+    rx: 3,
+    class: "action-bar-bg",
+  });
+  const fill = svgElement("rect");
+  setAttrs(fill, {
+    x: x + UNIT_PADDING,
+    y,
+    width: progress,
+    height: 4,
+    rx: 3,
+    class: "action-bar-fill",
+  });
+  const actionText = unit.nextActionTick === null
+    ? "NA"
+    : `Action（行动） ${unit.nextActionTick}`;
+  const actionTextElement = svgElement("text");
+  setAttrs(actionTextElement, {
+    x: x + UNIT_WIDTH / 2,
+    y: y + 14,
+    class: "action-bar-text",
+  });
+  actionTextElement.textContent = actionText;
+  parent.append(background, fill, actionTextElement);
+};
+
+const getActionRatio = (unit: VisualUnit, currentTick: number): number => {
+  if (unit.nextActionTick === null || unit.actionIntervalTicks === null || unit.actionIntervalTicks <= 0) {
+    return 0;
+  }
+  const cycleStart = Math.max(0, unit.nextActionTick - unit.actionIntervalTicks);
+  const local = Math.max(0, Math.min(unit.actionIntervalTicks, currentTick - cycleStart));
+  return local / unit.actionIntervalTicks;
+};
+
 const eventHighlightClass = (highlight: EventUnitHighlight | undefined): string => {
   return highlight ? `unit-current-event unit-current-${highlight}` : "";
+};
+
+const drawVictoryBanner = (svg: SVGSVGElement, state: VisualState): void => {
+  const result = state.battleResult;
+  if (!result) {
+    return;
+  }
+
+  const winner = result.winner ?? "Unknown";
+  const reason = result.reason ?? "-";
+  const endTick = result.end_tick ?? state.currentTick;
+  const width = WIDTH - 96;
+  const x = (WIDTH - width) / 2;
+  const y = 14;
+  const rect = svgElement("rect");
+  setAttrs(rect, {
+    x,
+    y,
+    width,
+    height: 44,
+    rx: 10,
+    class: "victory-banner",
+  });
+  const text = svgElement("text");
+  text.textContent = `Victory（胜负） ${winner} / ${reason} / tick ${endTick}`;
+  setAttrs(text, {
+    x: WIDTH / 2,
+    y: y + 28,
+    class: "victory-banner-text",
+  });
+  svg.append(rect, text);
 };
 
 const svgElement = <K extends keyof SVGElementTagNameMap>(tag: K): SVGElementTagNameMap[K] => {
