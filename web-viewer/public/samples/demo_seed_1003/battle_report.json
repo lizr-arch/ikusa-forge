@@ -1,75 +1,75 @@
 {
   "battle_id": "demo_001",
-  "end_tick": 240,
+  "end_tick": 341,
   "key_moments": [
     {
       "killer": "ally_002",
-      "summary": "enemy_002 was killed by ally_002",
-      "tick": 48,
-      "type": "death",
-      "unit": "enemy_002"
-    },
-    {
-      "killer": "ally_005",
-      "summary": "enemy_004 was killed by ally_005",
-      "tick": 56,
+      "summary": "enemy_004 was killed by ally_002",
+      "tick": 89,
       "type": "death",
       "unit": "enemy_004"
     },
     {
-      "killer": "enemy_005",
-      "summary": "ally_002 was killed by enemy_005",
-      "tick": 56,
-      "type": "death",
-      "unit": "ally_002"
-    },
-    {
       "killer": "ally_003",
-      "summary": "enemy_001 was killed by ally_003",
-      "tick": 160,
-      "type": "death",
-      "unit": "enemy_001"
-    },
-    {
-      "killer": "enemy_005",
-      "summary": "ally_005 was killed by enemy_005",
-      "tick": 168,
-      "type": "death",
-      "unit": "ally_005"
-    },
-    {
-      "killer": "ally_004",
-      "summary": "enemy_003 was killed by ally_004",
-      "tick": 198,
+      "summary": "enemy_003 was killed by ally_003",
+      "tick": 118,
       "type": "death",
       "unit": "enemy_003"
     },
     {
-      "killer": "ally_003",
-      "summary": "enemy_005 was killed by ally_003",
-      "tick": 200,
-      "type": "death",
-      "unit": "enemy_005"
-    },
-    {
-      "killer": "enemy_006",
-      "summary": "ally_004 was killed by enemy_006",
-      "tick": 216,
-      "type": "death",
-      "unit": "ally_004"
-    },
-    {
-      "killer": "ally_003",
-      "summary": "enemy_006 was killed by ally_003",
-      "tick": 240,
+      "killer": "ally_004",
+      "summary": "enemy_006 was killed by ally_004",
+      "tick": 139,
       "type": "death",
       "unit": "enemy_006"
     },
     {
-      "end_tick": 240,
+      "killer": "enemy_002",
+      "summary": "ally_004 was killed by enemy_002",
+      "tick": 157,
+      "type": "death",
+      "unit": "ally_004"
+    },
+    {
+      "killer": "enemy_005",
+      "summary": "ally_002 was killed by enemy_005",
+      "tick": 178,
+      "type": "death",
+      "unit": "ally_002"
+    },
+    {
+      "killer": "ally_001",
+      "summary": "enemy_002 was killed by ally_001",
+      "tick": 248,
+      "type": "death",
+      "unit": "enemy_002"
+    },
+    {
+      "killer": "enemy_005",
+      "summary": "ally_006 was killed by enemy_005",
+      "tick": 290,
+      "type": "death",
+      "unit": "ally_006"
+    },
+    {
+      "killer": "ally_003",
+      "summary": "enemy_001 was killed by ally_003",
+      "tick": 319,
+      "type": "death",
+      "unit": "enemy_001"
+    },
+    {
+      "killer": "ally_003",
+      "summary": "enemy_005 was killed by ally_003",
+      "tick": 341,
+      "type": "death",
+      "unit": "enemy_005"
+    },
+    {
+      "end_tick": 341,
       "reason": "enemy_eliminated",
-      "summary": "ally won by enemy_eliminated at tick 240; winner_alive=3, loser_alive=0, winner_total_hp=286, loser_total_hp=0",
-      "tick": 240,
+      "summary": "ally won by enemy_eliminated at tick 341; winner_alive=3, loser_alive=0, winner_total_hp=272, loser_total_hp=0",
+      "tick": 341,
       "type": "battle_end",
       "winner": "ally"
     }
@@ -81,30 +81,28 @@
     "formation_modifiers": 8,
     "skill_target_reason_counts": {
       "adjacent_allies": 2,
-      "current_target": 40,
-      "lowest_hp_enemy": 4,
+      "current_target": 46,
+      "lowest_hp_enemy": 6,
       "self": 2
     },
     "synergy_modifiers": 8,
     "target_reason_counts": {
-      "frontline_exposed_adjacent_column": 20,
-      "frontline_exposed_remote": 9,
-      "frontline_exposed_same_column": 8
+      "spatial_engaged_target": 31
     },
-    "total_actions_scheduled": 75,
-    "total_damage": 1189,
+    "total_actions_scheduled": 71,
+    "total_damage": 1212,
     "total_kills": 9,
     "total_modifiers": 16,
-    "total_skill_cooldowns": 48,
-    "total_skill_triggers": 48,
+    "total_skill_cooldowns": 56,
+    "total_skill_triggers": 56,
     "total_status_applied": 4,
     "total_status_expired": 0
   },
   "top_units": {
     "damage_done": [
       "ally_003",
-      "ally_004",
-      "enemy_005"
+      "enemy_002",
+      "ally_002"
     ],
     "damage_taken": [
       "enemy_001",
@@ -113,22 +111,22 @@
     ],
     "skill_triggers": [
       "ally_003",
-      "enemy_003",
-      "enemy_005"
+      "enemy_005",
+      "ally_005"
     ]
   },
   "units": {
     "ally_001": {
       "actions_taken": 7,
-      "cooldowns_started": 3,
-      "damage_done": 58,
-      "damage_taken": 94,
+      "cooldowns_started": 4,
+      "damage_done": 65,
+      "damage_taken": 29,
       "deaths": 0,
-      "kills": 0,
-      "last_next_action_tick": 256,
+      "kills": 1,
+      "last_next_action_tick": 338,
       "modifiers_received": 2,
       "skill_triggers": {
-        "intercept": 2,
+        "intercept": 3,
         "shield_guard": 1
       },
       "stat_bonuses": {
@@ -139,17 +137,17 @@
       "statuses_expired": 0
     },
     "ally_002": {
-      "actions_taken": 2,
-      "cooldowns_started": 2,
-      "damage_done": 69,
-      "damage_taken": 149,
+      "actions_taken": 5,
+      "cooldowns_started": 5,
+      "damage_done": 171,
+      "damage_taken": 146,
       "deaths": 1,
       "kills": 1,
-      "last_next_action_tick": 72,
+      "last_next_action_tick": 185,
       "modifiers_received": 2,
       "skill_triggers": {
-        "brace_counter": 1,
-        "spear_thrust": 1
+        "brace_counter": 2,
+        "spear_thrust": 3
       },
       "stat_bonuses": {
         "atk": 3.0,
@@ -159,16 +157,16 @@
       "statuses_expired": 0
     },
     "ally_003": {
-      "actions_taken": 12,
-      "cooldowns_started": 12,
-      "damage_done": 269,
-      "damage_taken": 0,
+      "actions_taken": 13,
+      "cooldowns_started": 13,
+      "damage_done": 250,
+      "damage_taken": 39,
       "deaths": 0,
       "kills": 3,
-      "last_next_action_tick": 260,
+      "last_next_action_tick": 361,
       "modifiers_received": 1,
       "skill_triggers": {
-        "katana_slash": 12
+        "katana_slash": 13
       },
       "stat_bonuses": {
         "atk": 3.0
@@ -177,16 +175,16 @@
       "statuses_expired": 0
     },
     "ally_004": {
-      "actions_taken": 12,
-      "cooldowns_started": 3,
-      "damage_done": 230,
-      "damage_taken": 83,
+      "actions_taken": 4,
+      "cooldowns_started": 2,
+      "damage_done": 158,
+      "damage_taken": 102,
       "deaths": 1,
       "kills": 1,
-      "last_next_action_tick": 234,
+      "last_next_action_tick": 157,
       "modifiers_received": 1,
       "skill_triggers": {
-        "smoke_strike": 3
+        "smoke_strike": 2
       },
       "stat_bonuses": {
         "atk": 3.0
@@ -195,17 +193,17 @@
       "statuses_expired": 0
     },
     "ally_005": {
-      "actions_taken": 6,
-      "cooldowns_started": 5,
-      "damage_done": 108,
-      "damage_taken": 116,
-      "deaths": 1,
-      "kills": 1,
-      "last_next_action_tick": 196,
+      "actions_taken": 10,
+      "cooldowns_started": 8,
+      "damage_done": 110,
+      "damage_taken": 30,
+      "deaths": 0,
+      "kills": 0,
+      "last_next_action_tick": 364,
       "modifiers_received": 1,
       "skill_triggers": {
-        "bow_shot": 3,
-        "focus_fire": 2
+        "bow_shot": 5,
+        "focus_fire": 3
       },
       "stat_bonuses": {
         "hp": 10.0
@@ -214,13 +212,13 @@
       "statuses_expired": 0
     },
     "ally_006": {
-      "actions_taken": 6,
+      "actions_taken": 3,
       "cooldowns_started": 1,
-      "damage_done": 13,
-      "damage_taken": 0,
-      "deaths": 0,
+      "damage_done": 6,
+      "damage_taken": 106,
+      "deaths": 1,
       "kills": 0,
-      "last_next_action_tick": 252,
+      "last_next_action_tick": 281,
       "modifiers_received": 1,
       "skill_triggers": {
         "banner_rally": 1
@@ -232,16 +230,16 @@
       "statuses_expired": 0
     },
     "enemy_001": {
-      "actions_taken": 4,
-      "cooldowns_started": 3,
-      "damage_done": 38,
-      "damage_taken": 167,
+      "actions_taken": 6,
+      "cooldowns_started": 4,
+      "damage_done": 54,
+      "damage_taken": 166,
       "deaths": 1,
       "kills": 0,
-      "last_next_action_tick": 160,
+      "last_next_action_tick": 331,
       "modifiers_received": 2,
       "skill_triggers": {
-        "intercept": 2,
+        "intercept": 3,
         "shield_guard": 1
       },
       "stat_bonuses": {
@@ -252,17 +250,17 @@
       "statuses_expired": 0
     },
     "enemy_002": {
-      "actions_taken": 1,
-      "cooldowns_started": 2,
-      "damage_done": 54,
-      "damage_taken": 134,
+      "actions_taken": 6,
+      "cooldowns_started": 6,
+      "damage_done": 198,
+      "damage_taken": 139,
       "deaths": 1,
-      "kills": 0,
-      "last_next_action_tick": 48,
+      "kills": 1,
+      "last_next_action_tick": 248,
       "modifiers_received": 2,
       "skill_triggers": {
-        "brace_counter": 1,
-        "spear_thrust": 1
+        "brace_counter": 2,
+        "spear_thrust": 4
       },
       "stat_bonuses": {
         "atk": 2.0,
@@ -272,29 +270,29 @@
       "statuses_expired": 0
     },
     "enemy_003": {
-      "actions_taken": 9,
-      "cooldowns_started": 9,
-      "damage_done": 115,
-      "damage_taken": 132,
+      "actions_taken": 2,
+      "cooldowns_started": 2,
+      "damage_done": 39,
+      "damage_taken": 121,
       "deaths": 1,
       "kills": 0,
-      "last_next_action_tick": 200,
+      "last_next_action_tick": 131,
       "modifiers_received": 0,
       "skill_triggers": {
-        "katana_slash": 9
+        "katana_slash": 2
       },
       "stat_bonuses": {},
       "statuses_applied": 0,
       "statuses_expired": 0
     },
     "enemy_004": {
-      "actions_taken": 3,
+      "actions_taken": 2,
       "cooldowns_started": 1,
-      "damage_done": 73,
-      "damage_taken": 79,
+      "damage_done": 56,
+      "damage_taken": 89,
       "deaths": 1,
       "kills": 0,
-      "last_next_action_tick": 72,
+      "last_next_action_tick": 106,
       "modifiers_received": 0,
       "skill_triggers": {
         "smoke_strike": 1
@@ -304,17 +302,17 @@
       "statuses_expired": 0
     },
     "enemy_005": {
-      "actions_taken": 7,
-      "cooldowns_started": 6,
-      "damage_done": 126,
-      "damage_taken": 112,
+      "actions_taken": 11,
+      "cooldowns_started": 9,
+      "damage_done": 96,
+      "damage_taken": 113,
       "deaths": 1,
       "kills": 2,
-      "last_next_action_tick": 224,
+      "last_next_action_tick": 346,
       "modifiers_received": 2,
       "skill_triggers": {
-        "bow_shot": 4,
-        "focus_fire": 2
+        "bow_shot": 6,
+        "focus_fire": 3
       },
       "stat_bonuses": {
         "atk": 1.0,
@@ -324,13 +322,13 @@
       "statuses_expired": 0
     },
     "enemy_006": {
-      "actions_taken": 6,
+      "actions_taken": 2,
       "cooldowns_started": 1,
-      "damage_done": 36,
-      "damage_taken": 123,
+      "damage_done": 9,
+      "damage_taken": 132,
       "deaths": 1,
-      "kills": 1,
-      "last_next_action_tick": 252,
+      "kills": 0,
+      "last_next_action_tick": 142,
       "modifiers_received": 2,
       "skill_triggers": {
         "banner_rally": 1
@@ -344,14 +342,14 @@
     }
   },
   "victory_explanation": {
-    "end_tick": 240,
+    "end_tick": 341,
     "loser_alive": 0,
     "loser_total_hp": 0,
     "reason": "enemy_eliminated",
-    "summary": "ally won by enemy_eliminated at tick 240; winner_alive=3, loser_alive=0, winner_total_hp=286, loser_total_hp=0",
+    "summary": "ally won by enemy_eliminated at tick 341; winner_alive=3, loser_alive=0, winner_total_hp=272, loser_total_hp=0",
     "winner": "ally",
     "winner_alive": 3,
-    "winner_total_hp": 286
+    "winner_total_hp": 272
   },
   "winner": "ally"
 }

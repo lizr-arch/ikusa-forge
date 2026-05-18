@@ -139,13 +139,14 @@ class SkillCombatTests(unittest.TestCase):
 
         _run_tick(state, config, events, tick=0)
 
-        self.assertEqual(["skill_trigger", "damage", "skill_cooldown", "action_scheduled"], [event.type for event in events])
-        self.assertEqual(["enemy_low_hp"], events[0].payload["targets"])
-        self.assertEqual("enemy_low_hp", events[1].payload["target"])
-        self.assertEqual("skill:focus_fire", events[1].payload["reason"])
-        self.assertEqual("lowest_hp_enemy", events[0].payload["target_reason"])
-        self.assertEqual("focus_fire", events[2].payload["skill"])
-        self.assertEqual("ally_001", events[3].payload["unit"])
+        combat_events = [event for event in events if event.type in {"skill_trigger", "damage", "skill_cooldown", "action_scheduled"}]
+        self.assertEqual(["skill_trigger", "damage", "skill_cooldown", "action_scheduled"], [event.type for event in combat_events])
+        self.assertEqual(["enemy_low_hp"], combat_events[0].payload["targets"])
+        self.assertEqual("enemy_low_hp", combat_events[1].payload["target"])
+        self.assertEqual("skill:focus_fire", combat_events[1].payload["reason"])
+        self.assertEqual("lowest_hp_enemy", combat_events[0].payload["target_reason"])
+        self.assertEqual("focus_fire", combat_events[2].payload["skill"])
+        self.assertEqual("ally_001", combat_events[3].payload["unit"])
 
     def test_current_target_attack_skill_marks_target_reason(self):
         skill = make_skill(
@@ -162,10 +163,10 @@ class SkillCombatTests(unittest.TestCase):
 
         _run_tick(state, config, events, tick=0)
 
-        self.assertEqual("skill_trigger", events[0].type)
-        self.assertEqual("current_target", events[0].payload["target_reason"])
-        self.assertEqual(["enemy_001"], events[0].payload["targets"])
-        self.assertIsInstance(events[0].payload.get("target_score"), dict)
+        skill_event = next(event for event in events if event.type == "skill_trigger")
+        self.assertEqual("current_target", skill_event.payload["target_reason"])
+        self.assertEqual(["enemy_001"], skill_event.payload["targets"])
+        self.assertIsInstance(skill_event.payload.get("target_score"), dict)
 
     def test_basic_attack_fallback_emits_matching_attack_and_damage_events(self):
         config = make_config()
@@ -177,12 +178,13 @@ class SkillCombatTests(unittest.TestCase):
 
         _run_tick(state, config, events, tick=0)
 
-        self.assertEqual(["attack", "damage", "action_scheduled"], [event.type for event in events])
-        self.assertEqual("basic_attack", events[1].payload["reason"])
-        self.assertEqual(events[0].payload["target"], events[1].payload["target"])
-        self.assertEqual("frontline_exposed_same_column", events[0].payload["target_reason"])
-        self.assertEqual(20, events[2].payload["next_action_tick"])
-        self.assertEqual("after_action", events[2].payload["reason"])
+        combat_events = [event for event in events if event.type in {"attack", "damage", "action_scheduled"}]
+        self.assertEqual(["attack", "damage", "action_scheduled"], [event.type for event in combat_events])
+        self.assertEqual("basic_attack", combat_events[1].payload["reason"])
+        self.assertEqual(combat_events[0].payload["target"], combat_events[1].payload["target"])
+        self.assertEqual("spatial_engaged_target", combat_events[0].payload["target_reason"])
+        self.assertEqual(20, combat_events[2].payload["next_action_tick"])
+        self.assertEqual("after_action", combat_events[2].payload["reason"])
 
     def test_demo_basic_mode_emits_skill_trigger_events(self):
         state, events = self.run_demo()

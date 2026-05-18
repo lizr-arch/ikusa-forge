@@ -225,7 +225,7 @@ test("manual file input loading remains available", async ({ page }) => {
   await expect(page.locator("#report")).toContainText(/DEF Bonus（防御加成）|DEF Bonus/);
 
   await page.locator(".key-moment").filter({ hasText: "enemy_eliminated" }).click();
-  await expect(page.locator("#tick-readout")).toContainText(/Tick（回合） 240|Tick 240/);
+  await expect(page.locator("#tick-readout")).toContainText("Tick 341");
 
   await expect(page.locator("#report")).toContainText("enemy_eliminated");
   await expect(page.locator("#report")).toContainText("Total Damage");
@@ -281,25 +281,31 @@ test("live mode can start and step with local API", async ({ page }) => {
     await expect(page.locator("#metadata")).toContainText("events ");
     await expect(page.locator("#board")).toBeVisible();
     await expect(page.locator(".unit-token")).toHaveCount(12, { timeout: 10_000 });
+    await expect(page.locator(".unit-range-circle").first()).toBeVisible();
     await expect(page.locator(".health-fill")).toHaveCount(12, { timeout: 10_000 });
     await expect(page.locator(".action-bar-bg")).toHaveCount(12, { timeout: 10_000 });
     await expect(page.locator(".unit-status-count")).toHaveCount(12, { timeout: 10_000 });
     await expect(page.locator(".unit-cooldown-count")).toHaveCount(12, { timeout: 10_000 });
     await expect(page.locator("#live-current-tick")).toHaveText(/\d+/);
 
+    const initialPositions = await readUnitPositions(page);
     let beforeCursor = Number((await page.locator("#live-event-cursor").textContent()) ?? "0");
     let beforeTick = (await page.locator("#tick-readout").textContent()) ?? "Tick 0";
     let beforeTimelineRows = await countTimelineRows(page);
     let effectFound = false;
-    for (let attempt = 0; attempt < 6 && !effectFound; attempt += 1) {
+    let movementFound = false;
+    for (let attempt = 0; attempt < 8 && (!effectFound || !movementFound); attempt += 1) {
       await page.locator("#step-live-battle").click();
       await waitForLiveProgress(page, beforeCursor, beforeTick, beforeTimelineRows);
-      effectFound = await hasLiveVisualEffect(page);
+      effectFound ||= await hasLiveVisualEffect(page);
+      movementFound ||= await hasUnitMovement(page, initialPositions);
       beforeCursor = Number((await page.locator("#live-event-cursor").textContent()) ?? "0");
       beforeTick = (await page.locator("#tick-readout").textContent()) ?? "Tick 0";
       beforeTimelineRows = await countTimelineRows(page);
     }
     expect(effectFound).toBeTruthy();
+    expect(movementFound).toBeTruthy();
+    await expect(page.locator("#live-latest-event")).toContainText(/unit_move|target_acquired|enter_range|engage_start|attack|damage|action_scheduled/);
 
     await page.locator("#reset-live-battle").click();
     await expect(page.locator("#live-session-id")).toContainText("-", { timeout: 10_000 });
@@ -416,4 +422,28 @@ const hasLiveVisualEffect = async (page: Page): Promise<boolean> => {
     || hasCooldown
     || hasVictory
     || hasModifierRing;
+};
+
+const readUnitPositions = async (page: Page): Promise<Map<string, string>> => {
+  const positions = new Map<string, string>();
+  for (const locator of await page.locator(".unit-token").all()) {
+    const unitId = (await locator.getAttribute("data-unit-id")) ?? "";
+    const positionX = (await locator.getAttribute("data-position-x")) ?? "";
+    const positionY = (await locator.getAttribute("data-position-y")) ?? "";
+    if (unitId) {
+      positions.set(unitId, `${positionX},${positionY}`);
+    }
+  }
+  return positions;
+};
+
+const hasUnitMovement = async (page: Page, baseline: Map<string, string>): Promise<boolean> => {
+  const positions = await readUnitPositions(page);
+  for (const [unitId, before] of baseline.entries()) {
+    const after = positions.get(unitId);
+    if (after !== undefined && after !== before) {
+      return true;
+    }
+  }
+  return false;
 };

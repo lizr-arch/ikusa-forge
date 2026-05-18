@@ -16,6 +16,7 @@
 - Live Combat Runtime Foundation / 实时战斗运行时基础 unittest checks for BattleSession / 战斗会话, Battle Snapshot / 战斗状态快照, and Event Buffer / 事件缓冲
 - Live Combat API / 实时战斗 API managed server smoke for Local HTTP Server / 本地 HTTP 服务 endpoints
 - HTML Live Mode / HTML 实时模式 smoke checks in browser for API start/controls/readouts
+- Realtime Spatial Combat Foundation / 实时空间战斗基础 smoke checks for Unit Movement Event / 单位移动事件, Target Acquisition / 寻敌, Enter Range Event / 进入射程事件, and Engage Start Event / 开始交战事件
 
 ## Jobs / 作业
 
@@ -32,7 +33,7 @@
 - `tools/run_live_api_smoke.py`
 - `python -m unittest discover -s sim-python/tests`
 
-The smoke/unit-test layer now also checks `status_apply`, `skill_cooldown`, `action_scheduled`, extended `battle_end`, report `victory_explanation`, and Live Combat Runtime / 实时战斗运行时 compatibility through BattleSession / 战斗会话 tests.
+The smoke/unit-test layer now also checks `status_apply`, `skill_cooldown`, `action_scheduled`, `unit_move`, `target_acquired`, `enter_range`, `engage_start`, extended `battle_end`, report `victory_explanation`, and Live Combat Runtime / 实时战斗运行时 compatibility through BattleSession / 战斗会话 tests.
 It also starts the Live Combat API / 实时战斗 API in a managed subprocess and runs API smoke against health/start/step/snapshot/events/reset.
 
 ### Web viewer / Web 回放器 (web-viewer)
@@ -55,7 +56,7 @@ It also starts the Live Combat API / 实时战斗 API in a managed subprocess an
 - `npx playwright install chromium --with-deps`
 - `npm run test:e2e`
 
-The browser smoke includes timeline filters and detail/report visibility for `status_apply`, `skill_cooldown`, `action_scheduled`, and `victory_explanation`.
+The browser smoke includes timeline filters and detail/report visibility for `status_apply`, `skill_cooldown`, `action_scheduled`, `unit_move`, `target_acquired`, `enter_range`, `engage_start`, and `victory_explanation`.
 It also checks Scenario Selector / 场景选择器, One-click Demo / 一键 Demo loading from Scenario Manifest / 场景清单, and manual File Input Loading / 文件输入加载 availability.
 Live smoke additionally validates battlefield-first live-mode rendering, including unit token count, HP bars, action bars, step-driven visual updates, and victory message readiness.
 It additionally verifies Live mode controls and error handling when API health is unavailable.

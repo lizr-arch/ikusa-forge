@@ -45,7 +45,7 @@ export const renderBoard = (container: HTMLElement, options: BoardRenderOptions)
   setAttrs(svg, {
     viewBox: `0 0 ${WIDTH} ${HEIGHT}`,
     role: "img",
-    "aria-label": "Replay board",
+    "aria-label": "Battlefield（战场）",
   });
 
   drawSideCells(svg, "enemy", ENEMY_Y);
@@ -302,6 +302,9 @@ const drawUnit = (
     role: "button",
     tabindex: 0,
     "aria-label": unit.instanceId,
+    "data-unit-id": unit.instanceId,
+    "data-position-x": unit.positionX,
+    "data-position-y": unit.positionY,
   });
 
   group.addEventListener("click", () => options.onSelectUnit(unit.instanceId));
@@ -311,6 +314,15 @@ const drawUnit = (
       options.onSelectUnit(unit.instanceId);
     }
   });
+
+  const range = svgElement("circle");
+  setAttrs(range, {
+    cx: center.x,
+    cy: center.y,
+    r: Math.max(8, unit.attackRange),
+    class: "unit-range-circle",
+  });
+  group.append(range);
 
   const x = center.x - UNIT_WIDTH / 2;
   const y = center.y - UNIT_HEIGHT / 2;
@@ -401,10 +413,9 @@ const drawUnit = (
 const buildUnitCenters = (state: VisualState): Map<string, Point> => {
   const centers = new Map<string, Point>();
   for (const unit of state.units.values()) {
-    const originY = unit.side === "enemy" ? ENEMY_Y : ALLY_Y;
     centers.set(unit.instanceId, {
-      x: ORIGIN_X + unit.x * CELL_WIDTH + (CELL_WIDTH - 8) / 2,
-      y: originY + unit.y * CELL_HEIGHT + (CELL_HEIGHT - 8) / 2,
+      x: unit.positionX,
+      y: unit.positionY,
     });
   }
   return centers;

@@ -13,7 +13,8 @@
 - Live Combat Runtime Foundation / 实时战斗运行时基础（BattleSession / 战斗会话、Step Runtime / 单步运行时、Battle Snapshot / 战斗状态快照、Event Buffer / 事件缓冲）
 - Live Combat API / 实时战斗 API（Local HTTP Server / 本地 HTTP 服务、Battle Session Manager / 战斗会话管理器、start/step/snapshot/events/reset API）
 - HTML Live Mode / HTML 实时模式（Live Combat API / 实时战斗 API 直连回放，定时调用 step 并消费 snapshot + events）
-- Live Battle Visual Polish / 实时战斗视觉打磨（战场优先布局、HP bar / 血条、行动条、攻击线、伤害跳字、胜负横幅）
+- Live Battle Visual Polish / 实时战斗视觉打磨（Battlefield-first layout / 战场优先布局、HP bar / 血条、行动条、攻击线、伤害跳字、胜负横幅）
+- Realtime Spatial Combat Foundation / 实时空间战斗基础（Continuous Position / 连续坐标、Movement Intent / 移动意图、Target Acquisition / 寻敌、Attack Range / 攻击范围、Unit Movement Event / 单位移动事件）
 - Browser Smoke Test / 浏览器冒烟测试（Playwright 基础检查）
 - Verified real `demo_001` modifier evidence：
   - formation modifiers in report summary / 战报阵型修正数 > 0
@@ -44,7 +45,8 @@
 - `phase2/live-combat-runtime-foundation`: Live Combat Runtime Foundation / 实时战斗运行时基础 (current / pending review)
 - `phase2/live-combat-api`: Live Combat API / 实时战斗 API (current / pending review)
 - `phase2/html-live-mode`: HTML Live Mode / HTML 实时模式 (current / pending review)
-- `phase2/live-battle-visual-polish`: Live Battle Visual Polish / 实时战斗视觉打磨 (current / pending review)
+- `phase2/live-battle-visual-polish`: Live Battle Visual Polish / 实时战斗视觉打磨 (merged / completed)
+- `phase2/realtime-spatial-combat-foundation`: Realtime Spatial Combat Foundation / 实时空间战斗基础 (current / pending review)
 
 ## Current Commands / 当前命令
 

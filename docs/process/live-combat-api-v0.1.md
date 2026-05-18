@@ -12,7 +12,7 @@ The goal is to let external clients create and step live battles without importi
 - Snapshot / 状态快照 returns JSON-safe battle state.
 - Event Buffer / 事件缓冲 returns incremental replay events from an integer cursor.
 
-This phase is an API Contract / API 契约 layer over existing combat behavior. It does not add WebSocket, HTML live mode, C# host, Godot, new combat rules, movement/pathfinding, new AI, or a frontend framework.
+This phase is an API Contract / API 契约 layer over combat behavior. Later Realtime Spatial Combat / 实时空间战斗 adds Continuous Position / 连续坐标 fields and movement events behind the same HTTP response shape. The API still does not add WebSocket, C# host, Godot, new frontend framework, A* pathfinding, terrain, or obstacle collision.
 
 ## API Contract / API 契约
 
@@ -108,6 +108,7 @@ Response:
 ```
 
 Step Battle / 推进战斗 returns only the events emitted during that step call.
+With Realtime Spatial Combat / 实时空间战斗 enabled, these incremental events can include `unit_move`, `target_acquired`, `enter_range`, and `engage_start` before attack/damage events.
 
 ### Snapshot / 状态快照
 
@@ -179,6 +180,7 @@ Recommended client flow:
 5. Call `POST /api/battle/reset` when done
 
 Multiple sessions can coexist in one Battle Session Manager / 战斗会话管理器. Each session has an independent BattleSession / 战斗会话, Snapshot / 状态快照, and Event Buffer / 事件缓冲.
+Each session also owns independent spatial state: Continuous Position / 连续坐标, Movement Intent / 移动意图, Target Acquisition / 寻敌 target, and Attack Range / 攻击范围 progress.
 
 ## Error Handling / 错误处理
 
@@ -255,7 +257,9 @@ For public deployment, add origin allowlist + auth + stricter config path valida
 - No C# host / 不做 C# 宿主
 - No Godot / 不做 Godot
 - No xlsx adapter / 不做 xlsx 适配器
-- No movement/pathfinding / 不做移动与寻路
+- No A* pathfinding / 不做 A* 寻路
+- No terrain / 不做地形
+- No obstacle collision / 不做障碍物碰撞
 - No new combat rules / 不做新战斗规则
 - No new skill effects / 不做新技能效果
 - No new AI logic / 不做新 AI 逻辑

@@ -10,7 +10,11 @@
   | "status_apply"
   | "status_expire"
   | "skill_cooldown"
-  | "action_scheduled";
+  | "action_scheduled"
+  | "unit_move"
+  | "target_acquired"
+  | "enter_range"
+  | "engage_start";
 
 export type UnitSide = "ally" | "enemy" | string;
 
@@ -64,6 +68,17 @@ export interface UnitSnapshot {
   skill_ids?: string[];
   hp?: number;
   alive?: boolean;
+  position_x?: number;
+  position_y?: number;
+  velocity_x?: number;
+  velocity_y?: number;
+  facing_angle?: number;
+  radius?: number;
+  move_speed?: number;
+  attack_range?: number;
+  engagement_range?: number;
+  engaged_target?: string | null;
+  movement_intent?: string;
   next_action_tick?: number;
   action_interval_ticks?: number;
   guard_value?: number;
@@ -90,6 +105,17 @@ export interface LiveUnitSnapshot {
   range: number;
   base_range?: number;
   base_attack_interval?: number;
+  position_x?: number;
+  position_y?: number;
+  velocity_x?: number;
+  velocity_y?: number;
+  facing_angle?: number;
+  radius?: number;
+  move_speed?: number;
+  attack_range?: number;
+  engagement_range?: number;
+  engaged_target?: string | null;
+  movement_intent?: string;
   next_action_tick: number | null;
   action_interval_ticks: number | null;
   statuses?: StatusEffectSnapshot[];

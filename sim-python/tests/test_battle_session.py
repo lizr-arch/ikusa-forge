@@ -66,7 +66,7 @@ class BattleSessionTests(unittest.TestCase):
         self.assertIn("status_apply", event_types)
         self.assertIn("skill_cooldown", event_types)
 
-    def test_step_battle_session_advances_ticks_and_emits_action_events(self):
+    def test_step_battle_session_advances_ticks_and_emits_spatial_events(self):
         session = self.create_session()
         initialize_battle_session(session)
 
@@ -81,7 +81,8 @@ class BattleSessionTests(unittest.TestCase):
         self.assertEqual(20, session.current_tick)
         self.assertFalse(session.finished)
         self.assertTrue(next_events)
-        self.assertIn("action_scheduled", event_types)
+        self.assertIn("unit_move", event_types)
+        self.assertIn("target_acquired", [event.type for event in session.events])
 
     def test_repeated_steps_reach_battle_end_once(self):
         session = self.create_session()
@@ -97,7 +98,7 @@ class BattleSessionTests(unittest.TestCase):
         self.assertEqual(1, event_types.count("battle_end"))
         self.assertEqual("ally", session.state.result.winner)
         self.assertEqual("enemy_eliminated", session.state.result.reason)
-        self.assertEqual(240, session.state.result.end_tick)
+        self.assertGreater(session.state.result.end_tick, 240)
 
         after_finished = step_battle_session(session, ticks=10)
         self.assertEqual([], after_finished)
@@ -166,6 +167,7 @@ class BattleSessionTests(unittest.TestCase):
         self.assertTrue(any(unit["statuses"] for unit in units))
         self.assertTrue(any(unit["skill_cooldowns"] for unit in units))
         self.assertTrue(any(unit["next_action_tick"] > 0 for unit in units))
+        self.assertTrue(any(unit["position_y"] != 80 + unit["y"] * 36 and unit["side"] == "enemy" for unit in units))
         sample_unit = units[0]
         for field in [
             "instance_id",
@@ -180,6 +182,17 @@ class BattleSessionTests(unittest.TestCase):
             "atk",
             "defense",
             "range",
+            "position_x",
+            "position_y",
+            "velocity_x",
+            "velocity_y",
+            "facing_angle",
+            "radius",
+            "move_speed",
+            "attack_range",
+            "engagement_range",
+            "engaged_target",
+            "movement_intent",
             "alive",
             "next_action_tick",
             "action_interval_ticks",
@@ -203,7 +216,7 @@ class BattleSessionTests(unittest.TestCase):
 
         self.assertGreater(len(delta_payload["events"]), 0)
         self.assertEqual(len(session.events), delta_payload["next_event_index"])
-        self.assertIn("action_scheduled", [event["type"] for event in delta_payload["events"]])
+        self.assertIn("unit_move", [event["type"] for event in delta_payload["events"]])
 
 
 if __name__ == "__main__":

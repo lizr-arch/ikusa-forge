@@ -148,7 +148,7 @@ class LiveApiManagerTests(unittest.TestCase):
         self.assertTrue(snapshot["finished"])
         self.assertEqual("ally", snapshot["result"]["winner"])
         self.assertEqual("enemy_eliminated", snapshot["result"]["reason"])
-        self.assertEqual(240, snapshot["result"]["end_tick"])
+        self.assertGreater(snapshot["result"]["end_tick"], 240)
         self.assertEqual("battle_end", all_events["events"][-1]["type"])
         self.assertEqual(1, event_types.count("battle_end"))
 
@@ -163,7 +163,7 @@ class LiveApiManagerTests(unittest.TestCase):
         event_types = [event["type"] for event in delta["events"]]
 
         self.assertGreater(len(delta["events"]), 0)
-        self.assertIn("action_scheduled", event_types)
+        self.assertIn("unit_move", event_types)
         self.assertGreater(delta["next_event_index"], old_index)
 
     def test_unknown_session_returns_clear_error(self):

@@ -191,6 +191,9 @@ def _create_unit_state(
     role: str,
     formation_id: str,
 ) -> UnitState:
+    position_x, position_y = _initial_position(encounter_unit.x, encounter_unit.y, side)
+    move_speed, attack_range = _spatial_stats(unit_def)
+    engagement_range = attack_range if "bow" in set(unit_def.tags) else attack_range + 4.0
     return UnitState(
         instance_id=instance_id,
         side=side,
@@ -210,7 +213,44 @@ def _create_unit_state(
         formation_id=formation_id,
         hp=unit_def.hp,
         alive=True,
+        position_x=position_x,
+        position_y=position_y,
+        radius=8.0,
+        move_speed=move_speed,
+        attack_range=attack_range,
+        engagement_range=engagement_range,
     )
+
+
+def _initial_position(x: int, y: int, side: str) -> Tuple[float, float]:
+    position_x = 80.0 + float(x) * 56.0
+    if side == "enemy":
+        position_y = 80.0 + float(y) * 36.0
+    else:
+        position_y = 320.0 + float(y) * 36.0
+    return position_x, position_y
+
+
+def _spatial_stats(unit_def: UnitDef) -> Tuple[float, float]:
+    tags = set(unit_def.tags)
+    weapons = set(unit_def.weapon_slots)
+    unit_id = unit_def.id
+
+    if "bow" in tags or "bow" in weapons or "archer" in unit_id:
+        return 18.0, 110.0
+    if "ninja" in tags or "ninja_tool" in weapons:
+        return 32.0, 18.0
+    if "spear" in tags or "spear" in weapons:
+        if "banner" in tags or "banner" in unit_id:
+            return 18.0, 40.0
+        return 24.0, 26.0
+    if "katana" in tags or "katana" in weapons:
+        return 24.0, 18.0
+    if "shield" in tags or "shield" in weapons:
+        return 18.0, 18.0
+    if "banner" in tags:
+        return 18.0, 40.0
+    return 24.0, max(18.0, float(unit_def.range) * 18.0)
 
 
 def _format_event_id(sequence_number: int) -> str:

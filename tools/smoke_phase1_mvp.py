@@ -20,6 +20,10 @@ REQUIRED_EVENT_TYPES = [
     "status_apply",
     "skill_cooldown",
     "action_scheduled",
+    "unit_move",
+    "target_acquired",
+    "enter_range",
+    "engage_start",
 ]
 
 REQUIRED_VIEWER_FILES = [
