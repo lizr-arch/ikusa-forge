@@ -60,6 +60,7 @@ The browser smoke includes timeline filters and detail/report visibility for `st
 It also checks Scenario Selector / 场景选择器, One-click Demo / 一键 Demo loading from Scenario Manifest / 场景清单, and manual File Input Loading / 文件输入加载 availability.
 Live smoke additionally validates battlefield-first live-mode rendering, including unit token count, HP bars, action bars, step-driven visual updates, and victory message readiness.
 It additionally verifies Live mode controls and error handling when API health is unavailable.
+Current live smoke also covers the PixiJS live battlefield renderer / PixiJS 实时战场渲染器, Formation Roster / 阵容堆栈, and Performance / 性能 panel telemetry, while keeping DOM controls and replay/report panels in place.
 
 ## Commands / 命令
 

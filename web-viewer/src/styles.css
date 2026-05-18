@@ -137,7 +137,7 @@ h3 {
 
 .workspace {
   display: grid;
-  grid-template-columns: minmax(520px, 3fr) minmax(360px, 1.25fr);
+  grid-template-columns: minmax(560px, 2.8fr) minmax(380px, 1.3fr);
   gap: 14px;
   min-height: 0;
 }
@@ -146,7 +146,7 @@ h3 {
   display: grid;
   grid-template-rows: auto minmax(0, 1fr);
   min-width: 0;
-  min-height: 640px;
+  min-height: 720px;
 }
 
 .panel-heading {
@@ -158,18 +158,40 @@ h3 {
   border-bottom: 1px solid var(--line);
 }
 
-.board-host {
+.battlefield-stack {
+  display: grid;
+  min-width: 0;
+  min-height: 0;
+}
+
+.battlefield-stack > * {
+  grid-area: 1 / 1;
+}
+
+.battlefield-host {
   display: grid;
   min-height: 0;
   padding: 16px;
   place-items: center;
   overflow: auto;
+  background: linear-gradient(180deg, #f7faf8 0%, #eef4f0 100%);
 }
 
-.board-host svg {
+#board svg {
   width: min(100%, 1040px);
   height: auto;
   max-height: 100%;
+}
+
+#pixi-battlefield {
+  min-height: 0;
+  min-width: 0;
+}
+
+#pixi-battlefield canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
 }
 
 .side-panel {
@@ -177,12 +199,12 @@ h3 {
   flex-direction: column;
   gap: 0;
   min-height: 0;
-  overflow: hidden;
+  overflow: auto;
 }
 
 .control-root {
   display: grid;
-  gap: 10px;
+  gap: 12px;
 }
 
 .panel-subblock {
@@ -208,6 +230,11 @@ h3 {
 .report-block {
   min-height: 0;
   overflow: auto;
+}
+
+#formation-roster,
+#performance-panel {
+  display: block;
 }
 
 .demo-guidance {
@@ -491,6 +518,10 @@ select {
   gap: 8px;
 }
 
+.performance-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
 .detail-row,
 .stat-item {
   display: grid;
@@ -629,6 +660,102 @@ select {
   border-radius: 8px;
   padding: 0.65rem;
   background: #fbfcfb;
+}
+
+.formation-roster {
+  display: grid;
+  gap: 12px;
+}
+
+.formation-side {
+  display: grid;
+  gap: 8px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 0.75rem;
+  background: #fbfcfb;
+}
+
+.formation-side-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.ally-heading {
+  color: var(--ally);
+}
+
+.enemy-heading {
+  color: var(--enemy);
+}
+
+.formation-unit {
+  display: grid;
+  grid-template-columns: auto minmax(96px, 1fr) minmax(80px, 1fr) auto auto;
+  gap: 8px;
+  align-items: center;
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 0.55rem 0.6rem;
+  background: #ffffff;
+  text-align: left;
+}
+
+.formation-unit.selected {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+
+.formation-unit:hover:not(:disabled) {
+  border-color: var(--line-strong);
+  background: #f9fbfa;
+}
+
+.roster-side-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1rem;
+  font-size: 0.8rem;
+  font-weight: 800;
+}
+
+.roster-side-badge.ally {
+  color: var(--ally);
+}
+
+.roster-side-badge.enemy {
+  color: var(--enemy);
+}
+
+.roster-unit-id,
+.roster-shape,
+.roster-unit-hp,
+.roster-combat-state {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  font-size: 0.8rem;
+}
+
+.roster-unit-id {
+  font-weight: 700;
+  color: #1f2623;
+}
+
+.roster-shape {
+  color: var(--text-muted);
+}
+
+.roster-unit-hp,
+.roster-combat-state {
+  color: #44514a;
+  text-align: right;
 }
 
 .board-cell {

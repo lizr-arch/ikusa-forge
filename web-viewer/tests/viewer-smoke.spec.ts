@@ -12,7 +12,7 @@ const debugTimelinePath = path.join(repoRoot, "runs", "demo_001", "debug_timelin
 test("loads curated scenario from manifest", async ({ page }) => {
   await page.goto("/");
 
-  await expect(page).toHaveTitle(/Ikusa Forge SVG Replay Viewer/);
+  await expect(page).toHaveTitle(/Ikusa Forge Live Battlefield Viewer/);
   await expect(page.locator("#scenario-loader")).toBeVisible();
   await expect(page.locator("#scenario-loader")).toContainText("Scenario Selector");
   await expect(page.locator("#scenario-manifest-state")).toContainText("3 scenarios");
@@ -28,8 +28,8 @@ test("loads curated scenario from manifest", async ({ page }) => {
   await expect(page.locator("#live-mode-heading")).toContainText("Live Mode（实时模式）");
   await expect(page.locator("#timeline-heading")).toContainText("Event Log（事件日志）");
   await expect(page.locator("#report-heading")).toContainText("Report Panel（战报面板）");
-  await expect(page.locator("text=Ally（友军）")).toBeVisible();
-  await expect(page.locator("text=Enemy（敌军）")).toBeVisible();
+  await expect(page.locator("#board .side-label-ally")).toBeVisible();
+  await expect(page.locator("#board .side-label-enemy")).toBeVisible();
   await expect(page.locator("#metadata")).toContainText("demo_001");
   await expect(page.locator("#metadata")).toContainText(/seed（种子）\s*1001|seed 1001/);
   await expect(page.locator("#replay-load-state")).toContainText(/samples\/demo_001\/replay\.json loaded/);
@@ -91,7 +91,7 @@ test("manual file input loading remains available", async ({ page }) => {
 
   await page.goto("/");
 
-  await expect(page).toHaveTitle(/Ikusa Forge SVG Replay Viewer/);
+  await expect(page).toHaveTitle(/Ikusa Forge Live Battlefield Viewer/);
   await expect(page.locator("#replay-file")).toBeAttached();
   await expect(page.locator("#report-file")).toBeAttached();
   await expect(page.locator("#demo-guidance")).toContainText("Demo Load Guidance");
@@ -281,24 +281,26 @@ test("live mode can start and step with local API", async ({ page }) => {
     await expect(page.locator("#metadata")).toContainText(/battle（战斗）\s*demo_001|battle demo_001/);
     await expect(page.locator("#metadata")).toContainText(/seed（种子）\s*1001|seed 1001/);
     await expect(page.locator("#metadata")).toContainText("events ");
-    await expect(page.getByRole("img", { name: "Battlefield（战场）" })).toBeVisible();
-    await expect(page.locator("#board")).toBeVisible();
-    await expect(page.locator(".unit-token")).toHaveCount(12, { timeout: 10_000 });
-    await expect(page.locator(".unit-range-circle").first()).toBeVisible();
-    await expect(page.locator(".health-fill")).toHaveCount(12, { timeout: 10_000 });
-    await expect(page.locator(".action-bar-bg")).toHaveCount(12, { timeout: 10_000 });
-    await expect(page.locator(".action-bar-fill")).toHaveCount(12, { timeout: 10_000 });
-    await expect(page.locator(".unit-status-count")).toHaveCount(12, { timeout: 10_000 });
-    await expect(page.locator(".unit-cooldown-count")).toHaveCount(12, { timeout: 10_000 });
+    await expect(page.locator("#board-heading")).toContainText("Battlefield（战场）");
+    await expect(page.locator("#pixi-battlefield")).toBeVisible();
+    await expect(page.locator("#pixi-battlefield canvas")).toBeVisible();
+    await expect(page.locator("#formation-roster")).toBeVisible();
+    await expect(page.locator("#performance-panel")).toBeVisible();
+    await expect(page.locator("#formation-roster")).toContainText("Ally（友军）");
+    await expect(page.locator("#formation-roster")).toContainText("Enemy（敌军）");
+    await expect(page.locator(".formation-unit")).toHaveCount(12, { timeout: 10_000 });
+    await expect(page.locator("#performance-panel")).toContainText("FPS（帧率）");
+    await expect(page.locator("#performance-panel")).toContainText("Frame Time（帧耗时）");
+    await expect(page.locator("#performance-panel")).toContainText("Pixi Render（Pixi 渲染）");
+    await expect(page.locator("#performance-panel")).toContainText("Timeline Rows（事件行数）");
     await expect(page.locator("#live-current-tick")).toHaveText(/\d+/);
+    const liveRows = await countTimelineRows(page);
+    expect(liveRows).toBeLessThanOrEqual(150);
 
-    const initialPositions = await readUnitPositions(page);
     let beforeCursor = Number((await page.locator("#live-event-cursor").textContent()) ?? "0");
     let beforeTick = (await page.locator("#tick-readout").textContent()) ?? "Tick 0";
     let beforeTimelineRows = await countTimelineRows(page);
-    let effectFound = false;
-    let movementFound = false;
-    for (let attempt = 0; attempt < 8 && (!effectFound || !movementFound); attempt += 1) {
+    for (let attempt = 0; attempt < 4; attempt += 1) {
       const scrollBeforeStep = await page.evaluate(() => window.scrollY);
       await page.locator("#step-live-battle").evaluate((element) => {
         (element as HTMLButtonElement).click();
@@ -306,14 +308,16 @@ test("live mode can start and step with local API", async ({ page }) => {
       await waitForLiveProgress(page, beforeCursor, beforeTick, beforeTimelineRows);
       const scrollAfterStep = await page.evaluate(() => window.scrollY);
       expect(scrollAfterStep).toBe(scrollBeforeStep);
-      effectFound ||= await hasLiveVisualEffect(page);
-      movementFound ||= await hasUnitMovement(page, initialPositions);
       beforeCursor = Number((await page.locator("#live-event-cursor").textContent()) ?? "0");
       beforeTick = (await page.locator("#tick-readout").textContent()) ?? "Tick 0";
       beforeTimelineRows = await countTimelineRows(page);
     }
-    expect(effectFound || movementFound).toBeTruthy();
     await expect(page.locator("#live-latest-event")).toContainText(/unit_move|target_acquired|enter_range|engage_start|attack|damage|action_scheduled/);
+    await expect(page.locator("#performance-panel")).toContainText(/FPS（帧率）|Frame Time（帧耗时）/);
+    await expect(page.locator("#performance-panel")).toContainText(/Pixi Render（Pixi 渲染）/);
+    await page.locator(".formation-unit").first().click();
+    await expect(page.locator("#unit-detail")).toContainText("Combat State（战斗状态）");
+    await expect(page.locator("#unit-detail")).toContainText(/Position（位置）|Position/);
 
     await page.locator("#reset-live-battle").evaluate((element) => {
       (element as HTMLButtonElement).click();
@@ -412,48 +416,4 @@ const waitForLiveProgress = async (
     await wait(100);
   }
   throw new Error("Live step produced no visible progress");
-};
-
-const hasLiveVisualEffect = async (page: Page): Promise<boolean> => {
-  const hasAttackLine = await page.locator(".attack-line").count() > 0;
-  const hasUnitEventRing = await page.locator(".unit-event-ring").count() > 0;
-  const hasDamage = await page.locator(".damage-label").count() > 0;
-  const hasSkill = await page.locator(".skill-label").count() > 0;
-  const hasStatus = await page.locator(".status-badge").count() > 0;
-  const hasCooldown = await page.locator(".cooldown-badge").count() > 0;
-  const hasVictory = await page.locator(".victory-banner, .battle-end-banner").count() > 0;
-  const hasModifierRing = await page.locator(".modifier-ring").count() > 0;
-
-  return hasAttackLine
-    || hasUnitEventRing
-    || hasDamage
-    || hasSkill
-    || hasStatus
-    || hasCooldown
-    || hasVictory
-    || hasModifierRing;
-};
-
-const readUnitPositions = async (page: Page): Promise<Map<string, string>> => {
-  const positions = new Map<string, string>();
-  for (const locator of await page.locator(".unit-token").all()) {
-    const unitId = (await locator.getAttribute("data-unit-id")) ?? "";
-    const positionX = (await locator.getAttribute("data-position-x")) ?? "";
-    const positionY = (await locator.getAttribute("data-position-y")) ?? "";
-    if (unitId) {
-      positions.set(unitId, `${positionX},${positionY}`);
-    }
-  }
-  return positions;
-};
-
-const hasUnitMovement = async (page: Page, baseline: Map<string, string>): Promise<boolean> => {
-  const positions = await readUnitPositions(page);
-  for (const [unitId, before] of baseline.entries()) {
-    const after = positions.get(unitId);
-    if (after !== undefined && after !== before) {
-      return true;
-    }
-  }
-  return false;
 };

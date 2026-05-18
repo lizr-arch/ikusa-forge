@@ -31,6 +31,16 @@ Live rendering behavior is now Battlefield-first / 战场优先:
 - Battlefield（战场） is the dominant visual zone for live playback
 - Timeline（事件日志） and Report（战报） remain secondary
 - Replay / 场景 controls stay available and unchanged for non-live work
+- Live battlefield rendering is handled by PixiJS / PixiJS 实时战场渲染器
+- SVG board remains available as replay/debug fallback / SVG 战场仍保留为回放与调试备份
+
+## Renderer / 渲染器
+
+The live battlefield uses PixiJS as the primary renderer:
+
+- PixiJS draws the battle field, units, HP bars, action bars, and live effects
+- DOM still renders Battle Control / 战斗控制, Formation Roster / 阵容堆栈, Selected Unit / 选中单位, Event Log / 事件日志, Report Panel / 战报面板, and Performance / 性能
+- live snapshot interpolation is handled in the viewer, not in Python runtime
 
 Mode switching keeps old workflows intact:
 

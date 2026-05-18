@@ -46,6 +46,7 @@ Current Python simulator status:
 - Live Combat API / 实时战斗 API（Python 标准库 Local HTTP Server / 本地 HTTP 服务，提供 start/step/snapshot/events/reset 端点）
 - HTML Live Mode / HTML 实时模式（`Live Combat API / 实时战斗 API` + HTTP polling，支持 `start/step/pause/resume/reset`）
 - Live Battle Visual Polish / 实时战斗视觉打磨（Battlefield-first layout / 战场优先布局，HP 条、行动条、伤害跳字、胜负横幅）
+- Live Pixi Battlefield Renderer / PixiJS 实时战场渲染器（主战场使用 PixiJS，DOM 继续负责控制、阵容、战报与性能）
 - Realtime Spatial Combat Foundation / 实时空间战斗基础（Continuous Position / 连续坐标、Movement Intent / 移动意图、Target Acquisition / 寻敌、Attack Range / 攻击范围、Unit Movement Event / 单位移动事件）
 
 Phase 1 Demo Package / 第一阶段演示包 / Phase 2 Tactical Depth notes are available at:
@@ -185,6 +186,8 @@ Then in the Live Mode / 实时模式 panel:
 - click `Start Live Battle（开始实时战斗）`
 - set `Speed（速度）`
 - observe `Live Status（实时状态）` and `Session ID（会话 ID）`
+
+The live battlefield is rendered by PixiJS, while the surrounding controls, roster, report, and performance panels stay in DOM.
 
 When the API is not running, the viewer shows:
 

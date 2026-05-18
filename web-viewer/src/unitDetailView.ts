@@ -27,6 +27,7 @@ export const renderUnitDetail = (
       ["Name（名称）", unit.name],
       ["Side（阵营）", unit.side],
       ["Role（角色）", unit.role],
+      ["Combat State（战斗状态）", unit.combatState],
       ["Position（位置）", `${unit.x},${unit.y}`],
       ["HP（生命）", `${unit.hp}/${unit.maxHp}`],
       ["Alive（存活）", unit.alive ? "yes（是）" : "no（否）"],

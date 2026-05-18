@@ -4,13 +4,13 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <title>Ikusa Forge SVG Replay Viewer</title>
+    <title>Ikusa Forge Live Battlefield Viewer（实时战场查看器）</title>
   </head>
   <body>
     <div id="app" class="app-shell">
       <header class="topbar">
         <div>
-          <h1>Ikusa Forge SVG Replay Viewer（SVG 回放查看器）</h1>
+          <h1>Ikusa Forge Live Battlefield Viewer（实时战场查看器）</h1>
           <div id="metadata" class="metadata">No replay loaded（未加载回放）</div>
         </div>
         <div id="status" class="status-line" role="status">Ready（就绪）</div>
@@ -22,7 +22,10 @@
             <h2 id="board-heading">Battlefield（战场）</h2>
             <div id="tick-readout" class="tick-readout">Tick（回合） 0</div>
           </div>
-          <div id="board" class="board-host"></div>
+          <div class="battlefield-stack">
+            <div id="pixi-battlefield" class="battlefield-host pixi-battlefield" hidden></div>
+            <div id="board" class="battlefield-host debug-board-host"></div>
+          </div>
         </section>
 
         <aside class="side-panel" aria-label="Replay tools">
@@ -134,15 +137,15 @@ python tools/run_demo_battle.py --battle demo_001 --seed 1001 --config config/ge
                   <span id="live-latest-event" class="live-inline-value">-</span>
                 </label>
                 <label class="select-label">
-                <span>Transport（传输方式）</span>
-                <span id="live-transport" class="live-inline-value">-</span>
-              </label>
-            </div>
+                  <span>Transport（传输方式）</span>
+                  <span id="live-transport" class="live-inline-value">-</span>
+                </label>
+              </div>
             </section>
 
             <section class="panel-subblock" aria-labelledby="replay-controls-heading">
               <h3 id="replay-controls-heading">Playback Controls（播放控制）</h3>
-            <div id="event-readout" class="event-readout">Event（事件） -</div>
+              <div id="event-readout" class="event-readout">Event（事件） -</div>
               <div class="control-row">
                 <button id="play-pause" type="button">Play（播放）</button>
                 <button id="step-tick" type="button">Step Tick（单步）</button>
@@ -185,6 +188,16 @@ python tools/run_demo_battle.py --battle demo_001 --seed 1001 --config config/ge
           <section class="panel-block" aria-labelledby="unit-heading">
             <h2 id="unit-heading">Selected Unit（选中单位）</h2>
             <div id="unit-detail"></div>
+          </section>
+
+          <section class="panel-block" aria-labelledby="roster-heading">
+            <h2 id="roster-heading">Formation Roster（阵容堆栈）</h2>
+            <div id="formation-roster"></div>
+          </section>
+
+          <section class="panel-block" aria-labelledby="performance-heading">
+            <h2 id="performance-heading">Performance（性能）</h2>
+            <div id="performance-panel"></div>
           </section>
 
           <section class="panel-block report-block" aria-labelledby="report-heading">
