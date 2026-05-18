@@ -17,7 +17,7 @@ export const renderScenarioSummary = (
   if (!options.scenario) {
     const empty = document.createElement("div");
     empty.className = "empty-state";
-    empty.textContent = "No curated scenario loaded";
+    empty.textContent = "No curated scenario loaded（未加载精选场景）";
     container.append(empty);
     return;
   }
@@ -37,12 +37,12 @@ export const renderScenarioSummary = (
   const replayResult = options.replay?.metadata.result ?? null;
   const summary = options.report?.summary;
   const rows: [string, string][] = [
-    ["Scenario ID", options.scenario.id],
-    ["Winner", formatValue(options.report?.winner ?? replayResult?.winner)],
-    ["Reason", formatValue(options.report?.reason ?? replayResult?.reason)],
-    ["End Tick", formatNumber(options.report?.end_tick ?? replayResult?.end_tick)],
-    ["Events", formatNumber(options.eventCount)],
-    ["Total Damage", formatNumber(summary?.total_damage)],
+    ["Scenario ID（场景 ID）", options.scenario.id],
+    ["Winner（胜利）", formatValue(options.report?.winner ?? replayResult?.winner)],
+    ["Reason（原因）", formatValue(options.report?.reason ?? replayResult?.reason)],
+    ["End Tick（终止回合）", formatNumber(options.report?.end_tick ?? replayResult?.end_tick)],
+    ["Events（事件）", formatNumber(options.eventCount)],
+    ["Total Damage（总伤害）", formatNumber(summary?.total_damage)],
     ["Status Applied（状态应用）", formatNumber(summary?.total_status_applied)],
     ["Skill Cooldown（技能冷却）", formatNumber(summary?.total_skill_cooldowns)],
     ["Action Scheduled（行动调度）", formatNumber(summary?.total_actions_scheduled)],

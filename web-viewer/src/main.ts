@@ -134,7 +134,7 @@ scenarioSelect.addEventListener("change", () => {
 loadBaselineDemoButton.addEventListener("click", () => {
   const scenario = baselineScenario();
   if (!scenario) {
-    setStatus("Scenario manifest is not available.");
+    setStatus("Scenario manifest is not available（场景清单不可用）.");
     return;
   }
   stopAllPlayback();
@@ -144,7 +144,7 @@ loadBaselineDemoButton.addEventListener("click", () => {
 loadScenarioButton.addEventListener("click", () => {
   const scenario = selectedScenario();
   if (!scenario) {
-    setStatus("Select a scenario first.");
+    setStatus("Select a scenario first（请先选择场景）.");
     return;
   }
   stopAllPlayback();
@@ -228,7 +228,7 @@ resetLiveButton.addEventListener("click", () => {
 const loadFiles = async (): Promise<void> => {
   stopAllPlayback();
   setModeReplay();
-  setStatus("Loading files");
+  setStatus("Loading files（正在加载文件）");
 
   const replayResult = await readReplayDocumentFile(replayInput.files?.[0] ?? null);
   if (!replayResult.ok) {
@@ -238,7 +238,7 @@ const loadFiles = async (): Promise<void> => {
 
   const reportFile = reportInput.files?.[0] ?? null;
   let loadedReport: BattleReport | null = null;
-  let reportMessage = "battle_report.json not loaded";
+  let reportMessage = "battle_report.json not loaded（未加载）";
   if (reportFile) {
     const reportResult = await readBattleReportFile(reportFile);
     if (!reportResult.ok) {
@@ -246,19 +246,19 @@ const loadFiles = async (): Promise<void> => {
       return;
     }
     loadedReport = reportResult.data;
-    reportMessage = `${reportResult.fileName} loaded`;
+    reportMessage = `${reportResult.fileName} loaded（已加载）`;
   }
 
   replay = replayResult.data;
   report = loadedReport;
   loadedScenario = null;
   loadedReplayFileName = replayResult.fileName;
-  loadedReportFileName = loadedReport ? reportMessage.replace(" loaded", "") : null;
+  loadedReportFileName = loadedReport ? reportFile?.name ?? "battle_report.json" : null;
   flatEvents = flattenReplayEvents(replay);
   selectedUnitId = null;
   selectedEventIndex = null;
   visualState = seekToTick(replay, 0);
-  setStatus(`${replayResult.fileName} loaded; ${reportMessage}`);
+  setStatus(`${replayResult.fileName} loaded（已加载）; ${reportMessage}`);
   render();
 };
 
@@ -279,7 +279,7 @@ const loadScenarioManifest = async (): Promise<void> => {
 const loadScenario = async (scenario: DemoScenario): Promise<void> => {
   stopAllPlayback();
   setModeReplay();
-  setStatus(`Loading scenario ${scenario.id}`);
+  setStatus(`Loading scenario（正在加载场景） ${scenario.id}`);
 
   const [replayResult, reportResult] = await Promise.all([
     fetchReplayDocument(scenario.replay_url),
@@ -307,7 +307,7 @@ const loadScenario = async (scenario: DemoScenario): Promise<void> => {
   timelineFilter = "all";
   visualState = seekToTick(replay, 0);
   mode = "replay";
-  setStatus(`scenario loaded: ${scenario.id}`);
+  setStatus(`scenario loaded（场景已加载）: ${scenario.id}`);
   render();
 };
 
@@ -402,7 +402,7 @@ const startLivePlayback = (): void => {
       liveStepInFlight = false;
     })().catch((error: unknown) => {
       liveStepInFlight = false;
-      setStatus(`live step failed: ${errorMessage(error)}`);
+      setStatus(`live step failed（实时推进失败）: ${errorMessage(error)}`);
       stopLivePlayback();
     });
   }, intervalMs);
@@ -434,7 +434,7 @@ const startLiveBattleLoop = async (): Promise<void> => {
   liveBattleId = liveBattleIdInput.value.trim() || "demo_001";
   const seedInput = parseSeed(liveSeedInput.value);
   if (seedInput === null) {
-    setStatus("Seed must be a valid integer.");
+    setStatus("Seed must be a valid integer（种子必须为整数）");
     setLiveApiStatus("Live API unavailable（实时 API 不可用）");
     setModeReplay();
     stopLivePlayback();
@@ -442,7 +442,7 @@ const startLiveBattleLoop = async (): Promise<void> => {
   }
   liveSeed = seedInput;
 
-  setLiveApiStatus("Checking API...");
+  setLiveApiStatus("Checking API（正在检查 API）");
   const health = await healthLiveApi(liveApiUrl);
   if (!health.ok) {
     setStatus(health.error);
@@ -481,21 +481,21 @@ const startLiveBattleLoop = async (): Promise<void> => {
   if (!liveFinished) {
     startLivePlayback();
   } else {
-    setLiveApiStatus("Victory（胜负） already determined at start");
-    setStatus("Live battle finished");
+    setLiveApiStatus("Victory（胜负） already determined at start（启动即已完成胜负）");
+    setStatus("Live battle finished（实时战斗已结束）");
     stopLivePlayback();
   }
-  setLiveApiStatus(`Connected to ${liveApiUrl}`);
-  setStatus("Live battle started");
+  setLiveApiStatus(`Connected to（已连接到） ${liveApiUrl}`);
+  setStatus("Live battle started（实时战斗已开始）");
   render();
 };
 
 const stepLiveOnce = async (ticks: number): Promise<void> => {
   if (liveSessionId === null) {
-    setLiveApiStatus("No session");
+    setLiveApiStatus("No live session（没有实时会话）");
     return;
   }
-  setLiveApiStatus("Running live battle...");
+  setLiveApiStatus("Running live battle（实时进行中）...");
   const response = await stepLiveBattle(liveApiUrl, liveSessionId, Math.max(1, Math.floor(ticks)));
   if (!response.ok) {
     setLiveApiStatus(response.error);
@@ -516,19 +516,19 @@ const stepLiveOnce = async (ticks: number): Promise<void> => {
   selectedEventIndex = flatEvents.length > 0 ? flatEvents.length - 1 : null;
   selectedUnitId = visualState ? selectedUnitId : null;
   liveEventCursorValue.textContent = String(liveEventCursor);
-  setLiveApiStatus("Live battle running");
+    setLiveApiStatus("Live battle running（实时进行中）");
   render();
 
   if (isLiveFinished()) {
     stopLivePlayback();
-    setLiveApiStatus("Victory（胜负） complete");
-    setStatus("Live battle finished");
+    setLiveApiStatus("Victory（胜负） complete（胜负完成）");
+    setStatus("Live battle finished（实时战斗已结束）");
   }
 };
 
 const resetLiveSession = async (): Promise<void> => {
   if (liveSessionId === null) {
-    clearLiveState("No live session");
+    clearLiveState("No live session（没有实时会话）");
     render();
     return;
   }
@@ -539,7 +539,7 @@ const resetLiveSession = async (): Promise<void> => {
     setLiveApiStatus(result.error);
     return;
   }
-  clearLiveState("Live API ready");
+  clearLiveState("Live API ready（实时 API 就绪）");
   render();
 };
 
@@ -552,7 +552,7 @@ const setModeReplay = (): void => {
   mode = "replay";
   liveSessionId = null;
   liveFinished = false;
-  liveStatusValue.textContent = "idle";
+  liveStatusValue.textContent = "idle（空闲）";
 };
 
 const setModeLive = (): void => {
@@ -583,7 +583,7 @@ const resetLiveStateForNewSession = (): void => {
   liveFinished = false;
   liveSessionIdValue.textContent = "-";
   liveEventCursorValue.textContent = "0";
-  liveStatusValue.textContent = "ready";
+  liveStatusValue.textContent = "ready（就绪）";
   liveCurrentTickValue.textContent = "0";
   liveUnitAliveValue.textContent = "0/0";
   liveLatestEventValue.textContent = "-";
@@ -598,8 +598,8 @@ const clearLiveState = (message: string): void => {
   setStatus(message);
   loadedReplayFileName = null;
   loadedReportFileName = null;
-  replayLoadState.textContent = "not loaded";
-  reportLoadState.textContent = "not loaded";
+  replayLoadState.textContent = "Not loaded（未加载）";
+  reportLoadState.textContent = "Not loaded（未加载）";
   scenarioSummaryContainer.textContent = "";
 };
 
@@ -619,19 +619,27 @@ const render = (): void => {
   nextEventButton.disabled = !replay || isLive || flatEvents.length === 0;
   playPauseButton.textContent = playbackTimer === null ? "Play（播放）" : "Pause（暂停）";
 
-  tickReadout.textContent = `Tick ${visualState.currentTick} / ${maxTick}`;
+  tickReadout.textContent = `Tick（回合） ${visualState.currentTick} / ${maxTick}`;
   eventReadout.textContent = currentEvent
-    ? `Event ${currentEvent.event.event_id} (${currentEvent.event.type})`
-    : "Event -";
+    ? `Event（事件） ${currentEvent.event.event_id} (${currentEvent.event.type})`
+    : "Event（事件） -";
 
   metadata.textContent = isLive
-    ? `battle ${liveBattleId} | seed ${liveSeed} | events ${flatEvents.length}`
+    ? `battle（战斗） ${liveBattleId} | seed（种子） ${liveSeed} | events（事件） ${flatEvents.length}`
     : (replay
-      ? `${replay.metadata.battle_id ?? "battle"} | seed ${replay.metadata.seed ?? "-"} | events ${flatEvents.length}`
-      : "No replay loaded");
+      ? `${replay.metadata.battle_id ?? "battle（战斗）"} | seed（种子） ${replay.metadata.seed ?? "-"} | events（事件） ${flatEvents.length}`
+      : "No replay loaded（未加载回放）");
 
-  replayLoadState.textContent = isLive ? "Live mode" : loadedReplayFileName ? `${loadedReplayFileName} loaded` : "not loaded";
-  reportLoadState.textContent = isLive ? "Live mode" : loadedReportFileName ? `${loadedReportFileName} loaded` : "not loaded";
+  replayLoadState.textContent = isLive
+    ? "Live mode（实时模式）"
+    : loadedReplayFileName
+    ? `${loadedReplayFileName} loaded（已加载）`
+    : "Not loaded（未加载）";
+  reportLoadState.textContent = isLive
+    ? "Live mode（实时模式）"
+    : loadedReportFileName
+    ? `${loadedReportFileName} loaded（已加载）`
+    : "Not loaded（未加载）";
 
   renderBoard(boardContainer, {
     state: visualState,
@@ -708,7 +716,9 @@ const currentEventEntry = (): FlatReplayEvent | null => {
 const renderScenarioControls = (): void => {
   const scenarios = scenarioManifest?.scenarios ?? [];
   scenarioLoader.hidden = scenarios.length === 0;
-  scenarioManifestState.textContent = scenarios.length > 0 ? `${scenarios.length} scenarios` : "Manifest not loaded";
+  scenarioManifestState.textContent = scenarios.length > 0
+    ? `${scenarios.length} scenarios（${scenarios.length} 个场景）`
+    : "Manifest not loaded（场景清单未加载）";
   loadBaselineDemoButton.disabled = scenarios.length === 0 || mode === "live";
   loadScenarioButton.disabled = scenarios.length === 0 || mode === "live";
   scenarioSelect.disabled = scenarios.length === 0 || mode === "live";
@@ -738,7 +748,7 @@ const renderLivePanel = (): void => {
   liveLatestEventValue.textContent = latestEvent ? `T${latestEvent.event.tick} ${latestEvent.event.type}` : "-";
   liveTransportValue.textContent = "HTTP Polling（HTTP 轮询）";
   if (!liveStatusLine.textContent) {
-    liveStatusLine.textContent = "Live API not checked";
+    liveStatusLine.textContent = "Live API not checked（未检查实时 API）";
   }
 
   pauseLiveButton.disabled = liveSessionId === null || livePlaybackTimer === null;

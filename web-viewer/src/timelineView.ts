@@ -42,7 +42,7 @@ export const renderTimeline = (container: HTMLElement, options: TimelineRenderOp
 
   const count = document.createElement("div");
   count.className = "timeline-count";
-  count.textContent = `${filteredEvents(options).length} / ${options.events.length} events`;
+  count.textContent = `${filteredEvents(options).length} / ${options.events.length} events（事件）`;
   toolbar.append(count);
 
   const label = document.createElement("label");
@@ -53,7 +53,27 @@ export const renderTimeline = (container: HTMLElement, options: TimelineRenderOp
   for (const filter of TIMELINE_FILTERS) {
     const option = document.createElement("option");
     option.value = filter;
-    option.textContent = filter;
+    option.textContent = filter === "all"
+      ? "All / 全部"
+      : filter === "attack"
+        ? "attack（攻击）"
+        : filter === "skill_trigger"
+          ? "skill_trigger（技能触发）"
+          : filter === "damage"
+            ? "damage（伤害）"
+            : filter === "death"
+              ? "death（死亡）"
+              : filter === "stat_modifier"
+                ? "stat_modifier（属性修正）"
+                : filter === "status_apply"
+                  ? "status_apply（状态应用）"
+                  : filter === "skill_cooldown"
+                    ? "skill_cooldown（技能冷却）"
+                    : filter === "action_scheduled"
+                      ? "action_scheduled（行动调度）"
+                      : filter === "battle_end"
+                        ? "battle_end（战斗结束）"
+                        : filter;
     option.selected = filter === options.filter;
     select.append(option);
   }
@@ -73,7 +93,7 @@ export const renderTimeline = (container: HTMLElement, options: TimelineRenderOp
   if (events.length === 0) {
     const empty = document.createElement("div");
     empty.className = "empty-state";
-    empty.textContent = "No events";
+    empty.textContent = "No events（无事件）";
     list.append(empty);
   }
 

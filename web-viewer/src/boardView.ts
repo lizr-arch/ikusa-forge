@@ -61,7 +61,7 @@ export const renderBoard = (container: HTMLElement, options: BoardRenderOptions)
 
 const drawSideCells = (svg: SVGSVGElement, side: "ally" | "enemy", originY: number): void => {
   const label = svgElement("text");
-  label.textContent = side === "ally" ? "Ally" : "Enemy";
+  label.textContent = side === "ally" ? "Ally（友军）" : "Enemy（敌军）";
   setAttrs(label, {
     x: 12,
     y: originY - 18,
@@ -353,8 +353,8 @@ const drawUnit = (
   appendText(group, unit.instanceId, center.x, y + 16, "unit-id");
   appendText(group, `${shorten(unit.name, 12)} / ${shorten(unit.role, 8)}`, center.x, y + 30, "unit-role");
   appendText(group, `${unit.hp}/${unit.maxHp}`, center.x, y + 54, "unit-hp");
-  appendText(group, `S${statusCount}`, center.x - 28, y - 4, "unit-status-count");
-  appendText(group, `C${cooldownCount}`, center.x + 28, y - 4, "unit-cooldown-count");
+  appendText(group, `Status（状态）${statusCount}`, center.x - 28, y - 4, "unit-status-count");
+  appendText(group, `Cooldown（冷却）${cooldownCount}`, center.x + 28, y - 4, "unit-cooldown-count");
   appendActionBar(group, x, y + 48, unit, options.state.currentTick);
 
   if (!unit.alive) {
@@ -372,13 +372,13 @@ const drawUnit = (
   const nextActionTick = unit.nextActionTick;
   const actionIntervalTicks = unit.actionIntervalTicks;
   const nextActionText = nextActionTick === null
-    ? "Next: -"
+    ? "Next Action（下次行动）: -"
     : actionIntervalTicks === null
-      ? `Next: ${nextActionTick}`
-      : `Next: ${nextActionTick}/${actionIntervalTicks}`;
+      ? `Next Action（下次行动）: ${nextActionTick}`
+      : `Next Action（下次行动）: ${nextActionTick}/${actionIntervalTicks}`;
   appendText(group, nextActionText, center.x, y + UNIT_HEIGHT + 10, "unit-action-text");
 
-  const meta = `ATK ${unit.atk} / DEF ${unit.defense}`;
+  const meta = `ATK（攻击） ${unit.atk} / DEF（防御） ${unit.defense}`;
   appendText(group, meta, center.x, y + UNIT_HEIGHT + 22, "unit-meta-text");
 
   const highlight = options.unitHighlights.get(unit.instanceId);
@@ -462,7 +462,9 @@ const appendActionBar = (
     rx: 3,
     class: "action-bar-fill",
   });
-  const actionText = unit.nextActionTick === null ? "NA" : `A${unit.nextActionTick}`;
+  const actionText = unit.nextActionTick === null
+    ? "NA"
+    : `Action（行动） ${unit.nextActionTick}`;
   const actionTextElement = svgElement("text");
   setAttrs(actionTextElement, {
     x: x + UNIT_WIDTH / 2,

@@ -64,6 +64,9 @@ Live-related visible labels remain bilingual `English（中文）`, including:
 
 This phase keeps earlier bilingual anchors like Scenario Selector（场景选择器）, Report Panel（战报面板）, and Timeline（事件日志）alive.
 
+Raw technical values（原始技术值） such as event type, unit id, skill id, and API URL keep their raw form;
+用户可见说明文本仍保持 `English（中文）`。
+
 ## Not in Scope / 不在范围
 
 本阶段只做视觉打磨与显示层增强，不改战斗逻辑。

@@ -11,16 +11,16 @@
       <header class="topbar">
         <div>
           <h1>Ikusa Forge SVG Replay Viewer（SVG 回放查看器）</h1>
-          <div id="metadata" class="metadata">No replay loaded</div>
+          <div id="metadata" class="metadata">No replay loaded（未加载回放）</div>
         </div>
-        <div id="status" class="status-line" role="status">Ready</div>
+        <div id="status" class="status-line" role="status">Ready（就绪）</div>
       </header>
 
       <main class="workspace">
         <section class="board-panel" aria-labelledby="board-heading">
           <div class="panel-heading">
             <h2 id="board-heading">Battlefield（战场）</h2>
-            <div id="tick-readout" class="tick-readout">Tick 0</div>
+            <div id="tick-readout" class="tick-readout">Tick（回合） 0</div>
           </div>
           <div id="board" class="board-host"></div>
         </section>
@@ -34,7 +34,7 @@
               <div id="scenario-loader" class="scenario-loader" hidden aria-label="Scenario Selector">
                 <div class="scenario-loader-heading">
                   <h3>Scenario Selector（场景选择器）</h3>
-                  <span id="scenario-manifest-state">Manifest not loaded</span>
+                  <span id="scenario-manifest-state">Manifest not loaded（场景清单未加载）</span>
                 </div>
                 <label class="select-label">
                   <span>Scenario / 场景</span>
@@ -47,18 +47,18 @@
               </div>
               <div id="demo-guidance" class="demo-guidance" aria-label="Demo Load Guidance / Demo 加载引导">
                 <h3>Demo Load Guidance（Demo 加载引导）</h3>
-                <p>Generate demo files first:</p>
+                <p>Generate demo files first（请先生成 Demo 文件）:</p>
                 <pre><code>python tools/export_xlsx_to_json.py --input config/source --output config/generated
 python tools/validate_config.py --input config/generated
 python tools/run_demo_battle.py --battle demo_001 --seed 1001 --config config/generated --out runs/demo_001 --mode basic</code></pre>
-                <p>Demo files expected:</p>
+                <p>Demo files expected（预期 Demo 文件）:</p>
                 <ul>
                   <li>runs/demo_001/replay.json</li>
                   <li>runs/demo_001/battle_report.json</li>
                 </ul>
                 <div class="load-state-grid" aria-label="Demo file load state">
-                  <span>Replay <strong id="replay-load-state">not loaded</strong></span>
-                  <span>Report <strong id="report-load-state">not loaded</strong></span>
+                  <span>Replay（回放） <strong id="replay-load-state">Not loaded（未加载）</strong></span>
+                  <span>Report（战报） <strong id="report-load-state">Not loaded（未加载）</strong></span>
                 </div>
               </div>
               <label class="file-label">
@@ -74,7 +74,7 @@ python tools/run_demo_battle.py --battle demo_001 --seed 1001 --config config/ge
 
             <section class="panel-subblock live-mode-block" aria-labelledby="live-mode-heading">
               <h3 id="live-mode-heading">Live Mode（实时模式）</h3>
-              <div id="live-status-line" class="empty-state">Live API not checked</div>
+              <div id="live-status-line" class="empty-state">Live API not checked（尚未检查实时 API）</div>
               <label class="input-grid">
                 <span>API URL（API 地址）</span>
                 <input id="live-api-url" type="text" value="http://127.0.0.1:8765" />
@@ -103,14 +103,14 @@ python tools/run_demo_battle.py --battle demo_001 --seed 1001 --config config/ge
               <label class="select-label">
                 <span>Speed（速度）</span>
                 <select id="live-speed-select">
-                  <option value="1" selected>1x</option>
-                  <option value="2">2x</option>
-                  <option value="4">4x</option>
-                </select>
+                <option value="1" selected>1x</option>
+                <option value="2">2x</option>
+                <option value="4">4x</option>
+              </select>
               </label>
               <label class="select-label">
                 <span>Live Status（实时状态）</span>
-                <span id="live-status" class="live-inline-value">idle</span>
+                <span id="live-status" class="live-inline-value">idle（空闲）</span>
               </label>
               <div class="live-status-grid">
                 <label class="select-label">
@@ -134,15 +134,15 @@ python tools/run_demo_battle.py --battle demo_001 --seed 1001 --config config/ge
                   <span id="live-latest-event" class="live-inline-value">-</span>
                 </label>
                 <label class="select-label">
-                  <span>Transport（传输方式）</span>
-                  <span id="live-transport" class="live-inline-value">-</span>
-                </label>
-              </div>
+                <span>Transport（传输方式）</span>
+                <span id="live-transport" class="live-inline-value">-</span>
+              </label>
+            </div>
             </section>
 
             <section class="panel-subblock" aria-labelledby="replay-controls-heading">
               <h3 id="replay-controls-heading">Playback Controls（播放控制）</h3>
-              <div id="event-readout" class="event-readout">Event -</div>
+            <div id="event-readout" class="event-readout">Event（事件） -</div>
               <div class="control-row">
                 <button id="play-pause" type="button">Play（播放）</button>
                 <button id="step-tick" type="button">Step Tick（单步）</button>
