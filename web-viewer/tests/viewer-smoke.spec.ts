@@ -312,9 +312,11 @@ test("live mode can start and step with local API", async ({ page }) => {
       beforeTick = (await page.locator("#tick-readout").textContent()) ?? "Tick 0";
       beforeTimelineRows = await countTimelineRows(page);
     }
+    await expect(page.locator("#pixi-battlefield canvas")).toBeVisible();
     await expect(page.locator("#live-latest-event")).toContainText(/unit_move|target_acquired|enter_range|engage_start|attack|damage|action_scheduled/);
     await expect(page.locator("#performance-panel")).toContainText(/FPS（帧率）|Frame Time（帧耗时）/);
     await expect(page.locator("#performance-panel")).toContainText(/Pixi Render（Pixi 渲染）/);
+    await expect(page.locator("#pixi-battlefield canvas")).toBeVisible();
     await page.locator(".formation-unit").first().click();
     await expect(page.locator("#unit-detail")).toContainText("Combat State（战斗状态）");
     await expect(page.locator("#unit-detail")).toContainText(/Position（位置）|Position/);

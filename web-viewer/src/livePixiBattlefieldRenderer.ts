@@ -21,6 +21,8 @@ interface UnitSprite {
   hpBg: Graphics;
   hpFill: Graphics;
   hpText: Text;
+  actionBarBg: Graphics;
+  actionBarFill: Graphics;
   actionText: Text;
   statusText: Text;
   cooldownText: Text;
@@ -163,6 +165,8 @@ export const createLivePixiBattlefieldRenderer = (
       sprite.hpBg.destroy();
       sprite.hpFill.destroy();
       sprite.hpText.destroy();
+      sprite.actionBarBg.destroy();
+      sprite.actionBarFill.destroy();
       sprite.actionText.destroy();
       sprite.statusText.destroy();
       sprite.cooldownText.destroy();
@@ -193,17 +197,21 @@ export const createLivePixiBattlefieldRenderer = (
     const hpBg = new Graphics();
     const hpFill = new Graphics();
     const hpText = new Text({ text: `${unit.hp}/${unit.maxHp}`, style: { fill: 0xe6f5ee, fontSize: 8 } });
+    const actionBarBg = new Graphics();
+    const actionBarFill = new Graphics();
     const actionText = new Text({ text: "Action -", style: { fill: 0xdbebff, fontSize: 7 } });
     const body = new Graphics();
     const selectionRing = new Graphics();
 
-    group.addChild(selectionRing, body, hpBg, hpFill, hpText, actionText, statusText, cooldownText, nameText);
+    group.addChild(selectionRing, body, hpBg, hpFill, hpText, actionBarBg, actionBarFill, actionText, statusText, cooldownText, nameText);
     updateUnitSprite({
       container: group,
       body,
       hpBg,
       hpFill,
       hpText,
+      actionBarBg,
+      actionBarFill,
       actionText,
       statusText,
       cooldownText,
@@ -216,6 +224,8 @@ export const createLivePixiBattlefieldRenderer = (
       hpBg,
       hpFill,
       hpText,
+      actionBarBg,
+      actionBarFill,
       actionText,
       statusText,
       cooldownText,
@@ -260,9 +270,22 @@ export const createLivePixiBattlefieldRenderer = (
     sprite.hpText.text = `${unit.hp}/${unit.maxHp}`;
 
     const actionRatio = actionIndicatorRatio(unit);
-    const actionBarY = hpY + 10;
+    const actionBarY = hpY + 8;
+    const actionBarWidth = hpWidth * actionRatio;
+    sprite.actionBarBg.clear();
+    sprite.actionBarBg.beginFill(0x1a2a24);
+    sprite.actionBarBg.drawRect(hpX, actionBarY, hpWidth, 4);
+    sprite.actionBarBg.endFill();
+    sprite.actionBarFill.clear();
+    if (unit.alive && actionRatio > 0) {
+      sprite.actionBarFill.beginFill(0x3b82bf);
+      sprite.actionBarFill.drawRect(hpX, actionBarY, actionBarWidth, 4);
+      sprite.actionBarFill.endFill();
+    }
+
+    const actionTextY = hpY + 10;
     sprite.actionText.x = centerX - UNIT_WIDTH / 2;
-    sprite.actionText.y = actionBarY;
+    sprite.actionText.y = actionTextY;
     sprite.actionText.text = actionText(unit);
 
     const metaY = actionBarY + 10;
@@ -298,9 +321,12 @@ export const createLivePixiBattlefieldRenderer = (
 
   const createEffectFromEvent = (event: ReplayEvent, state: VisualState): void => {
     switch (event.type) {
-      case "attack":
-        createAttackLine(event.payload.source, event.payload.target, state);
+      case "attack": {
+        const payload = event.payload as Record<string, unknown>;
+        const attacker = payload.attacker ?? payload.source;
+        createAttackLine(attacker, event.payload.target, state);
         break;
+      }
       case "damage":
         if (typeof event.payload.amount === "number") {
           createFloatingText(`-${event.payload.amount}`, event.payload.target, state);
@@ -310,8 +336,10 @@ export const createLivePixiBattlefieldRenderer = (
         createSkillCallout(event.payload.source, event.payload.skill as string, state);
         break;
       case "status_apply":
+        createStatusBadge(event.payload.target, "S+", state);
+        break;
       case "status_expire":
-        createStatusBadge(event.payload.target, event.payload.type === "status_expire" ? "SE" : "S+", state);
+        createStatusBadge(event.payload.target, "SE", state);
         break;
       case "skill_cooldown":
         createCooldownBadge(event.payload.source, `${event.payload.ready_tick}`, state);
