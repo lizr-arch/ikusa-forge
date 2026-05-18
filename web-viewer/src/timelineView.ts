@@ -40,6 +40,7 @@ interface TimelineRenderOptions {
   filter: TimelineFilter;
   onSelectEvent: (globalIndex: number) => void;
   onFilterChange: (filter: TimelineFilter) => void;
+  autoScrollSelectedEvent?: boolean;
 }
 
 export const renderTimeline = (container: HTMLElement, options: TimelineRenderOptions): void => {
@@ -134,7 +135,9 @@ export const renderTimeline = (container: HTMLElement, options: TimelineRenderOp
   }
 
   container.append(list);
-  selectedRow?.scrollIntoView({ block: "nearest" });
+  if (options.autoScrollSelectedEvent ?? true) {
+    selectedRow?.scrollIntoView({ block: "nearest" });
+  }
 };
 
 const filteredEvents = (options: TimelineRenderOptions): FlatReplayEvent[] => {

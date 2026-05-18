@@ -272,7 +272,9 @@ test("live mode can start and step with local API", async ({ page }) => {
     await page.locator("#live-api-url").fill(apiUrl);
     await page.locator("#live-battle-id").fill("demo_001");
     await page.locator("#live-seed").fill("1001");
-    await page.locator("#start-live-battle").click();
+    await page.locator("#start-live-battle").evaluate((element) => {
+      (element as HTMLButtonElement).click();
+    });
 
     await expect(page.locator("#live-session-id")).not.toHaveText("-", { timeout: 10_000 });
     await expect(page.locator("#live-status-line")).toContainText(/connected|running|运行/i, { timeout: 10_000 });
@@ -297,8 +299,13 @@ test("live mode can start and step with local API", async ({ page }) => {
     let effectFound = false;
     let movementFound = false;
     for (let attempt = 0; attempt < 8 && (!effectFound || !movementFound); attempt += 1) {
-      await page.locator("#step-live-battle").click();
+      const scrollBeforeStep = await page.evaluate(() => window.scrollY);
+      await page.locator("#step-live-battle").evaluate((element) => {
+        (element as HTMLButtonElement).click();
+      });
       await waitForLiveProgress(page, beforeCursor, beforeTick, beforeTimelineRows);
+      const scrollAfterStep = await page.evaluate(() => window.scrollY);
+      expect(scrollAfterStep).toBe(scrollBeforeStep);
       effectFound ||= await hasLiveVisualEffect(page);
       movementFound ||= await hasUnitMovement(page, initialPositions);
       beforeCursor = Number((await page.locator("#live-event-cursor").textContent()) ?? "0");
@@ -308,7 +315,9 @@ test("live mode can start and step with local API", async ({ page }) => {
     expect(effectFound || movementFound).toBeTruthy();
     await expect(page.locator("#live-latest-event")).toContainText(/unit_move|target_acquired|enter_range|engage_start|attack|damage|action_scheduled/);
 
-    await page.locator("#reset-live-battle").click();
+    await page.locator("#reset-live-battle").evaluate((element) => {
+      (element as HTMLButtonElement).click();
+    });
     await expect(page.locator("#live-session-id")).toContainText("-", { timeout: 10_000 });
     await expect(page.locator("#live-status")).toContainText(/ready|idle/i, { timeout: 10_000 });
     await expect(page.locator("#live-event-cursor")).toHaveText("0");

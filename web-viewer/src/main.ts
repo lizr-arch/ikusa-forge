@@ -669,6 +669,7 @@ const render = (): void => {
     events: flatEvents,
     selectedEventIndex,
     filter: timelineFilter,
+    autoScrollSelectedEvent: mode !== "live",
     onSelectEvent: (globalIndex) => {
       if (mode === "live") {
         selectedEventIndex = globalIndex;
