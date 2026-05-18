@@ -47,6 +47,7 @@ Current Python simulator status:
 - HTML Live Mode / HTML 实时模式（`Live Combat API / 实时战斗 API` + HTTP polling，支持 `start/step/pause/resume/reset`）
 - Live Battle Visual Polish / 实时战斗视觉打磨（Battlefield-first layout / 战场优先布局，HP 条、行动条、伤害跳字、胜负横幅）
 - Realtime Spatial Combat Foundation / 实时空间战斗基础（Continuous Position / 连续坐标、Movement Intent / 移动意图、Target Acquisition / 寻敌、Attack Range / 攻击范围、Unit Movement Event / 单位移动事件）
+- Combat Architecture Formalization / 战斗架构正式化（Unit FSM / 单位状态机、Decision Models / 决策模型、Action Pipeline / 行动管线骨架、Combat State / 战斗状态）
 
 Phase 1 Demo Package / 第一阶段演示包 / Phase 2 Tactical Depth notes are available at:
 
@@ -60,6 +61,8 @@ Phase 1 Demo Package / 第一阶段演示包 / Phase 2 Tactical Depth notes are 
 - `docs/process/live-combat-runtime-foundation-v0.1.md`
 - `docs/process/live-combat-api-v0.1.md`
 - `docs/process/live-battle-visual-polish-v0.1.md`
+- `docs/architecture/combat-architecture-v0.1.md`
+- `docs/process/combat-architecture-formalization-v0.1.md`
 
 Quick start for a full demo run / 一次完整演示最简命令:
 

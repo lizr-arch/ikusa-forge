@@ -68,6 +68,7 @@ export interface UnitSnapshot {
   skill_ids?: string[];
   hp?: number;
   alive?: boolean;
+  combat_state?: string;
   position_x?: number;
   position_y?: number;
   velocity_x?: number;
@@ -121,6 +122,8 @@ export interface LiveUnitSnapshot {
   statuses?: StatusEffectSnapshot[];
   skill_cooldowns?: Record<string, number>;
   alive: boolean;
+  combat_state?: string;
+  combatState: string;
   guard_value?: number;
   tags?: string[];
 }

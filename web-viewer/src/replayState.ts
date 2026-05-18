@@ -18,6 +18,7 @@ export interface VisualUnit {
   engagementRange: number;
   engagedTarget: string | null;
   movementIntent: string;
+  combatState: string;
   role: string;
   name: string;
   tags: string[];
@@ -387,6 +388,7 @@ const applyUnitSpawn = (state: VisualState, event: ReplayEvent): void => {
     engagementRange: readNumber(snapshot.engagement_range, readNumber(snapshot.base_range, 0)),
     engagedTarget: readNullableString(snapshot.engaged_target),
     movementIntent: readString(snapshot.movement_intent, "hold"),
+    combatState: readString(snapshot.combat_state, "idle"),
     role: readString(snapshot.role, "unknown"),
     name: readString(snapshot.name, instanceId),
     tags: readStringArray(snapshot.tags),
@@ -548,6 +550,7 @@ const buildLiveUnit = (snapshotUnit: LiveUnitSnapshot): VisualUnit => {
     engagementRange: readNumber(snapshot.engagement_range, readNumber(snapshot.base_range, readNumber(snapshot.range, 0))),
     engagedTarget: readNullableString(snapshot.engaged_target),
     movementIntent: readString(snapshot.movement_intent, "hold"),
+    combatState: readString(snapshot.combat_state, "idle"),
     role: readString(snapshot.role, "unknown"),
     name: readString(snapshot.name, readString(snapshot.instance_id)),
     tags: readStringArray(snapshot.tags),
@@ -602,6 +605,7 @@ const applyUnitMove = (state: VisualState, event: ReplayEvent): void => {
     unit.moveSpeed = readNumber(event.payload.move_speed, unit.moveSpeed);
     unit.movementIntent = readString(event.payload.reason, "move_to_attack_range");
     unit.engagedTarget = readNullableString(event.payload.target);
+    unit.combatState = "moving_to_engage";
   }
   state.lastMove = {
     tick: event.tick,
@@ -621,7 +625,8 @@ const applySpatialTargetEvent = (state: VisualState, event: ReplayEvent): void =
   const unit = state.units.get(unitId);
   if (unit) {
     unit.engagedTarget = targetId;
-    unit.movementIntent = event.type === "target_acquired" ? "target_acquired" : "engaged";
+    unit.movementIntent = event.type === "target_acquired" ? "move_to_attack_range" : "engaged";
+    unit.combatState = event.type === "target_acquired" ? "moving_to_engage" : "engaged";
   }
 };
 
@@ -633,6 +638,9 @@ const applyDeath = (state: VisualState, event: ReplayEvent): void => {
   }
   unit.alive = false;
   unit.hp = 0;
+  unit.combatState = "dead";
+  unit.engagedTarget = null;
+  unit.movementIntent = "hold";
 };
 
 const clampTick = (tick: number, maxTick: number): number => {

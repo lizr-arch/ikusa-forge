@@ -30,6 +30,7 @@ export const renderUnitDetail = (
       ["Position（位置）", `${unit.x},${unit.y}`],
       ["HP（生命）", `${unit.hp}/${unit.maxHp}`],
       ["Alive（存活）", unit.alive ? "yes（是）" : "no（否）"],
+      ["Combat State（战斗状态）", unit.combatState],
       ["ATK（攻击）", formatNumber(unit.atk)],
       ["DEF（防御）", formatNumber(unit.defense)],
       ["Range（射程）", formatNumber(unit.range)],

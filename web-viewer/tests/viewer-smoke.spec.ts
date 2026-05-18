@@ -65,6 +65,7 @@ test("loads curated scenario from manifest", async ({ page }) => {
 
   await page.locator('#report .report-table .report-unit-link[data-unit-id="ally_001"]').click();
   await expect(page.locator("#unit-detail")).toContainText(/Next Action Tick（下次行动）|Next Action/);
+  await expect(page.locator("#unit-detail")).toContainText(/Combat State（战斗状态）|Combat State/);
   await expect(page.locator("#report")).toContainText("Victory Explanation");
   await expect(page.locator("#report")).toContainText("enemy_eliminated");
 });
@@ -136,6 +137,7 @@ test("manual file input loading remains available", async ({ page }) => {
   await page.locator('#report .report-table .report-unit-link[data-unit-id="ally_001"]').click();
   await expect(page.locator("#unit-detail")).toContainText("ally_001");
   await expect(page.locator("#unit-detail")).toContainText(/Status（状态）|Active Statuses/);
+  await expect(page.locator("#unit-detail")).toContainText(/Combat State（战斗状态）|Combat State/);
   await expect(page.locator("#unit-detail")).toContainText(/HP（生命）|HP/);
   await expect(page.locator("#unit-detail")).toContainText(/Cooldown（冷却）|Cooldowns/);
   await expect(page.locator("#unit-detail")).toContainText(/Next Action（下次行动）|Next Action Tick/);
@@ -291,6 +293,8 @@ test("live mode can start and step with local API", async ({ page }) => {
     await expect(page.locator(".unit-status-count")).toHaveCount(12, { timeout: 10_000 });
     await expect(page.locator(".unit-cooldown-count")).toHaveCount(12, { timeout: 10_000 });
     await expect(page.locator("#live-current-tick")).toHaveText(/\d+/);
+    await page.locator('[data-unit-id="ally_001"]').click({ force: true });
+    await expect(page.locator("#unit-detail")).toContainText(/Combat State（战斗状态）|Combat State/);
 
     const initialPositions = await readUnitPositions(page);
     let beforeCursor = Number((await page.locator("#live-event-cursor").textContent()) ?? "0");
