@@ -91,12 +91,16 @@
     },
     "total_actions_scheduled": 71,
     "total_damage": 1212,
+    "total_engage_start": 29,
+    "total_enter_range": 29,
     "total_kills": 9,
     "total_modifiers": 16,
     "total_skill_cooldowns": 56,
     "total_skill_triggers": 56,
     "total_status_applied": 4,
-    "total_status_expired": 0
+    "total_status_expired": 0,
+    "total_target_acquired": 42,
+    "total_unit_moves": 276
   },
   "top_units": {
     "damage_done": [
@@ -122,9 +126,12 @@
       "damage_done": 65,
       "damage_taken": 29,
       "deaths": 0,
+      "engagements_started": 2,
+      "entered_range": 2,
       "kills": 1,
       "last_next_action_tick": 338,
       "modifiers_received": 2,
+      "moves": 31,
       "skill_triggers": {
         "intercept": 3,
         "shield_guard": 1
@@ -134,7 +141,8 @@
         "hp": 10.0
       },
       "statuses_applied": 1,
-      "statuses_expired": 0
+      "statuses_expired": 0,
+      "target_acquired": 4
     },
     "ally_002": {
       "actions_taken": 5,
@@ -142,9 +150,12 @@
       "damage_done": 171,
       "damage_taken": 146,
       "deaths": 1,
+      "engagements_started": 3,
+      "entered_range": 3,
       "kills": 1,
       "last_next_action_tick": 185,
       "modifiers_received": 2,
+      "moves": 20,
       "skill_triggers": {
         "brace_counter": 2,
         "spear_thrust": 3
@@ -154,7 +165,8 @@
         "hp": 10.0
       },
       "statuses_applied": 0,
-      "statuses_expired": 0
+      "statuses_expired": 0,
+      "target_acquired": 4
     },
     "ally_003": {
       "actions_taken": 13,
@@ -162,9 +174,12 @@
       "damage_done": 250,
       "damage_taken": 39,
       "deaths": 0,
+      "engagements_started": 3,
+      "entered_range": 3,
       "kills": 3,
       "last_next_action_tick": 361,
       "modifiers_received": 1,
+      "moves": 30,
       "skill_triggers": {
         "katana_slash": 13
       },
@@ -172,7 +187,8 @@
         "atk": 3.0
       },
       "statuses_applied": 0,
-      "statuses_expired": 0
+      "statuses_expired": 0,
+      "target_acquired": 4
     },
     "ally_004": {
       "actions_taken": 4,
@@ -180,9 +196,12 @@
       "damage_done": 158,
       "damage_taken": 102,
       "deaths": 1,
+      "engagements_started": 3,
+      "entered_range": 3,
       "kills": 1,
       "last_next_action_tick": 157,
       "modifiers_received": 1,
+      "moves": 21,
       "skill_triggers": {
         "smoke_strike": 2
       },
@@ -190,7 +209,8 @@
         "atk": 3.0
       },
       "statuses_applied": 1,
-      "statuses_expired": 0
+      "statuses_expired": 0,
+      "target_acquired": 4
     },
     "ally_005": {
       "actions_taken": 10,
@@ -198,9 +218,12 @@
       "damage_done": 110,
       "damage_taken": 30,
       "deaths": 0,
+      "engagements_started": 3,
+      "entered_range": 3,
       "kills": 0,
       "last_next_action_tick": 364,
       "modifiers_received": 1,
+      "moves": 25,
       "skill_triggers": {
         "bow_shot": 5,
         "focus_fire": 3
@@ -209,7 +232,8 @@
         "hp": 10.0
       },
       "statuses_applied": 0,
-      "statuses_expired": 0
+      "statuses_expired": 0,
+      "target_acquired": 5
     },
     "ally_006": {
       "actions_taken": 3,
@@ -217,9 +241,12 @@
       "damage_done": 6,
       "damage_taken": 106,
       "deaths": 1,
+      "engagements_started": 1,
+      "entered_range": 1,
       "kills": 0,
       "last_next_action_tick": 281,
       "modifiers_received": 1,
+      "moves": 44,
       "skill_triggers": {
         "banner_rally": 1
       },
@@ -227,7 +254,8 @@
         "hp": 10.0
       },
       "statuses_applied": 0,
-      "statuses_expired": 0
+      "statuses_expired": 0,
+      "target_acquired": 5
     },
     "enemy_001": {
       "actions_taken": 6,
@@ -235,9 +263,12 @@
       "damage_done": 54,
       "damage_taken": 166,
       "deaths": 1,
+      "engagements_started": 2,
+      "entered_range": 2,
       "kills": 0,
       "last_next_action_tick": 331,
       "modifiers_received": 2,
+      "moves": 28,
       "skill_triggers": {
         "intercept": 3,
         "shield_guard": 1
@@ -247,7 +278,8 @@
         "hp": 10.0
       },
       "statuses_applied": 1,
-      "statuses_expired": 0
+      "statuses_expired": 0,
+      "target_acquired": 3
     },
     "enemy_002": {
       "actions_taken": 6,
@@ -255,9 +287,12 @@
       "damage_done": 198,
       "damage_taken": 139,
       "deaths": 1,
+      "engagements_started": 3,
+      "entered_range": 3,
       "kills": 1,
       "last_next_action_tick": 248,
       "modifiers_received": 2,
+      "moves": 24,
       "skill_triggers": {
         "brace_counter": 2,
         "spear_thrust": 4
@@ -267,7 +302,8 @@
         "hp": 10.0
       },
       "statuses_applied": 0,
-      "statuses_expired": 0
+      "statuses_expired": 0,
+      "target_acquired": 4
     },
     "enemy_003": {
       "actions_taken": 2,
@@ -275,15 +311,19 @@
       "damage_done": 39,
       "damage_taken": 121,
       "deaths": 1,
+      "engagements_started": 2,
+      "entered_range": 2,
       "kills": 0,
       "last_next_action_tick": 131,
       "modifiers_received": 0,
+      "moves": 18,
       "skill_triggers": {
         "katana_slash": 2
       },
       "stat_bonuses": {},
       "statuses_applied": 0,
-      "statuses_expired": 0
+      "statuses_expired": 0,
+      "target_acquired": 2
     },
     "enemy_004": {
       "actions_taken": 2,
@@ -291,15 +331,19 @@
       "damage_done": 56,
       "damage_taken": 89,
       "deaths": 1,
+      "engagements_started": 1,
+      "entered_range": 1,
       "kills": 0,
       "last_next_action_tick": 106,
       "modifiers_received": 0,
+      "moves": 14,
       "skill_triggers": {
         "smoke_strike": 1
       },
       "stat_bonuses": {},
       "statuses_applied": 1,
-      "statuses_expired": 0
+      "statuses_expired": 0,
+      "target_acquired": 1
     },
     "enemy_005": {
       "actions_taken": 11,
@@ -307,9 +351,12 @@
       "damage_done": 96,
       "damage_taken": 113,
       "deaths": 1,
+      "engagements_started": 4,
+      "entered_range": 4,
       "kills": 2,
       "last_next_action_tick": 346,
       "modifiers_received": 2,
+      "moves": 7,
       "skill_triggers": {
         "bow_shot": 6,
         "focus_fire": 3
@@ -319,7 +366,8 @@
         "hp": 10.0
       },
       "statuses_applied": 0,
-      "statuses_expired": 0
+      "statuses_expired": 0,
+      "target_acquired": 4
     },
     "enemy_006": {
       "actions_taken": 2,
@@ -327,9 +375,12 @@
       "damage_done": 9,
       "damage_taken": 132,
       "deaths": 1,
+      "engagements_started": 2,
+      "entered_range": 2,
       "kills": 0,
       "last_next_action_tick": 142,
       "modifiers_received": 2,
+      "moves": 14,
       "skill_triggers": {
         "banner_rally": 1
       },
@@ -338,7 +389,8 @@
         "hp": 10.0
       },
       "statuses_applied": 0,
-      "statuses_expired": 0
+      "statuses_expired": 0,
+      "target_acquired": 2
     }
   },
   "victory_explanation": {

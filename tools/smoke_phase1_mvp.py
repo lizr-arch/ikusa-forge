@@ -87,7 +87,11 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         f"total_skill_triggers={summary.get('total_skill_triggers')}, "
         f"total_status_applied={summary.get('total_status_applied')}, "
         f"total_skill_cooldowns={summary.get('total_skill_cooldowns')}, "
-        f"total_actions_scheduled={summary.get('total_actions_scheduled')}"
+        f"total_actions_scheduled={summary.get('total_actions_scheduled')}, "
+        f"total_unit_moves={summary.get('total_unit_moves')}, "
+        f"total_target_acquired={summary.get('total_target_acquired')}, "
+        f"total_enter_range={summary.get('total_enter_range')}, "
+        f"total_engage_start={summary.get('total_engage_start')}"
     )
     return 0
 
@@ -201,6 +205,10 @@ def _check_report(
         _expect(summary.get("total_status_applied") == event_counts.get("status_apply"), "report status count", errors)
         _expect(summary.get("total_skill_cooldowns") == event_counts.get("skill_cooldown"), "report cooldown count", errors)
         _expect(summary.get("total_actions_scheduled") == event_counts.get("action_scheduled"), "report action schedule count", errors)
+        _expect(summary.get("total_unit_moves") == event_counts.get("unit_move"), "report move count", errors)
+        _expect(summary.get("total_target_acquired") == event_counts.get("target_acquired"), "report target acquired count", errors)
+        _expect(summary.get("total_enter_range") == event_counts.get("enter_range"), "report enter range count", errors)
+        _expect(summary.get("total_engage_start") == event_counts.get("engage_start"), "report engage start count", errors)
 
     _expect(isinstance(report.get("units"), dict) and len(report.get("units", {})) >= 2, "report units", errors)
     _expect(isinstance(report.get("victory_explanation"), dict), "report victory_explanation", errors)
@@ -208,6 +216,11 @@ def _check_report(
     for field in ["damage_done", "damage_taken", "skill_triggers"]:
         _expect(isinstance(top_units.get(field), list) and len(top_units.get(field, [])) > 0, f"top_units.{field}", errors)
     _expect(isinstance(report.get("key_moments"), list) and len(report.get("key_moments", [])) > 0, "report key_moments", errors)
+    units = _as_dict(report.get("units"))
+    _expect(any(_as_dict(unit).get("moves", 0) > 0 for unit in units.values()), "report unit moves", errors)
+    _expect(any(_as_dict(unit).get("target_acquired", 0) > 0 for unit in units.values()), "report unit target acquired", errors)
+    _expect(any(_as_dict(unit).get("entered_range", 0) > 0 for unit in units.values()), "report unit enter range", errors)
+    _expect(any(_as_dict(unit).get("engagements_started", 0) > 0 for unit in units.values()), "report unit engage start", errors)
 
 
 def _filter_events_with_reason(events: Sequence[Dict[str, Any]], event_type: str) -> List[Dict[str, Any]]:

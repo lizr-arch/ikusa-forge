@@ -163,6 +163,7 @@ python tools/smoke_live_api.py --host 127.0.0.1 --port 8765 --battle demo_001 --
 
 The API is a Python standard-library Local HTTP Server / 本地 HTTP 服务 for external clients.
 HTML Live Mode / HTML 实时模式 now consumes this API directly with HTTP polling.
+The combat runtime now uses Realtime Spatial Combat / 实时空间战斗 fields, so Live Mode / 实时模式 shows units moving through Continuous Position / 连续坐标 before they attack in Attack Range / 攻击范围; the spatial helpers live in `sim-python/ikusa_sim/spatial_combat.py`, and report summaries include move / target / range / engage counters.
 
 For local HTML Live Mode, the API runs on localhost and returns local development CORS headers
 (`Access-Control-Allow-Origin: *`, `Access-Control-Allow-Methods: GET, POST, OPTIONS`,

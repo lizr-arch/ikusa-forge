@@ -46,6 +46,10 @@ export const renderScenarioSummary = (
     ["Status Applied（状态应用）", formatNumber(summary?.total_status_applied)],
     ["Skill Cooldown（技能冷却）", formatNumber(summary?.total_skill_cooldowns)],
     ["Action Scheduled（行动调度）", formatNumber(summary?.total_actions_scheduled)],
+    ["Unit Moves（单位移动）", formatNumber(summary?.total_unit_moves)],
+    ["Target Acquired（发现目标）", formatNumber(summary?.total_target_acquired)],
+    ["Enter Range（进入射程）", formatNumber(summary?.total_enter_range)],
+    ["Engage Start（开始交战）", formatNumber(summary?.total_engage_start)],
   ];
 
   container.append(title, description, statGrid(rows));

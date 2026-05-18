@@ -303,8 +303,11 @@ const drawUnit = (
     tabindex: 0,
     "aria-label": unit.instanceId,
     "data-unit-id": unit.instanceId,
+    "data-side": unit.side,
+    "data-alive": unit.alive ? "true" : "false",
     "data-position-x": unit.positionX,
     "data-position-y": unit.positionY,
+    "data-next-action-tick": unit.nextActionTick ?? -1,
   });
 
   group.addEventListener("click", () => options.onSelectUnit(unit.instanceId));

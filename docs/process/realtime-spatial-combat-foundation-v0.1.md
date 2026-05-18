@@ -42,6 +42,32 @@ x = 80 + col * 56
 
 这是第一版 Simple Engagement / 简单接敌。它不是 A* pathfinding / A* 寻路，不包含 terrain / 地形、obstacle collision / 障碍物碰撞 或 complex physics / 复杂物理。
 
+## Spatial Module / 空间模块
+
+空间逻辑已经抽到 `sim-python/ikusa_sim/spatial_combat.py`，并由 `battle_session.py` 调用，便于后续继续扩展：
+
+- `initialize_spatial_state`
+- `update_spatial_engagements`
+- `distance_between`
+- `in_attack_range`
+- `nearest_alive_enemy`
+- `move_toward_target`
+- `select_engaged_target_decision`
+
+报表层同时新增空间计数：
+
+- `total_unit_moves`
+- `total_target_acquired`
+- `total_enter_range`
+- `total_engage_start`
+
+以及 per-unit 计数：
+
+- `moves`
+- `target_acquired`
+- `entered_range`
+- `engagements_started`
+
 ## Event Contract / 事件契约
 
 新增事件：
@@ -95,6 +121,7 @@ Replay Mode / 回放模式 和 Scenario Mode / 场景模式 也可读取 `unit_m
 - cavalry charge / 骑兵冲锋
 - morale / 士气
 - complex physics / 复杂物理
+- formation-level group steering / 阵型级群体导航
 - C# host / C# 宿主
 - Godot
 - WebSocket

@@ -33,7 +33,7 @@
 - `tools/run_live_api_smoke.py`
 - `python -m unittest discover -s sim-python/tests`
 
-The smoke/unit-test layer now also checks `status_apply`, `skill_cooldown`, `action_scheduled`, `unit_move`, `target_acquired`, `enter_range`, `engage_start`, extended `battle_end`, report `victory_explanation`, and Live Combat Runtime / 实时战斗运行时 compatibility through BattleSession / 战斗会话 tests.
+The smoke/unit-test layer now also checks `status_apply`, `skill_cooldown`, `action_scheduled`, `unit_move`, `target_acquired`, `enter_range`, `engage_start`, the matching report spatial counters (`total_unit_moves`, `total_target_acquired`, `total_enter_range`, `total_engage_start`), extended `battle_end`, report `victory_explanation`, and Live Combat Runtime / 实时战斗运行时 compatibility through BattleSession / 战斗会话 tests.
 It also starts the Live Combat API / 实时战斗 API in a managed subprocess and runs API smoke against health/start/step/snapshot/events/reset.
 
 ### Web viewer / Web 回放器 (web-viewer)

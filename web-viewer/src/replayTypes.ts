@@ -261,6 +261,10 @@ export interface UnitReport {
   cooldowns_started?: number;
   actions_taken?: number;
   last_next_action_tick?: number | null;
+  moves?: number;
+  target_acquired?: number;
+  entered_range?: number;
+  engagements_started?: number;
 }
 
 export interface ReportSummary {
@@ -274,6 +278,10 @@ export interface ReportSummary {
   total_status_expired?: number;
   total_skill_cooldowns?: number;
   total_actions_scheduled?: number;
+  total_unit_moves?: number;
+  total_target_acquired?: number;
+  total_enter_range?: number;
+  total_engage_start?: number;
   target_reason_counts?: Record<string, number>;
   skill_target_reason_counts?: Record<string, number>;
 }

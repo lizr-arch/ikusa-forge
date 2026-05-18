@@ -25,6 +25,10 @@ DEMO_001_REQUIRED_EVENTS = [
     "status_apply",
     "skill_cooldown",
     "action_scheduled",
+    "unit_move",
+    "target_acquired",
+    "enter_range",
+    "engage_start",
 ]
 
 

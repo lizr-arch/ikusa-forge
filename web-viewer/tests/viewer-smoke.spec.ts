@@ -279,11 +279,13 @@ test("live mode can start and step with local API", async ({ page }) => {
     await expect(page.locator("#metadata")).toContainText(/battle（战斗）\s*demo_001|battle demo_001/);
     await expect(page.locator("#metadata")).toContainText(/seed（种子）\s*1001|seed 1001/);
     await expect(page.locator("#metadata")).toContainText("events ");
+    await expect(page.getByRole("img", { name: "Battlefield（战场）" })).toBeVisible();
     await expect(page.locator("#board")).toBeVisible();
     await expect(page.locator(".unit-token")).toHaveCount(12, { timeout: 10_000 });
     await expect(page.locator(".unit-range-circle").first()).toBeVisible();
     await expect(page.locator(".health-fill")).toHaveCount(12, { timeout: 10_000 });
     await expect(page.locator(".action-bar-bg")).toHaveCount(12, { timeout: 10_000 });
+    await expect(page.locator(".action-fill")).toHaveCount(12, { timeout: 10_000 });
     await expect(page.locator(".unit-status-count")).toHaveCount(12, { timeout: 10_000 });
     await expect(page.locator(".unit-cooldown-count")).toHaveCount(12, { timeout: 10_000 });
     await expect(page.locator("#live-current-tick")).toHaveText(/\d+/);
