@@ -79,6 +79,7 @@ export interface UnitSnapshot {
   engagement_range?: number;
   engaged_target?: string | null;
   movement_intent?: string;
+  combat_state?: string;
   next_action_tick?: number;
   action_interval_ticks?: number;
   guard_value?: number;
@@ -116,6 +117,7 @@ export interface LiveUnitSnapshot {
   engagement_range?: number;
   engaged_target?: string | null;
   movement_intent?: string;
+  combat_state?: string;
   next_action_tick: number | null;
   action_interval_ticks: number | null;
   statuses?: StatusEffectSnapshot[];

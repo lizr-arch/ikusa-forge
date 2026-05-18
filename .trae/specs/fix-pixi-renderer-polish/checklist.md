@@ -1,0 +1,30 @@
+# Checklist
+
+- [ ] Attack line uses `event.payload.attacker ?? event.payload.source` instead of `event.payload.source`
+- [ ] UnitSprite interface includes `actionBarBg: Graphics` and `actionBarFill: Graphics`
+- [ ] createUnitSprite creates actionBarBg and actionBarFill Graphics, adds them as children
+- [ ] updateUnitSprite draws action bar background rect and fill rect using `actionIndicatorRatio(unit)`
+- [ ] Dead units show action bar as empty or greyed out
+- [ ] destroy() cleans up actionBarBg and actionBarFill
+- [ ] status_expire check uses `event.type` instead of `event.payload.type`
+- [ ] Playwright smoke test has all 4 tests passing
+- [ ] Playwright smoke test asserts Pixi canvas visible after live step
+- [ ] Playwright smoke test asserts performance panel visible after live steps
+- [ ] PR #24 body updated with correct framework boundary wording
+- [ ] Python export_xlsx_to_json passes
+- [ ] Python validate_config passes
+- [ ] Python run_demo_battle passes
+- [ ] Python smoke_phase1_mvp passes
+- [ ] Python generate_demo_scenarios passes
+- [ ] Python smoke_demo_scenarios passes
+- [ ] Python run_live_api_smoke passes
+- [ ] Python unittest passes
+- [ ] Web npm install succeeds
+- [ ] Web npm run typecheck succeeds
+- [ ] Web npm run build succeeds
+- [ ] Web npm run test:e2e succeeds
+- [ ] git diff --exit-code -- web-viewer/public/samples passes
+- [ ] git diff --check and git diff --cached --check pass
+- [ ] git commit + push succeeds
+- [ ] PR CI is green
+- [ ] Completion report delivered
