@@ -305,6 +305,7 @@ const drawUnit = (
     "data-unit-id": unit.instanceId,
     "data-side": unit.side,
     "data-alive": unit.alive ? "true" : "false",
+    "data-combat-state": unit.combatState,
     "data-position-x": unit.positionX,
     "data-position-y": unit.positionY,
     "data-next-action-tick": unit.nextActionTick ?? -1,
@@ -395,6 +396,7 @@ const drawUnit = (
 
   const meta = `ATK（攻击） ${unit.atk} / DEF（防御） ${unit.defense}`;
   appendText(group, meta, center.x, y + UNIT_HEIGHT + 22, "unit-meta-text");
+  appendText(group, `State（状态） ${shorten(unit.combatState, 12)}`, center.x, y + UNIT_HEIGHT + 34, "unit-state-text");
 
   const highlight = options.unitHighlights.get(unit.instanceId);
   if (highlight) {

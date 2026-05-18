@@ -868,6 +868,7 @@ select {
 .unit-role,
 .unit-hp,
 .unit-meta-text,
+.unit-state-text,
 .unit-action-text,
 .unit-status-count,
 .unit-cooldown-count,
@@ -897,6 +898,12 @@ select {
 .unit-meta-text {
   fill: #44514a;
   font-size: 8px;
+  font-variant-numeric: tabular-nums;
+}
+
+.unit-state-text {
+  fill: #5a6760;
+  font-size: 7px;
   font-variant-numeric: tabular-nums;
 }
 

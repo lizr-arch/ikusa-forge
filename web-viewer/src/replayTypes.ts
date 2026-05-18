@@ -1,4 +1,4 @@
-﻿export type KnownReplayEventType =
+export type KnownReplayEventType =
   | "battle_start"
   | "unit_spawn"
   | "attack"
@@ -68,6 +68,7 @@ export interface UnitSnapshot {
   skill_ids?: string[];
   hp?: number;
   alive?: boolean;
+  combat_state?: string;
   position_x?: number;
   position_y?: number;
   velocity_x?: number;
@@ -79,7 +80,6 @@ export interface UnitSnapshot {
   engagement_range?: number;
   engaged_target?: string | null;
   movement_intent?: string;
-  combat_state?: string;
   next_action_tick?: number;
   action_interval_ticks?: number;
   guard_value?: number;
@@ -123,6 +123,7 @@ export interface LiveUnitSnapshot {
   statuses?: StatusEffectSnapshot[];
   skill_cooldowns?: Record<string, number>;
   alive: boolean;
+  combatState: string;
   guard_value?: number;
   tags?: string[];
 }

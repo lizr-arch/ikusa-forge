@@ -49,6 +49,7 @@
 - `phase2/live-battle-visual-polish`: Live Battle Visual Polish / 实时战斗视觉打磨 (merged / completed)
 - `phase2/live-pixi-battlefield-renderer`: Live Pixi Battlefield Renderer / PixiJS 实时战场渲染器 (current / pending review)
 - `phase2/realtime-spatial-combat-foundation`: Realtime Spatial Combat Foundation / 实时空间战斗基础 (current / pending review)
+- `phase2/combat-architecture-formalization`: Combat Architecture Formalization / 战斗架构正式化 (current / pending review)
 
 ## Current Commands / 当前命令
 
@@ -124,11 +125,12 @@ npm run test:e2e
 
 优先关注交付可展示闭环与交付稳定性：
 
-1. `phase2/combat-behavior-pack`（若目标是提升战斗行为可解释性）
-2. `phase2/combat-system-pack`（若目标是状态、冷却、行动时间线和胜负解释可见性）
-3. `phase2/demo-one-click-and-scenarios`（若目标是降低演示和冒烟门槛）
-4. `phase2/live-combat-runtime-foundation`（若目标是从 replay 生成迈向可 step 的可移植运行时）
-5. `phase2/live-combat-api`（若目标是向外部客户端暴露本地 HTTP API）
-6. `phase2/live-battle-visual-polish`（若目标是提升展示观感）
-7. `phase2/ci-workflow`（若目标是稳定交付）
-8. `phase1/viewer-polish`（若目标是演示稳定）
+1. `phase2/combat-architecture-formalization`（若目标是先把运行时架构正式化，再继续迁移）
+2. `phase2/combat-behavior-pack`（若目标是提升战斗行为可解释性）
+3. `phase2/combat-system-pack`（若目标是状态、冷却、行动时间线和胜负解释可见性）
+4. `phase2/demo-one-click-and-scenarios`（若目标是降低演示和冒烟门槛）
+5. `phase2/live-combat-runtime-foundation`（若目标是从 replay 生成迈向可 step 的可移植运行时）
+6. `phase2/live-combat-api`（若目标是向外部客户端暴露本地 HTTP API）
+7. `phase2/live-battle-visual-polish`（若目标是提升展示观感）
+8. `phase2/ci-workflow`（若目标是稳定交付）
+9. `phase1/viewer-polish`（若目标是演示稳定）

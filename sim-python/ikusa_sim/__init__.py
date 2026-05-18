@@ -23,11 +23,25 @@ from ikusa_sim.battle_session import (
     step_battle_session,
     step_until_finished,
 )
+from ikusa_sim.actions import (
+    ActionResult,
+    CombatAction,
+    build_basic_attack_action,
+    build_skill_action,
+    resolve_combat_action,
+    validate_combat_action,
+)
 from ikusa_sim.combat_rules import (
     apply_damage,
     attack_interval_to_ticks,
     calculate_basic_damage,
     calculate_skill_damage,
+)
+from ikusa_sim.decisions import (
+    ActionDecision,
+    IntentDecision,
+    MovementDecision,
+    SkillDecision,
 )
 from ikusa_sim.config_loader import ConfigLoadError, load_config
 from ikusa_sim.events import BattleEvent, event_to_dict, events_to_tick_groups
@@ -59,6 +73,12 @@ from ikusa_sim.skills import (
     try_use_on_battle_start_skills,
 )
 from ikusa_sim.targeting import select_target
+from ikusa_sim.unit_fsm import (
+    UnitCombatState,
+    can_transition_unit_state,
+    get_unit_combat_state,
+    set_unit_combat_state,
+)
 
 __all__ = [
     "BattleEvent",
@@ -67,6 +87,8 @@ __all__ = [
     "BattleSession",
     "BattleSessionManager",
     "BattleState",
+    "ActionDecision",
+    "ActionResult",
     "ConfigBundle",
     "ConfigLoadError",
     "Constants",
@@ -76,13 +98,19 @@ __all__ = [
     "FormationLookupError",
     "FormationPattern",
     "FormationSlot",
+    "CombatAction",
     "LiveApiError",
+    "IntentDecision",
+    "MovementDecision",
     "SkillDef",
+    "SkillDecision",
     "SynergyDef",
     "StatusEffect",
+    "UnitCombatState",
     "UnitState",
     "UnitDef",
     "WeaponDef",
+    "build_basic_attack_action",
     "apply_damage",
     "attack_interval_to_ticks",
     "battle_result_to_dict",
@@ -94,6 +122,7 @@ __all__ = [
     "build_battle_snapshot",
     "calculate_basic_damage",
     "calculate_skill_damage",
+    "can_transition_unit_state",
     "create_battle_state",
     "create_battle_session",
     "create_live_api_server",
@@ -101,6 +130,7 @@ __all__ = [
     "events_to_tick_groups",
     "get_ready_skills",
     "get_events_since",
+    "get_unit_combat_state",
     "get_slot_role",
     "initialize_battle_session",
     "load_config",
@@ -108,9 +138,12 @@ __all__ = [
     "run_basic_combat",
     "run_battle_skeleton",
     "select_target",
+    "set_unit_combat_state",
+    "resolve_combat_action",
     "spawn_units_from_encounter",
     "step_battle_session",
     "step_until_finished",
+    "validate_combat_action",
     "SkillUseResult",
     "try_use_on_ally_attacked_skills",
     "try_use_on_attack_skill",
