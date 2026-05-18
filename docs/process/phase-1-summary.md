@@ -15,6 +15,7 @@
 - HTML Live Mode / HTML 实时模式（Live Combat API / 实时战斗 API 直连回放，定时调用 step 并消费 snapshot + events）
 - Live Battle Visual Polish / 实时战斗视觉打磨（Battlefield-first layout / 战场优先布局、HP bar / 血条、行动条、攻击线、伤害跳字、胜负横幅）
 - Realtime Spatial Combat Foundation / 实时空间战斗基础（`spatial_combat.py` 空间模块、Continuous Position / 连续坐标、Movement Intent / 移动意图、Target Acquisition / 寻敌、Attack Range / 攻击范围、Unit Movement Event / 单位移动事件、report spatial counters / 战报空间计数）
+- Live Viewer Performance Pass / 实时回放性能修复（renderLiveFrame / 实时帧渲染、capped live timeline / 限制实时时间线、Performance / 性能 观测）
 - Browser Smoke Test / 浏览器冒烟测试（Playwright 基础检查）
 - Verified real `demo_001` modifier evidence：
   - formation modifiers in report summary / 战报阵型修正数 > 0
@@ -48,6 +49,7 @@
 - `phase2/live-battle-visual-polish`: Live Battle Visual Polish / 实时战斗视觉打磨 (merged / completed)
 - `phase2/realtime-spatial-combat-foundation`: Realtime Spatial Combat Foundation / 实时空间战斗基础 (current / pending review)
 - `phase2/combat-architecture-formalization`: Combat Architecture Formalization / 战斗架构正式化 (current / pending review)
+- `phase2/live-viewer-performance-pass`: Live Viewer Performance Pass / 实时回放性能修复 (current / pending review)
 
 ## Current Commands / 当前命令
 

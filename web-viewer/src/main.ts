@@ -23,6 +23,18 @@ import {
   readReplayDocumentFile,
 } from "./replayLoader";
 import { renderReport } from "./reportView";
+import {
+  beginMeasure,
+  createPerformanceTelemetry,
+  formatPerformanceCount,
+  formatPerformanceDuration,
+  formatPerformanceMode,
+  formatPerformanceRate,
+  endMeasure,
+  getPerformanceSnapshot,
+  recordFrame,
+  type PerformanceTelemetry,
+} from "./performanceTelemetry";
 import { renderScenarioSummary } from "./scenarioSummaryView";
 import { renderTimeline, type TimelineFilter } from "./timelineView";
 import { renderUnitDetail } from "./unitDetailView";
@@ -37,6 +49,7 @@ import type {
   BattleReport,
   DemoScenario,
   LiveBattleResult,
+  LiveStepResponse,
   ReplayDocument,
   ScenarioManifest,
 } from "./replayTypes";
@@ -80,6 +93,17 @@ const liveCurrentTickValue = element<HTMLElement>("live-current-tick");
 const liveUnitAliveValue = element<HTMLElement>("live-unit-alive");
 const liveLatestEventValue = element<HTMLElement>("live-latest-event");
 const liveTransportValue = element<HTMLElement>("live-transport");
+const performanceLiveModeValue = element<HTMLElement>("performance-live-mode");
+const performanceFpsValue = element<HTMLElement>("performance-fps");
+const performanceFrameTimeValue = element<HTMLElement>("performance-frame-time");
+const performanceAvgFrameValue = element<HTMLElement>("performance-avg-frame");
+const performanceP95FrameValue = element<HTMLElement>("performance-p95-frame");
+const performanceStepApiValue = element<HTMLElement>("performance-step-api");
+const performanceRenderValue = element<HTMLElement>("performance-render");
+const performanceBoardValue = element<HTMLElement>("performance-board");
+const performanceTimelineValue = element<HTMLElement>("performance-timeline");
+const performanceTimelineRowsValue = element<HTMLElement>("performance-timeline-rows");
+const performanceTotalEventsValue = element<HTMLElement>("performance-total-events");
 
 const boardContainer = element<HTMLDivElement>("board");
 const scenarioSummaryContainer = element<HTMLDivElement>("scenario-summary");
@@ -107,6 +131,8 @@ let loadedReportFileName: string | null = null;
 let scenarioManifest: ScenarioManifest | null = null;
 let selectedScenarioId: string | null = null;
 let loadedScenario: DemoScenario | null = null;
+let lastScenarioControlsKey = "";
+let performanceTelemetry: PerformanceTelemetry = createPerformanceTelemetry();
 
 let liveSessionId: string | null = null;
 let liveApiUrl = DEFAULT_LIVE_API_URL;
@@ -115,8 +141,13 @@ let liveSeed = 1001;
 let liveEventCursor = 0;
 let liveResult: LiveBattleResult | null = null;
 let liveFinished = false;
+let liveReportRenderState: "none" | "progress" | "finished" = "none";
+let liveRenderRafId: number | null = null;
+let liveRenderLastPaintAt = 0;
+let liveRenderDirty = true;
 
 const LIVE_LOOP_INTERVAL_MS = 250;
+const LIVE_RENDER_BUDGET_MS = Math.round(1000 / 30);
 
 liveApiUrlInput.value = DEFAULT_LIVE_API_URL;
 liveBattleIdInput.value = liveBattleId;
@@ -388,6 +419,7 @@ const startLivePlayback = (): void => {
   if (livePlaybackTimer !== null) {
     return;
   }
+  startLiveRenderLoop();
   const intervalMs = Math.max(50, Math.round(LIVE_LOOP_INTERVAL_MS / liveSpeed()));
   livePlaybackTimer = window.setInterval(() => {
     void (async () => {
@@ -417,6 +449,38 @@ const stopLivePlayback = (): void => {
   liveStatusValue.textContent = "paused（暂停）";
 };
 
+const startLiveRenderLoop = (): void => {
+  if (mode !== "live" || liveRenderRafId !== null) {
+    return;
+  }
+  liveRenderLastPaintAt = 0;
+  liveRenderRafId = window.requestAnimationFrame(runLiveRenderLoop);
+};
+
+const stopLiveRenderLoop = (): void => {
+  if (liveRenderRafId === null) {
+    return;
+  }
+  window.cancelAnimationFrame(liveRenderRafId);
+  liveRenderRafId = null;
+};
+
+const runLiveRenderLoop = (now: number): void => {
+  liveRenderRafId = null;
+  if (mode !== "live") {
+    return;
+  }
+
+  if (liveRenderLastPaintAt !== 0 && now - liveRenderLastPaintAt < LIVE_RENDER_BUDGET_MS) {
+    liveRenderRafId = window.requestAnimationFrame(runLiveRenderLoop);
+    return;
+  }
+
+  renderLiveFrame();
+  liveRenderLastPaintAt = now;
+  liveRenderRafId = window.requestAnimationFrame(runLiveRenderLoop);
+};
+
 const isLiveFinished = (): boolean => {
   if (liveFinished) {
     return true;
@@ -427,6 +491,7 @@ const isLiveFinished = (): boolean => {
 
 const startLiveBattleLoop = async (): Promise<void> => {
   stopAllPlayback();
+  performanceTelemetry = createPerformanceTelemetry();
   setModeLive();
   resetLiveStateForNewSession();
   liveFinished = false;
@@ -477,7 +542,11 @@ const startLiveBattleLoop = async (): Promise<void> => {
   loadedReplayFileName = "live session";
   loadedReportFileName = "live session";
   timelineFilter = "all";
+  replayLoadState.textContent = "Live mode（实时模式）";
+  reportLoadState.textContent = "Live mode（实时模式）";
   liveStatusValue.textContent = "running（运行中）";
+  liveRenderDirty = true;
+  startLiveRenderLoop();
   if (!liveFinished) {
     startLivePlayback();
   } else {
@@ -487,7 +556,7 @@ const startLiveBattleLoop = async (): Promise<void> => {
   }
   setLiveApiStatus(`Connected to（已连接到） ${liveApiUrl}`);
   setStatus("Live battle started（实时战斗已开始）");
-  render();
+  renderLiveFrame();
 };
 
 const stepLiveOnce = async (ticks: number): Promise<void> => {
@@ -496,7 +565,13 @@ const stepLiveOnce = async (ticks: number): Promise<void> => {
     return;
   }
   setLiveApiStatus("Running live battle（实时进行中）...");
-  const response = await stepLiveBattle(liveApiUrl, liveSessionId, Math.max(1, Math.floor(ticks)));
+  beginMeasure("step_api");
+  let response: Awaited<ReturnType<typeof stepLiveBattle>>;
+  try {
+    response = await stepLiveBattle(liveApiUrl, liveSessionId, Math.max(1, Math.floor(ticks)));
+  } finally {
+    endMeasure("step_api");
+  }
   if (!response.ok) {
     setLiveApiStatus(response.error);
     setStatus(response.error);
@@ -504,6 +579,17 @@ const stepLiveOnce = async (ticks: number): Promise<void> => {
     return;
   }
 
+  applyLiveStepResponse(response);
+  setLiveApiStatus("Live battle running（实时进行中）");
+
+  if (isLiveFinished()) {
+    stopLivePlayback();
+    setLiveApiStatus("Victory（胜负） complete（胜负完成）");
+    setStatus("Live battle finished（实时战斗已结束）");
+  }
+};
+
+const applyLiveStepResponse = (response: LiveStepResponse): void => {
   if (response.snapshot) {
     visualState = buildVisualStateFromSnapshot(response.snapshot);
     liveResult = toBattleResult(response.snapshot.result);
@@ -514,25 +600,20 @@ const stepLiveOnce = async (ticks: number): Promise<void> => {
     liveEventCursor = response.next_event_index;
   }
   selectedEventIndex = flatEvents.length > 0 ? flatEvents.length - 1 : null;
-  selectedUnitId = visualState ? selectedUnitId : null;
   liveEventCursorValue.textContent = String(liveEventCursor);
-    setLiveApiStatus("Live battle running（实时进行中）");
-  render();
-
-  if (isLiveFinished()) {
-    stopLivePlayback();
-    setLiveApiStatus("Victory（胜负） complete（胜负完成）");
-    setStatus("Live battle finished（实时战斗已结束）");
-  }
+  liveRenderDirty = true;
+  performanceTelemetry.totalEvents = flatEvents.length;
+  performanceTelemetry.displayedTimelineRows = Math.min(flatEvents.length, LIVE_TIMELINE_MAX_ROWS);
 };
 
 const resetLiveSession = async (): Promise<void> => {
   if (liveSessionId === null) {
     clearLiveState("No live session（没有实时会话）");
-    render();
+    renderFullFrame();
     return;
   }
   stopLivePlayback();
+  stopLiveRenderLoop();
   const result = await resetLiveBattle(liveApiUrl, liveSessionId);
   if (!result.ok) {
     setStatus(result.error);
@@ -540,7 +621,7 @@ const resetLiveSession = async (): Promise<void> => {
     return;
   }
   clearLiveState("Live API ready（实时 API 就绪）");
-  render();
+  renderFullFrame();
 };
 
 const liveSpeed = (): number => {
@@ -552,17 +633,26 @@ const setModeReplay = (): void => {
   mode = "replay";
   liveSessionId = null;
   liveFinished = false;
+  liveReportRenderState = "none";
   liveStatusValue.textContent = "idle（空闲）";
+  performanceTelemetry = createPerformanceTelemetry();
+  renderPerformancePanel();
+  stopLiveRenderLoop();
+  renderScenarioControls();
 };
 
 const setModeLive = (): void => {
   mode = "live";
   playbackTimer !== null && stopPlayback();
+  performanceTelemetry.liveMode = true;
+  renderPerformancePanel();
+  renderScenarioControls();
 };
 
 const stopAllPlayback = (): void => {
   stopPlayback();
   stopLivePlayback();
+  stopLiveRenderLoop();
 };
 
 const playbackSpeed = (): number => {
@@ -581,6 +671,10 @@ const resetLiveStateForNewSession = (): void => {
   liveEventCursor = 0;
   liveResult = null;
   liveFinished = false;
+  liveReportRenderState = "none";
+  performanceTelemetry.lastStepApiMs = null;
+  performanceTelemetry.displayedTimelineRows = 0;
+  performanceTelemetry.totalEvents = 0;
   liveSessionIdValue.textContent = "-";
   liveEventCursorValue.textContent = "0";
   liveStatusValue.textContent = "ready（就绪）";
@@ -588,6 +682,9 @@ const resetLiveStateForNewSession = (): void => {
   liveUnitAliveValue.textContent = "0/0";
   liveLatestEventValue.textContent = "-";
   liveTransportValue.textContent = "-";
+  scenarioSummaryContainer.textContent = "";
+  unitDetailContainer.textContent = "No unit selected（未选择单位）";
+  liveRenderDirty = true;
 };
 
 const clearLiveState = (message: string): void => {
@@ -601,46 +698,27 @@ const clearLiveState = (message: string): void => {
   replayLoadState.textContent = "Not loaded（未加载）";
   reportLoadState.textContent = "Not loaded（未加载）";
   scenarioSummaryContainer.textContent = "";
+  unitDetailContainer.textContent = "No unit selected（未选择单位）";
+  renderPerformancePanel();
 };
 
+const LIVE_TIMELINE_MAX_ROWS = 100;
+
 const render = (): void => {
-  const isLive = mode === "live";
-  const maxTick = replay ? getReplayMaxTick(replay) : visualState.currentTick;
+  if (mode === "live") {
+    renderLiveFrame();
+    return;
+  }
+  renderFullFrame();
+};
+
+const renderFullFrame = (): void => {
+  beginMeasure("render");
   const currentEvent = currentEventEntry();
   renderScenarioControls();
-  renderLivePanel();
+  syncReplayChrome(currentEvent);
 
-  tickSlider.max = String(maxTick);
-  tickSlider.value = String(Math.min(visualState.currentTick, maxTick));
-  tickSlider.disabled = !replay || isLive;
-  playPauseButton.disabled = !replay || isLive;
-  stepTickButton.disabled = !replay || isLive;
-  previousEventButton.disabled = !replay || isLive || flatEvents.length === 0;
-  nextEventButton.disabled = !replay || isLive || flatEvents.length === 0;
-  playPauseButton.textContent = playbackTimer === null ? "Play（播放）" : "Pause（暂停）";
-
-  tickReadout.textContent = `Tick（回合） ${visualState.currentTick} / ${maxTick}`;
-  eventReadout.textContent = currentEvent
-    ? `Event（事件） ${currentEvent.event.event_id} (${currentEvent.event.type})`
-    : "Event（事件） -";
-
-  metadata.textContent = isLive
-    ? `battle（战斗） ${liveBattleId} | seed（种子） ${liveSeed} | events（事件） ${flatEvents.length}`
-    : (replay
-      ? `${replay.metadata.battle_id ?? "battle（战斗）"} | seed（种子） ${replay.metadata.seed ?? "-"} | events（事件） ${flatEvents.length}`
-      : "No replay loaded（未加载回放）");
-
-  replayLoadState.textContent = isLive
-    ? "Live mode（实时模式）"
-    : loadedReplayFileName
-    ? `${loadedReplayFileName} loaded（已加载）`
-    : "Not loaded（未加载）";
-  reportLoadState.textContent = isLive
-    ? "Live mode（实时模式）"
-    : loadedReportFileName
-    ? `${loadedReportFileName} loaded（已加载）`
-    : "Not loaded（未加载）";
-
+  beginMeasure("board");
   renderBoard(boardContainer, {
     state: visualState,
     selectedUnitId,
@@ -649,11 +727,13 @@ const render = (): void => {
       selectUnit(unitId);
     },
   });
+  endMeasure("board");
+
   renderBattleSummary(battleSummaryContainer, {
     replay,
     report,
     eventCount: flatEvents.length,
-    liveMode: isLive,
+    liveMode: false,
     liveFinished,
     liveCurrentTick: visualState.currentTick,
     liveResult,
@@ -665,17 +745,14 @@ const render = (): void => {
     eventCount: flatEvents.length,
   });
   renderEventHighlight(eventHighlightContainer, currentEvent, visualState);
-  renderTimeline(timelineContainer, {
+
+  beginMeasure("timeline");
+  const displayedRows = renderTimeline(timelineContainer, {
     events: flatEvents,
     selectedEventIndex,
     filter: timelineFilter,
-    autoScrollSelectedEvent: mode !== "live",
+    autoScrollSelectedEvent: true,
     onSelectEvent: (globalIndex) => {
-      if (mode === "live") {
-        selectedEventIndex = globalIndex;
-        render();
-        return;
-      }
       stopPlayback();
       seekEvent(globalIndex);
     },
@@ -684,16 +761,169 @@ const render = (): void => {
       render();
     },
   });
+  endMeasure("timeline");
+
   renderUnitDetail(unitDetailContainer, visualState, report, selectedUnitId);
   renderReport(reportContainer, report, {
     selectedUnitId,
     onSelectUnit: selectUnit,
     onSeekTick: seekTickFromReport,
-    liveMode: isLive,
+    liveMode: false,
     isFinished: liveFinished,
     liveResult,
     liveCurrentTick: visualState.currentTick,
   });
+  performanceTelemetry.liveMode = false;
+  performanceTelemetry.displayedTimelineRows = displayedRows;
+  performanceTelemetry.totalEvents = flatEvents.length;
+  endMeasure("render");
+  recordFrame();
+  renderPerformancePanel();
+};
+
+const renderLiveFrame = (): void => {
+  beginMeasure("render");
+  const currentEvent = currentEventEntry();
+  syncLiveChrome(currentEvent);
+
+  if (liveRenderDirty) {
+    beginMeasure("board");
+    renderBoard(boardContainer, {
+      state: visualState,
+      selectedUnitId,
+      unitHighlights: unitHighlightsForEvent(currentEvent),
+      onSelectUnit: (unitId) => {
+        selectUnit(unitId);
+      },
+    });
+    endMeasure("board");
+
+    renderBattleSummary(battleSummaryContainer, {
+      replay,
+      report,
+      eventCount: flatEvents.length,
+      liveMode: true,
+      liveFinished,
+      liveCurrentTick: visualState.currentTick,
+      liveResult,
+    });
+    renderEventHighlight(eventHighlightContainer, currentEvent, visualState);
+
+    beginMeasure("timeline");
+    const displayedRows = renderTimeline(timelineContainer, {
+      events: flatEvents,
+      selectedEventIndex,
+      filter: timelineFilter,
+      autoScrollSelectedEvent: false,
+      maxRows: LIVE_TIMELINE_MAX_ROWS,
+      renderMode: "live_capped",
+      onSelectEvent: (globalIndex) => {
+        selectedEventIndex = globalIndex;
+        liveRenderDirty = true;
+        render();
+      },
+      onFilterChange: (filter) => {
+        timelineFilter = filter;
+        liveRenderDirty = true;
+        render();
+      },
+    });
+    endMeasure("timeline");
+    performanceTelemetry.displayedTimelineRows = displayedRows;
+    performanceTelemetry.totalEvents = flatEvents.length;
+
+    renderUnitDetail(unitDetailContainer, visualState, report, selectedUnitId);
+
+    if (liveFinished) {
+      if (liveReportRenderState !== "finished") {
+        renderReport(reportContainer, report, {
+          selectedUnitId,
+          onSelectUnit: selectUnit,
+          onSeekTick: seekTickFromReport,
+          liveMode: true,
+          isFinished: true,
+          liveResult,
+          liveCurrentTick: visualState.currentTick,
+        });
+        liveReportRenderState = "finished";
+      }
+    } else if (liveReportRenderState !== "progress") {
+      renderReport(reportContainer, report, {
+        selectedUnitId,
+        onSelectUnit: selectUnit,
+        onSeekTick: seekTickFromReport,
+        liveMode: true,
+        isFinished: false,
+        liveResult,
+        liveCurrentTick: visualState.currentTick,
+      });
+      liveReportRenderState = "progress";
+    }
+
+    liveRenderDirty = false;
+  }
+
+  performanceTelemetry.totalEvents = flatEvents.length;
+  performanceTelemetry.liveMode = true;
+  endMeasure("render");
+  liveRenderLastPaintAt = performance.now();
+  recordFrame();
+  renderPerformancePanel();
+};
+
+const renderPerformancePanel = (): void => {
+  const snapshot = getPerformanceSnapshot();
+  performanceLiveModeValue.textContent = formatPerformanceMode(snapshot.liveMode);
+  performanceFpsValue.textContent = formatPerformanceRate(snapshot.fps);
+  performanceFrameTimeValue.textContent = formatPerformanceDuration(snapshot.lastFrameMs);
+  performanceAvgFrameValue.textContent = formatPerformanceDuration(snapshot.avgFrameMs);
+  performanceP95FrameValue.textContent = formatPerformanceDuration(snapshot.p95FrameMs);
+  performanceRenderValue.textContent = formatPerformanceDuration(snapshot.lastRenderMs);
+  performanceBoardValue.textContent = formatPerformanceDuration(snapshot.lastBoardRenderMs);
+  performanceTimelineValue.textContent = formatPerformanceDuration(snapshot.lastTimelineRenderMs);
+  performanceStepApiValue.textContent = formatPerformanceDuration(snapshot.lastStepApiMs);
+  performanceTimelineRowsValue.textContent = formatPerformanceCount(snapshot.displayedTimelineRows);
+  performanceTotalEventsValue.textContent = formatPerformanceCount(snapshot.totalEvents);
+};
+
+const syncReplayChrome = (currentEvent: FlatReplayEvent | null): void => {
+  renderLivePanel();
+
+  const maxTick = replay ? getReplayMaxTick(replay) : visualState.currentTick;
+  tickSlider.max = String(maxTick);
+  tickSlider.value = String(Math.min(visualState.currentTick, maxTick));
+  tickSlider.disabled = !replay;
+  playPauseButton.disabled = !replay;
+  stepTickButton.disabled = !replay;
+  previousEventButton.disabled = !replay || flatEvents.length === 0;
+  nextEventButton.disabled = !replay || flatEvents.length === 0;
+  playPauseButton.textContent = playbackTimer === null ? "Play（播放）" : "Pause（暂停）";
+
+  tickReadout.textContent = `Tick（回合） ${visualState.currentTick} / ${maxTick}`;
+  eventReadout.textContent = currentEvent
+    ? `Event（事件） ${currentEvent.event.event_id} (${currentEvent.event.type})`
+    : "Event（事件） -";
+
+  metadata.textContent = replay
+    ? `${replay.metadata.battle_id ?? "battle（战斗）"} | seed（种子） ${replay.metadata.seed ?? "-"} | events（事件） ${flatEvents.length}`
+    : "No replay loaded（未加载回放）";
+  replayLoadState.textContent = loadedReplayFileName
+    ? `${loadedReplayFileName} loaded（已加载）`
+    : "Not loaded（未加载）";
+  reportLoadState.textContent = loadedReportFileName
+    ? `${loadedReportFileName} loaded（已加载）`
+    : "Not loaded（未加载）";
+};
+
+const syncLiveChrome = (currentEvent: FlatReplayEvent | null): void => {
+  renderLivePanel();
+
+  const maxTick = replay ? getReplayMaxTick(replay) : visualState.currentTick;
+  tickReadout.textContent = `Tick（回合） ${visualState.currentTick} / ${maxTick}`;
+  eventReadout.textContent = currentEvent
+    ? `Event（事件） ${currentEvent.event.event_id} (${currentEvent.event.type})`
+    : "Event（事件） -";
+  metadata.textContent = `battle（战斗） ${liveBattleId} | seed（种子） ${liveSeed} | events（事件） ${flatEvents.length}`;
 };
 
 const setStatus = (message: string): void => {
@@ -706,6 +936,9 @@ const setLiveApiStatus = (message: string): void => {
 
 const selectUnit = (unitId: string): void => {
   selectedUnitId = unitId;
+  if (mode === "live") {
+    liveRenderDirty = true;
+  }
   render();
 };
 
@@ -716,6 +949,9 @@ const currentEventEntry = (): FlatReplayEvent | null => {
 
 const renderScenarioControls = (): void => {
   const scenarios = scenarioManifest?.scenarios ?? [];
+  const selectedId = selectedScenarioId ?? scenarios[0]?.id ?? "";
+  const scenarioIds = scenarios.map((scenario) => scenario.id).join("|");
+  const controlKey = `${mode}::${selectedId}::${scenarioIds}`;
   scenarioLoader.hidden = scenarios.length === 0;
   scenarioManifestState.textContent = scenarios.length > 0
     ? `${scenarios.length} scenarios（${scenarios.length} 个场景）`
@@ -724,7 +960,11 @@ const renderScenarioControls = (): void => {
   loadScenarioButton.disabled = scenarios.length === 0 || mode === "live";
   scenarioSelect.disabled = scenarios.length === 0 || mode === "live";
 
-  const selectedId = selectedScenarioId ?? scenarios[0]?.id;
+  if (controlKey === lastScenarioControlsKey) {
+    return;
+  }
+  lastScenarioControlsKey = controlKey;
+
   scenarioSelect.replaceChildren();
   for (const scenario of scenarios) {
     const option = document.createElement("option");
@@ -736,9 +976,16 @@ const renderScenarioControls = (): void => {
 };
 
 const renderLivePanel = (): void => {
-  liveApiUrlInput.value = liveApiUrl;
-  liveBattleIdInput.value = liveBattleId;
-  liveSeedInput.value = String(liveSeed);
+  if (liveApiUrlInput.value !== liveApiUrl) {
+    liveApiUrlInput.value = liveApiUrl;
+  }
+  if (liveBattleIdInput.value !== liveBattleId) {
+    liveBattleIdInput.value = liveBattleId;
+  }
+  const liveSeedValue = String(liveSeed);
+  if (liveSeedInput.value !== liveSeedValue) {
+    liveSeedInput.value = liveSeedValue;
+  }
   liveSessionIdValue.textContent = liveSessionId ?? "-";
   liveEventCursorValue.textContent = String(liveEventCursor);
   liveCurrentTickValue.textContent = String(visualState.currentTick);
@@ -747,14 +994,15 @@ const renderLivePanel = (): void => {
   liveUnitAliveValue.textContent = `${alive}/${total}`;
   const latestEvent = flatEvents.length > 0 ? flatEvents[flatEvents.length - 1].event : null;
   liveLatestEventValue.textContent = latestEvent ? `${latestEvent.type} @ ${latestEvent.tick}` : "-";
-  liveTransportValue.textContent = "HTTP Polling（HTTP 轮询）";
+  liveTransportValue.textContent = liveSessionId ? "HTTP Polling（HTTP 轮询）" : "-";
   if (!liveStatusLine.textContent) {
     liveStatusLine.textContent = "Live API not checked（未检查实时 API）";
   }
 
-  pauseLiveButton.disabled = liveSessionId === null || livePlaybackTimer === null;
-  resumeLiveButton.disabled = liveSessionId === null || livePlaybackTimer !== null;
-  stepLiveButton.disabled = liveSessionId === null || mode !== "live";
+  const finished = isLiveFinished();
+  pauseLiveButton.disabled = liveSessionId === null || livePlaybackTimer === null || finished;
+  resumeLiveButton.disabled = liveSessionId === null || livePlaybackTimer !== null || finished;
+  stepLiveButton.disabled = liveSessionId === null || mode !== "live" || finished;
   resetLiveButton.disabled = liveSessionId === null;
 };
 

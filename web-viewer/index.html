@@ -103,10 +103,10 @@ python tools/run_demo_battle.py --battle demo_001 --seed 1001 --config config/ge
               <label class="select-label">
                 <span>Speed（速度）</span>
                 <select id="live-speed-select">
-                <option value="1" selected>1x</option>
-                <option value="2">2x</option>
-                <option value="4">4x</option>
-              </select>
+                  <option value="1" selected>1x</option>
+                  <option value="2">2x</option>
+                  <option value="4">4x</option>
+                </select>
               </label>
               <label class="select-label">
                 <span>Live Status（实时状态）</span>
@@ -134,15 +134,64 @@ python tools/run_demo_battle.py --battle demo_001 --seed 1001 --config config/ge
                   <span id="live-latest-event" class="live-inline-value">-</span>
                 </label>
                 <label class="select-label">
-                <span>Transport（传输方式）</span>
-                <span id="live-transport" class="live-inline-value">-</span>
-              </label>
+                  <span>Transport（传输方式）</span>
+                  <span id="live-transport" class="live-inline-value">-</span>
+                </label>
             </div>
+              <details id="performance-panel" class="panel-subblock performance-panel" open>
+                <summary>Performance（性能）</summary>
+                <div class="performance-grid">
+                  <label class="select-label">
+                    <span>Live Mode（实时模式）</span>
+                    <span id="performance-live-mode" class="live-inline-value">replay（回放）</span>
+                  </label>
+                  <label class="select-label">
+                    <span>FPS（帧率）</span>
+                    <span id="performance-fps" class="live-inline-value">-</span>
+                  </label>
+                  <label class="select-label">
+                    <span>Frame Time（帧耗时）</span>
+                    <span id="performance-frame-time" class="live-inline-value">-</span>
+                  </label>
+                  <label class="select-label">
+                    <span>Avg Frame（平均帧耗时）</span>
+                    <span id="performance-avg-frame" class="live-inline-value">-</span>
+                  </label>
+                  <label class="select-label">
+                    <span>P95 Frame（P95 帧耗时）</span>
+                    <span id="performance-p95-frame" class="live-inline-value">-</span>
+                  </label>
+                  <label class="select-label">
+                    <span>Render（渲染）</span>
+                    <span id="performance-render" class="live-inline-value">-</span>
+                  </label>
+                  <label class="select-label">
+                    <span>Board（战场）</span>
+                    <span id="performance-board" class="live-inline-value">-</span>
+                  </label>
+                  <label class="select-label">
+                    <span>Timeline（时间线）</span>
+                    <span id="performance-timeline" class="live-inline-value">-</span>
+                  </label>
+                  <label class="select-label">
+                    <span>Step API（接口推进）</span>
+                    <span id="performance-step-api" class="live-inline-value">-</span>
+                  </label>
+                  <label class="select-label">
+                    <span>Timeline Rows（事件行数）</span>
+                    <span id="performance-timeline-rows" class="live-inline-value">0</span>
+                  </label>
+                  <label class="select-label">
+                    <span>Total Events（总事件）</span>
+                    <span id="performance-total-events" class="live-inline-value">0</span>
+                  </label>
+                </div>
+              </details>
             </section>
 
             <section class="panel-subblock" aria-labelledby="replay-controls-heading">
               <h3 id="replay-controls-heading">Playback Controls（播放控制）</h3>
-            <div id="event-readout" class="event-readout">Event（事件） -</div>
+              <div id="event-readout" class="event-readout">Event（事件） -</div>
               <div class="control-row">
                 <button id="play-pause" type="button">Play（播放）</button>
                 <button id="step-tick" type="button">Step Tick（单步）</button>

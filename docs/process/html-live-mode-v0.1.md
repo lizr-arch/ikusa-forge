@@ -98,8 +98,8 @@ Examples shown in UI:
 - Live status metadata now includes:
   - Current Tick（当前 Tick）
   - Unit Alive（存活单位）
-  - Latest Event（最新事件）
-  - Transport（传输方式）
+- Latest Event（最新事件）
+- Transport（传输方式）
 
 Live visual effects in this phase:
 
@@ -110,6 +110,10 @@ Live visual effects in this phase:
 - Cooldown Badge / 冷却标记
 - Death Marker / 死亡标记
 - Victory Banner / 胜负横幅
+
+## Performance behavior / 性能行为
+
+Live step / 实时单步 now uses `renderLiveFrame / 实时帧渲染` instead of a full page redraw. The viewer also caps the live Timeline / 时间线 DOM to the latest 100 rows, runs a `requestAnimationFrame / 渲染循环` loop with a 30 FPS / 30 帧每秒 目标, and exposes Performance（性能） telemetry so users can see whether the slowdown comes from Step API / 接口推进, Frame Time / 帧耗时, Board / 战场, or Timeline / 时间线 rendering.
 
 ## Not in Scope / 不在范围
 

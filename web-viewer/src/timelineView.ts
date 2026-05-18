@@ -41,9 +41,11 @@ interface TimelineRenderOptions {
   onSelectEvent: (globalIndex: number) => void;
   onFilterChange: (filter: TimelineFilter) => void;
   autoScrollSelectedEvent?: boolean;
+  maxRows?: number;
+  renderMode?: "full" | "live_capped";
 }
 
-export const renderTimeline = (container: HTMLElement, options: TimelineRenderOptions): void => {
+export const renderTimeline = (container: HTMLElement, options: TimelineRenderOptions): number => {
   container.replaceChildren();
 
   const toolbar = document.createElement("div");
@@ -51,7 +53,11 @@ export const renderTimeline = (container: HTMLElement, options: TimelineRenderOp
 
   const count = document.createElement("div");
   count.className = "timeline-count";
-  count.textContent = `${filteredEvents(options).length} / ${options.events.length} events（事件）`;
+  const filtered = filteredEvents(options);
+  const displayed = displayableEvents(options, filtered);
+  count.textContent = options.renderMode === "live_capped" && typeof options.maxRows === "number" && filtered.length > displayed.length
+    ? `Showing latest ${displayed.length} of ${options.events.length} events（显示最近 ${displayed.length} / 共 ${options.events.length} 个事件）`
+    : `${displayed.length} / ${options.events.length} events（事件）`;
   toolbar.append(count);
 
   const label = document.createElement("label");
@@ -98,8 +104,7 @@ export const renderTimeline = (container: HTMLElement, options: TimelineRenderOp
   const list = document.createElement("div");
   list.className = "timeline-list";
 
-  const events = filteredEvents(options);
-  if (events.length === 0) {
+  if (displayed.length === 0) {
     const empty = document.createElement("div");
     empty.className = "empty-state";
     empty.textContent = "No events（无事件）";
@@ -107,7 +112,7 @@ export const renderTimeline = (container: HTMLElement, options: TimelineRenderOp
   }
 
   let selectedRow: HTMLButtonElement | null = null;
-  for (const entry of events) {
+  for (const entry of displayed) {
     const row = document.createElement("button");
     row.type = "button";
     row.className = entry.globalIndex === options.selectedEventIndex ? "timeline-row selected" : "timeline-row";
@@ -138,6 +143,8 @@ export const renderTimeline = (container: HTMLElement, options: TimelineRenderOp
   if (options.autoScrollSelectedEvent ?? true) {
     selectedRow?.scrollIntoView({ block: "nearest" });
   }
+
+  return displayed.length;
 };
 
 const filteredEvents = (options: TimelineRenderOptions): FlatReplayEvent[] => {
@@ -145,6 +152,19 @@ const filteredEvents = (options: TimelineRenderOptions): FlatReplayEvent[] => {
     return options.events;
   }
   return options.events.filter((entry) => entry.event.type === options.filter);
+};
+
+const displayableEvents = (
+  options: TimelineRenderOptions,
+  filtered: FlatReplayEvent[],
+): FlatReplayEvent[] => {
+  if (options.renderMode !== "live_capped" || typeof options.maxRows !== "number" || options.maxRows <= 0) {
+    return filtered;
+  }
+  if (filtered.length <= options.maxRows) {
+    return filtered;
+  }
+  return filtered.slice(filtered.length - options.maxRows);
 };
 
 const isTimelineFilter = (value: string): value is TimelineFilter => {

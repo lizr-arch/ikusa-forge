@@ -24,6 +24,12 @@ interface Point {
   y: number;
 }
 
+interface BoardSurfaceCache {
+  svg: SVGSVGElement;
+  staticLayer: SVGGElement;
+  dynamicLayer: SVGGElement;
+}
+
 const SVG_NS = "http://www.w3.org/2000/svg";
 const COLS = 4;
 const ROWS = 3;
@@ -38,8 +44,24 @@ const HEIGHT = ALLY_Y + ROWS * CELL_HEIGHT + 48;
 const UNIT_WIDTH = 102;
 const UNIT_HEIGHT = 60;
 const UNIT_PADDING = 8;
+const boardSurfaceCache = new WeakMap<HTMLElement, BoardSurfaceCache>();
 
 export const renderBoard = (container: HTMLElement, options: BoardRenderOptions): void => {
+  const surface = ensureBoardSurface(container);
+  surface.dynamicLayer.replaceChildren();
+
+  const centers = buildUnitCenters(options.state);
+  drawAnnotations(surface.dynamicLayer, options.state, centers);
+  drawUnits(surface.dynamicLayer, options, centers);
+  drawVictoryBanner(surface.dynamicLayer, options.state);
+};
+
+const ensureBoardSurface = (container: HTMLElement): BoardSurfaceCache => {
+  const cached = boardSurfaceCache.get(container);
+  if (cached) {
+    return cached;
+  }
+
   container.replaceChildren();
   const svg = svgElement("svg");
   setAttrs(svg, {
@@ -48,18 +70,21 @@ export const renderBoard = (container: HTMLElement, options: BoardRenderOptions)
     "aria-label": "Battlefield（战场）",
   });
 
-  drawSideCells(svg, "enemy", ENEMY_Y);
-  drawSideCells(svg, "ally", ALLY_Y);
-
-  const centers = buildUnitCenters(options.state);
-  drawAnnotations(svg, options.state, centers);
-  drawUnits(svg, options, centers);
-  drawVictoryBanner(svg, options.state);
-
+  const staticLayer = svgElement("g");
+  const dynamicLayer = svgElement("g");
+  staticLayer.classList.add("board-layer", "board-layer-static");
+  dynamicLayer.classList.add("board-layer", "board-layer-dynamic");
+  drawSideCells(staticLayer, "enemy", ENEMY_Y);
+  drawSideCells(staticLayer, "ally", ALLY_Y);
+  svg.append(staticLayer, dynamicLayer);
   container.append(svg);
+
+  const surface = { svg, staticLayer, dynamicLayer };
+  boardSurfaceCache.set(container, surface);
+  return surface;
 };
 
-const drawSideCells = (svg: SVGSVGElement, side: "ally" | "enemy", originY: number): void => {
+const drawSideCells = (parent: SVGElement, side: "ally" | "enemy", originY: number): void => {
   const label = svgElement("text");
   label.textContent = side === "ally" ? "Ally（友军）" : "Enemy（敌军）";
   setAttrs(label, {
@@ -67,7 +92,7 @@ const drawSideCells = (svg: SVGSVGElement, side: "ally" | "enemy", originY: numb
     y: originY - 18,
     class: `side-label side-label-${side}`,
   });
-  svg.append(label);
+  parent.append(label);
 
   for (let y = 0; y < ROWS; y += 1) {
     for (let x = 0; x < COLS; x += 1) {
@@ -80,7 +105,7 @@ const drawSideCells = (svg: SVGSVGElement, side: "ally" | "enemy", originY: numb
         rx: 8,
         class: "board-cell",
       });
-      svg.append(rect);
+      parent.append(rect);
 
       const coord = svgElement("text");
       coord.textContent = `${x},${y}`;
@@ -89,13 +114,13 @@ const drawSideCells = (svg: SVGSVGElement, side: "ally" | "enemy", originY: numb
         y: originY + y * CELL_HEIGHT + 18,
         class: "cell-coordinate",
       });
-      svg.append(coord);
+      parent.append(coord);
     }
   }
 };
 
 const drawAnnotations = (
-  svg: SVGSVGElement,
+  parent: SVGElement,
   state: VisualState,
   centers: Map<string, Point>,
 ): void => {
@@ -111,7 +136,7 @@ const drawAnnotations = (
         y2: target.y,
         class: "attack-line",
       });
-      svg.append(line);
+      parent.append(line);
     }
   }
 
@@ -128,7 +153,7 @@ const drawAnnotations = (
         r: unitId === state.lastSkill.source ? 36 : 31,
         class: unitId === state.lastSkill.source ? "skill-ring skill-ring-source" : "skill-ring",
       });
-      svg.append(ring);
+      parent.append(ring);
     }
 
     const source = centers.get(state.lastSkill.source);
@@ -140,7 +165,7 @@ const drawAnnotations = (
         y: source.y - 40,
         class: "skill-label",
       });
-      svg.append(label);
+      parent.append(label);
     }
   }
 
@@ -157,7 +182,7 @@ const drawAnnotations = (
         rx: 10,
         class: "modifier-ring modifier-ring-source",
       });
-      svg.append(sourceRing);
+      parent.append(sourceRing);
     }
 
     if (target) {
@@ -168,7 +193,7 @@ const drawAnnotations = (
         r: state.lastModifier.stat === "atk" ? 42 : 36,
         class: "modifier-ring modifier-ring-target",
       });
-      svg.append(targetRing);
+      parent.append(targetRing);
 
       const summary = svgElement("text");
       summary.textContent = `${state.lastModifier.stat}${state.lastModifier.amount >= 0 ? "+" : ""}${state.lastModifier.amount}`;
@@ -177,7 +202,7 @@ const drawAnnotations = (
         y: target.y + 4,
         class: "modifier-label",
       });
-      svg.append(summary);
+      parent.append(summary);
     }
 
     if (state.lastModifier.reason && target) {
@@ -188,7 +213,7 @@ const drawAnnotations = (
         y: target.y + 18,
         class: "modifier-reason-label",
       });
-      svg.append(reason);
+      parent.append(reason);
     }
   }
 
@@ -202,7 +227,7 @@ const drawAnnotations = (
         y: target.y - 18,
         class: "damage-label",
       });
-      svg.append(text);
+      parent.append(text);
 
       if (state.lastDamage.reason) {
         const reason = svgElement("text");
@@ -212,7 +237,7 @@ const drawAnnotations = (
           y: target.y - 3,
           class: "damage-reason-label",
         });
-        svg.append(reason);
+        parent.append(reason);
       }
     }
   }
@@ -234,7 +259,7 @@ const drawAnnotations = (
         y: target.y - 20,
         class: "status-badge-text",
       });
-      svg.append(marker, markerLabel);
+      parent.append(marker, markerLabel);
     }
   }
 
@@ -258,13 +283,13 @@ const drawAnnotations = (
         y: source.y - 11,
         class: "cooldown-text",
       });
-      svg.append(cooldown, label);
+      parent.append(cooldown, label);
     }
   }
 };
 
 const drawUnits = (
-  svg: SVGSVGElement,
+  parent: SVGElement,
   options: BoardRenderOptions,
   centers: Map<string, Point>,
 ): void => {
@@ -276,12 +301,12 @@ const drawUnits = (
     if (!center) {
       continue;
     }
-    drawUnit(svg, unit, center, options);
+    drawUnit(parent, unit, center, options);
   }
 };
 
 const drawUnit = (
-  svg: SVGSVGElement,
+  parent: SVGElement,
   unit: VisualUnit,
   center: Point,
   options: BoardRenderOptions,
@@ -298,9 +323,9 @@ const drawUnit = (
     .filter(Boolean)
     .join(" ");
   setAttrs(group, {
-    class: classNames,
-    role: "button",
-    tabindex: 0,
+      class: classNames,
+      role: "button",
+      tabindex: 0,
     "aria-label": unit.instanceId,
     "data-unit-id": unit.instanceId,
     "data-side": unit.side,
@@ -412,7 +437,7 @@ const drawUnit = (
     group.append(ring);
   }
 
-  svg.append(group);
+  parent.append(group);
 };
 
 const buildUnitCenters = (state: VisualState): Map<string, Point> => {
@@ -504,7 +529,7 @@ const eventHighlightClass = (highlight: EventUnitHighlight | undefined): string 
   return highlight ? `unit-current-event unit-current-${highlight}` : "";
 };
 
-const drawVictoryBanner = (svg: SVGSVGElement, state: VisualState): void => {
+const drawVictoryBanner = (parent: SVGElement, state: VisualState): void => {
   const result = state.battleResult;
   if (!result) {
     return;
@@ -532,7 +557,7 @@ const drawVictoryBanner = (svg: SVGSVGElement, state: VisualState): void => {
     y: y + 28,
     class: "victory-banner-text",
   });
-  svg.append(rect, text);
+  parent.append(rect, text);
 };
 
 const svgElement = <K extends keyof SVGElementTagNameMap>(tag: K): SVGElementTagNameMap[K] => {

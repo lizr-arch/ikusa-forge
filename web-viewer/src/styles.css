@@ -28,6 +28,7 @@ body {
   min-width: 320px;
   min-height: 100vh;
   background: var(--surface-soft);
+  overflow-anchor: none;
 }
 
 button,
@@ -77,6 +78,7 @@ button:disabled {
   gap: 14px;
   min-height: 100vh;
   padding: 14px;
+  overflow-anchor: none;
 }
 
 .topbar,
@@ -192,6 +194,28 @@ h3 {
   border-radius: 8px;
   padding: 0.75rem;
   background: #fbfcfb;
+}
+
+.performance-panel {
+  display: grid;
+  gap: 8px;
+}
+
+.performance-panel > summary {
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 600;
+  list-style: none;
+}
+
+.performance-panel > summary::-webkit-details-marker {
+  display: none;
+}
+
+.performance-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
 }
 
 .panel-block {
@@ -316,6 +340,12 @@ h3 {
   font-size: 0.82rem;
 }
 
+.select-label span,
+.file-label span,
+.range-label span {
+  overflow-wrap: anywhere;
+}
+
 .control-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -338,6 +368,8 @@ h3 {
   min-height: 2.1rem;
   display: flex;
   align-items: center;
+  overflow-wrap: anywhere;
+  min-width: 0;
 }
 
 .live-status-grid {

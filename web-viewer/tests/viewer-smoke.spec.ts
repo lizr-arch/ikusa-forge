@@ -293,6 +293,17 @@ test("live mode can start and step with local API", async ({ page }) => {
     await expect(page.locator(".unit-status-count")).toHaveCount(12, { timeout: 10_000 });
     await expect(page.locator(".unit-cooldown-count")).toHaveCount(12, { timeout: 10_000 });
     await expect(page.locator("#live-current-tick")).toHaveText(/\d+/);
+    await expect(page.locator("#performance-panel")).toBeVisible();
+    await expect(page.locator("#performance-live-mode")).toContainText(/live|实时/);
+    await expect(page.locator("#performance-fps")).toContainText(/fps/);
+    await expect(page.locator("#performance-frame-time")).toContainText(/ms/);
+    await expect(page.locator("#performance-avg-frame")).toContainText(/ms/);
+    await expect(page.locator("#performance-p95-frame")).toContainText(/ms/);
+    await expect(page.locator("#performance-render")).toContainText(/ms|-$/);
+    await expect(page.locator("#performance-timeline-rows")).toHaveText(/\d+/);
+    await expect(page.locator("#performance-total-events")).toHaveText(/\d+/);
+    await expect(page.locator("#live-transport")).toContainText(/HTTP Polling|HTTP 轮询/);
+    expect(await countTimelineRows(page)).toBeLessThanOrEqual(150);
     await page.locator('[data-unit-id="ally_001"]').click({ force: true });
     await expect(page.locator("#unit-detail")).toContainText(/Combat State（战斗状态）|Combat State/);
 
@@ -310,6 +321,8 @@ test("live mode can start and step with local API", async ({ page }) => {
       await waitForLiveProgress(page, beforeCursor, beforeTick, beforeTimelineRows);
       const scrollAfterStep = await page.evaluate(() => window.scrollY);
       expect(scrollAfterStep).toBe(scrollBeforeStep);
+      await expect(page.getByRole("img", { name: "Battlefield（战场）" })).toBeVisible();
+      expect(await countTimelineRows(page)).toBeLessThanOrEqual(150);
       effectFound ||= await hasLiveVisualEffect(page);
       movementFound ||= await hasUnitMovement(page, initialPositions);
       beforeCursor = Number((await page.locator("#live-event-cursor").textContent()) ?? "0");

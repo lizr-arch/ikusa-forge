@@ -60,6 +60,7 @@ The browser smoke includes timeline filters and detail/report visibility for `st
 It also checks Scenario Selector / 场景选择器, One-click Demo / 一键 Demo loading from Scenario Manifest / 场景清单, and manual File Input Loading / 文件输入加载 availability.
 Live smoke additionally validates battlefield-first live-mode rendering, including unit token count, HP bars, action bars, step-driven visual updates, and victory message readiness.
 It additionally verifies Live mode controls and error handling when API health is unavailable.
+After the live-viewer performance pass / 实时回放性能修复, browser smoke also checks that the live Timeline / 时间线 is capped, Performance（性能） telemetry is visible, and Battlefield / 战场 remains visible while stepping.
 
 ## Commands / 命令
 

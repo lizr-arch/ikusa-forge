@@ -20,32 +20,42 @@ export const renderBattleSummary = (
   const replayResult = options.replay?.metadata.result ?? options.liveResult;
   const liveResult = options.liveResult;
   const summary = options.report?.summary;
-  const rows: [string, string][] = [
-    ["Battle ID（战斗 ID）", formatValue(options.replay?.metadata.battle_id ?? options.report?.battle_id)],
-    ["Seed（种子）", formatNumber(options.replay?.metadata.seed ?? options.report?.seed)],
-    ["Winner（胜利）", formatValue(options.report?.winner ?? liveResult?.winner ?? replayResult?.winner)],
-    ["Reason（原因）", formatValue(options.report?.reason ?? liveResult?.reason ?? replayResult?.reason)],
-    [
-      "End Tick（终止回合）",
-      options.liveMode ? formatNumber(options.liveCurrentTick ?? replayResult?.end_tick) : formatNumber(
-        options.report?.end_tick ?? replayResult?.end_tick,
-      ),
-    ],
-    ["Events（事件）", formatNumber(options.eventCount)],
-    ["Total Damage（总伤害）", formatNumber(summary?.total_damage)],
-    ["Total Kills（总击杀）", formatNumber(summary?.total_kills)],
-    ["Skill Triggers（技能触发）", formatNumber(summary?.total_skill_triggers)],
-    ["Status Applied（状态应用）", formatNumber(summary?.total_status_applied)],
-    ["Skill Cooldown（技能冷却）", formatNumber(summary?.total_skill_cooldowns)],
-    ["Action Scheduled（行动调度）", formatNumber(summary?.total_actions_scheduled)],
-    ["Unit Moves（单位移动）", formatNumber(summary?.total_unit_moves)],
-    ["Target Acquired（发现目标）", formatNumber(summary?.total_target_acquired)],
-    ["Enter Range（进入射程）", formatNumber(summary?.total_enter_range)],
-    ["Engage Start（开始交战）", formatNumber(summary?.total_engage_start)],
-    ["Total Modifiers（总修正）", formatNumber(summary?.total_modifiers)],
-    ["Formation Modifiers（编队修正）", formatNumber(summary?.formation_modifiers)],
-    ["Synergy Modifiers（协同修正）", formatNumber(summary?.synergy_modifiers)],
-  ];
+  const rows: [string, string][] =
+    options.liveMode && !options.liveFinished
+      ? [
+          ["Battle ID（战斗 ID）", formatValue(options.replay?.metadata.battle_id ?? options.report?.battle_id)],
+          ["Seed（种子）", formatNumber(options.replay?.metadata.seed ?? options.report?.seed)],
+          ["Current Tick（当前 Tick）", formatNumber(options.liveCurrentTick ?? replayResult?.end_tick)],
+          ["Events（事件）", formatNumber(options.eventCount)],
+          ["Winner（胜利）", formatValue(options.report?.winner ?? liveResult?.winner ?? replayResult?.winner)],
+          ["Reason（原因）", formatValue(options.report?.reason ?? liveResult?.reason ?? replayResult?.reason)],
+        ]
+      : [
+          ["Battle ID（战斗 ID）", formatValue(options.replay?.metadata.battle_id ?? options.report?.battle_id)],
+          ["Seed（种子）", formatNumber(options.replay?.metadata.seed ?? options.report?.seed)],
+          ["Winner（胜利）", formatValue(options.report?.winner ?? liveResult?.winner ?? replayResult?.winner)],
+          ["Reason（原因）", formatValue(options.report?.reason ?? liveResult?.reason ?? replayResult?.reason)],
+          [
+            "End Tick（终止回合）",
+            options.liveMode ? formatNumber(options.liveCurrentTick ?? replayResult?.end_tick) : formatNumber(
+              options.report?.end_tick ?? replayResult?.end_tick,
+            ),
+          ],
+          ["Events（事件）", formatNumber(options.eventCount)],
+          ["Total Damage（总伤害）", formatNumber(summary?.total_damage)],
+          ["Total Kills（总击杀）", formatNumber(summary?.total_kills)],
+          ["Skill Triggers（技能触发）", formatNumber(summary?.total_skill_triggers)],
+          ["Status Applied（状态应用）", formatNumber(summary?.total_status_applied)],
+          ["Skill Cooldown（技能冷却）", formatNumber(summary?.total_skill_cooldowns)],
+          ["Action Scheduled（行动调度）", formatNumber(summary?.total_actions_scheduled)],
+          ["Unit Moves（单位移动）", formatNumber(summary?.total_unit_moves)],
+          ["Target Acquired（发现目标）", formatNumber(summary?.total_target_acquired)],
+          ["Enter Range（进入射程）", formatNumber(summary?.total_enter_range)],
+          ["Engage Start（开始交战）", formatNumber(summary?.total_engage_start)],
+          ["Total Modifiers（总修正）", formatNumber(summary?.total_modifiers)],
+          ["Formation Modifiers（编队修正）", formatNumber(summary?.formation_modifiers)],
+          ["Synergy Modifiers（协同修正）", formatNumber(summary?.synergy_modifiers)],
+        ];
 
   container.append(statGrid(rows));
 };
