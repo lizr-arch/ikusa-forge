@@ -744,8 +744,8 @@ const renderLivePanel = (): void => {
   const alive = [...visualState.units.values()].filter((unit) => unit.alive).length;
   const total = visualState.units.size;
   liveUnitAliveValue.textContent = `${alive}/${total}`;
-  const latestEvent = currentEventEntry();
-  liveLatestEventValue.textContent = latestEvent ? `T${latestEvent.event.tick} ${latestEvent.event.type}` : "-";
+  const latestEvent = flatEvents.length > 0 ? flatEvents[flatEvents.length - 1].event : null;
+  liveLatestEventValue.textContent = latestEvent ? `${latestEvent.type} @ ${latestEvent.tick}` : "-";
   liveTransportValue.textContent = "HTTP Polling（HTTP 轮询）";
   if (!liveStatusLine.textContent) {
     liveStatusLine.textContent = "Live API not checked（未检查实时 API）";

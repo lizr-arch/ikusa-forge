@@ -81,7 +81,9 @@ def _wait_for_health(host: str, port: int, process: subprocess.Popen) -> bool:
             return False
         try:
             with request.urlopen(url, timeout=1) as response:
-                return response.status == 200
+                if response.status == 200:
+                    time.sleep(0.1)
+                    return process.poll() is None
         except error.URLError:
             time.sleep(0.2)
     return False

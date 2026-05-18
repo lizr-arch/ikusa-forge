@@ -30,6 +30,10 @@ def build_battle_report_from_events(
     total_status_expired = 0
     total_skill_cooldowns = 0
     total_actions_scheduled = 0
+    total_unit_moves = 0
+    total_target_acquired = 0
+    total_enter_range = 0
+    total_engage_start = 0
     target_reason_counts = {}  # type: Dict[str, int]
     skill_target_reason_counts = {}  # type: Dict[str, int]
 
@@ -134,6 +138,34 @@ def build_battle_report_from_events(
                 total_actions_scheduled += 1
             continue
 
+        if event_type == "unit_move":
+            unit_id = payload.get("unit")
+            if unit_id:
+                _ensure_unit(units, unit_id)["moves"] += 1
+                total_unit_moves += 1
+            continue
+
+        if event_type == "target_acquired":
+            unit_id = payload.get("unit")
+            if unit_id:
+                _ensure_unit(units, unit_id)["target_acquired"] += 1
+                total_target_acquired += 1
+            continue
+
+        if event_type == "enter_range":
+            unit_id = payload.get("unit")
+            if unit_id:
+                _ensure_unit(units, unit_id)["entered_range"] += 1
+                total_enter_range += 1
+            continue
+
+        if event_type == "engage_start":
+            unit_id = payload.get("unit")
+            if unit_id:
+                _ensure_unit(units, unit_id)["engagements_started"] += 1
+                total_engage_start += 1
+            continue
+
         if event_type == "battle_end":
             battle_end = payload
             key_moments.append(_battle_end_key_moment(event, payload))
@@ -158,6 +190,10 @@ def build_battle_report_from_events(
             "total_status_expired": total_status_expired,
             "total_skill_cooldowns": total_skill_cooldowns,
             "total_actions_scheduled": total_actions_scheduled,
+            "total_unit_moves": total_unit_moves,
+            "total_target_acquired": total_target_acquired,
+            "total_enter_range": total_enter_range,
+            "total_engage_start": total_engage_start,
             "target_reason_counts": target_reason_counts,
             "skill_target_reason_counts": skill_target_reason_counts,
         },
@@ -187,6 +223,10 @@ def _ensure_unit(units: Dict[str, Dict[str, Any]], unit_id: str) -> Dict[str, An
             "cooldowns_started": 0,
             "actions_taken": 0,
             "last_next_action_tick": None,
+            "moves": 0,
+            "target_acquired": 0,
+            "entered_range": 0,
+            "engagements_started": 0,
         }
     return units[unit_id]
 

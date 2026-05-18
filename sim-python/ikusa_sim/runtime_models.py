@@ -40,6 +40,17 @@ class UnitState:
     next_action_tick: int = 0
     action_interval_ticks: int = 0
     guard_value: int = 0
+    position_x: float = 0.0
+    position_y: float = 0.0
+    velocity_x: float = 0.0
+    velocity_y: float = 0.0
+    facing_angle: float = 0.0
+    radius: float = 8.0
+    move_speed: float = 24.0
+    attack_range: float = 18.0
+    engagement_range: float = 22.0
+    engaged_target: Optional[str] = None
+    movement_intent: str = "hold"
     statuses: List[StatusEffect] = field(default_factory=list)
     skill_cooldowns: Dict[str, int] = field(default_factory=dict)
     atk: int = field(init=False)

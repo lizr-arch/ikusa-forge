@@ -51,6 +51,10 @@ export const renderReport = (
       ["Status Expired（状态到期）", formatNumber(report.summary?.total_status_expired)],
       ["Skill Cooldown（技能冷却）", formatNumber(report.summary?.total_skill_cooldowns)],
       ["Action Scheduled（行动调度）", formatNumber(report.summary?.total_actions_scheduled)],
+      ["Unit Moves（单位移动）", formatNumber(report.summary?.total_unit_moves)],
+      ["Target Acquired（发现目标）", formatNumber(report.summary?.total_target_acquired)],
+      ["Enter Range（进入射程）", formatNumber(report.summary?.total_enter_range)],
+      ["Engage Start（开始交战）", formatNumber(report.summary?.total_engage_start)],
       ["Total Modifiers（总修正）", formatNumber(report.summary?.total_modifiers)],
       ["Formation Modifiers（编队修正）", formatNumber(report.summary?.formation_modifiers)],
       ["Synergy Modifiers（协同修正）", formatNumber(report.summary?.synergy_modifiers)],
@@ -140,6 +144,10 @@ const renderUnitTable = (
     "Statuses（状态）",
     "Cooldowns（冷却）",
     "Actions（行动）",
+    "Moves（移动）",
+    "Target Acquired（发现目标）",
+    "Enter Range（进入射程）",
+    "Engage Start（开始交战）",
     "Next Action（下次行动）",
     "ATK Bonus（攻击加成）",
     "DEF Bonus（防御加成）",
@@ -169,6 +177,10 @@ const renderUnitTable = (
     appendCell(row, formatNumber(unitReport.statuses_applied));
     appendCell(row, formatNumber(unitReport.cooldowns_started));
     appendCell(row, formatNumber(unitReport.actions_taken));
+    appendCell(row, formatNumber(unitReport.moves));
+    appendCell(row, formatNumber(unitReport.target_acquired));
+    appendCell(row, formatNumber(unitReport.entered_range));
+    appendCell(row, formatNumber(unitReport.engagements_started));
     appendCell(row, formatNumber(unitReport.last_next_action_tick));
     appendCell(row, formatNumber((unitReport.stat_bonuses ?? {}).atk));
     appendCell(row, formatNumber((unitReport.stat_bonuses ?? {}).defense));
@@ -180,7 +192,7 @@ const renderUnitTable = (
   if (Object.keys(units).length === 0) {
     const row = document.createElement("tr");
     const cell = document.createElement("td");
-    cell.colSpan = 15;
+    cell.colSpan = 19;
     cell.textContent = "No unit rows（无单位行）";
     row.append(cell);
     body.append(row);

@@ -30,7 +30,13 @@ from ikusa_sim.skills import (
     try_use_on_battle_start_skills,
 )
 from ikusa_sim.synergy import apply_synergies
-from ikusa_sim.targeting import TargetDecision, select_target_decision
+from ikusa_sim.targeting import TargetDecision
+from ikusa_sim.spatial_combat import (
+    engaged_target_in_attack_range,
+    initialize_spatial_state,
+    select_engaged_target_decision,
+    update_spatial_engagements,
+)
 
 
 @dataclass
@@ -85,6 +91,7 @@ def initialize_runtime_state(session: BattleSession) -> None:
     session.events.append(_battle_start_event(state))
     encounter = session.config.encounters[session.battle_id]
     session.events.extend(spawn_units_from_encounter(session.config, encounter, state))
+    initialize_spatial_state(state)
     apply_formation_bonuses(state, session.events)
     apply_synergies(state, session.config, session.events)
     try_use_on_battle_start_skills(state, session.config, session.events)
@@ -174,12 +181,13 @@ def _run_tick(
     events: List[BattleEvent],
     tick: int,
 ) -> Optional[BattleResult]:
+    update_spatial_engagements(state, events, tick)
     while True:
         attacker = _next_actionable_unit(state, tick)
         if attacker is None:
             return None
 
-        decision = select_target_decision(attacker, state.units)
+        decision = select_engaged_target_decision(attacker, state.units)
         target = decision.target
         if target is None:
             return _build_victory_result(state, tick)
@@ -233,6 +241,17 @@ def _unit_snapshot(unit: UnitState) -> Dict[str, Any]:
         "base_defense": unit.base_defense,
         "range": unit.range,
         "base_range": unit.base_range,
+        "position_x": unit.position_x,
+        "position_y": unit.position_y,
+        "velocity_x": unit.velocity_x,
+        "velocity_y": unit.velocity_y,
+        "facing_angle": unit.facing_angle,
+        "radius": unit.radius,
+        "move_speed": unit.move_speed,
+        "attack_range": unit.attack_range,
+        "engagement_range": unit.engagement_range,
+        "engaged_target": unit.engaged_target,
+        "movement_intent": unit.movement_intent,
         "alive": unit.alive,
         "next_action_tick": unit.next_action_tick,
         "action_interval_ticks": unit.action_interval_ticks,
@@ -347,7 +366,7 @@ def _next_actionable_unit(state: BattleState, tick: int) -> Optional[UnitState]:
     actionable = [
         unit
         for unit in state.units
-        if unit.alive and unit.next_action_tick <= tick
+        if unit.alive and unit.next_action_tick <= tick and engaged_target_in_attack_range(unit, state.units)
     ]
     if not actionable:
         return None

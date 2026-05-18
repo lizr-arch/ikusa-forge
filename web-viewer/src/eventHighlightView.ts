@@ -107,6 +107,25 @@ const eventDetailRows = (
         ["Action Interval（行动间隔）", formatNumber(readNumber(event.payload.action_interval_ticks))],
         ["Reason（原因）", formatValue(readValue(event.payload.reason))],
       ];
+    case "unit_move":
+      return [
+        ["Unit", formatValue(readValue(event.payload.unit))],
+        ["Target", formatValue(readValue(event.payload.target))],
+        ["To X", formatNumber(readNumber(event.payload.to_x))],
+        ["To Y", formatNumber(readNumber(event.payload.to_y))],
+        ["Move Speed", formatNumber(readNumber(event.payload.move_speed))],
+        ["Reason", formatValue(readValue(event.payload.reason))],
+      ];
+    case "target_acquired":
+    case "enter_range":
+    case "engage_start":
+      return [
+        ["Unit", formatValue(readValue(event.payload.unit))],
+        ["Target", formatValue(readValue(event.payload.target))],
+        ["Distance", formatNumber(readNumber(event.payload.distance))],
+        ["Attack Range", formatNumber(readNumber(event.payload.attack_range))],
+        ["Reason", formatValue(readValue(event.payload.reason))],
+      ];
     case "death":
       return [["Unit（单位）", formatValue(readValue(event.payload.unit))]];
     case "battle_end":

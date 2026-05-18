@@ -7,6 +7,17 @@ export interface VisualUnit {
   unitDefId: string;
   x: number;
   y: number;
+  positionX: number;
+  positionY: number;
+  velocityX: number;
+  velocityY: number;
+  facingAngle: number;
+  radius: number;
+  moveSpeed: number;
+  attackRange: number;
+  engagementRange: number;
+  engagedTarget: string | null;
+  movementIntent: string;
   role: string;
   name: string;
   tags: string[];
@@ -101,6 +112,17 @@ export interface SkillAnnotation {
   targetScore: TargetScorePayload | null;
 }
 
+export interface MoveAnnotation {
+  tick: number;
+  unit: string;
+  target: string | null;
+  fromX: number;
+  fromY: number;
+  toX: number;
+  toY: number;
+  reason: string;
+}
+
 export interface VisualState {
   currentTick: number;
   units: Map<string, VisualUnit>;
@@ -111,6 +133,7 @@ export interface VisualState {
   lastCooldown: CooldownAnnotation | null;
   lastActionSchedule: ActionScheduleAnnotation | null;
   lastSkill: SkillAnnotation | null;
+  lastMove: MoveAnnotation | null;
   battleResult: BattleResult | null;
   victory: BattleResult | null;
   appliedEventId: string | null;
@@ -133,6 +156,7 @@ export const createEmptyVisualState = (): VisualState => ({
   lastCooldown: null,
   lastActionSchedule: null,
   lastSkill: null,
+  lastMove: null,
   battleResult: null,
   victory: null,
   appliedEventId: null,
@@ -288,6 +312,14 @@ export const applyEvent = (
     case "skill_cooldown":
       applySkillCooldown(state, event);
       return;
+    case "unit_move":
+      applyUnitMove(state, event);
+      return;
+    case "target_acquired":
+    case "enter_range":
+    case "engage_start":
+      applySpatialTargetEvent(state, event);
+      return;
     case "action_scheduled":
       applyActionScheduled(state, event);
       return;
@@ -344,6 +376,17 @@ const applyUnitSpawn = (state: VisualState, event: ReplayEvent): void => {
     unitDefId: readString(snapshot.unit_def_id),
     x: readNumber(snapshot.x, 0),
     y: readNumber(snapshot.y, 0),
+    positionX: readNumber(snapshot.position_x, spatialXFromGrid(readNumber(snapshot.x, 0))),
+    positionY: readNumber(snapshot.position_y, spatialYFromGrid(readNumber(snapshot.y, 0), readString(snapshot.side))),
+    velocityX: readNumber(snapshot.velocity_x, 0),
+    velocityY: readNumber(snapshot.velocity_y, 0),
+    facingAngle: readNumber(snapshot.facing_angle, 0),
+    radius: readNumber(snapshot.radius, 8),
+    moveSpeed: readNumber(snapshot.move_speed, 0),
+    attackRange: readNumber(snapshot.attack_range, readNumber(snapshot.base_range, 0)),
+    engagementRange: readNumber(snapshot.engagement_range, readNumber(snapshot.base_range, 0)),
+    engagedTarget: readNullableString(snapshot.engaged_target),
+    movementIntent: readString(snapshot.movement_intent, "hold"),
     role: readString(snapshot.role, "unknown"),
     name: readString(snapshot.name, instanceId),
     tags: readStringArray(snapshot.tags),
@@ -494,6 +537,17 @@ const buildLiveUnit = (snapshotUnit: LiveUnitSnapshot): VisualUnit => {
     unitDefId: readString(snapshot.unit_def_id),
     x: readNumber(snapshot.x, 0),
     y: readNumber(snapshot.y, 0),
+    positionX: readNumber(snapshot.position_x, spatialXFromGrid(readNumber(snapshot.x, 0))),
+    positionY: readNumber(snapshot.position_y, spatialYFromGrid(readNumber(snapshot.y, 0), readString(snapshot.side))),
+    velocityX: readNumber(snapshot.velocity_x, 0),
+    velocityY: readNumber(snapshot.velocity_y, 0),
+    facingAngle: readNumber(snapshot.facing_angle, 0),
+    radius: readNumber(snapshot.radius, 8),
+    moveSpeed: readNumber(snapshot.move_speed, 0),
+    attackRange: readNumber(snapshot.attack_range, readNumber(snapshot.base_range, readNumber(snapshot.range, 0))),
+    engagementRange: readNumber(snapshot.engagement_range, readNumber(snapshot.base_range, readNumber(snapshot.range, 0))),
+    engagedTarget: readNullableString(snapshot.engaged_target),
+    movementIntent: readString(snapshot.movement_intent, "hold"),
     role: readString(snapshot.role, "unknown"),
     name: readString(snapshot.name, readString(snapshot.instance_id)),
     tags: readStringArray(snapshot.tags),
@@ -533,6 +587,42 @@ const applyActionScheduled = (state: VisualState, event: ReplayEvent): void => {
     unit.lastActionSchedule = annotation;
   }
   state.lastActionSchedule = annotation;
+};
+
+const applyUnitMove = (state: VisualState, event: ReplayEvent): void => {
+  const unitId = readString(event.payload.unit);
+  const unit = state.units.get(unitId);
+  const toX = readNumber(event.payload.to_x, unit?.positionX ?? 0);
+  const toY = readNumber(event.payload.to_y, unit?.positionY ?? 0);
+  if (unit) {
+    unit.positionX = toX;
+    unit.positionY = toY;
+    unit.velocityX = readNumber(event.payload.velocity_x, 0);
+    unit.velocityY = readNumber(event.payload.velocity_y, 0);
+    unit.moveSpeed = readNumber(event.payload.move_speed, unit.moveSpeed);
+    unit.movementIntent = readString(event.payload.reason, "move_to_attack_range");
+    unit.engagedTarget = readNullableString(event.payload.target);
+  }
+  state.lastMove = {
+    tick: event.tick,
+    unit: unitId,
+    target: readNullableString(event.payload.target),
+    fromX: readNumber(event.payload.from_x, toX),
+    fromY: readNumber(event.payload.from_y, toY),
+    toX,
+    toY,
+    reason: readString(event.payload.reason),
+  };
+};
+
+const applySpatialTargetEvent = (state: VisualState, event: ReplayEvent): void => {
+  const unitId = readString(event.payload.unit);
+  const targetId = readNullableString(event.payload.target);
+  const unit = state.units.get(unitId);
+  if (unit) {
+    unit.engagedTarget = targetId;
+    unit.movementIntent = event.type === "target_acquired" ? "target_acquired" : "engaged";
+  }
 };
 
 const applyDeath = (state: VisualState, event: ReplayEvent): void => {
@@ -674,3 +764,7 @@ const readStringArray = (value: unknown): string[] => {
   }
   return value.filter((item): item is string => typeof item === "string");
 };
+
+const spatialXFromGrid = (x: number): number => 80 + x * 56;
+
+const spatialYFromGrid = (y: number, side: string): number => (side === "enemy" ? 80 : 320) + y * 36;

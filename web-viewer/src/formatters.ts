@@ -44,6 +44,14 @@ export const eventSummary = (event: ReplayEvent): string => {
       return `${text(event.payload.source)} cooldown ${text(event.payload.skill)} ready ${text(event.payload.ready_tick)}`;
     case "action_scheduled":
       return `${text(event.payload.unit)} next action ${text(event.payload.next_action_tick)}`;
+    case "unit_move":
+      return `${text(event.payload.unit)} moves toward ${text(event.payload.target)} (${text(event.payload.to_x)}, ${text(event.payload.to_y)})`;
+    case "target_acquired":
+      return `${text(event.payload.unit)} targets ${text(event.payload.target)} at ${text(event.payload.distance)}`;
+    case "enter_range":
+      return `${text(event.payload.unit)} enters range of ${text(event.payload.target)}`;
+    case "engage_start":
+      return `${text(event.payload.unit)} engages ${text(event.payload.target)}`;
     case "battle_end":
       return `winner ${text(event.payload.winner)} by ${text(event.payload.reason)}`;
     default:

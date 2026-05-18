@@ -13,6 +13,7 @@ The viewer behavior is:
 - poll `POST /api/battle/step` on an interval
 - consume `snapshot` and `events` to render `Battlefield / 战场`
 - stop at battle end
+- render Realtime Spatial Combat / 实时空间战斗 movement from Continuous Position / 连续坐标 fields
 
 This avoids replay-only playback and demonstrates that a browser client can observe a running
 runtime session through polling.
@@ -56,6 +57,8 @@ Endpoints are consumed directly from `liveApiClient.ts`:
 - `getLiveSnapshot`
 - `getLiveEvents`
 - `resetLiveBattle`
+
+Snapshot / 状态快照 units may include Realtime Spatial Combat / 实时空间战斗 fields such as `position_x`, `position_y`, `move_speed`, `attack_range`, `engaged_target`, and `movement_intent`. The HTML viewer treats those as the authoritative Live Battlefield / 实时战场 position.
 
 ## Bilingual UI / 双语界面
 
@@ -114,7 +117,7 @@ Live visual effects in this phase:
 - No C# host / 不做 C# 宿主
 - No Godot / 不做 Godot
 - No xlsx adapter / 不做 xlsx 适配器
-- No movement/pathfinding / 不做移动与寻路
+- Movement / 移动 is limited to straight-line Simple Engagement / 简单接敌; no A* pathfinding / 不做 A* 寻路
 - No new frontend framework / 不引入新前端框架
 - No visual regression / 不做视觉回归
 - No cross-browser matrix / 不做跨浏览器矩阵

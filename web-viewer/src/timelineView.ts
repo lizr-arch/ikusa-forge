@@ -11,6 +11,10 @@ export type TimelineFilter =
   | "status_apply"
   | "skill_cooldown"
   | "action_scheduled"
+  | "unit_move"
+  | "target_acquired"
+  | "enter_range"
+  | "engage_start"
   | "battle_end";
 
 export const TIMELINE_FILTERS: TimelineFilter[] = [
@@ -23,6 +27,10 @@ export const TIMELINE_FILTERS: TimelineFilter[] = [
   "status_apply",
   "skill_cooldown",
   "action_scheduled",
+  "unit_move",
+  "target_acquired",
+  "enter_range",
+  "engage_start",
   "battle_end",
 ];
 

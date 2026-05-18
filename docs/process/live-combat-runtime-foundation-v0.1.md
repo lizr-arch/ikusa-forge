@@ -11,9 +11,11 @@ The goal is to make the combat core portable beyond replay generation:
 - Event Buffer / 事件缓冲 for reading new events since a known integer cursor.
 - Runtime Contract / 运行时契约 that keeps replay/report/viewer behavior compatible.
 
-This phase is a runtime shape refactor. It does not add combat rules, skills, AI, movement, HTTP serving, C# host, Godot, or new combat logic.
+This phase is a runtime shape refactor. It does not add combat rules, skills, AI, HTTP serving, C# host, Godot, WebSocket, or new combat logic.
 
 HTML Live Mode / HTML 实时模式 consumes `Battle Snapshot / 战斗状态快照` and `event stream / 事件流` from this contract and applies battlefield visualization at the client.
+
+Later Realtime Spatial Combat / 实时空间战斗 adds Continuous Position / 连续坐标, Movement Intent / 移动意图, Target Acquisition / 寻敌, and Attack Range / 攻击范围 fields behind the same BattleSession / 战斗会话 API. It still does not add HTTP serving, C# host, Godot, WebSocket, or a frontend framework.
 
 ## Runtime Contract / 运行时契约
 
@@ -137,7 +139,7 @@ The public signature does not change. Existing tools keep using it:
 
 For `demo_001 / seed=1001`, the compatibility target remains:
 
-- events: `332`
+- events: `716`
 - winner: `ally`
 - reason: `enemy_eliminated`
 - end_tick: `240`

@@ -167,7 +167,7 @@ h3 {
 }
 
 .board-host svg {
-  width: min(100%, 900px);
+  width: min(100%, 1040px);
   height: auto;
   max-height: 100%;
 }
@@ -469,7 +469,11 @@ select {
 .event-type-status_apply,
 .event-type-status_expire,
 .event-type-skill_cooldown,
-.event-type-action_scheduled {
+.event-type-action_scheduled,
+.event-type-unit_move,
+.event-type-target_acquired,
+.event-type-enter_range,
+.event-type-engage_start {
   border-color: #8cc4b3;
   background: var(--ally-soft);
 }
@@ -663,6 +667,19 @@ select {
   transform: translateY(-1px);
 }
 
+.unit-token text,
+.unit-token .unit-range-circle {
+  pointer-events: none;
+}
+
+.unit-range-circle {
+  fill: rgb(255 255 255 / 10%);
+  pointer-events: none;
+  stroke: rgb(101 115 107 / 35%);
+  stroke-dasharray: 4 5;
+  stroke-width: 1.2;
+}
+
 .unit-rect {
   fill: #ffffff;
   stroke: var(--line-strong);
@@ -735,18 +752,18 @@ select {
 
 .unit-id {
   fill: #1f2623;
-  font-size: 12px;
+  font-size: 10px;
   font-weight: 700;
 }
 
 .unit-role {
   fill: #44514a;
-  font-size: 10px;
+  font-size: 7px;
 }
 
 .unit-hp {
   fill: #1f2623;
-  font-size: 10px;
+  font-size: 8px;
   font-variant-numeric: tabular-nums;
 }
 
@@ -777,6 +794,28 @@ select {
 
 .health-fill {
   fill: #2d9a6f;
+}
+
+.action-background {
+  fill: rgb(31 38 35 / 14%);
+}
+
+.action-fill {
+  fill: var(--accent);
+}
+
+.status-badge,
+.cooldown-badge {
+  font-size: 5.5px;
+  font-weight: 800;
+}
+
+.status-badge {
+  fill: #1f6f5d;
+}
+
+.cooldown-badge {
+  fill: #8a5d05;
 }
 
 .unit-dead .health-fill {
@@ -959,6 +998,19 @@ select {
   fill: #6232a3;
   font-size: 9px;
   font-weight: 700;
+  text-anchor: middle;
+}
+
+.victory-board-banner {
+  fill: #fff1c7;
+  stroke: var(--accent);
+  stroke-width: 2;
+}
+
+.victory-board-text {
+  fill: #3f300d;
+  font-size: 14px;
+  font-weight: 800;
   text-anchor: middle;
 }
 
