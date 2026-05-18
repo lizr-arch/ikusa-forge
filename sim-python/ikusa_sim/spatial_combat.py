@@ -8,9 +8,11 @@ rules from battles, tests, and any future viewers.
 import math
 from typing import List, Optional
 
+from ikusa_sim.decisions import MovementDecision
 from ikusa_sim.events import BattleEvent
 from ikusa_sim.runtime_models import BattleState, UnitState
 from ikusa_sim.targeting import TargetCandidateScore, TargetDecision, select_target_decision
+from ikusa_sim.unit_fsm import UnitCombatState, get_unit_combat_state, set_unit_combat_state
 
 
 def initialize_spatial_state(state: BattleState) -> None:
@@ -19,9 +21,12 @@ def initialize_spatial_state(state: BattleState) -> None:
         unit.velocity_y = 0.0
         if not unit.alive:
             # dead units should not keep stale spatial intent
+            set_unit_combat_state(unit, UnitCombatState.DEAD, reason="initialize_spatial_state")
             unit.movement_intent = "hold"
             unit.engaged_target = None
             continue
+        if get_unit_combat_state(unit) == UnitCombatState.DEAD.value:
+            set_unit_combat_state(unit, UnitCombatState.IDLE, reason="initialize_spatial_state")
         if not unit.movement_intent:
             unit.movement_intent = "hold"
 
@@ -38,6 +43,7 @@ def update_spatial_engagements(
             unit.velocity_x = 0.0
             unit.velocity_y = 0.0
             unit.movement_intent = "hold"
+            set_unit_combat_state(unit, UnitCombatState.IDLE, reason="no_enemy_target")
             continue
 
         previous_target = unit.engaged_target
@@ -64,6 +70,7 @@ def update_spatial_engagements(
             unit.velocity_y = 0.0
             unit.facing_angle = _angle_to(unit, target)
             unit.movement_intent = "engaged"
+            set_unit_combat_state(unit, UnitCombatState.ENGAGED, reason="attack_range_reached")
             if previous_intent != "engaged" or previous_target != target.instance_id:
                 _emit_enter_range_events(state, events, tick, unit, target, distance_before)
             continue
@@ -75,6 +82,7 @@ def update_spatial_engagements(
             unit.movement_intent = "engaged"
             unit.velocity_x = 0.0
             unit.velocity_y = 0.0
+            set_unit_combat_state(unit, UnitCombatState.ENGAGED, reason="attack_range_reached")
             _emit_enter_range_events(state, events, tick, unit, target, distance_after)
 
 
@@ -90,11 +98,21 @@ def move_toward_target(
         unit.velocity_x = 0.0
         unit.velocity_y = 0.0
         unit.movement_intent = "engaged"
+        set_unit_combat_state(unit, UnitCombatState.ENGAGED, reason="zero_distance_engage")
         return
 
     step_distance = unit.move_speed / float(max(1, state.tick_rate))
     desired_step = max(0.0, distance - unit.attack_range)
     actual_step = min(step_distance, desired_step)
+    movement_decision = MovementDecision(
+        unit_id=unit.instance_id,
+        intent="move_to_attack_range",
+        target_id=target.instance_id,
+        destination_x=target.position_x,
+        destination_y=target.position_y,
+        reason="move_to_attack_range",
+        score=max(0.0, distance - unit.attack_range),
+    )
     direction_x = (target.position_x - unit.position_x) / distance
     direction_y = (target.position_y - unit.position_y) / distance
 
@@ -105,7 +123,8 @@ def move_toward_target(
     unit.velocity_x = direction_x * unit.move_speed if actual_step > 0 else 0.0
     unit.velocity_y = direction_y * unit.move_speed if actual_step > 0 else 0.0
     unit.facing_angle = math.degrees(math.atan2(direction_y, direction_x))
-    unit.movement_intent = "move_to_attack_range" if actual_step > 0 else "engaged"
+    unit.movement_intent = movement_decision.intent
+    set_unit_combat_state(unit, UnitCombatState.MOVING_TO_ENGAGE, reason=movement_decision.reason)
 
     distance_after = distance_between(unit, target)
     if actual_step > 0 and (tick % 5 == 0 or distance_after <= unit.attack_range + 0.001):

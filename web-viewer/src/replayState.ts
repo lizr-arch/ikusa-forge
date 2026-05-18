@@ -606,6 +606,7 @@ const applyUnitMove = (state: VisualState, event: ReplayEvent): void => {
     unit.movementIntent = readString(event.payload.reason, "move_to_attack_range");
     unit.combatState = unit.movementIntent;
     unit.engagedTarget = readNullableString(event.payload.target);
+    unit.combatState = "moving_to_engage";
   }
   state.lastMove = {
     tick: event.tick,
@@ -639,6 +640,8 @@ const applyDeath = (state: VisualState, event: ReplayEvent): void => {
   unit.alive = false;
   unit.hp = 0;
   unit.combatState = "dead";
+  unit.engagedTarget = null;
+  unit.movementIntent = "hold";
 };
 
 const clampTick = (tick: number, maxTick: number): number => {

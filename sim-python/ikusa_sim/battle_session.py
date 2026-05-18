@@ -8,6 +8,7 @@ new events.
 from dataclasses import asdict, dataclass, field
 from typing import Any, Dict, List, Optional
 
+from ikusa_sim.actions import build_basic_attack_action, resolve_combat_action
 from ikusa_sim.battle_skeleton import (
     battle_result_to_dict,
     create_battle_state,
@@ -37,6 +38,7 @@ from ikusa_sim.spatial_combat import (
     select_engaged_target_decision,
     update_spatial_engagements,
 )
+from ikusa_sim.unit_fsm import get_unit_combat_state
 
 
 @dataclass
@@ -233,6 +235,7 @@ def _unit_snapshot(unit: UnitState) -> Dict[str, Any]:
         "x": unit.x,
         "y": unit.y,
         "role": unit.role,
+        "combat_state": get_unit_combat_state(unit),
         "hp": unit.hp,
         "base_hp": unit.base_hp,
         "atk": unit.atk,
@@ -286,6 +289,13 @@ def _apply_basic_attack(
                 "role": decision.score.role_score,
                 "tie_break": decision.score.tie_break,
             }
+
+    action_reason = payload["target_reason"]
+    action = build_basic_attack_action(attacker.instance_id, target.instance_id, tick, action_reason)
+    action_result = resolve_combat_action(action)
+    if not action_result.ok:
+        return target
+
     events.append(
         BattleEvent(
             tick=tick,

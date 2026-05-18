@@ -51,6 +51,7 @@ class UnitState:
     engagement_range: float = 22.0
     engaged_target: Optional[str] = None
     movement_intent: str = "hold"
+    combat_state: str = "idle"
     statuses: List[StatusEffect] = field(default_factory=list)
     skill_cooldowns: Dict[str, int] = field(default_factory=dict)
     atk: int = field(init=False)

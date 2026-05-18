@@ -4,6 +4,7 @@ from typing import Optional
 
 from ikusa_sim.models import SkillDef
 from ikusa_sim.runtime_models import UnitState
+from ikusa_sim.unit_fsm import UnitCombatState, set_unit_combat_state
 
 
 def attack_interval_to_ticks(attack_interval: float, tick_rate: int) -> int:
@@ -35,6 +36,7 @@ def apply_damage(
         return False
 
     defender.alive = False
+    set_unit_combat_state(defender, UnitCombatState.DEAD, reason=reason or "lethal_damage")
     return True
 
 
