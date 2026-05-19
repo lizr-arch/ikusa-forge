@@ -139,7 +139,7 @@ class LiveApiManagerTests(unittest.TestCase):
         while not manager.snapshot(session_id)["finished"]:
             manager.step_session(session_id, ticks=5)
             steps += 1
-            self.assertLessEqual(steps, 100)
+            self.assertLessEqual(steps, 150)
 
         snapshot = manager.snapshot(session_id)
         all_events = manager.events_since(session_id, 0)

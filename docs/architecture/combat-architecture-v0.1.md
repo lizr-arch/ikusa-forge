@@ -113,3 +113,9 @@ FSM / 状态机 适合表达单位状态，但它并不擅长单独承担：
 - Events / 事件流
 
 这样 Python runtime / Python 运行时 可以继续作为权威模拟器，而 Godot 只负责渲染与交互壳。
+
+## Migration path / 迁移路线
+
+Phase 2 迁移路线：
+
+- `phase2/formation-and-engagement-system` — Formation and Engagement System / 编队与接敌系统 ✅ 已完成

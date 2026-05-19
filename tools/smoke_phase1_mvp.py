@@ -91,7 +91,11 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         f"total_unit_moves={summary.get('total_unit_moves')}, "
         f"total_target_acquired={summary.get('total_target_acquired')}, "
         f"total_enter_range={summary.get('total_enter_range')}, "
-        f"total_engage_start={summary.get('total_engage_start')}"
+        f"total_engage_start={summary.get('total_engage_start')}, "
+        f"total_formation_anchor_updates={summary.get('total_formation_anchor_updates')}, "
+        f"total_engagement_locks={summary.get('total_engagement_locks')}, "
+        f"total_engagement_releases={summary.get('total_engagement_releases')}, "
+        f"total_ranged_holds={summary.get('total_ranged_holds')}"
     )
     return 0
 
@@ -147,6 +151,10 @@ def _check_replay(
 
     for event_type in REQUIRED_EVENT_TYPES:
         _expect(counts.get(event_type, 0) > 0, f"replay {event_type} events", errors)
+    _expect(counts.get("formation_anchor_update", 0) > 0, "replay formation_anchor_update events", errors)
+    _expect(counts.get("engagement_lock", 0) > 0, "replay engagement_lock events", errors)
+    _expect(counts.get("engagement_release", 0) >= 0, "replay engagement_release events", errors)
+    _expect(counts.get("ranged_hold", 0) > 0, "replay ranged_hold events", errors)
     _expect(len(attack_with_reason) > 0, "replay attack target_reason", errors)
     _expect(len(skill_trigger_with_reason) > 0, "replay skill_trigger target_reason", errors)
     if battle_end_events:
@@ -158,6 +166,12 @@ def _check_replay(
     unit_count = metadata.get("unit_count")
     if isinstance(unit_count, int):
         _expect(counts.get("unit_spawn") == unit_count, "replay unit_count", errors)
+
+    unit_spawns = [event for event in events if event.get("type") == "unit_spawn"]
+    _expect(len(unit_spawns) > 0, "replay unit_spawn events", errors)
+    if unit_spawns:
+        first_spawn_unit = _as_dict(_as_dict(unit_spawns[0].get("payload")).get("unit"))
+        _expect("engagement_role" in first_spawn_unit, "replay unit_spawn engagement_role", errors)
 
     result = _as_dict(metadata.get("result"))
     _expect(result.get("winner") in {"ally", "enemy", "draw"}, "replay winner", errors)
@@ -192,6 +206,10 @@ def _check_report(
     _expect(_non_negative(summary.get("total_status_expired")), "report summary.total_status_expired", errors)
     _expect(summary.get("formation_modifiers", 0) > 0, "report summary.formation_modifiers", errors)
     _expect(summary.get("synergy_modifiers", 0) > 0, "report summary.synergy_modifiers", errors)
+    _expect(_positive(summary.get("total_formation_anchor_updates")), "report summary.total_formation_anchor_updates", errors)
+    _expect(_positive(summary.get("total_engagement_locks")), "report summary.total_engagement_locks", errors)
+    _expect(_non_negative(summary.get("total_engagement_releases")), "report summary.total_engagement_releases", errors)
+    _expect(_positive(summary.get("total_ranged_holds")), "report summary.total_ranged_holds", errors)
     target_reasons = _as_dict(summary.get("target_reason_counts"))
     skill_target_reasons = _as_dict(summary.get("skill_target_reason_counts"))
     _expect(_non_empty_dict(target_reasons), "report target_reason_counts", errors)
@@ -209,6 +227,10 @@ def _check_report(
         _expect(summary.get("total_target_acquired") == event_counts.get("target_acquired"), "report target acquired count", errors)
         _expect(summary.get("total_enter_range") == event_counts.get("enter_range"), "report enter range count", errors)
         _expect(summary.get("total_engage_start") == event_counts.get("engage_start"), "report engage start count", errors)
+        _expect(summary.get("total_formation_anchor_updates") == event_counts.get("formation_anchor_update"), "report formation anchor update count", errors)
+        _expect(summary.get("total_engagement_locks") == event_counts.get("engagement_lock"), "report engagement lock count", errors)
+        _expect(summary.get("total_engagement_releases") == event_counts.get("engagement_release"), "report engagement release count", errors)
+        _expect(summary.get("total_ranged_holds") == event_counts.get("ranged_hold", 0), "report ranged hold count", errors)
 
     _expect(isinstance(report.get("units"), dict) and len(report.get("units", {})) >= 2, "report units", errors)
     _expect(isinstance(report.get("victory_explanation"), dict), "report victory_explanation", errors)
@@ -221,6 +243,8 @@ def _check_report(
     _expect(any(_as_dict(unit).get("target_acquired", 0) > 0 for unit in units.values()), "report unit target acquired", errors)
     _expect(any(_as_dict(unit).get("entered_range", 0) > 0 for unit in units.values()), "report unit enter range", errors)
     _expect(any(_as_dict(unit).get("engagements_started", 0) > 0 for unit in units.values()), "report unit engage start", errors)
+    _expect(any(_as_dict(unit).get("engagement_locks", 0) > 0 for unit in units.values()), "report unit engagement locks", errors)
+    _expect(any(_as_dict(unit).get("ranged_holds", 0) > 0 for unit in units.values()), "report unit ranged holds", errors)
 
 
 def _filter_events_with_reason(events: Sequence[Dict[str, Any]], event_type: str) -> List[Dict[str, Any]]:

@@ -50,6 +50,13 @@ class UnitState:
     attack_range: float = 18.0
     engagement_range: float = 22.0
     engaged_target: Optional[str] = None
+    formation_anchor_x: float = 0.0
+    formation_anchor_y: float = 0.0
+    formation_group_id: str = ""
+    engagement_target: Optional[str] = None
+    engagement_role: str = "frontline"
+    desired_distance: float = 0.0
+    separation_radius: float = 14.4
     movement_intent: str = "hold"
     combat_state: str = "idle"
     statuses: List[StatusEffect] = field(default_factory=list)
@@ -62,6 +69,46 @@ class UnitState:
         self.atk = self.base_atk
         self.defense = self.base_defense
         self.range = self.base_range
+
+        if self.formation_group_id == "":
+            self.formation_group_id = self.side
+
+        _text_sources = [
+            name.lower() for name in [self.unit_def_id, self.name] if name
+        ] + [tag.lower() for tag in self.tags]
+
+        def _any_text_has(*keywords: str) -> bool:
+            return any(
+                any(kw in text for kw in keywords)
+                for text in _text_sources
+            )
+
+        role_lower = self.role.lower()
+
+        # Priority: ninja > ranged > support > frontline
+        if _any_text_has("ninja"):
+            self.engagement_role = "flanker"
+        elif _any_text_has("bow", "archer", "yumi", "ranged") or any(
+            "bow" in (slot.lower() if slot else "") for slot in (self.weapon_slots or [])
+        ):
+            self.engagement_role = "ranged"
+        elif _any_text_has("banner", "flag", "support"):
+            self.engagement_role = "support"
+        elif any(kw in role_lower for kw in ("shield", "spear", "katana", "samurai", "vanguard", "front")):
+            self.engagement_role = "frontline"
+        # else keep default "frontline"
+
+        if self.desired_distance == 0.0:
+            eng_role = self.engagement_role
+            if eng_role == "ranged":
+                self.desired_distance = self.attack_range * 0.65
+            elif eng_role == "support":
+                self.desired_distance = max(40.0, self.attack_range)
+            else:
+                self.desired_distance = self.attack_range * 0.85
+
+        if self.separation_radius == 14.4:
+            self.separation_radius = self.radius * 1.8
 
 
 @dataclass(frozen=True)

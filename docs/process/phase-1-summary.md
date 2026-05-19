@@ -50,6 +50,7 @@
 - `phase2/live-pixi-battlefield-renderer`: Live Pixi Battlefield Renderer / PixiJS 实时战场渲染器 (current / pending review)
 - `phase2/realtime-spatial-combat-foundation`: Realtime Spatial Combat Foundation / 实时空间战斗基础 (current / pending review)
 - `phase2/combat-architecture-formalization`: Combat Architecture Formalization / 战斗架构正式化 (current / pending review)
+- `phase2/formation-and-engagement-system`: Formation and Engagement System / 编队与接敌系统 (current / pending review)
 
 ## Current Commands / 当前命令
 

@@ -34,6 +34,10 @@ def build_battle_report_from_events(
     total_target_acquired = 0
     total_enter_range = 0
     total_engage_start = 0
+    total_formation_anchor_updates = 0
+    total_engagement_locks = 0
+    total_engagement_releases = 0
+    total_ranged_holds = 0
     target_reason_counts = {}  # type: Dict[str, int]
     skill_target_reason_counts = {}  # type: Dict[str, int]
 
@@ -166,6 +170,34 @@ def build_battle_report_from_events(
                 total_engage_start += 1
             continue
 
+        if event_type == "formation_anchor_update":
+            unit_id = payload.get("unit")
+            if unit_id:
+                _ensure_unit(units, unit_id)["formation_anchor_updates"] += 1
+                total_formation_anchor_updates += 1
+            continue
+
+        if event_type == "engagement_lock":
+            unit_id = payload.get("unit")
+            if unit_id:
+                _ensure_unit(units, unit_id)["engagement_locks"] += 1
+                total_engagement_locks += 1
+            continue
+
+        if event_type == "engagement_release":
+            unit_id = payload.get("unit")
+            if unit_id:
+                _ensure_unit(units, unit_id)["engagement_releases"] += 1
+                total_engagement_releases += 1
+            continue
+
+        if event_type == "ranged_hold":
+            unit_id = payload.get("unit")
+            if unit_id:
+                _ensure_unit(units, unit_id)["ranged_holds"] += 1
+                total_ranged_holds += 1
+            continue
+
         if event_type == "battle_end":
             battle_end = payload
             key_moments.append(_battle_end_key_moment(event, payload))
@@ -196,6 +228,10 @@ def build_battle_report_from_events(
             "total_engage_start": total_engage_start,
             "target_reason_counts": target_reason_counts,
             "skill_target_reason_counts": skill_target_reason_counts,
+            "total_formation_anchor_updates": total_formation_anchor_updates,
+            "total_engagement_locks": total_engagement_locks,
+            "total_engagement_releases": total_engagement_releases,
+            "total_ranged_holds": total_ranged_holds,
         },
         "victory_explanation": victory_explanation,
         "units": units,
@@ -227,6 +263,10 @@ def _ensure_unit(units: Dict[str, Dict[str, Any]], unit_id: str) -> Dict[str, An
             "target_acquired": 0,
             "entered_range": 0,
             "engagements_started": 0,
+            "formation_anchor_updates": 0,
+            "engagement_locks": 0,
+            "engagement_releases": 0,
+            "ranged_holds": 0,
         }
     return units[unit_id]
 

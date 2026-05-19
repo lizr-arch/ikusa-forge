@@ -3,24 +3,41 @@
 This module keeps the continuous-position and engagement logic separate from
 the session orchestration layer so the runtime can reuse the same spatial
 rules from battles, tests, and any future viewers.
+
+Phase 2: integrated with Formation System / 编队系统 and
+Engagement System / 接敌系统 for role-based movement, anchoring,
+and separation.
 """
 
 import math
 from typing import List, Optional
 
 from ikusa_sim.decisions import MovementDecision
+from ikusa_sim.engagement_system import update_engagement_pairs
 from ikusa_sim.events import BattleEvent
+from ikusa_sim.formation_system import initialize_formation_anchors, update_formation_anchors
 from ikusa_sim.runtime_models import BattleState, UnitState
+from ikusa_sim.spatial_utils import (
+    angle_to,
+    distance_between,
+    in_attack_range,
+    nearest_alive_enemy,
+    next_event_id,
+    unit_by_id,
+)
 from ikusa_sim.targeting import TargetCandidateScore, TargetDecision, select_target_decision
 from ikusa_sim.unit_fsm import UnitCombatState, get_unit_combat_state, set_unit_combat_state
 
+_SEPARATION_PUSH = 1.5
+_EVENT_THROTTLE = 5
+
 
 def initialize_spatial_state(state: BattleState) -> None:
+    initialize_formation_anchors(state)
     for unit in state.units:
         unit.velocity_x = 0.0
         unit.velocity_y = 0.0
         if not unit.alive:
-            # dead units should not keep stale spatial intent
             set_unit_combat_state(unit, UnitCombatState.DEAD, reason="initialize_spatial_state")
             unit.movement_intent = "hold"
             unit.engaged_target = None
@@ -36,54 +53,39 @@ def update_spatial_engagements(
     events: List[BattleEvent],
     tick: int,
 ) -> None:
-    for unit in sorted((candidate for candidate in state.units if candidate.alive), key=lambda item: item.instance_id):
-        target = nearest_alive_enemy(unit, state.units)
-        if target is None:
-            unit.engaged_target = None
-            unit.velocity_x = 0.0
-            unit.velocity_y = 0.0
-            unit.movement_intent = "hold"
-            set_unit_combat_state(unit, UnitCombatState.IDLE, reason="no_enemy_target")
-            continue
+    update_formation_anchors(state, events, tick)
+    update_engagement_pairs(state, events, tick)
 
-        previous_target = unit.engaged_target
-        previous_intent = unit.movement_intent
-        distance_before = distance_between(unit, target)
-        if previous_target != target.instance_id:
-            unit.engaged_target = target.instance_id
-            events.append(
-                BattleEvent(
-                    tick=tick,
-                    event_id=_next_event_id(state),
-                    type="target_acquired",
-                    payload={
-                        "unit": unit.instance_id,
-                        "target": target.instance_id,
-                        "distance": round(distance_before, 3),
-                        "reason": "nearest_enemy",
-                    },
-                )
-            )
+    alive_units = sorted(
+        (u for u in state.units if u.alive),
+        key=lambda u: u.instance_id,
+    )
 
-        if in_attack_range(unit, target):
-            unit.velocity_x = 0.0
-            unit.velocity_y = 0.0
-            unit.facing_angle = _angle_to(unit, target)
-            unit.movement_intent = "engaged"
-            set_unit_combat_state(unit, UnitCombatState.ENGAGED, reason="attack_range_reached")
-            if previous_intent != "engaged" or previous_target != target.instance_id:
-                _emit_enter_range_events(state, events, tick, unit, target, distance_before)
-            continue
+    for unit in alive_units:
+        intent = unit.movement_intent
 
-        move_toward_target(state, events, tick, unit, target)
+        if intent in ("engaged", "engaged_lock"):
+            _handle_engaged_unit(state, events, tick, unit)
 
-        distance_after = distance_between(unit, target)
-        if in_attack_range(unit, target) and (previous_intent != "engaged" or previous_target != target.instance_id):
-            unit.movement_intent = "engaged"
-            unit.velocity_x = 0.0
-            unit.velocity_y = 0.0
-            set_unit_combat_state(unit, UnitCombatState.ENGAGED, reason="attack_range_reached")
-            _emit_enter_range_events(state, events, tick, unit, target, distance_after)
+        elif intent == "hold_range":
+            _handle_ranged_holding(state, events, tick, unit)
+
+        elif intent == "hold":
+            _handle_holding_unit(state, events, tick, unit)
+
+        elif intent == "move_to_engage":
+            _handle_moving_unit(state, events, tick, unit)
+
+        elif intent == "retreat_range":
+            _handle_retreating_unit(state, events, tick, unit)
+
+        elif intent == "move_to_anchor":
+            _handle_move_to_anchor(state, events, tick, unit)
+
+        else:
+            _handle_moving_unit(state, events, tick, unit)
+
+    _apply_separation(state, alive_units)
 
 
 def move_toward_target(
@@ -93,71 +95,18 @@ def move_toward_target(
     unit: UnitState,
     target: UnitState,
 ) -> None:
-    distance = distance_between(unit, target)
-    if distance <= 0:
-        unit.velocity_x = 0.0
-        unit.velocity_y = 0.0
-        unit.movement_intent = "engaged"
-        set_unit_combat_state(unit, UnitCombatState.ENGAGED, reason="zero_distance_engage")
-        return
-
-    step_distance = unit.move_speed / float(max(1, state.tick_rate))
-    desired_step = max(0.0, distance - unit.attack_range)
-    actual_step = min(step_distance, desired_step)
-    movement_decision = MovementDecision(
-        unit_id=unit.instance_id,
-        intent="move_to_attack_range",
-        target_id=target.instance_id,
-        destination_x=target.position_x,
-        destination_y=target.position_y,
-        reason="move_to_attack_range",
-        score=max(0.0, distance - unit.attack_range),
-    )
-    direction_x = (target.position_x - unit.position_x) / distance
-    direction_y = (target.position_y - unit.position_y) / distance
-
-    old_x = unit.position_x
-    old_y = unit.position_y
-    unit.position_x += direction_x * actual_step
-    unit.position_y += direction_y * actual_step
-    unit.velocity_x = direction_x * unit.move_speed if actual_step > 0 else 0.0
-    unit.velocity_y = direction_y * unit.move_speed if actual_step > 0 else 0.0
-    unit.facing_angle = math.degrees(math.atan2(direction_y, direction_x))
-    unit.movement_intent = movement_decision.intent
-    set_unit_combat_state(unit, UnitCombatState.MOVING_TO_ENGAGE, reason=movement_decision.reason)
-
-    distance_after = distance_between(unit, target)
-    if actual_step > 0 and (tick % 5 == 0 or distance_after <= unit.attack_range + 0.001):
-        events.append(
-            BattleEvent(
-                tick=tick,
-                event_id=_next_event_id(state),
-                type="unit_move",
-                payload={
-                    "unit": unit.instance_id,
-                    "target": target.instance_id,
-                    "from_x": round(old_x, 3),
-                    "from_y": round(old_y, 3),
-                    "to_x": round(unit.position_x, 3),
-                    "to_y": round(unit.position_y, 3),
-                    "velocity_x": round(unit.velocity_x, 3),
-                    "velocity_y": round(unit.velocity_y, 3),
-                    "move_speed": unit.move_speed,
-                    "distance_to_target": round(distance_after, 3),
-                    "reason": "move_to_attack_range",
-                },
-            )
-        )
+    _move_unit_toward(state, events, tick, unit, target, unit.attack_range, "move_to_attack_range")
 
 
 def select_engaged_target_decision(attacker: UnitState, units: List[UnitState]) -> TargetDecision:
-    target = _unit_by_id(units, attacker.engaged_target)
+    target_id = attacker.engaged_target or attacker.engagement_target
+    target = unit_by_id(units, target_id)
     if target is not None and target.alive and target.side != attacker.side and in_attack_range(attacker, target):
-        distance = distance_between(attacker, target)
+        dist = distance_between(attacker, target)
         score = TargetCandidateScore(
             unit_id=target.instance_id,
-            final_score=max(0, int(1000.0 - distance)),
-            exposure_score=max(0, int(200.0 - distance)),
+            final_score=max(0, int(1000.0 - dist)),
+            exposure_score=max(0, int(200.0 - dist)),
             column_score=max(0, 40 - abs(attacker.x - target.x) * 10),
             low_hp_score=int((1.0 - (float(target.hp) / float(max(1, target.base_hp)))) * 120),
             threat_score=target.atk + target.range * 4 + (15 if target.skill_ids else 0),
@@ -174,24 +123,390 @@ def select_engaged_target_decision(attacker: UnitState, units: List[UnitState]) 
 
 
 def engaged_target_in_attack_range(unit: UnitState, units: List[UnitState]) -> bool:
-    target = _unit_by_id(units, unit.engaged_target)
+    target_id = unit.engaged_target or unit.engagement_target
+    target = unit_by_id(units, target_id)
     return target is not None and target.alive and target.side != unit.side and in_attack_range(unit, target)
 
 
-def nearest_alive_enemy(unit: UnitState, units: List[UnitState]) -> Optional[UnitState]:
-    enemies = [candidate for candidate in units if candidate.alive and candidate.side != unit.side]
-    if not enemies:
-        return None
-    enemies.sort(key=lambda candidate: (distance_between(unit, candidate), candidate.instance_id))
-    return enemies[0]
+def _handle_engaged_unit(
+    state: BattleState,
+    events: List[BattleEvent],
+    tick: int,
+    unit: UnitState,
+) -> None:
+    target_id = unit.engaged_target or unit.engagement_target
+    target = unit_by_id(state.units, target_id)
+    if target is None or not target.alive:
+        return
+
+    previous_intent = unit.movement_intent
+    unit.velocity_x = 0.0
+    unit.velocity_y = 0.0
+    unit.facing_angle = angle_to(unit, target)
+
+    if not _has_entered_range_for(unit, target_id):
+        _mark_entered_range(unit, target_id)
+        _emit_enter_range_events(state, events, tick, unit, target, distance_between(unit, target))
+
+    set_unit_combat_state(unit, UnitCombatState.ENGAGED, reason="attack_range_reached")
+    if previous_intent == "move_to_engage":
+        unit.movement_intent = "engaged_lock" if unit.engagement_role in ("frontline", "flanker") else "engaged"
 
 
-def distance_between(left: UnitState, right: UnitState) -> float:
-    return math.hypot(left.position_x - right.position_x, left.position_y - right.position_y)
+def _handle_ranged_holding(
+    state: BattleState,
+    events: List[BattleEvent],
+    tick: int,
+    unit: UnitState,
+) -> None:
+    target_id = unit.engaged_target or unit.engagement_target
+    target = unit_by_id(state.units, target_id)
+    if target is None or not target.alive:
+        return
+
+    unit.velocity_x = 0.0
+    unit.velocity_y = 0.0
+    unit.facing_angle = angle_to(unit, target)
+    set_unit_combat_state(unit, UnitCombatState.ENGAGED, reason="ranged_hold")
+
+    if not _has_entered_range_for(unit, target_id):
+        _mark_entered_range(unit, target_id)
+        _emit_enter_range_events(state, events, tick, unit, target, distance_between(unit, target))
 
 
-def in_attack_range(unit: UnitState, target: UnitState) -> bool:
-    return distance_between(unit, target) <= unit.attack_range + 0.001
+def _handle_holding_unit(
+    state: BattleState,
+    events: List[BattleEvent],
+    tick: int,
+    unit: UnitState,
+) -> None:
+    target_id = unit.engaged_target or unit.engagement_target
+    target = unit_by_id(state.units, target_id)
+    if target is not None and target.alive and in_attack_range(unit, target):
+        unit.velocity_x = 0.0
+        unit.velocity_y = 0.0
+        unit.facing_angle = angle_to(unit, target)
+        if not _has_entered_range_for(unit, target_id):
+            _mark_entered_range(unit, target_id)
+            _emit_enter_range_events(state, events, tick, unit, target, distance_between(unit, target))
+        return
+
+    unit.velocity_x = 0.0
+    unit.velocity_y = 0.0
+    set_unit_combat_state(unit, UnitCombatState.IDLE, reason="holding")
+
+
+def _handle_moving_unit(
+    state: BattleState,
+    events: List[BattleEvent],
+    tick: int,
+    unit: UnitState,
+) -> None:
+    target_id = unit.engagement_target or unit.engaged_target
+    target = unit_by_id(state.units, target_id)
+
+    if target is not None and target.alive:
+        dist = distance_between(unit, target)
+
+        if _should_emit_target_acquired(unit, target):
+            events.append(
+                BattleEvent(
+                    tick=tick,
+                    event_id=next_event_id(state),
+                    type="target_acquired",
+                    payload={
+                        "unit": unit.instance_id,
+                        "target": target.instance_id,
+                        "distance": round(dist, 3),
+                        "reason": "nearest_enemy",
+                    },
+                )
+            )
+            unit.engaged_target = target.instance_id
+            unit._acquired_target_id = target.instance_id
+        if in_attack_range(unit, target):
+            unit.velocity_x = 0.0
+            unit.velocity_y = 0.0
+            unit.facing_angle = angle_to(unit, target)
+            if not _has_entered_range_for(unit, target_id):
+                _mark_entered_range(unit, target_id)
+                _emit_enter_range_events(state, events, tick, unit, target, dist)
+                unit.movement_intent = "engaged_lock" if unit.engagement_role in ("frontline", "flanker") else "engaged"
+            return
+
+        stop_distance = unit.desired_distance if unit.engagement_role == "ranged" else unit.attack_range
+        if unit.engagement_role == "ranged" and dist <= stop_distance + 0.001:
+            unit.velocity_x = 0.0
+            unit.velocity_y = 0.0
+            unit.facing_angle = angle_to(unit, target)
+            unit.movement_intent = "hold_range"
+            return
+
+        _move_unit_toward(state, events, tick, unit, target, stop_distance, "move_to_attack_range")
+        return
+
+    anchor_x, anchor_y = unit.formation_anchor_x, unit.formation_anchor_y
+    dx = anchor_x - unit.position_x
+    dy = anchor_y - unit.position_y
+    anchor_dist = math.hypot(dx, dy)
+    if anchor_dist < 1.0:
+        unit.velocity_x = 0.0
+        unit.velocity_y = 0.0
+        unit.movement_intent = "hold"
+        return
+
+    step_distance = unit.move_speed / float(max(1, state.tick_rate))
+    actual_step = min(step_distance, anchor_dist)
+    dir_x = dx / anchor_dist
+    dir_y = dy / anchor_dist
+
+    old_x = unit.position_x
+    old_y = unit.position_y
+    unit.position_x += dir_x * actual_step
+    unit.position_y += dir_y * actual_step
+    unit.velocity_x = dir_x * unit.move_speed if actual_step > 0 else 0.0
+    unit.velocity_y = dir_y * unit.move_speed if actual_step > 0 else 0.0
+    unit.facing_angle = math.degrees(math.atan2(dir_y, dir_x))
+    unit.movement_intent = "move_to_engage"
+    set_unit_combat_state(unit, UnitCombatState.MOVING_TO_ENGAGE, reason="move_to_anchor")
+
+    if actual_step > 0 and tick % _EVENT_THROTTLE == 0:
+        events.append(
+            BattleEvent(
+                tick=tick,
+                event_id=next_event_id(state),
+                type="unit_move",
+                payload={
+                    "unit": unit.instance_id,
+                    "target": None,
+                    "from_x": round(old_x, 3),
+                    "from_y": round(old_y, 3),
+                    "to_x": round(unit.position_x, 3),
+                    "to_y": round(unit.position_y, 3),
+                    "velocity_x": round(unit.velocity_x, 3),
+                    "velocity_y": round(unit.velocity_y, 3),
+                    "move_speed": unit.move_speed,
+                    "distance_to_target": round(math.hypot(unit.position_x - anchor_x, unit.position_y - anchor_y), 3),
+                    "reason": "move_to_anchor",
+                },
+            )
+        )
+
+
+def _handle_move_to_anchor(
+    state: BattleState,
+    events: List[BattleEvent],
+    tick: int,
+    unit: UnitState,
+) -> None:
+    anchor_x, anchor_y = unit.formation_anchor_x, unit.formation_anchor_y
+    dx = anchor_x - unit.position_x
+    dy = anchor_y - unit.position_y
+    anchor_dist = math.hypot(dx, dy)
+    if anchor_dist < 1.0:
+        unit.velocity_x = 0.0
+        unit.velocity_y = 0.0
+        unit.movement_intent = "hold"
+        return
+
+    step_distance = unit.move_speed / float(max(1, state.tick_rate))
+    actual_step = min(step_distance, anchor_dist)
+    dir_x = dx / anchor_dist
+    dir_y = dy / anchor_dist
+
+    old_x = unit.position_x
+    old_y = unit.position_y
+    unit.position_x += dir_x * actual_step
+    unit.position_y += dir_y * actual_step
+    unit.velocity_x = dir_x * unit.move_speed if actual_step > 0 else 0.0
+    unit.velocity_y = dir_y * unit.move_speed if actual_step > 0 else 0.0
+    unit.facing_angle = math.degrees(math.atan2(dir_y, dir_x))
+    unit.movement_intent = "move_to_anchor"
+    set_unit_combat_state(unit, UnitCombatState.MOVING_TO_FORMATION, reason="follow_anchor")
+
+    if actual_step > 0 and tick % _EVENT_THROTTLE == 0:
+        events.append(
+            BattleEvent(
+                tick=tick,
+                event_id=next_event_id(state),
+                type="unit_move",
+                payload={
+                    "unit": unit.instance_id,
+                    "target": None,
+                    "from_x": round(old_x, 3),
+                    "from_y": round(old_y, 3),
+                    "to_x": round(unit.position_x, 3),
+                    "to_y": round(unit.position_y, 3),
+                    "velocity_x": round(unit.velocity_x, 3),
+                    "velocity_y": round(unit.velocity_y, 3),
+                    "move_speed": unit.move_speed,
+                    "distance_to_target": round(math.hypot(unit.position_x - anchor_x, unit.position_y - anchor_y), 3),
+                    "reason": "move_to_anchor",
+                },
+            )
+        )
+
+
+def _handle_retreating_unit(
+    state: BattleState,
+    events: List[BattleEvent],
+    tick: int,
+    unit: UnitState,
+) -> None:
+    target_id = unit.engaged_target or unit.engagement_target
+    target = unit_by_id(state.units, target_id)
+    if target is None or not target.alive:
+        unit.movement_intent = "hold"
+        return
+
+    dx = unit.position_x - target.position_x
+    dy = unit.position_y - target.position_y
+    dist = math.hypot(dx, dy)
+    if dist < 0.001:
+        dx = 1.0
+        dy = 0.0
+        dist = 1.0
+    dir_x = dx / dist
+    dir_y = dy / dist
+
+    step_distance = unit.move_speed / float(max(1, state.tick_rate)) * 0.5
+    old_x = unit.position_x
+    old_y = unit.position_y
+    unit.position_x += dir_x * step_distance
+    unit.position_y += dir_y * step_distance
+    unit.velocity_x = dir_x * unit.move_speed * 0.5
+    unit.velocity_y = dir_y * unit.move_speed * 0.5
+    unit.facing_angle = math.degrees(math.atan2(dy, dx))
+    set_unit_combat_state(unit, UnitCombatState.MOVING_TO_ENGAGE, reason="retreat_range")
+
+    if tick % _EVENT_THROTTLE == 0:
+        events.append(
+            BattleEvent(
+                tick=tick,
+                event_id=next_event_id(state),
+                type="unit_move",
+                payload={
+                    "unit": unit.instance_id,
+                    "target": target.instance_id,
+                    "from_x": round(old_x, 3),
+                    "from_y": round(old_y, 3),
+                    "to_x": round(unit.position_x, 3),
+                    "to_y": round(unit.position_y, 3),
+                    "velocity_x": round(unit.velocity_x, 3),
+                    "velocity_y": round(unit.velocity_y, 3),
+                    "move_speed": unit.move_speed,
+                    "distance_to_target": round(distance_between(unit, target), 3),
+                    "reason": "retreat_range",
+                },
+            )
+        )
+
+
+def _move_unit_toward(
+    state: BattleState,
+    events: List[BattleEvent],
+    tick: int,
+    unit: UnitState,
+    target: UnitState,
+    stop_distance: float,
+    reason: str,
+) -> None:
+    dist = distance_between(unit, target)
+    if dist <= 0:
+        unit.velocity_x = 0.0
+        unit.velocity_y = 0.0
+        unit.movement_intent = "engaged"
+        set_unit_combat_state(unit, UnitCombatState.ENGAGED, reason="zero_distance_engage")
+        return
+
+    step_distance = unit.move_speed / float(max(1, state.tick_rate))
+    desired_step = max(0.0, dist - stop_distance)
+    actual_step = min(step_distance, desired_step)
+
+    MovementDecision(
+        unit_id=unit.instance_id,
+        intent="move_to_attack_range",
+        target_id=target.instance_id,
+        destination_x=target.position_x,
+        destination_y=target.position_y,
+        reason=reason,
+        score=max(0.0, dist - stop_distance),
+    )
+    direction_x = (target.position_x - unit.position_x) / dist
+    direction_y = (target.position_y - unit.position_y) / dist
+
+    old_x = unit.position_x
+    old_y = unit.position_y
+    unit.position_x += direction_x * actual_step
+    unit.position_y += direction_y * actual_step
+    unit.velocity_x = direction_x * unit.move_speed if actual_step > 0 else 0.0
+    unit.velocity_y = direction_y * unit.move_speed if actual_step > 0 else 0.0
+    unit.facing_angle = math.degrees(math.atan2(direction_y, direction_x))
+    unit.movement_intent = "move_to_attack_range"
+    set_unit_combat_state(unit, UnitCombatState.MOVING_TO_ENGAGE, reason=reason)
+
+    distance_after = distance_between(unit, target)
+    if actual_step > 0 and (tick % _EVENT_THROTTLE == 0 or distance_after <= stop_distance + 0.001):
+        events.append(
+            BattleEvent(
+                tick=tick,
+                event_id=next_event_id(state),
+                type="unit_move",
+                payload={
+                    "unit": unit.instance_id,
+                    "target": target.instance_id,
+                    "from_x": round(old_x, 3),
+                    "from_y": round(old_y, 3),
+                    "to_x": round(unit.position_x, 3),
+                    "to_y": round(unit.position_y, 3),
+                    "velocity_x": round(unit.velocity_x, 3),
+                    "velocity_y": round(unit.velocity_y, 3),
+                    "move_speed": unit.move_speed,
+                    "distance_to_target": round(distance_after, 3),
+                    "reason": reason,
+                },
+            )
+        )
+
+
+def _apply_separation(state: BattleState, units: List[UnitState]) -> None:
+    for i, unit_a in enumerate(units):
+        for unit_b in units[i + 1:]:
+            if unit_a.side != unit_b.side:
+                continue
+            dist = distance_between(unit_a, unit_b)
+            min_dist = max(unit_a.separation_radius, unit_b.separation_radius)
+            if dist >= min_dist:
+                continue
+            if dist < 0.001:
+                dist = 0.001
+                dx = _stable_xor_float(unit_a.instance_id, unit_b.instance_id, 1.0)
+                dy = _stable_xor_float(unit_b.instance_id, unit_a.instance_id, 1.0)
+            else:
+                dx = (unit_a.position_x - unit_b.position_x) / dist
+                dy = (unit_a.position_y - unit_b.position_y) / dist
+
+            push = (min_dist - dist) * 0.5 / float(max(1, state.tick_rate))
+            push = min(push, _SEPARATION_PUSH)
+            unit_a.position_x += dx * push
+            unit_a.position_y += dy * push
+            unit_b.position_x -= dx * push
+            unit_b.position_y -= dy * push
+
+
+def _has_entered_range_for(unit: UnitState, target_id: str) -> bool:
+    return getattr(unit, "_entered_range_targets", None) is not None and target_id in unit._entered_range_targets
+
+
+def _mark_entered_range(unit: UnitState, target_id: str) -> None:
+    if not hasattr(unit, "_entered_range_targets") or unit._entered_range_targets is None:
+        unit._entered_range_targets = set()
+    unit._entered_range_targets.add(target_id)
+
+
+def _should_emit_target_acquired(unit: UnitState, target: UnitState) -> bool:
+    acquired = getattr(unit, "_acquired_target_id", None)
+    return acquired != target.instance_id
 
 
 def _emit_enter_range_events(
@@ -212,7 +527,7 @@ def _emit_enter_range_events(
     events.append(
         BattleEvent(
             tick=tick,
-            event_id=_next_event_id(state),
+            event_id=next_event_id(state),
             type="enter_range",
             payload=payload,
         )
@@ -220,31 +535,12 @@ def _emit_enter_range_events(
     events.append(
         BattleEvent(
             tick=tick,
-            event_id=_next_event_id(state),
+            event_id=next_event_id(state),
             type="engage_start",
             payload={**payload, "reason": "attack_range_reached"},
         )
     )
 
 
-def _unit_by_id(units: List[UnitState], unit_id: Optional[str]) -> Optional[UnitState]:
-    if not unit_id:
-        return None
-    for unit in units:
-        if unit.instance_id == unit_id:
-            return unit
-    return None
-
-
-def _angle_to(unit: UnitState, target: UnitState) -> float:
-    return math.degrees(math.atan2(target.position_y - unit.position_y, target.position_x - unit.position_x))
-
-
-def _format_event_id(sequence_number: int) -> str:
-    return f"evt_{sequence_number:06d}"
-
-
-def _next_event_id(state: BattleState) -> str:
-    event_id = _format_event_id(state._next_event_number)
-    state._next_event_number += 1
-    return event_id
+def _stable_xor_float(a: str, b: str, fallback: float) -> float:
+    return fallback if a < b else -fallback

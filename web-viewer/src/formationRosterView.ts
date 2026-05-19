@@ -56,7 +56,19 @@ export const renderFormationRoster = (
       state.className = "roster-combat-state";
       state.textContent = unit.combatState || unit.movementIntent || "idle";
 
-      row.append(tag, id, shape, hp, state);
+      const engagementRole = document.createElement("span");
+      engagementRole.className = "roster-engagement-role";
+      engagementRole.textContent = unit.engagementRole || "-";
+
+      const engagementTarget = document.createElement("span");
+      engagementTarget.className = "roster-engagement-target";
+      engagementTarget.textContent = unit.engagementTarget || "-";
+
+      const desiredDistance = document.createElement("span");
+      desiredDistance.className = "roster-desired-distance";
+      desiredDistance.textContent = unit.desiredDistance ? `dist:${Math.round(unit.desiredDistance)}` : "-";
+
+      row.append(tag, id, shape, hp, state, engagementRole, engagementTarget, desiredDistance);
       list.append(row);
     }
 

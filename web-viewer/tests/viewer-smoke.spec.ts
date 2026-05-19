@@ -45,7 +45,7 @@ test("loads curated scenario from manifest", async ({ page }) => {
 
   await expect(page.locator("#battle-summary")).toContainText("ally");
   await expect(page.locator("#battle-summary")).toContainText("enemy_eliminated");
-  await expect(page.locator("#battle-summary")).toContainText("341");
+  await expect(page.locator("#battle-summary")).toContainText("458");
 
   await expect(page.getByRole("img", { name: "Battlefield（战场）" })).toBeVisible();
   await expect(page.locator(".unit-token")).toHaveCount(12);
@@ -115,7 +115,7 @@ test("manual file input loading remains available", async ({ page }) => {
   await expect(page.locator("#battle-summary")).toContainText("ally");
   await expect(page.locator("#battle-summary")).toContainText("enemy_eliminated");
   await expect(page.locator("#battle-summary")).toContainText(/end tick|end_tick/i);
-  await expect(page.locator("#battle-summary")).toContainText("341");
+  await expect(page.locator("#battle-summary")).toContainText("458");
 
   await expect(page.getByRole("img", { name: "Battlefield（战场）" })).toBeVisible();
   await expect(page.locator(".unit-token")).toHaveCount(12);
@@ -227,7 +227,7 @@ test("manual file input loading remains available", async ({ page }) => {
   await expect(page.locator("#report")).toContainText(/DEF Bonus（防御加成）|DEF Bonus/);
 
   await page.locator(".key-moment").filter({ hasText: "enemy_eliminated" }).click();
-  await expect(page.locator("#tick-readout")).toContainText(/Tick（回合） 341 \/ \d+|Tick 341/);
+  await expect(page.locator("#tick-readout")).toContainText(/Tick（回合） 458 \/ \d+|Tick 458/);
 
   await expect(page.locator("#report")).toContainText("enemy_eliminated");
   await expect(page.locator("#report")).toContainText("Total Damage");

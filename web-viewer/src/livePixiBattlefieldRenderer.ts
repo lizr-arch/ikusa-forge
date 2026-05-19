@@ -13,6 +13,7 @@ const UNIT_HEIGHT = 34;
 
 interface LivePixiOptions {
   onSelectUnit: (unitId: string) => void;
+  debugOverlay: boolean;
 }
 
 interface UnitSprite {
@@ -43,6 +44,7 @@ interface LivePixiBattlefieldRenderer {
   update: (nowMs?: number) => void;
   resize: () => void;
   destroy: () => void;
+  setDebugOverlay: (enabled: boolean) => void;
 }
 
 export const createLivePixiBattlefieldRenderer = (
@@ -56,7 +58,9 @@ export const createLivePixiBattlefieldRenderer = (
   const unitLayer = new Container();
   const effectLayer = new Container();
   const effectLabelLayer = new Container();
-  root.addChild(unitLayer, effectLayer, effectLabelLayer);
+  const debugLayer = new Container();
+  debugLayer.visible = options.debugOverlay;
+  root.addChild(unitLayer, effectLayer, effectLabelLayer, debugLayer);
   app.stage.addChild(root);
 
   const units = new Map<string, UnitSprite>();
@@ -101,6 +105,34 @@ export const createLivePixiBattlefieldRenderer = (
       if (!nextUnits.has(unitId)) {
         unitLayer.removeChild(sprite.container);
         units.delete(unitId);
+      }
+    }
+    if (options.debugOverlay) {
+      debugLayer.removeChildren();
+      for (const unit of state.units.values()) {
+        const anchorDot = new Graphics();
+        anchorDot.beginFill(unit.side === "ally" ? 0x2f80ed : 0xd94a4a, 0.4);
+        anchorDot.drawCircle(unit.formationAnchorX, unit.formationAnchorY, 4);
+        anchorDot.endFill();
+        debugLayer.addChild(anchorDot);
+
+        if (unit.engagementTarget) {
+          const target = state.units.get(unit.engagementTarget);
+          if (target) {
+            const line = new Graphics();
+            line.lineStyle(1, 0xf6e27a, 0.35);
+            line.moveTo(unit.positionX, unit.positionY);
+            line.lineTo(target.positionX, target.positionY);
+            debugLayer.addChild(line);
+          }
+        }
+
+        if (unit.engagementRole === "ranged" && unit.desiredDistance > 0) {
+          const circle = new Graphics();
+          circle.lineStyle(1, 0x6d93d2, 0.25);
+          circle.drawCircle(unit.positionX, unit.positionY, unit.desiredDistance);
+          debugLayer.addChild(circle);
+        }
       }
     }
   };
@@ -507,6 +539,13 @@ export const createLivePixiBattlefieldRenderer = (
     update,
     resize,
     destroy,
+    setDebugOverlay: (enabled: boolean) => {
+      options.debugOverlay = enabled;
+      debugLayer.visible = enabled;
+      if (latestState) {
+        setVisualState(latestState);
+      }
+    },
   };
 };
 

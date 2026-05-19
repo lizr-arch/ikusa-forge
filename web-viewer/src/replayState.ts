@@ -38,6 +38,13 @@ export interface VisualUnit {
   lastStatus: StatusAnnotation | null;
   lastCooldown: CooldownAnnotation | null;
   lastActionSchedule: ActionScheduleAnnotation | null;
+  formationAnchorX: number;
+  formationAnchorY: number;
+  formationGroupId: string;
+  engagementTarget: string | null;
+  engagementRole: string;
+  desiredDistance: number;
+  separationRadius: number;
 }
 
 export interface AttackAnnotation {
@@ -340,6 +347,18 @@ export const applyEvent = (
       };
       state.victory = state.battleResult;
       return;
+    case "formation_anchor_update":
+      applyFormationAnchorUpdate(state, event);
+      return;
+    case "engagement_lock":
+      applyEngagementLock(state, event);
+      return;
+    case "engagement_release":
+      applyEngagementRelease(state, event);
+      return;
+    case "ranged_hold":
+      applyRangedHold(state, event);
+      return;
     case "battle_start":
       return;
     default:
@@ -371,6 +390,8 @@ const applyUnitSpawn = (state: VisualState, event: ReplayEvent): void => {
 
   const hp = readNumber(snapshot.hp, readNumber(snapshot.base_hp, 0));
   const maxHp = readNumber(snapshot.base_hp, hp);
+  const unitAnchorX = readNumber(snapshot.position_x, spatialXFromGrid(readNumber(snapshot.x, 0)));
+  const unitAnchorY = readNumber(snapshot.position_y, spatialYFromGrid(readNumber(snapshot.y, 0), readString(snapshot.side)));
   state.units.set(instanceId, {
     instanceId,
     side: readString(snapshot.side),
@@ -403,6 +424,13 @@ const applyUnitSpawn = (state: VisualState, event: ReplayEvent): void => {
     statBonuses: new Map<string, number>(),
     statuses: readStatusSnapshots(snapshot.statuses),
     skillCooldowns: readNumberMap(snapshot.skill_cooldowns),
+    formationAnchorX: readNumber(snapshot.formation_anchor_x, unitAnchorX),
+    formationAnchorY: readNumber(snapshot.formation_anchor_y, unitAnchorY),
+    formationGroupId: readString(snapshot.formation_group_id, readString(snapshot.side)),
+    engagementTarget: readNullableString(snapshot.engagement_target),
+    engagementRole: readString(snapshot.engagement_role, "frontline"),
+    desiredDistance: readNumber(snapshot.desired_distance, readNumber(snapshot.attack_range, 18) * 0.85),
+    separationRadius: readNumber(snapshot.separation_radius, readNumber(snapshot.radius, 8) * 1.8),
     nextActionTick: readNullableNumber(snapshot.next_action_tick),
     actionIntervalTicks: readNullableNumber(snapshot.action_interval_ticks),
     lastStatus: null,
@@ -533,6 +561,8 @@ const applySkillCooldown = (state: VisualState, event: ReplayEvent): void => {
 
 const buildLiveUnit = (snapshotUnit: LiveUnitSnapshot): VisualUnit => {
   const snapshot = snapshotUnit as Partial<LiveUnitSnapshot> & Record<string, unknown>;
+  const unitAnchorX = readNumber(snapshot.position_x, spatialXFromGrid(readNumber(snapshot.x, 0)));
+  const unitAnchorY = readNumber(snapshot.position_y, spatialYFromGrid(readNumber(snapshot.y, 0), readString(snapshot.side)));
   return {
     instanceId: readString(snapshot.instance_id),
     side: readString(snapshot.side),
@@ -565,6 +595,13 @@ const buildLiveUnit = (snapshotUnit: LiveUnitSnapshot): VisualUnit => {
     statBonuses: new Map<string, number>(),
     statuses: readStatusSnapshots(snapshot.statuses),
     skillCooldowns: readNumberMap((snapshot as Record<string, unknown>).skill_cooldowns),
+    formationAnchorX: readNumber(snapshot.formation_anchor_x, unitAnchorX),
+    formationAnchorY: readNumber(snapshot.formation_anchor_y, unitAnchorY),
+    formationGroupId: readString(snapshot.formation_group_id, readString(snapshot.side)),
+    engagementTarget: readNullableString(snapshot.engagement_target),
+    engagementRole: readString(snapshot.engagement_role, "frontline"),
+    desiredDistance: readNumber(snapshot.desired_distance, readNumber(snapshot.attack_range, readNumber(snapshot.range, 18)) * 0.85),
+    separationRadius: readNumber(snapshot.separation_radius, readNumber(snapshot.radius, 8) * 1.8),
     nextActionTick: readNullableNumber(snapshot.next_action_tick),
     actionIntervalTicks: readNullableNumber(snapshot.action_interval_ticks),
     lastStatus: null,
@@ -777,3 +814,47 @@ const readStringArray = (value: unknown): string[] => {
 const spatialXFromGrid = (x: number): number => 80 + x * 56;
 
 const spatialYFromGrid = (y: number, side: string): number => (side === "enemy" ? 80 : 320) + y * 36;
+
+const applyFormationAnchorUpdate = (state: VisualState, event: ReplayEvent): void => {
+  const unitId = readString(event.payload.unit);
+  const unit = state.units.get(unitId);
+  if (unit) {
+    unit.formationAnchorX = readNumber(event.payload.anchor_x, unit.formationAnchorX);
+    unit.formationAnchorY = readNumber(event.payload.anchor_y, unit.formationAnchorY);
+    unit.formationGroupId = readString(event.payload.group_id, unit.formationGroupId);
+  }
+};
+
+const applyEngagementLock = (state: VisualState, event: ReplayEvent): void => {
+  const unitId = readString(event.payload.unit);
+  const targetId = readNullableString(event.payload.target);
+  const unit = state.units.get(unitId);
+  if (unit) {
+    unit.engagementTarget = targetId;
+    unit.engagementRole = readString(event.payload.role, unit.engagementRole);
+    unit.engagedTarget = targetId;
+    unit.movementIntent = "engaged_lock";
+  }
+};
+
+const applyEngagementRelease = (state: VisualState, event: ReplayEvent): void => {
+  const unitId = readString(event.payload.unit);
+  const unit = state.units.get(unitId);
+  if (unit) {
+    unit.engagementTarget = null;
+    unit.engagedTarget = null;
+    unit.movementIntent = "hold";
+  }
+};
+
+const applyRangedHold = (state: VisualState, event: ReplayEvent): void => {
+  const unitId = readString(event.payload.unit);
+  const targetId = readNullableString(event.payload.target);
+  const unit = state.units.get(unitId);
+  if (unit) {
+    unit.engagementTarget = targetId;
+    unit.engagedTarget = targetId;
+    unit.desiredDistance = readNumber(event.payload.desired_distance, unit.desiredDistance);
+    unit.movementIntent = "hold_range";
+  }
+};
