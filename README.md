@@ -49,6 +49,7 @@ Current Python simulator status:
 - Live Pixi Battlefield Renderer / PixiJS 实时战场渲染器（主战场使用 PixiJS，DOM 继续负责控制、阵容、战报与性能）
 - Realtime Spatial Combat Foundation / 实时空间战斗基础（Continuous Position / 连续坐标、Movement Intent / 移动意图、Target Acquisition / 寻敌、Attack Range / 攻击范围、Unit Movement Event / 单位移动事件）
 - Combat Architecture Formalization / 战斗架构正式化（Unit FSM / 单位状态机、Decision Models / 决策模型、Action Pipeline / 行动管线骨架、Combat State / 战斗状态）
+- Formation and Engagement System / 编队与接敌系统（Formation Anchor / 编队锚点、Group Advance / 编队推进、Engagement Pairing / 接敌配对、Melee Engagement Lock / 近战接敌锁定、Ranged Hold Distance / 远程保持距离、Separation / 单位分离）
 
 Phase 1 Demo Package / 第一阶段演示包 / Phase 2 Tactical Depth notes are available at:
 
@@ -64,6 +65,7 @@ Phase 1 Demo Package / 第一阶段演示包 / Phase 2 Tactical Depth notes are 
 - `docs/process/live-battle-visual-polish-v0.1.md`
 - `docs/architecture/combat-architecture-v0.1.md`
 - `docs/process/combat-architecture-formalization-v0.1.md`
+- `docs/process/formation-and-engagement-system-v0.1.md`
 
 Quick start for a full demo run / 一次完整演示最简命令:
 

@@ -14,7 +14,11 @@ export type KnownReplayEventType =
   | "unit_move"
   | "target_acquired"
   | "enter_range"
-  | "engage_start";
+  | "engage_start"
+  | "formation_anchor_update"
+  | "engagement_lock"
+  | "engagement_release"
+  | "ranged_hold";
 
 export type UnitSide = "ally" | "enemy" | string;
 
@@ -87,6 +91,13 @@ export interface UnitSnapshot {
   skill_cooldowns?: Record<string, number>;
   atk?: number;
   defense?: number;
+  formation_anchor_x?: number;
+  formation_anchor_y?: number;
+  formation_group_id?: string;
+  engagement_target?: string | null;
+  engagement_role?: string;
+  desired_distance?: number;
+  separation_radius?: number;
 }
 
 export interface LiveUnitSnapshot {
@@ -126,6 +137,13 @@ export interface LiveUnitSnapshot {
   combatState: string;
   guard_value?: number;
   tags?: string[];
+  formation_anchor_x?: number;
+  formation_anchor_y?: number;
+  formation_group_id?: string;
+  engagement_target?: string | null;
+  engagement_role?: string;
+  desired_distance?: number;
+  separation_radius?: number;
 }
 
 export interface LiveBattleSnapshot {
@@ -268,6 +286,10 @@ export interface UnitReport {
   target_acquired?: number;
   entered_range?: number;
   engagements_started?: number;
+  formation_anchor_updates?: number;
+  engagement_locks?: number;
+  engagement_releases?: number;
+  ranged_holds?: number;
 }
 
 export interface ReportSummary {
@@ -285,6 +307,10 @@ export interface ReportSummary {
   total_target_acquired?: number;
   total_enter_range?: number;
   total_engage_start?: number;
+  total_formation_anchor_updates?: number;
+  total_engagement_locks?: number;
+  total_engagement_releases?: number;
+  total_ranged_holds?: number;
   target_reason_counts?: Record<string, number>;
   skill_target_reason_counts?: Record<string, number>;
 }

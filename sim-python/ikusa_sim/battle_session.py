@@ -261,6 +261,13 @@ def _unit_snapshot(unit: UnitState) -> Dict[str, Any]:
         "guard_value": unit.guard_value,
         "skill_cooldowns": dict(unit.skill_cooldowns),
         "statuses": [asdict(status) for status in unit.statuses],
+        "formation_anchor_x": unit.formation_anchor_x,
+        "formation_anchor_y": unit.formation_anchor_y,
+        "formation_group_id": unit.formation_group_id,
+        "engagement_target": unit.engagement_target,
+        "engagement_role": unit.engagement_role,
+        "desired_distance": unit.desired_distance,
+        "separation_radius": unit.separation_radius,
     }
 
 

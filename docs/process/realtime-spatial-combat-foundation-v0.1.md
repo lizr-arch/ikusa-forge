@@ -122,7 +122,7 @@ Replay Mode / 回放模式 和 Scenario Mode / 场景模式 也可读取 `unit_m
 - cavalry charge / 骑兵冲锋
 - morale / 士气
 - complex physics / 复杂物理
-- formation-level group steering / 阵型级群体导航
+- formation-level group steering / 阵型级群体导航（→ 正在 Phase 2 Formation and Engagement System / 编队与接敌系统中处理）
 - C# host / C# 宿主
 - Godot
 - WebSocket

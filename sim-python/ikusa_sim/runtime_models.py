@@ -50,6 +50,13 @@ class UnitState:
     attack_range: float = 18.0
     engagement_range: float = 22.0
     engaged_target: Optional[str] = None
+    formation_anchor_x: float = 0.0
+    formation_anchor_y: float = 0.0
+    formation_group_id: str = ""
+    engagement_target: Optional[str] = None
+    engagement_role: str = "frontline"
+    desired_distance: float = 0.0
+    separation_radius: float = 14.4
     movement_intent: str = "hold"
     combat_state: str = "idle"
     statuses: List[StatusEffect] = field(default_factory=list)
@@ -62,6 +69,32 @@ class UnitState:
         self.atk = self.base_atk
         self.defense = self.base_defense
         self.range = self.base_range
+
+        if self.formation_group_id == "":
+            self.formation_group_id = self.side
+
+        role_lower = self.role.lower()
+        if any(kw in role_lower for kw in ("vanguard", "front", "shield", "spear", "katana")):
+            self.engagement_role = "frontline"
+        elif any(kw in role_lower for kw in ("bow", "archer")):
+            self.engagement_role = "ranged"
+        elif any(kw in role_lower for kw in ("banner", "support")):
+            self.engagement_role = "support"
+        elif "ninja" in role_lower:
+            self.engagement_role = "flanker"
+        # else keep the default "frontline"
+
+        if self.desired_distance == 0.0:
+            role_lower = self.role.lower()
+            if any(kw in role_lower for kw in ("banner", "support")):
+                self.desired_distance = max(40.0, self.attack_range)
+            elif any(kw in role_lower for kw in ("bow", "archer")):
+                self.desired_distance = self.attack_range * 0.65
+            else:
+                self.desired_distance = self.attack_range * 0.85
+
+        if self.separation_radius == 14.4:
+            self.separation_radius = self.radius * 1.8
 
 
 @dataclass(frozen=True)

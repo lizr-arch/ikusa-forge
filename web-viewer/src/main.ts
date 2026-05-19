@@ -866,6 +866,7 @@ const ensurePixiRenderer = (): void => {
     onSelectUnit: (unitId) => {
       selectUnit(unitId);
     },
+    debugOverlay: false,
   });
 };
 
