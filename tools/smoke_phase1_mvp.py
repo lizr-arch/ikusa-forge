@@ -154,7 +154,7 @@ def _check_replay(
     _expect(counts.get("formation_anchor_update", 0) > 0, "replay formation_anchor_update events", errors)
     _expect(counts.get("engagement_lock", 0) > 0, "replay engagement_lock events", errors)
     _expect(counts.get("engagement_release", 0) >= 0, "replay engagement_release events", errors)
-    _expect(counts.get("ranged_hold", 0) >= 0, "replay ranged_hold events", errors)
+    _expect(counts.get("ranged_hold", 0) > 0, "replay ranged_hold events", errors)
     _expect(len(attack_with_reason) > 0, "replay attack target_reason", errors)
     _expect(len(skill_trigger_with_reason) > 0, "replay skill_trigger target_reason", errors)
     if battle_end_events:
@@ -209,7 +209,7 @@ def _check_report(
     _expect(_positive(summary.get("total_formation_anchor_updates")), "report summary.total_formation_anchor_updates", errors)
     _expect(_positive(summary.get("total_engagement_locks")), "report summary.total_engagement_locks", errors)
     _expect(_non_negative(summary.get("total_engagement_releases")), "report summary.total_engagement_releases", errors)
-    _expect(_non_negative(summary.get("total_ranged_holds")), "report summary.total_ranged_holds", errors)
+    _expect(_positive(summary.get("total_ranged_holds")), "report summary.total_ranged_holds", errors)
     target_reasons = _as_dict(summary.get("target_reason_counts"))
     skill_target_reasons = _as_dict(summary.get("skill_target_reason_counts"))
     _expect(_non_empty_dict(target_reasons), "report target_reason_counts", errors)
@@ -244,6 +244,7 @@ def _check_report(
     _expect(any(_as_dict(unit).get("entered_range", 0) > 0 for unit in units.values()), "report unit enter range", errors)
     _expect(any(_as_dict(unit).get("engagements_started", 0) > 0 for unit in units.values()), "report unit engage start", errors)
     _expect(any(_as_dict(unit).get("engagement_locks", 0) > 0 for unit in units.values()), "report unit engagement locks", errors)
+    _expect(any(_as_dict(unit).get("ranged_holds", 0) > 0 for unit in units.values()), "report unit ranged holds", errors)
 
 
 def _filter_events_with_reason(events: Sequence[Dict[str, Any]], event_type: str) -> List[Dict[str, Any]]:

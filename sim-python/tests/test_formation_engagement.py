@@ -107,6 +107,9 @@ class FormationEngagementTests(unittest.TestCase):
             next_action_tick=1,
             action_interval_ticks=1,
             role="archer",
+            unit_def_id="ashigaru_bow",
+            tags=["ashigaru", "bow", "backline"],
+            weapon_slots=["bow"],
         )
         target = self.make_unit(
             instance_id="enemy_001",
@@ -166,6 +169,7 @@ class FormationEngagementTests(unittest.TestCase):
             next_action_tick=999,
             action_interval_ticks=999,
             role="banner",
+            tags=["banner"],
         )
         target = self.make_unit(
             instance_id="enemy_001",
@@ -250,6 +254,39 @@ class FormationEngagementTests(unittest.TestCase):
             self.assertIn("desired_distance", unit_snap)
             self.assertIn("separation_radius", unit_snap)
 
+    def test_demo_001_has_ranged_units(self) -> None:
+        """demo_001 has at least one unit with engagement_role == ranged."""
+        session = create_battle_session(self.bundle, "demo_001", 1001)
+        initialize_battle_session(session)
+
+        ranged_units = [u for u in session.state.units if u.engagement_role == "ranged"]
+        self.assertGreaterEqual(len(ranged_units), 1, "Expected at least one ranged unit in demo_001")
+        for ru in ranged_units:
+            self.assertGreater(ru.desired_distance, 10.0, f"Ranged unit {ru.instance_id} has tiny desired_distance: {ru.desired_distance}")
+
+    def test_ranged_desired_distance_greater_than_melee(self) -> None:
+        """Ranged unit desired_distance should be larger than melee desired_distance."""
+        session = create_battle_session(self.bundle, "demo_001", 1001)
+        initialize_battle_session(session)
+
+        ranged_dd = [u.desired_distance for u in session.state.units if u.engagement_role == "ranged"]
+        melee_dd = [u.desired_distance for u in session.state.units if u.engagement_role == "frontline"]
+
+        if ranged_dd and melee_dd:
+            self.assertGreater(max(ranged_dd), max(melee_dd),
+                f"Ranged desired_distance ({max(ranged_dd)}) should exceed melee ({max(melee_dd)})")
+
+    def test_ranged_hold_event_produced(self) -> None:
+        """Running demo_001 produces ranged_hold events."""
+        session = create_battle_session(self.bundle, "demo_001", 1001)
+        initialize_battle_session(session)
+
+        for _ in range(80):
+            step_battle_session(session, ticks=1)
+
+        event_types = {e.type for e in session.events}
+        self.assertIn("ranged_hold", event_types, "Expected ranged_hold events in demo_001 event stream")
+
     def make_duel_session(
         self,
         *,
@@ -326,23 +363,26 @@ class FormationEngagementTests(unittest.TestCase):
         next_action_tick: int = 0,
         action_interval_ticks: int = 0,
         role: str = "front",
+        unit_def_id: str = "",
+        tags: list = None,
+        weapon_slots: list = None,
     ) -> RuntimeUnitState:
         unit_def = self.sample_unit_def
         return RuntimeUnitState(
             instance_id=instance_id,
             side=side,
-            unit_def_id=unit_def.id,
+            unit_def_id=unit_def_id or unit_def.id,
             x=x,
             y=y,
             role=role,
             name=unit_def.name,
-            tags=list(unit_def.tags),
+            tags=tags if tags is not None else list(unit_def.tags),
             base_hp=5000,
             base_atk=20,
             base_defense=10,
             base_range=1,
             base_attack_interval=1.0,
-            weapon_slots=[],
+            weapon_slots=weapon_slots if weapon_slots is not None else [],
             skill_ids=[],
             hp=5000,
             alive=True,

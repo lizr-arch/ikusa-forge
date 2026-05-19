@@ -14,7 +14,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--port", type=int, default=8765)
     parser.add_argument("--battle", default="demo_001")
     parser.add_argument("--seed", type=int, default=1001)
-    parser.add_argument("--max-steps", type=int, default=100)
+    parser.add_argument("--max-steps", type=int, default=150)
     parser.add_argument("--step-ticks", type=int, default=5)
     return parser
 

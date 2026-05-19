@@ -168,7 +168,7 @@ class CombatArchitectureTests(unittest.TestCase):
         self.assertIsNotNone(state.result)
         self.assertEqual("ally", state.result.winner)
         self.assertEqual("enemy_eliminated", state.result.reason)
-        self.assertEqual(623, state.result.end_tick)
+        self.assertEqual(458, state.result.end_tick)
         self.assertTrue(any(unit.combat_state == "dead" for unit in state.units if not unit.alive))
 
         report = build_battle_report_from_events(
@@ -185,7 +185,7 @@ class CombatArchitectureTests(unittest.TestCase):
         )
         self.assertEqual("ally", report["winner"])
         self.assertEqual("enemy_eliminated", report["reason"])
-        self.assertEqual(623, report["end_tick"])
+        self.assertEqual(458, report["end_tick"])
 
     def make_duel_session(
         self,

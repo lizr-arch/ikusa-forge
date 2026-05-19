@@ -73,23 +73,37 @@ class UnitState:
         if self.formation_group_id == "":
             self.formation_group_id = self.side
 
+        _text_sources = [
+            name.lower() for name in [self.unit_def_id, self.name] if name
+        ] + [tag.lower() for tag in self.tags]
+
+        def _any_text_has(*keywords: str) -> bool:
+            return any(
+                any(kw in text for kw in keywords)
+                for text in _text_sources
+            )
+
         role_lower = self.role.lower()
-        if any(kw in role_lower for kw in ("vanguard", "front", "shield", "spear", "katana")):
-            self.engagement_role = "frontline"
-        elif any(kw in role_lower for kw in ("bow", "archer")):
-            self.engagement_role = "ranged"
-        elif any(kw in role_lower for kw in ("banner", "support")):
-            self.engagement_role = "support"
-        elif "ninja" in role_lower:
+
+        # Priority: ninja > ranged > support > frontline
+        if _any_text_has("ninja"):
             self.engagement_role = "flanker"
-        # else keep the default "frontline"
+        elif _any_text_has("bow", "archer", "yumi", "ranged") or any(
+            "bow" in (slot.lower() if slot else "") for slot in (self.weapon_slots or [])
+        ):
+            self.engagement_role = "ranged"
+        elif _any_text_has("banner", "flag", "support"):
+            self.engagement_role = "support"
+        elif any(kw in role_lower for kw in ("shield", "spear", "katana", "samurai", "vanguard", "front")):
+            self.engagement_role = "frontline"
+        # else keep default "frontline"
 
         if self.desired_distance == 0.0:
-            role_lower = self.role.lower()
-            if any(kw in role_lower for kw in ("banner", "support")):
-                self.desired_distance = max(40.0, self.attack_range)
-            elif any(kw in role_lower for kw in ("bow", "archer")):
+            eng_role = self.engagement_role
+            if eng_role == "ranged":
                 self.desired_distance = self.attack_range * 0.65
+            elif eng_role == "support":
+                self.desired_distance = max(40.0, self.attack_range)
             else:
                 self.desired_distance = self.attack_range * 0.85
 
