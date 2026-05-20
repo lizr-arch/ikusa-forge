@@ -2,7 +2,7 @@
 
 from dataclasses import dataclass, field
 from itertools import count
-from typing import Callable, List, Optional
+from typing import Callable, Dict, List, Optional
 
 from ikusa_sim.events import BattleEvent
 
@@ -18,6 +18,8 @@ class CombatAction:
     target_id: Optional[str]
     tick: int
     reason: str
+    skill_id: Optional[str] = None
+    metadata: Dict[str, object] = field(default_factory=dict)
 
 
 @dataclass(frozen=True)
@@ -25,6 +27,7 @@ class ActionResult:
     ok: bool
     events: List[BattleEvent] = field(default_factory=list)
     reason: str = ""
+    effects: List[object] = field(default_factory=list)
 
 
 def build_basic_attack_action(
@@ -40,6 +43,8 @@ def build_basic_attack_action(
         target_id=target_id,
         tick=tick,
         reason=reason,
+        skill_id=None,
+        metadata={},
     )
 
 
@@ -58,6 +63,8 @@ def build_skill_action(
         target_id=target_id,
         tick=tick,
         reason=action_reason,
+        skill_id=skill_id,
+        metadata={},
     )
 
 

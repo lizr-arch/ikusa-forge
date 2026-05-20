@@ -1,0 +1,50 @@
+# Checklist
+
+- [ ] CombatAction has `skill_id` and `metadata` fields
+- [ ] ActionResult has `effects` field
+- [ ] `effect_models.py` exists with all 5 Effect dataclasses
+- [ ] All Effect dataclasses are JSON-serializable via `dataclasses.asdict`
+- [ ] `action_pipeline.py` exists with `run_combat_action`
+- [ ] `validate_combat_action` checks unit alive, target alive, range, cooldown, battle finished
+- [ ] `resolve_combat_action` produces correct effects for basic_attack and skill
+- [ ] `apply_effects` modifies UnitState (hp, statuses, cooldowns, alive, next_action_tick)
+- [ ] `emit_events_from_effects` emits all expected event types with correct payloads
+- [ ] `battle_session._apply_basic_attack` delegates to `run_combat_action`
+- [ ] `skills.py` skill resolve delegates to `run_combat_action`
+- [ ] `attack` event payload preserves `attacker`, `target`, `target_reason`, `target_score`
+- [ ] `damage` event payload preserves `source`, `target`, `amount`, `target_hp_after`, `reason`
+- [ ] `death` event payload preserves `unit`
+- [ ] `skill_trigger` event payload preserves `source`, `skill`, `trigger`, `targets`, `target_reason`, `target_score`
+- [ ] `skill_cooldown` event payload preserves `source`, `skill`, `start_tick`, `ready_tick`, `cooldown_ticks`
+- [ ] `status_apply` event payload preserves all StatusEffect fields
+- [ ] `action_scheduled` event payload preserves `unit`, `current_tick`, `next_action_tick`, `action_interval_ticks`, `reason`
+- [ ] `test_action_pipeline.py` exists with all 7 test scenarios
+- [ ] `test_basic_combat.py` all pass
+- [ ] `test_skill_combat.py` all pass
+- [ ] `test_combat_architecture.py` all pass
+- [ ] `demo_001` winner = "ally", reason = "enemy_eliminated", end_tick = 458
+- [ ] `python -m unittest discover -s sim-python/tests` all pass
+- [ ] `smoke_phase1_mvp.py` passes
+- [ ] `smoke_demo_scenarios.py` passes
+- [ ] `run_live_api_smoke.py` passes
+- [ ] `npm run typecheck` passes
+- [ ] `npm run build` passes
+- [ ] `npm run test:e2e` passes
+- [ ] `git diff --exit-code -- web-viewer/public/samples` clean
+- [ ] `docs/process/action-pipeline-migration-v0.1.md` exists with all required sections
+- [ ] `README.md` updated with Phase 2 entry
+- [ ] `docs/architecture/combat-architecture-v0.1.md` updated
+- [ ] `docs/process/combat-architecture-formalization-v0.1.md` updated
+- [ ] `docs/process/phase-1-summary.md` updated
+- [ ] Branch `phase2/action-pipeline-migration` pushed
+- [ ] PR created (not draft, base: main)
+- [ ] PR body contains Summary, Verification, Runtime behavior, Boundary
+- [ ] No new skills added
+- [ ] No config schema changed
+- [ ] No Live API response shape changed
+- [ ] No PixiJS renderer removed
+- [ ] No Phaser introduced
+- [ ] No Godot/C# code added
+- [ ] No terrain/pathfinding code added
+- [ ] No combat rules moved to TypeScript
+- [ ] No AI strategy major changes

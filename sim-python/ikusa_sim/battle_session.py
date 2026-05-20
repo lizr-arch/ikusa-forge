@@ -8,7 +8,6 @@ new events.
 from dataclasses import asdict, dataclass, field
 from typing import Any, Dict, List, Optional
 
-from ikusa_sim.actions import build_basic_attack_action, resolve_combat_action
 from ikusa_sim.battle_skeleton import (
     battle_result_to_dict,
     create_battle_state,
@@ -279,65 +278,27 @@ def _apply_basic_attack(
     target: UnitState,
     decision: Optional[TargetDecision] = None,
 ) -> UnitState:
-    payload = {
-        "attacker": attacker.instance_id,
-        "target": target.instance_id,
-        "target_reason": "current_target",
-    }
+    from ikusa_sim.action_pipeline import build_basic_attack_action, run_combat_action
+
+    target_reason = "spatial_engaged_target"
     if decision is not None:
-        payload["target_reason"] = decision.reason
-        if decision.score is not None:
-            payload["target_score"] = {
-                "final": decision.score.final_score,
-                "exposure": decision.score.exposure_score,
-                "column": decision.score.column_score,
-                "low_hp": decision.score.low_hp_score,
-                "threat": decision.score.threat_score,
-                "role": decision.score.role_score,
-                "tie_break": decision.score.tie_break,
-            }
+        target_reason = decision.reason
 
-    action_reason = payload["target_reason"]
-    action = build_basic_attack_action(attacker.instance_id, target.instance_id, tick, action_reason)
-    action_result = resolve_combat_action(action)
-    if not action_result.ok:
-        return target
+    action = build_basic_attack_action(state, attacker, target, tick)
 
-    events.append(
-        BattleEvent(
-            tick=tick,
-            event_id=_next_event_id(state),
-            type="attack",
-            payload=payload,
-        )
-    )
+    action.metadata["target_reason"] = target_reason
+    if decision is not None and decision.score is not None:
+        action.metadata["target_score"] = {
+            "final": decision.score.final_score,
+            "exposure": decision.score.exposure_score,
+            "column": decision.score.column_score,
+            "low_hp": decision.score.low_hp_score,
+            "threat": decision.score.threat_score,
+            "role": decision.score.role_score,
+            "tie_break": decision.score.tie_break,
+        }
 
-    amount = calculate_basic_damage(attacker, target)
-    reason = "basic_attack"
-    died = apply_damage(target, amount, reason=reason, source=attacker.instance_id)
-    events.append(
-        BattleEvent(
-            tick=tick,
-            event_id=_next_event_id(state),
-            type="damage",
-            payload={
-                "source": attacker.instance_id,
-                "target": target.instance_id,
-                "amount": amount,
-                "target_hp_after": target.hp,
-                "reason": reason,
-            },
-        )
-    )
-    if died:
-        events.append(
-            BattleEvent(
-                tick=tick,
-                event_id=_next_event_id(state),
-                type="death",
-                payload={"unit": target.instance_id},
-            )
-        )
+    run_combat_action(state, action, tick, events)
     return target
 
 

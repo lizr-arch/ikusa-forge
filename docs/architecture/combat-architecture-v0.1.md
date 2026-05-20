@@ -119,3 +119,4 @@ FSM / 状态机 适合表达单位状态，但它并不擅长单独承担：
 Phase 2 迁移路线：
 
 - `phase2/formation-and-engagement-system` — Formation and Engagement System / 编队与接敌系统 ✅ 已完成
+- `phase2/action-pipeline-migration` — Action Pipeline Migration / 行动管线迁移 ✅ 已完成（把攻击/技能/效果结算从散落逻辑迁入统一管线，新增 Effect Models / 效果模型、Action Pipeline / 行动管线、Validate → Resolve → ApplyEffects → EmitEvents 五阶段设计）
