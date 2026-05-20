@@ -14,9 +14,7 @@ from ikusa_sim.battle_skeleton import (
     spawn_units_from_encounter,
 )
 from ikusa_sim.combat_rules import (
-    apply_damage,
     attack_interval_to_ticks,
-    calculate_basic_damage,
 )
 from ikusa_sim.events import BattleEvent, event_to_dict
 from ikusa_sim.formation_bonus import apply_formation_bonuses
@@ -37,6 +35,7 @@ from ikusa_sim.spatial_combat import (
     select_engaged_target_decision,
     update_spatial_engagements,
 )
+from ikusa_sim.status_system import apply_status_expire_effect, build_status_expire_effects
 from ikusa_sim.unit_fsm import get_unit_combat_state
 
 
@@ -182,6 +181,7 @@ def _run_tick(
     events: List[BattleEvent],
     tick: int,
 ) -> Optional[BattleResult]:
+    _apply_expired_statuses(state, events, tick)
     update_spatial_engagements(state, events, tick)
     while True:
         attacker = _next_actionable_unit(state, tick)
@@ -200,7 +200,8 @@ def _run_tick(
             config,
             tick,
             events,
-            decision,
+            schedule_next_action=True,
+            target_decision=decision,
         )
         damaged_targets = skill_result.damaged_targets
         if not skill_result.used:
@@ -216,10 +217,6 @@ def _run_tick(
             ]
 
         _trigger_reactions(state, config, events, tick, attacker, damaged_targets)
-
-        if attacker.alive:
-            attacker.next_action_tick = tick + attacker.action_interval_ticks
-            _emit_action_scheduled(state, events, tick, attacker)
         result = _build_victory_result(state, tick)
         if result:
             return result
@@ -298,7 +295,7 @@ def _apply_basic_attack(
             "tie_break": decision.score.tie_break,
         }
 
-    run_combat_action(state, action, tick, events)
+    run_combat_action(state, action, tick, events, schedule_next_action=True)
     return target
 
 
@@ -386,26 +383,27 @@ def _finish_battle(
     )
 
 
-def _emit_action_scheduled(
+def _apply_expired_statuses(
     state: BattleState,
     events: List[BattleEvent],
     tick: int,
-    unit: UnitState,
 ) -> None:
-    events.append(
-        BattleEvent(
-            tick=tick,
-            event_id=_next_event_id(state),
-            type="action_scheduled",
-            payload={
-                "unit": unit.instance_id,
-                "current_tick": tick,
-                "next_action_tick": unit.next_action_tick,
-                "action_interval_ticks": unit.action_interval_ticks,
-                "reason": "after_action",
-            },
+    for effect in build_status_expire_effects(state, tick):
+        apply_status_expire_effect(state, effect)
+        events.append(
+            BattleEvent(
+                tick=tick,
+                event_id=_next_event_id(state),
+                type="status_expire",
+                payload={
+                    "status_id": effect.status_id,
+                    "target": effect.target,
+                    "stat": effect.stat,
+                    "amount": effect.amount,
+                    "reason": effect.reason,
+                },
+            )
         )
-    )
 
 
 def _battle_end_payload(state: BattleState, result: BattleResult) -> dict:

@@ -5154,6 +5154,18 @@
         {
           "event_id": "evt_000290",
           "payload": {
+            "action_interval_ticks": 36,
+            "current_tick": 68,
+            "next_action_tick": 104,
+            "reason": "after_action",
+            "unit": "enemy_006"
+          },
+          "tick": 68,
+          "type": "action_scheduled"
+        },
+        {
+          "event_id": "evt_000291",
+          "payload": {
             "skill": "brace_counter",
             "source": "ally_002",
             "target_reason": "current_target",
@@ -5166,7 +5178,7 @@
           "type": "skill_trigger"
         },
         {
-          "event_id": "evt_000291",
+          "event_id": "evt_000292",
           "payload": {
             "amount": 31,
             "reason": "skill:brace_counter",
@@ -5178,7 +5190,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_000292",
+          "event_id": "evt_000293",
           "payload": {
             "cooldown_ticks": 60,
             "ready_tick": 128,
@@ -5190,7 +5202,7 @@
           "type": "skill_cooldown"
         },
         {
-          "event_id": "evt_000293",
+          "event_id": "evt_000294",
           "payload": {
             "skill": "intercept",
             "source": "ally_001",
@@ -5204,7 +5216,7 @@
           "type": "skill_trigger"
         },
         {
-          "event_id": "evt_000294",
+          "event_id": "evt_000295",
           "payload": {
             "amount": 18,
             "reason": "skill:intercept",
@@ -5216,7 +5228,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_000295",
+          "event_id": "evt_000296",
           "payload": {
             "cooldown_ticks": 80,
             "ready_tick": 148,
@@ -5226,18 +5238,6 @@
           },
           "tick": 68,
           "type": "skill_cooldown"
-        },
-        {
-          "event_id": "evt_000296",
-          "payload": {
-            "action_interval_ticks": 36,
-            "current_tick": 68,
-            "next_action_tick": 104,
-            "reason": "after_action",
-            "unit": "enemy_006"
-          },
-          "tick": 68,
-          "type": "action_scheduled"
         }
       ],
       "tick": 68
@@ -5932,6 +5932,18 @@
         {
           "event_id": "evt_000340",
           "payload": {
+            "action_interval_ticks": 24,
+            "current_tick": 79,
+            "next_action_tick": 103,
+            "reason": "after_action",
+            "unit": "ally_002"
+          },
+          "tick": 79,
+          "type": "action_scheduled"
+        },
+        {
+          "event_id": "evt_000341",
+          "payload": {
             "skill": "intercept",
             "source": "enemy_001",
             "target_reason": "current_target",
@@ -5944,7 +5956,7 @@
           "type": "skill_trigger"
         },
         {
-          "event_id": "evt_000341",
+          "event_id": "evt_000342",
           "payload": {
             "amount": 14,
             "reason": "skill:intercept",
@@ -5956,7 +5968,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_000342",
+          "event_id": "evt_000343",
           "payload": {
             "cooldown_ticks": 80,
             "ready_tick": 159,
@@ -5966,18 +5978,6 @@
           },
           "tick": 79,
           "type": "skill_cooldown"
-        },
-        {
-          "event_id": "evt_000343",
-          "payload": {
-            "action_interval_ticks": 24,
-            "current_tick": 79,
-            "next_action_tick": 103,
-            "reason": "after_action",
-            "unit": "ally_002"
-          },
-          "tick": 79,
-          "type": "action_scheduled"
         }
       ],
       "tick": 79
@@ -14506,6 +14506,18 @@
         {
           "event_id": "evt_000885",
           "payload": {
+            "action_interval_ticks": 18,
+            "current_tick": 163,
+            "next_action_tick": 181,
+            "reason": "after_action",
+            "unit": "enemy_004"
+          },
+          "tick": 163,
+          "type": "action_scheduled"
+        },
+        {
+          "event_id": "evt_000886",
+          "payload": {
             "skill": "intercept",
             "source": "ally_001",
             "target_reason": "current_target",
@@ -14518,7 +14530,7 @@
           "type": "skill_trigger"
         },
         {
-          "event_id": "evt_000886",
+          "event_id": "evt_000887",
           "payload": {
             "amount": 19,
             "reason": "skill:intercept",
@@ -14530,7 +14542,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_000887",
+          "event_id": "evt_000888",
           "payload": {
             "unit": "enemy_004"
           },
@@ -14538,7 +14550,7 @@
           "type": "death"
         },
         {
-          "event_id": "evt_000888",
+          "event_id": "evt_000889",
           "payload": {
             "cooldown_ticks": 80,
             "ready_tick": 243,
@@ -14555,7 +14567,7 @@
     {
       "events": [
         {
-          "event_id": "evt_000889",
+          "event_id": "evt_000890",
           "payload": {
             "reason": "target_dead",
             "target": "enemy_004",
@@ -14565,7 +14577,7 @@
           "type": "engagement_release"
         },
         {
-          "event_id": "evt_000890",
+          "event_id": "evt_000891",
           "payload": {
             "distance": 12.887,
             "reason": "melee_entered_range",
@@ -14577,7 +14589,7 @@
           "type": "engagement_lock"
         },
         {
-          "event_id": "evt_000891",
+          "event_id": "evt_000892",
           "payload": {
             "reason": "target_dead",
             "target": "enemy_004",
@@ -14587,7 +14599,7 @@
           "type": "engagement_release"
         },
         {
-          "event_id": "evt_000892",
+          "event_id": "evt_000893",
           "payload": {
             "desired_distance": 71.5,
             "distance": 18.022,
@@ -14599,7 +14611,7 @@
           "type": "ranged_hold"
         },
         {
-          "event_id": "evt_000893",
+          "event_id": "evt_000894",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 100.559,
@@ -14617,7 +14629,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_000894",
+          "event_id": "evt_000895",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 89.271,
@@ -14635,7 +14647,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_000895",
+          "event_id": "evt_000896",
           "payload": {
             "attack_range": 18.0,
             "distance": 12.887,
@@ -14647,7 +14659,7 @@
           "type": "enter_range"
         },
         {
-          "event_id": "evt_000896",
+          "event_id": "evt_000897",
           "payload": {
             "attack_range": 18.0,
             "distance": 12.887,
@@ -14660,7 +14672,7 @@
           "type": "engage_start"
         },
         {
-          "event_id": "evt_000897",
+          "event_id": "evt_000898",
           "payload": {
             "skill": "smoke_strike",
             "source": "ally_004",
@@ -14683,7 +14695,7 @@
           "type": "skill_trigger"
         },
         {
-          "event_id": "evt_000898",
+          "event_id": "evt_000899",
           "payload": {
             "amount": 43,
             "reason": "skill:smoke_strike",
@@ -14695,7 +14707,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_000899",
+          "event_id": "evt_000900",
           "payload": {
             "cooldown_ticks": 60,
             "ready_tick": 224,
@@ -14707,7 +14719,19 @@
           "type": "skill_cooldown"
         },
         {
-          "event_id": "evt_000900",
+          "event_id": "evt_000901",
+          "payload": {
+            "action_interval_ticks": 18,
+            "current_tick": 164,
+            "next_action_tick": 182,
+            "reason": "after_action",
+            "unit": "ally_004"
+          },
+          "tick": 164,
+          "type": "action_scheduled"
+        },
+        {
+          "event_id": "evt_000902",
           "payload": {
             "skill": "brace_counter",
             "source": "enemy_002",
@@ -14721,7 +14745,7 @@
           "type": "skill_trigger"
         },
         {
-          "event_id": "evt_000901",
+          "event_id": "evt_000903",
           "payload": {
             "amount": 30,
             "reason": "skill:brace_counter",
@@ -14733,7 +14757,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_000902",
+          "event_id": "evt_000904",
           "payload": {
             "cooldown_ticks": 60,
             "ready_tick": 224,
@@ -14745,7 +14769,7 @@
           "type": "skill_cooldown"
         },
         {
-          "event_id": "evt_000903",
+          "event_id": "evt_000905",
           "payload": {
             "skill": "intercept",
             "source": "enemy_001",
@@ -14759,7 +14783,7 @@
           "type": "skill_trigger"
         },
         {
-          "event_id": "evt_000904",
+          "event_id": "evt_000906",
           "payload": {
             "amount": 17,
             "reason": "skill:intercept",
@@ -14771,7 +14795,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_000905",
+          "event_id": "evt_000907",
           "payload": {
             "unit": "ally_004"
           },
@@ -14779,7 +14803,7 @@
           "type": "death"
         },
         {
-          "event_id": "evt_000906",
+          "event_id": "evt_000908",
           "payload": {
             "cooldown_ticks": 80,
             "ready_tick": 244,
@@ -14796,7 +14820,7 @@
     {
       "events": [
         {
-          "event_id": "evt_000907",
+          "event_id": "evt_000909",
           "payload": {
             "reason": "target_dead",
             "target": "ally_004",
@@ -14806,7 +14830,7 @@
           "type": "engagement_release"
         },
         {
-          "event_id": "evt_000908",
+          "event_id": "evt_000910",
           "payload": {
             "desired_distance": 71.5,
             "distance": 18.021,
@@ -14818,7 +14842,7 @@
           "type": "ranged_hold"
         },
         {
-          "event_id": "evt_000909",
+          "event_id": "evt_000911",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 100.599,
@@ -14836,7 +14860,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_000910",
+          "event_id": "evt_000912",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 89.215,
@@ -14854,7 +14878,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_000911",
+          "event_id": "evt_000913",
           "payload": {
             "distance_to_target": 51.166,
             "from_x": 234.761,
@@ -14872,7 +14896,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_000912",
+          "event_id": "evt_000914",
           "payload": {
             "distance": 49.438,
             "reason": "nearest_enemy",
@@ -14883,7 +14907,7 @@
           "type": "target_acquired"
         },
         {
-          "event_id": "evt_000913",
+          "event_id": "evt_000915",
           "payload": {
             "distance_to_target": 48.238,
             "from_x": 230.663,
@@ -14901,7 +14925,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_000914",
+          "event_id": "evt_000916",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 108.354,
@@ -14924,7 +14948,7 @@
     {
       "events": [
         {
-          "event_id": "evt_000915",
+          "event_id": "evt_000917",
           "payload": {
             "desired_distance": 71.5,
             "distance": 18.02,
@@ -14936,7 +14960,7 @@
           "type": "ranged_hold"
         },
         {
-          "event_id": "evt_000916",
+          "event_id": "evt_000918",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 100.637,
@@ -14954,7 +14978,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_000917",
+          "event_id": "evt_000919",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 89.162,
@@ -14977,7 +15001,7 @@
     {
       "events": [
         {
-          "event_id": "evt_000918",
+          "event_id": "evt_000920",
           "payload": {
             "desired_distance": 71.5,
             "distance": 18.02,
@@ -14989,7 +15013,7 @@
           "type": "ranged_hold"
         },
         {
-          "event_id": "evt_000919",
+          "event_id": "evt_000921",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 100.673,
@@ -15007,7 +15031,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_000920",
+          "event_id": "evt_000922",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 89.112,
@@ -15025,7 +15049,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_000921",
+          "event_id": "evt_000923",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 108.339,
@@ -15048,7 +15072,7 @@
     {
       "events": [
         {
-          "event_id": "evt_000922",
+          "event_id": "evt_000924",
           "payload": {
             "desired_distance": 71.5,
             "distance": 18.019,
@@ -15060,7 +15084,7 @@
           "type": "ranged_hold"
         },
         {
-          "event_id": "evt_000923",
+          "event_id": "evt_000925",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 100.708,
@@ -15078,7 +15102,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_000924",
+          "event_id": "evt_000926",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 89.063,
@@ -15096,7 +15120,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_000925",
+          "event_id": "evt_000927",
           "payload": {
             "attacker": "ally_005",
             "target": "enemy_003",
@@ -15115,7 +15139,7 @@
           "type": "attack"
         },
         {
-          "event_id": "evt_000926",
+          "event_id": "evt_000928",
           "payload": {
             "amount": 7,
             "reason": "basic_attack",
@@ -15127,7 +15151,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_000927",
+          "event_id": "evt_000929",
           "payload": {
             "action_interval_ticks": 28,
             "current_tick": 168,
@@ -15144,7 +15168,7 @@
     {
       "events": [
         {
-          "event_id": "evt_000928",
+          "event_id": "evt_000930",
           "payload": {
             "desired_distance": 71.5,
             "distance": 18.018,
@@ -15156,7 +15180,7 @@
           "type": "ranged_hold"
         },
         {
-          "event_id": "evt_000929",
+          "event_id": "evt_000931",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 100.741,
@@ -15174,7 +15198,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_000930",
+          "event_id": "evt_000932",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 89.017,
@@ -15192,7 +15216,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_000931",
+          "event_id": "evt_000933",
           "payload": {
             "distance": 41.949,
             "reason": "nearest_enemy",
@@ -15203,7 +15227,7 @@
           "type": "target_acquired"
         },
         {
-          "event_id": "evt_000932",
+          "event_id": "evt_000934",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 108.326,
@@ -15226,7 +15250,7 @@
     {
       "events": [
         {
-          "event_id": "evt_000933",
+          "event_id": "evt_000935",
           "payload": {
             "anchor_x": 114.079,
             "anchor_y": 133.002,
@@ -15238,7 +15262,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_000934",
+          "event_id": "evt_000936",
           "payload": {
             "anchor_x": 114.079,
             "anchor_y": 169.002,
@@ -15250,7 +15274,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_000935",
+          "event_id": "evt_000937",
           "payload": {
             "anchor_x": 58.079,
             "anchor_y": 205.002,
@@ -15262,7 +15286,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_000936",
+          "event_id": "evt_000938",
           "payload": {
             "anchor_x": 226.079,
             "anchor_y": 205.002,
@@ -15274,7 +15298,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_000937",
+          "event_id": "evt_000939",
           "payload": {
             "anchor_x": 101.921,
             "anchor_y": 266.998,
@@ -15286,7 +15310,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_000938",
+          "event_id": "evt_000940",
           "payload": {
             "anchor_x": 269.921,
             "anchor_y": 266.998,
@@ -15298,7 +15322,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_000939",
+          "event_id": "evt_000941",
           "payload": {
             "anchor_x": 157.921,
             "anchor_y": 302.998,
@@ -15310,7 +15334,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_000940",
+          "event_id": "evt_000942",
           "payload": {
             "anchor_x": 101.921,
             "anchor_y": 338.998,
@@ -15322,7 +15346,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_000941",
+          "event_id": "evt_000943",
           "payload": {
             "desired_distance": 71.5,
             "distance": 18.018,
@@ -15334,7 +15358,7 @@
           "type": "ranged_hold"
         },
         {
-          "event_id": "evt_000942",
+          "event_id": "evt_000944",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 100.772,
@@ -15352,7 +15376,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_000943",
+          "event_id": "evt_000945",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 88.972,
@@ -15370,7 +15394,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_000944",
+          "event_id": "evt_000946",
           "payload": {
             "attack_range": 40.0,
             "distance": 39.849,
@@ -15382,7 +15406,7 @@
           "type": "enter_range"
         },
         {
-          "event_id": "evt_000945",
+          "event_id": "evt_000947",
           "payload": {
             "attack_range": 40.0,
             "distance": 39.849,
@@ -15395,7 +15419,7 @@
           "type": "engage_start"
         },
         {
-          "event_id": "evt_000946",
+          "event_id": "evt_000948",
           "payload": {
             "distance_to_target": 38.649,
             "from_x": 231.122,
@@ -15418,7 +15442,7 @@
     {
       "events": [
         {
-          "event_id": "evt_000947",
+          "event_id": "evt_000949",
           "payload": {
             "desired_distance": 71.5,
             "distance": 18.017,
@@ -15430,7 +15454,7 @@
           "type": "ranged_hold"
         },
         {
-          "event_id": "evt_000948",
+          "event_id": "evt_000950",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 100.802,
@@ -15448,7 +15472,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_000949",
+          "event_id": "evt_000951",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 88.93,
@@ -15466,7 +15490,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_000950",
+          "event_id": "evt_000952",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 108.313,
@@ -15489,7 +15513,7 @@
     {
       "events": [
         {
-          "event_id": "evt_000951",
+          "event_id": "evt_000953",
           "payload": {
             "desired_distance": 71.5,
             "distance": 18.016,
@@ -15501,7 +15525,7 @@
           "type": "ranged_hold"
         },
         {
-          "event_id": "evt_000952",
+          "event_id": "evt_000954",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 100.831,
@@ -15519,7 +15543,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_000953",
+          "event_id": "evt_000955",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 88.89,
@@ -15542,7 +15566,7 @@
     {
       "events": [
         {
-          "event_id": "evt_000954",
+          "event_id": "evt_000956",
           "payload": {
             "desired_distance": 71.5,
             "distance": 18.016,
@@ -15554,7 +15578,7 @@
           "type": "ranged_hold"
         },
         {
-          "event_id": "evt_000955",
+          "event_id": "evt_000957",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 100.858,
@@ -15572,7 +15596,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_000956",
+          "event_id": "evt_000958",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 88.851,
@@ -15590,7 +15614,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_000957",
+          "event_id": "evt_000959",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 108.301,
@@ -15613,7 +15637,7 @@
     {
       "events": [
         {
-          "event_id": "evt_000958",
+          "event_id": "evt_000960",
           "payload": {
             "desired_distance": 71.5,
             "distance": 18.015,
@@ -15625,7 +15649,7 @@
           "type": "ranged_hold"
         },
         {
-          "event_id": "evt_000959",
+          "event_id": "evt_000961",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 100.884,
@@ -15643,7 +15667,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_000960",
+          "event_id": "evt_000962",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 88.814,
@@ -15666,7 +15690,7 @@
     {
       "events": [
         {
-          "event_id": "evt_000961",
+          "event_id": "evt_000963",
           "payload": {
             "desired_distance": 71.5,
             "distance": 18.014,
@@ -15678,7 +15702,7 @@
           "type": "ranged_hold"
         },
         {
-          "event_id": "evt_000962",
+          "event_id": "evt_000964",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 100.909,
@@ -15696,7 +15720,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_000963",
+          "event_id": "evt_000965",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 88.779,
@@ -15714,7 +15738,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_000964",
+          "event_id": "evt_000966",
           "payload": {
             "distance_to_target": 32.649,
             "from_x": 231.568,
@@ -15732,7 +15756,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_000965",
+          "event_id": "evt_000967",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 108.29,
@@ -15755,7 +15779,7 @@
     {
       "events": [
         {
-          "event_id": "evt_000966",
+          "event_id": "evt_000968",
           "payload": {
             "desired_distance": 71.5,
             "distance": 18.014,
@@ -15767,7 +15791,7 @@
           "type": "ranged_hold"
         },
         {
-          "event_id": "evt_000967",
+          "event_id": "evt_000969",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 100.933,
@@ -15785,7 +15809,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_000968",
+          "event_id": "evt_000970",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 88.745,
@@ -15808,7 +15832,7 @@
     {
       "events": [
         {
-          "event_id": "evt_000969",
+          "event_id": "evt_000971",
           "payload": {
             "desired_distance": 71.5,
             "distance": 18.013,
@@ -15820,7 +15844,7 @@
           "type": "ranged_hold"
         },
         {
-          "event_id": "evt_000970",
+          "event_id": "evt_000972",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 100.956,
@@ -15838,7 +15862,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_000971",
+          "event_id": "evt_000973",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 88.713,
@@ -15856,7 +15880,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_000972",
+          "event_id": "evt_000974",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 108.28,
@@ -15879,7 +15903,7 @@
     {
       "events": [
         {
-          "event_id": "evt_000973",
+          "event_id": "evt_000975",
           "payload": {
             "desired_distance": 71.5,
             "distance": 18.013,
@@ -15891,7 +15915,7 @@
           "type": "ranged_hold"
         },
         {
-          "event_id": "evt_000974",
+          "event_id": "evt_000976",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 100.977,
@@ -15909,7 +15933,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_000975",
+          "event_id": "evt_000977",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 88.682,
@@ -15927,7 +15951,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_000976",
+          "event_id": "evt_000978",
           "payload": {
             "skill": "focus_fire",
             "source": "enemy_005",
@@ -15941,7 +15965,7 @@
           "type": "skill_trigger"
         },
         {
-          "event_id": "evt_000977",
+          "event_id": "evt_000979",
           "payload": {
             "amount": 9,
             "reason": "skill:focus_fire",
@@ -15953,7 +15977,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_000978",
+          "event_id": "evt_000980",
           "payload": {
             "cooldown_ticks": 100,
             "ready_tick": 278,
@@ -15965,7 +15989,7 @@
           "type": "skill_cooldown"
         },
         {
-          "event_id": "evt_000979",
+          "event_id": "evt_000981",
           "payload": {
             "action_interval_ticks": 28,
             "current_tick": 178,
@@ -15982,7 +16006,7 @@
     {
       "events": [
         {
-          "event_id": "evt_000980",
+          "event_id": "evt_000982",
           "payload": {
             "desired_distance": 71.5,
             "distance": 18.012,
@@ -15994,7 +16018,7 @@
           "type": "ranged_hold"
         },
         {
-          "event_id": "evt_000981",
+          "event_id": "evt_000983",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 100.998,
@@ -16012,7 +16036,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_000982",
+          "event_id": "evt_000984",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 88.652,
@@ -16030,7 +16054,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_000983",
+          "event_id": "evt_000985",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 108.271,
@@ -16048,7 +16072,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_000984",
+          "event_id": "evt_000986",
           "payload": {
             "skill": "katana_slash",
             "source": "enemy_003",
@@ -16071,7 +16095,7 @@
           "type": "skill_trigger"
         },
         {
-          "event_id": "evt_000985",
+          "event_id": "evt_000987",
           "payload": {
             "amount": 11,
             "reason": "skill:katana_slash",
@@ -16083,7 +16107,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_000986",
+          "event_id": "evt_000988",
           "payload": {
             "cooldown_ticks": 20,
             "ready_tick": 199,
@@ -16095,7 +16119,7 @@
           "type": "skill_cooldown"
         },
         {
-          "event_id": "evt_000987",
+          "event_id": "evt_000989",
           "payload": {
             "action_interval_ticks": 20,
             "current_tick": 179,
@@ -16112,7 +16136,7 @@
     {
       "events": [
         {
-          "event_id": "evt_000988",
+          "event_id": "evt_000990",
           "payload": {
             "anchor_x": 115.232,
             "anchor_y": 122.943,
@@ -16124,7 +16148,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_000989",
+          "event_id": "evt_000991",
           "payload": {
             "anchor_x": 115.232,
             "anchor_y": 158.943,
@@ -16136,7 +16160,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_000990",
+          "event_id": "evt_000992",
           "payload": {
             "anchor_x": 59.232,
             "anchor_y": 194.943,
@@ -16148,7 +16172,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_000991",
+          "event_id": "evt_000993",
           "payload": {
             "anchor_x": 227.232,
             "anchor_y": 194.943,
@@ -16160,7 +16184,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_000992",
+          "event_id": "evt_000994",
           "payload": {
             "anchor_x": 100.768,
             "anchor_y": 277.057,
@@ -16172,7 +16196,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_000993",
+          "event_id": "evt_000995",
           "payload": {
             "anchor_x": 268.768,
             "anchor_y": 277.057,
@@ -16184,7 +16208,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_000994",
+          "event_id": "evt_000996",
           "payload": {
             "anchor_x": 156.768,
             "anchor_y": 313.057,
@@ -16196,7 +16220,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_000995",
+          "event_id": "evt_000997",
           "payload": {
             "anchor_x": 100.768,
             "anchor_y": 349.057,
@@ -16208,7 +16232,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_000996",
+          "event_id": "evt_000998",
           "payload": {
             "desired_distance": 71.5,
             "distance": 18.012,
@@ -16220,7 +16244,7 @@
           "type": "ranged_hold"
         },
         {
-          "event_id": "evt_000997",
+          "event_id": "evt_000999",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 101.018,
@@ -16238,7 +16262,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_000998",
+          "event_id": "evt_001000",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 88.624,
@@ -16256,7 +16280,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_000999",
+          "event_id": "evt_001001",
           "payload": {
             "distance_to_target": 26.649,
             "from_x": 232.015,
@@ -16279,7 +16303,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001000",
+          "event_id": "evt_001002",
           "payload": {
             "desired_distance": 71.5,
             "distance": 18.011,
@@ -16291,7 +16315,7 @@
           "type": "ranged_hold"
         },
         {
-          "event_id": "evt_001001",
+          "event_id": "evt_001003",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 101.037,
@@ -16309,7 +16333,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_001002",
+          "event_id": "evt_001004",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 88.597,
@@ -16327,7 +16351,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_001003",
+          "event_id": "evt_001005",
           "payload": {
             "distance_to_target": 26.0,
             "from_x": 232.104,
@@ -16345,7 +16369,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_001004",
+          "event_id": "evt_001006",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 108.262,
@@ -16363,7 +16387,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_001005",
+          "event_id": "evt_001007",
           "payload": {
             "skill": "spear_thrust",
             "source": "enemy_002",
@@ -16386,7 +16410,7 @@
           "type": "skill_trigger"
         },
         {
-          "event_id": "evt_001006",
+          "event_id": "evt_001008",
           "payload": {
             "amount": 26,
             "reason": "skill:spear_thrust",
@@ -16398,7 +16422,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_001007",
+          "event_id": "evt_001009",
           "payload": {
             "cooldown_ticks": 26,
             "ready_tick": 207,
@@ -16410,7 +16434,7 @@
           "type": "skill_cooldown"
         },
         {
-          "event_id": "evt_001008",
+          "event_id": "evt_001010",
           "payload": {
             "action_interval_ticks": 24,
             "current_tick": 181,
@@ -16427,7 +16451,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001009",
+          "event_id": "evt_001011",
           "payload": {
             "distance": 26.0,
             "reason": "melee_entered_range",
@@ -16439,7 +16463,7 @@
           "type": "engagement_lock"
         },
         {
-          "event_id": "evt_001010",
+          "event_id": "evt_001012",
           "payload": {
             "desired_distance": 71.5,
             "distance": 18.011,
@@ -16451,7 +16475,7 @@
           "type": "ranged_hold"
         },
         {
-          "event_id": "evt_001011",
+          "event_id": "evt_001013",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 101.055,
@@ -16469,7 +16493,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_001012",
+          "event_id": "evt_001014",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 88.571,
@@ -16487,7 +16511,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_001013",
+          "event_id": "evt_001015",
           "payload": {
             "attack_range": 26.0,
             "distance": 26.0,
@@ -16499,7 +16523,7 @@
           "type": "enter_range"
         },
         {
-          "event_id": "evt_001014",
+          "event_id": "evt_001016",
           "payload": {
             "attack_range": 26.0,
             "distance": 26.0,
@@ -16517,7 +16541,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001015",
+          "event_id": "evt_001017",
           "payload": {
             "desired_distance": 71.5,
             "distance": 18.01,
@@ -16529,7 +16553,7 @@
           "type": "ranged_hold"
         },
         {
-          "event_id": "evt_001016",
+          "event_id": "evt_001018",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 101.072,
@@ -16547,7 +16571,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_001017",
+          "event_id": "evt_001019",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 88.546,
@@ -16565,7 +16589,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_001018",
+          "event_id": "evt_001020",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 108.254,
@@ -16583,7 +16607,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_001019",
+          "event_id": "evt_001021",
           "payload": {
             "attacker": "ally_006",
             "target": "enemy_002",
@@ -16602,7 +16626,7 @@
           "type": "attack"
         },
         {
-          "event_id": "evt_001020",
+          "event_id": "evt_001022",
           "payload": {
             "amount": 2,
             "reason": "basic_attack",
@@ -16614,7 +16638,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_001021",
+          "event_id": "evt_001023",
           "payload": {
             "action_interval_ticks": 36,
             "current_tick": 183,
@@ -16631,7 +16655,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001022",
+          "event_id": "evt_001024",
           "payload": {
             "desired_distance": 71.5,
             "distance": 18.01,
@@ -16643,7 +16667,7 @@
           "type": "ranged_hold"
         },
         {
-          "event_id": "evt_001023",
+          "event_id": "evt_001025",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 101.088,
@@ -16661,7 +16685,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_001024",
+          "event_id": "evt_001026",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 88.522,
@@ -16684,7 +16708,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001025",
+          "event_id": "evt_001027",
           "payload": {
             "desired_distance": 71.5,
             "distance": 18.01,
@@ -16696,7 +16720,7 @@
           "type": "ranged_hold"
         },
         {
-          "event_id": "evt_001026",
+          "event_id": "evt_001028",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 101.104,
@@ -16714,7 +16738,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_001027",
+          "event_id": "evt_001029",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 88.5,
@@ -16732,7 +16756,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_001028",
+          "event_id": "evt_001030",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 108.247,
@@ -16755,7 +16779,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001029",
+          "event_id": "evt_001031",
           "payload": {
             "desired_distance": 71.5,
             "distance": 18.009,
@@ -16767,7 +16791,7 @@
           "type": "ranged_hold"
         },
         {
-          "event_id": "evt_001030",
+          "event_id": "evt_001032",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 101.119,
@@ -16785,7 +16809,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_001031",
+          "event_id": "evt_001033",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 88.478,
@@ -16808,7 +16832,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001032",
+          "event_id": "evt_001034",
           "payload": {
             "desired_distance": 71.5,
             "distance": 18.009,
@@ -16820,7 +16844,7 @@
           "type": "ranged_hold"
         },
         {
-          "event_id": "evt_001033",
+          "event_id": "evt_001035",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 101.134,
@@ -16838,7 +16862,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_001034",
+          "event_id": "evt_001036",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 88.457,
@@ -16856,7 +16880,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_001035",
+          "event_id": "evt_001037",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 108.24,
@@ -16879,7 +16903,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001036",
+          "event_id": "evt_001038",
           "payload": {
             "desired_distance": 71.5,
             "distance": 18.009,
@@ -16891,7 +16915,7 @@
           "type": "ranged_hold"
         },
         {
-          "event_id": "evt_001037",
+          "event_id": "evt_001039",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 101.147,
@@ -16909,7 +16933,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_001038",
+          "event_id": "evt_001040",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 88.437,
@@ -16932,7 +16956,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001039",
+          "event_id": "evt_001041",
           "payload": {
             "desired_distance": 71.5,
             "distance": 18.008,
@@ -16944,7 +16968,7 @@
           "type": "ranged_hold"
         },
         {
-          "event_id": "evt_001040",
+          "event_id": "evt_001042",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 101.161,
@@ -16962,7 +16986,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_001041",
+          "event_id": "evt_001043",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 88.418,
@@ -16980,7 +17004,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_001042",
+          "event_id": "evt_001044",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 108.233,
@@ -17003,7 +17027,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001043",
+          "event_id": "evt_001045",
           "payload": {
             "anchor_x": 116.474,
             "anchor_y": 112.895,
@@ -17015,7 +17039,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001044",
+          "event_id": "evt_001046",
           "payload": {
             "anchor_x": 116.474,
             "anchor_y": 148.895,
@@ -17027,7 +17051,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001045",
+          "event_id": "evt_001047",
           "payload": {
             "anchor_x": 60.474,
             "anchor_y": 184.895,
@@ -17039,7 +17063,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001046",
+          "event_id": "evt_001048",
           "payload": {
             "anchor_x": 228.474,
             "anchor_y": 184.895,
@@ -17051,7 +17075,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001047",
+          "event_id": "evt_001049",
           "payload": {
             "anchor_x": 99.526,
             "anchor_y": 287.105,
@@ -17063,7 +17087,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001048",
+          "event_id": "evt_001050",
           "payload": {
             "anchor_x": 267.526,
             "anchor_y": 287.105,
@@ -17075,7 +17099,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001049",
+          "event_id": "evt_001051",
           "payload": {
             "anchor_x": 155.526,
             "anchor_y": 323.105,
@@ -17087,7 +17111,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001050",
+          "event_id": "evt_001052",
           "payload": {
             "anchor_x": 99.526,
             "anchor_y": 359.105,
@@ -17099,7 +17123,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001051",
+          "event_id": "evt_001053",
           "payload": {
             "desired_distance": 71.5,
             "distance": 18.008,
@@ -17111,7 +17135,7 @@
           "type": "ranged_hold"
         },
         {
-          "event_id": "evt_001052",
+          "event_id": "evt_001054",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 101.173,
@@ -17129,7 +17153,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_001053",
+          "event_id": "evt_001055",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 88.4,
@@ -17147,7 +17171,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_001054",
+          "event_id": "evt_001056",
           "payload": {
             "attacker": "enemy_001",
             "target": "ally_001",
@@ -17166,7 +17190,7 @@
           "type": "attack"
         },
         {
-          "event_id": "evt_001055",
+          "event_id": "evt_001057",
           "payload": {
             "amount": 1,
             "reason": "basic_attack",
@@ -17178,7 +17202,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_001056",
+          "event_id": "evt_001058",
           "payload": {
             "action_interval_ticks": 32,
             "current_tick": 190,
@@ -17195,7 +17219,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001057",
+          "event_id": "evt_001059",
           "payload": {
             "desired_distance": 71.5,
             "distance": 18.008,
@@ -17207,7 +17231,7 @@
           "type": "ranged_hold"
         },
         {
-          "event_id": "evt_001058",
+          "event_id": "evt_001060",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 101.185,
@@ -17225,7 +17249,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_001059",
+          "event_id": "evt_001061",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 88.383,
@@ -17243,7 +17267,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_001060",
+          "event_id": "evt_001062",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 108.228,
@@ -17266,7 +17290,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001061",
+          "event_id": "evt_001063",
           "payload": {
             "desired_distance": 71.5,
             "distance": 18.007,
@@ -17278,7 +17302,7 @@
           "type": "ranged_hold"
         },
         {
-          "event_id": "evt_001062",
+          "event_id": "evt_001064",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 101.197,
@@ -17296,7 +17320,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_001063",
+          "event_id": "evt_001065",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 88.366,
@@ -17319,7 +17343,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001064",
+          "event_id": "evt_001066",
           "payload": {
             "desired_distance": 71.5,
             "distance": 18.007,
@@ -17331,7 +17355,7 @@
           "type": "ranged_hold"
         },
         {
-          "event_id": "evt_001065",
+          "event_id": "evt_001067",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 101.208,
@@ -17349,7 +17373,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_001066",
+          "event_id": "evt_001068",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 88.35,
@@ -17367,7 +17391,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_001067",
+          "event_id": "evt_001069",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 108.222,
@@ -17390,7 +17414,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001068",
+          "event_id": "evt_001070",
           "payload": {
             "desired_distance": 71.5,
             "distance": 18.007,
@@ -17402,7 +17426,7 @@
           "type": "ranged_hold"
         },
         {
-          "event_id": "evt_001069",
+          "event_id": "evt_001071",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 101.218,
@@ -17420,7 +17444,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_001070",
+          "event_id": "evt_001072",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 88.335,
@@ -17443,7 +17467,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001071",
+          "event_id": "evt_001073",
           "payload": {
             "desired_distance": 71.5,
             "distance": 18.006,
@@ -17455,7 +17479,7 @@
           "type": "ranged_hold"
         },
         {
-          "event_id": "evt_001072",
+          "event_id": "evt_001074",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 101.228,
@@ -17473,7 +17497,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_001073",
+          "event_id": "evt_001075",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 88.32,
@@ -17491,7 +17515,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_001074",
+          "event_id": "evt_001076",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 108.217,
@@ -17514,7 +17538,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001075",
+          "event_id": "evt_001077",
           "payload": {
             "desired_distance": 71.5,
             "distance": 18.006,
@@ -17526,7 +17550,7 @@
           "type": "ranged_hold"
         },
         {
-          "event_id": "evt_001076",
+          "event_id": "evt_001078",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 101.238,
@@ -17544,7 +17568,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_001077",
+          "event_id": "evt_001079",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 88.306,
@@ -17562,7 +17586,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_001078",
+          "event_id": "evt_001080",
           "payload": {
             "skill": "bow_shot",
             "source": "ally_005",
@@ -17585,7 +17609,7 @@
           "type": "skill_trigger"
         },
         {
-          "event_id": "evt_001079",
+          "event_id": "evt_001081",
           "payload": {
             "amount": 20,
             "reason": "skill:bow_shot",
@@ -17597,7 +17621,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_001080",
+          "event_id": "evt_001082",
           "payload": {
             "cooldown_ticks": 30,
             "ready_tick": 226,
@@ -17609,7 +17633,7 @@
           "type": "skill_cooldown"
         },
         {
-          "event_id": "evt_001081",
+          "event_id": "evt_001083",
           "payload": {
             "action_interval_ticks": 28,
             "current_tick": 196,
@@ -17626,7 +17650,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001082",
+          "event_id": "evt_001084",
           "payload": {
             "desired_distance": 71.5,
             "distance": 18.006,
@@ -17638,7 +17662,7 @@
           "type": "ranged_hold"
         },
         {
-          "event_id": "evt_001083",
+          "event_id": "evt_001085",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 101.247,
@@ -17656,7 +17680,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_001084",
+          "event_id": "evt_001086",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 88.292,
@@ -17674,7 +17698,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_001085",
+          "event_id": "evt_001087",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 108.213,
@@ -17697,7 +17721,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001086",
+          "event_id": "evt_001088",
           "payload": {
             "desired_distance": 71.5,
             "distance": 18.006,
@@ -17709,7 +17733,7 @@
           "type": "ranged_hold"
         },
         {
-          "event_id": "evt_001087",
+          "event_id": "evt_001089",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 101.256,
@@ -17727,7 +17751,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_001088",
+          "event_id": "evt_001090",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 88.28,
@@ -17750,7 +17774,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001089",
+          "event_id": "evt_001091",
           "payload": {
             "desired_distance": 71.5,
             "distance": 18.005,
@@ -17762,7 +17786,7 @@
           "type": "ranged_hold"
         },
         {
-          "event_id": "evt_001090",
+          "event_id": "evt_001092",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 101.265,
@@ -17780,7 +17804,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_001091",
+          "event_id": "evt_001093",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 88.267,
@@ -17798,7 +17822,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_001092",
+          "event_id": "evt_001094",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 108.209,
@@ -17816,7 +17840,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_001093",
+          "event_id": "evt_001095",
           "payload": {
             "skill": "katana_slash",
             "source": "enemy_003",
@@ -17839,7 +17863,7 @@
           "type": "skill_trigger"
         },
         {
-          "event_id": "evt_001094",
+          "event_id": "evt_001096",
           "payload": {
             "amount": 11,
             "reason": "skill:katana_slash",
@@ -17851,7 +17875,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_001095",
+          "event_id": "evt_001097",
           "payload": {
             "cooldown_ticks": 20,
             "ready_tick": 219,
@@ -17863,7 +17887,7 @@
           "type": "skill_cooldown"
         },
         {
-          "event_id": "evt_001096",
+          "event_id": "evt_001098",
           "payload": {
             "action_interval_ticks": 20,
             "current_tick": 199,
@@ -17880,7 +17904,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001097",
+          "event_id": "evt_001099",
           "payload": {
             "anchor_x": 117.719,
             "anchor_y": 102.847,
@@ -17892,7 +17916,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001098",
+          "event_id": "evt_001100",
           "payload": {
             "anchor_x": 117.719,
             "anchor_y": 138.847,
@@ -17904,7 +17928,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001099",
+          "event_id": "evt_001101",
           "payload": {
             "anchor_x": 61.719,
             "anchor_y": 174.847,
@@ -17916,7 +17940,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001100",
+          "event_id": "evt_001102",
           "payload": {
             "anchor_x": 229.719,
             "anchor_y": 174.847,
@@ -17928,7 +17952,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001101",
+          "event_id": "evt_001103",
           "payload": {
             "anchor_x": 98.281,
             "anchor_y": 297.153,
@@ -17940,7 +17964,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001102",
+          "event_id": "evt_001104",
           "payload": {
             "anchor_x": 266.281,
             "anchor_y": 297.153,
@@ -17952,7 +17976,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001103",
+          "event_id": "evt_001105",
           "payload": {
             "anchor_x": 154.281,
             "anchor_y": 333.153,
@@ -17964,7 +17988,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001104",
+          "event_id": "evt_001106",
           "payload": {
             "anchor_x": 98.281,
             "anchor_y": 369.153,
@@ -17976,7 +18000,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001105",
+          "event_id": "evt_001107",
           "payload": {
             "desired_distance": 71.5,
             "distance": 18.005,
@@ -17988,7 +18012,7 @@
           "type": "ranged_hold"
         },
         {
-          "event_id": "evt_001106",
+          "event_id": "evt_001108",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 101.273,
@@ -18006,7 +18030,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_001107",
+          "event_id": "evt_001109",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 88.255,
@@ -18029,7 +18053,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001108",
+          "event_id": "evt_001110",
           "payload": {
             "desired_distance": 71.5,
             "distance": 18.005,
@@ -18041,7 +18065,7 @@
           "type": "ranged_hold"
         },
         {
-          "event_id": "evt_001109",
+          "event_id": "evt_001111",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 101.28,
@@ -18059,7 +18083,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_001110",
+          "event_id": "evt_001112",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 88.244,
@@ -18077,7 +18101,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_001111",
+          "event_id": "evt_001113",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 108.205,
@@ -18100,7 +18124,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001112",
+          "event_id": "evt_001114",
           "payload": {
             "desired_distance": 71.5,
             "distance": 18.005,
@@ -18112,7 +18136,7 @@
           "type": "ranged_hold"
         },
         {
-          "event_id": "evt_001113",
+          "event_id": "evt_001115",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 101.288,
@@ -18130,7 +18154,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_001114",
+          "event_id": "evt_001116",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 88.233,
@@ -18153,7 +18177,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001115",
+          "event_id": "evt_001117",
           "payload": {
             "desired_distance": 71.5,
             "distance": 18.005,
@@ -18165,7 +18189,7 @@
           "type": "ranged_hold"
         },
         {
-          "event_id": "evt_001116",
+          "event_id": "evt_001118",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 101.295,
@@ -18183,7 +18207,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_001117",
+          "event_id": "evt_001119",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 88.223,
@@ -18201,7 +18225,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_001118",
+          "event_id": "evt_001120",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 108.202,
@@ -18224,7 +18248,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001119",
+          "event_id": "evt_001121",
           "payload": {
             "desired_distance": 71.5,
             "distance": 18.004,
@@ -18236,7 +18260,7 @@
           "type": "ranged_hold"
         },
         {
-          "event_id": "evt_001120",
+          "event_id": "evt_001122",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 101.302,
@@ -18254,7 +18278,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_001121",
+          "event_id": "evt_001123",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 88.213,
@@ -18277,7 +18301,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001122",
+          "event_id": "evt_001124",
           "payload": {
             "desired_distance": 71.5,
             "distance": 18.004,
@@ -18289,7 +18313,7 @@
           "type": "ranged_hold"
         },
         {
-          "event_id": "evt_001123",
+          "event_id": "evt_001125",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 101.308,
@@ -18307,7 +18331,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_001124",
+          "event_id": "evt_001126",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 88.204,
@@ -18325,7 +18349,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_001125",
+          "event_id": "evt_001127",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 108.198,
@@ -18343,7 +18367,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_001126",
+          "event_id": "evt_001128",
           "payload": {
             "attacker": "enemy_002",
             "target": "ally_006",
@@ -18362,7 +18386,7 @@
           "type": "attack"
         },
         {
-          "event_id": "evt_001127",
+          "event_id": "evt_001129",
           "payload": {
             "amount": 11,
             "reason": "basic_attack",
@@ -18374,7 +18398,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_001128",
+          "event_id": "evt_001130",
           "payload": {
             "action_interval_ticks": 24,
             "current_tick": 205,
@@ -18391,7 +18415,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001129",
+          "event_id": "evt_001131",
           "payload": {
             "desired_distance": 71.5,
             "distance": 18.004,
@@ -18403,7 +18427,7 @@
           "type": "ranged_hold"
         },
         {
-          "event_id": "evt_001130",
+          "event_id": "evt_001132",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 101.315,
@@ -18421,7 +18445,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_001131",
+          "event_id": "evt_001133",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 88.194,
@@ -18439,7 +18463,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_001132",
+          "event_id": "evt_001134",
           "payload": {
             "skill": "bow_shot",
             "source": "enemy_005",
@@ -18462,7 +18486,7 @@
           "type": "skill_trigger"
         },
         {
-          "event_id": "evt_001133",
+          "event_id": "evt_001135",
           "payload": {
             "amount": 2,
             "reason": "skill:bow_shot",
@@ -18474,7 +18498,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_001134",
+          "event_id": "evt_001136",
           "payload": {
             "cooldown_ticks": 30,
             "ready_tick": 236,
@@ -18486,7 +18510,7 @@
           "type": "skill_cooldown"
         },
         {
-          "event_id": "evt_001135",
+          "event_id": "evt_001137",
           "payload": {
             "action_interval_ticks": 28,
             "current_tick": 206,
@@ -18503,7 +18527,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001136",
+          "event_id": "evt_001138",
           "payload": {
             "desired_distance": 71.5,
             "distance": 18.004,
@@ -18515,7 +18539,7 @@
           "type": "ranged_hold"
         },
         {
-          "event_id": "evt_001137",
+          "event_id": "evt_001139",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 101.321,
@@ -18533,7 +18557,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_001138",
+          "event_id": "evt_001140",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 88.186,
@@ -18551,7 +18575,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_001139",
+          "event_id": "evt_001141",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 108.195,
@@ -18574,7 +18598,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001140",
+          "event_id": "evt_001142",
           "payload": {
             "desired_distance": 71.5,
             "distance": 18.004,
@@ -18586,7 +18610,7 @@
           "type": "ranged_hold"
         },
         {
-          "event_id": "evt_001141",
+          "event_id": "evt_001143",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 101.326,
@@ -18604,7 +18628,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_001142",
+          "event_id": "evt_001144",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 88.177,
@@ -18627,7 +18651,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001143",
+          "event_id": "evt_001145",
           "payload": {
             "desired_distance": 71.5,
             "distance": 18.004,
@@ -18639,7 +18663,7 @@
           "type": "ranged_hold"
         },
         {
-          "event_id": "evt_001144",
+          "event_id": "evt_001146",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 101.332,
@@ -18657,7 +18681,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_001145",
+          "event_id": "evt_001147",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 88.169,
@@ -18675,7 +18699,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_001146",
+          "event_id": "evt_001148",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 108.193,
@@ -18698,7 +18722,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001147",
+          "event_id": "evt_001149",
           "payload": {
             "anchor_x": 118.966,
             "anchor_y": 92.799,
@@ -18710,7 +18734,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001148",
+          "event_id": "evt_001150",
           "payload": {
             "anchor_x": 118.966,
             "anchor_y": 128.799,
@@ -18722,7 +18746,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001149",
+          "event_id": "evt_001151",
           "payload": {
             "anchor_x": 62.966,
             "anchor_y": 164.799,
@@ -18734,7 +18758,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001150",
+          "event_id": "evt_001152",
           "payload": {
             "anchor_x": 230.966,
             "anchor_y": 164.799,
@@ -18746,7 +18770,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001151",
+          "event_id": "evt_001153",
           "payload": {
             "anchor_x": 97.034,
             "anchor_y": 307.201,
@@ -18758,7 +18782,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001152",
+          "event_id": "evt_001154",
           "payload": {
             "anchor_x": 265.034,
             "anchor_y": 307.201,
@@ -18770,7 +18794,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001153",
+          "event_id": "evt_001155",
           "payload": {
             "anchor_x": 153.034,
             "anchor_y": 343.201,
@@ -18782,7 +18806,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001154",
+          "event_id": "evt_001156",
           "payload": {
             "anchor_x": 97.034,
             "anchor_y": 379.201,
@@ -18794,7 +18818,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001155",
+          "event_id": "evt_001157",
           "payload": {
             "desired_distance": 71.5,
             "distance": 18.003,
@@ -18806,7 +18830,7 @@
           "type": "ranged_hold"
         },
         {
-          "event_id": "evt_001156",
+          "event_id": "evt_001158",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 101.337,
@@ -18824,7 +18848,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_001157",
+          "event_id": "evt_001159",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 88.162,
@@ -18847,7 +18871,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001158",
+          "event_id": "evt_001160",
           "payload": {
             "desired_distance": 71.5,
             "distance": 18.003,
@@ -18859,7 +18883,7 @@
           "type": "ranged_hold"
         },
         {
-          "event_id": "evt_001159",
+          "event_id": "evt_001161",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 101.342,
@@ -18877,7 +18901,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_001160",
+          "event_id": "evt_001162",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 88.154,
@@ -18895,7 +18919,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_001161",
+          "event_id": "evt_001163",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 108.19,
@@ -18918,7 +18942,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001162",
+          "event_id": "evt_001164",
           "payload": {
             "desired_distance": 71.5,
             "distance": 18.003,
@@ -18930,7 +18954,7 @@
           "type": "ranged_hold"
         },
         {
-          "event_id": "evt_001163",
+          "event_id": "evt_001165",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 101.347,
@@ -18948,7 +18972,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_001164",
+          "event_id": "evt_001166",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 88.147,
@@ -18971,7 +18995,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001165",
+          "event_id": "evt_001167",
           "payload": {
             "desired_distance": 71.5,
             "distance": 18.003,
@@ -18983,7 +19007,7 @@
           "type": "ranged_hold"
         },
         {
-          "event_id": "evt_001166",
+          "event_id": "evt_001168",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 101.351,
@@ -19001,7 +19025,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_001167",
+          "event_id": "evt_001169",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 88.141,
@@ -19019,7 +19043,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_001168",
+          "event_id": "evt_001170",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 108.188,
@@ -19042,7 +19066,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001169",
+          "event_id": "evt_001171",
           "payload": {
             "desired_distance": 71.5,
             "distance": 18.003,
@@ -19054,7 +19078,7 @@
           "type": "ranged_hold"
         },
         {
-          "event_id": "evt_001170",
+          "event_id": "evt_001172",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 101.356,
@@ -19072,7 +19096,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_001171",
+          "event_id": "evt_001173",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 88.134,
@@ -19095,7 +19119,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001172",
+          "event_id": "evt_001174",
           "payload": {
             "desired_distance": 71.5,
             "distance": 18.003,
@@ -19107,7 +19131,7 @@
           "type": "ranged_hold"
         },
         {
-          "event_id": "evt_001173",
+          "event_id": "evt_001175",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 101.36,
@@ -19125,7 +19149,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_001174",
+          "event_id": "evt_001176",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 88.128,
@@ -19143,7 +19167,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_001175",
+          "event_id": "evt_001177",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 108.186,
@@ -19166,7 +19190,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001176",
+          "event_id": "evt_001178",
           "payload": {
             "desired_distance": 71.5,
             "distance": 18.003,
@@ -19178,7 +19202,7 @@
           "type": "ranged_hold"
         },
         {
-          "event_id": "evt_001177",
+          "event_id": "evt_001179",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 101.364,
@@ -19196,7 +19220,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_001178",
+          "event_id": "evt_001180",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 88.122,
@@ -19219,7 +19243,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001179",
+          "event_id": "evt_001181",
           "payload": {
             "desired_distance": 71.5,
             "distance": 18.003,
@@ -19231,7 +19255,7 @@
           "type": "ranged_hold"
         },
         {
-          "event_id": "evt_001180",
+          "event_id": "evt_001182",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 101.368,
@@ -19249,7 +19273,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_001181",
+          "event_id": "evt_001183",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 88.116,
@@ -19267,7 +19291,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_001182",
+          "event_id": "evt_001184",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 108.184,
@@ -19290,7 +19314,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001183",
+          "event_id": "evt_001185",
           "payload": {
             "desired_distance": 71.5,
             "distance": 18.002,
@@ -19302,7 +19326,7 @@
           "type": "ranged_hold"
         },
         {
-          "event_id": "evt_001184",
+          "event_id": "evt_001186",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 101.372,
@@ -19320,7 +19344,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_001185",
+          "event_id": "evt_001187",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 88.111,
@@ -19343,7 +19367,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001186",
+          "event_id": "evt_001188",
           "payload": {
             "desired_distance": 71.5,
             "distance": 18.002,
@@ -19355,7 +19379,7 @@
           "type": "ranged_hold"
         },
         {
-          "event_id": "evt_001187",
+          "event_id": "evt_001189",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 101.375,
@@ -19373,7 +19397,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_001188",
+          "event_id": "evt_001190",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 88.106,
@@ -19391,7 +19415,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_001189",
+          "event_id": "evt_001191",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 108.182,
@@ -19409,7 +19433,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_001190",
+          "event_id": "evt_001192",
           "payload": {
             "attacker": "ally_006",
             "target": "enemy_002",
@@ -19428,7 +19452,7 @@
           "type": "attack"
         },
         {
-          "event_id": "evt_001191",
+          "event_id": "evt_001193",
           "payload": {
             "amount": 2,
             "reason": "basic_attack",
@@ -19440,7 +19464,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_001192",
+          "event_id": "evt_001194",
           "payload": {
             "action_interval_ticks": 36,
             "current_tick": 219,
@@ -19452,7 +19476,7 @@
           "type": "action_scheduled"
         },
         {
-          "event_id": "evt_001193",
+          "event_id": "evt_001195",
           "payload": {
             "skill": "katana_slash",
             "source": "enemy_003",
@@ -19475,7 +19499,7 @@
           "type": "skill_trigger"
         },
         {
-          "event_id": "evt_001194",
+          "event_id": "evt_001196",
           "payload": {
             "amount": 11,
             "reason": "skill:katana_slash",
@@ -19487,7 +19511,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_001195",
+          "event_id": "evt_001197",
           "payload": {
             "cooldown_ticks": 20,
             "ready_tick": 239,
@@ -19499,7 +19523,7 @@
           "type": "skill_cooldown"
         },
         {
-          "event_id": "evt_001196",
+          "event_id": "evt_001198",
           "payload": {
             "action_interval_ticks": 20,
             "current_tick": 219,
@@ -19516,7 +19540,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001197",
+          "event_id": "evt_001199",
           "payload": {
             "anchor_x": 120.214,
             "anchor_y": 82.751,
@@ -19528,7 +19552,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001198",
+          "event_id": "evt_001200",
           "payload": {
             "anchor_x": 120.214,
             "anchor_y": 118.751,
@@ -19540,7 +19564,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001199",
+          "event_id": "evt_001201",
           "payload": {
             "anchor_x": 64.214,
             "anchor_y": 154.751,
@@ -19552,7 +19576,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001200",
+          "event_id": "evt_001202",
           "payload": {
             "anchor_x": 232.214,
             "anchor_y": 154.751,
@@ -19564,7 +19588,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001201",
+          "event_id": "evt_001203",
           "payload": {
             "anchor_x": 95.786,
             "anchor_y": 317.249,
@@ -19576,7 +19600,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001202",
+          "event_id": "evt_001204",
           "payload": {
             "anchor_x": 263.786,
             "anchor_y": 317.249,
@@ -19588,7 +19612,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001203",
+          "event_id": "evt_001205",
           "payload": {
             "anchor_x": 151.786,
             "anchor_y": 353.249,
@@ -19600,7 +19624,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001204",
+          "event_id": "evt_001206",
           "payload": {
             "anchor_x": 95.786,
             "anchor_y": 389.249,
@@ -19612,7 +19636,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001205",
+          "event_id": "evt_001207",
           "payload": {
             "desired_distance": 71.5,
             "distance": 18.002,
@@ -19624,7 +19648,7 @@
           "type": "ranged_hold"
         },
         {
-          "event_id": "evt_001206",
+          "event_id": "evt_001208",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 101.379,
@@ -19642,7 +19666,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_001207",
+          "event_id": "evt_001209",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 88.101,
@@ -19665,7 +19689,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001208",
+          "event_id": "evt_001210",
           "payload": {
             "desired_distance": 71.5,
             "distance": 18.002,
@@ -19677,7 +19701,7 @@
           "type": "ranged_hold"
         },
         {
-          "event_id": "evt_001209",
+          "event_id": "evt_001211",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 101.382,
@@ -19695,7 +19719,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_001210",
+          "event_id": "evt_001212",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 88.096,
@@ -19713,7 +19737,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_001211",
+          "event_id": "evt_001213",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 108.181,
@@ -19736,7 +19760,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001212",
+          "event_id": "evt_001214",
           "payload": {
             "desired_distance": 71.5,
             "distance": 18.002,
@@ -19748,7 +19772,7 @@
           "type": "ranged_hold"
         },
         {
-          "event_id": "evt_001213",
+          "event_id": "evt_001215",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 101.385,
@@ -19766,7 +19790,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_001214",
+          "event_id": "evt_001216",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 88.091,
@@ -19784,7 +19808,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_001215",
+          "event_id": "evt_001217",
           "payload": {
             "attacker": "enemy_001",
             "target": "ally_001",
@@ -19803,7 +19827,7 @@
           "type": "attack"
         },
         {
-          "event_id": "evt_001216",
+          "event_id": "evt_001218",
           "payload": {
             "amount": 1,
             "reason": "basic_attack",
@@ -19815,7 +19839,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_001217",
+          "event_id": "evt_001219",
           "payload": {
             "action_interval_ticks": 32,
             "current_tick": 222,
@@ -19832,7 +19856,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001218",
+          "event_id": "evt_001220",
           "payload": {
             "desired_distance": 71.5,
             "distance": 18.002,
@@ -19844,7 +19868,7 @@
           "type": "ranged_hold"
         },
         {
-          "event_id": "evt_001219",
+          "event_id": "evt_001221",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 101.388,
@@ -19862,7 +19886,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_001220",
+          "event_id": "evt_001222",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 88.087,
@@ -19880,7 +19904,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_001221",
+          "event_id": "evt_001223",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 108.179,
@@ -19903,7 +19927,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001222",
+          "event_id": "evt_001224",
           "payload": {
             "desired_distance": 71.5,
             "distance": 18.002,
@@ -19915,7 +19939,7 @@
           "type": "ranged_hold"
         },
         {
-          "event_id": "evt_001223",
+          "event_id": "evt_001225",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 101.391,
@@ -19933,7 +19957,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_001224",
+          "event_id": "evt_001226",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 88.083,
@@ -19951,7 +19975,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_001225",
+          "event_id": "evt_001227",
           "payload": {
             "skill": "focus_fire",
             "source": "ally_005",
@@ -19965,7 +19989,7 @@
           "type": "skill_trigger"
         },
         {
-          "event_id": "evt_001226",
+          "event_id": "evt_001228",
           "payload": {
             "amount": 27,
             "reason": "skill:focus_fire",
@@ -19977,7 +20001,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_001227",
+          "event_id": "evt_001229",
           "payload": {
             "unit": "enemy_003"
           },
@@ -19985,7 +20009,7 @@
           "type": "death"
         },
         {
-          "event_id": "evt_001228",
+          "event_id": "evt_001230",
           "payload": {
             "cooldown_ticks": 100,
             "ready_tick": 324,
@@ -19997,7 +20021,7 @@
           "type": "skill_cooldown"
         },
         {
-          "event_id": "evt_001229",
+          "event_id": "evt_001231",
           "payload": {
             "action_interval_ticks": 28,
             "current_tick": 224,
@@ -20014,7 +20038,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001230",
+          "event_id": "evt_001232",
           "payload": {
             "reason": "target_dead",
             "target": "enemy_003",
@@ -20024,7 +20048,7 @@
           "type": "engagement_release"
         },
         {
-          "event_id": "evt_001231",
+          "event_id": "evt_001233",
           "payload": {
             "desired_distance": 71.5,
             "distance": 18.002,
@@ -20036,7 +20060,7 @@
           "type": "ranged_hold"
         },
         {
-          "event_id": "evt_001232",
+          "event_id": "evt_001234",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 101.394,
@@ -20054,7 +20078,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_001233",
+          "event_id": "evt_001235",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 88.079,
@@ -20072,7 +20096,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_001234",
+          "event_id": "evt_001236",
           "payload": {
             "distance": 127.793,
             "reason": "nearest_enemy",
@@ -20083,7 +20107,7 @@
           "type": "target_acquired"
         },
         {
-          "event_id": "evt_001235",
+          "event_id": "evt_001237",
           "payload": {
             "distance_to_target": 126.893,
             "from_x": 88.15,
@@ -20106,7 +20130,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001236",
+          "event_id": "evt_001238",
           "payload": {
             "desired_distance": 71.5,
             "distance": 18.002,
@@ -20118,7 +20142,7 @@
           "type": "ranged_hold"
         },
         {
-          "event_id": "evt_001237",
+          "event_id": "evt_001239",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 101.396,
@@ -20136,7 +20160,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_001238",
+          "event_id": "evt_001240",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 88.075,
@@ -20159,7 +20183,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001239",
+          "event_id": "evt_001241",
           "payload": {
             "desired_distance": 71.5,
             "distance": 18.002,
@@ -20171,7 +20195,7 @@
           "type": "ranged_hold"
         },
         {
-          "event_id": "evt_001240",
+          "event_id": "evt_001242",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 101.399,
@@ -20189,7 +20213,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_001241",
+          "event_id": "evt_001243",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 88.071,
@@ -20212,7 +20236,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001242",
+          "event_id": "evt_001244",
           "payload": {
             "desired_distance": 71.5,
             "distance": 18.002,
@@ -20224,7 +20248,7 @@
           "type": "ranged_hold"
         },
         {
-          "event_id": "evt_001243",
+          "event_id": "evt_001245",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 101.401,
@@ -20242,7 +20266,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_001244",
+          "event_id": "evt_001246",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 88.068,
@@ -20265,7 +20289,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001245",
+          "event_id": "evt_001247",
           "payload": {
             "desired_distance": 71.5,
             "distance": 18.002,
@@ -20277,7 +20301,7 @@
           "type": "ranged_hold"
         },
         {
-          "event_id": "evt_001246",
+          "event_id": "evt_001248",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 101.404,
@@ -20295,7 +20319,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_001247",
+          "event_id": "evt_001249",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 88.064,
@@ -20313,7 +20337,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_001248",
+          "event_id": "evt_001250",
           "payload": {
             "skill": "spear_thrust",
             "source": "enemy_002",
@@ -20336,7 +20360,7 @@
           "type": "skill_trigger"
         },
         {
-          "event_id": "evt_001249",
+          "event_id": "evt_001251",
           "payload": {
             "amount": 26,
             "reason": "skill:spear_thrust",
@@ -20348,7 +20372,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_001250",
+          "event_id": "evt_001252",
           "payload": {
             "cooldown_ticks": 26,
             "ready_tick": 255,
@@ -20360,7 +20384,7 @@
           "type": "skill_cooldown"
         },
         {
-          "event_id": "evt_001251",
+          "event_id": "evt_001253",
           "payload": {
             "action_interval_ticks": 24,
             "current_tick": 229,
@@ -20377,7 +20401,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001252",
+          "event_id": "evt_001254",
           "payload": {
             "anchor_x": 122.493,
             "anchor_y": 73.092,
@@ -20389,7 +20413,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001253",
+          "event_id": "evt_001255",
           "payload": {
             "anchor_x": 122.493,
             "anchor_y": 109.092,
@@ -20401,7 +20425,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001254",
+          "event_id": "evt_001256",
           "payload": {
             "anchor_x": 66.493,
             "anchor_y": 145.092,
@@ -20413,7 +20437,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001255",
+          "event_id": "evt_001257",
           "payload": {
             "anchor_x": 234.493,
             "anchor_y": 145.092,
@@ -20425,7 +20449,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001256",
+          "event_id": "evt_001258",
           "payload": {
             "anchor_x": 93.507,
             "anchor_y": 326.908,
@@ -20437,7 +20461,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001257",
+          "event_id": "evt_001259",
           "payload": {
             "anchor_x": 261.507,
             "anchor_y": 326.908,
@@ -20449,7 +20473,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001258",
+          "event_id": "evt_001260",
           "payload": {
             "anchor_x": 93.507,
             "anchor_y": 398.908,
@@ -20461,7 +20485,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001259",
+          "event_id": "evt_001261",
           "payload": {
             "desired_distance": 71.5,
             "distance": 18.001,
@@ -20473,7 +20497,7 @@
           "type": "ranged_hold"
         },
         {
-          "event_id": "evt_001260",
+          "event_id": "evt_001262",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 101.406,
@@ -20491,7 +20515,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_001261",
+          "event_id": "evt_001263",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 88.061,
@@ -20509,7 +20533,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_001262",
+          "event_id": "evt_001264",
           "payload": {
             "distance_to_target": 122.392,
             "from_x": 88.625,
@@ -20532,7 +20556,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001263",
+          "event_id": "evt_001265",
           "payload": {
             "desired_distance": 71.5,
             "distance": 18.001,
@@ -20544,7 +20568,7 @@
           "type": "ranged_hold"
         },
         {
-          "event_id": "evt_001264",
+          "event_id": "evt_001266",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 101.408,
@@ -20562,7 +20586,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_001265",
+          "event_id": "evt_001267",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 88.058,
@@ -20585,7 +20609,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001266",
+          "event_id": "evt_001268",
           "payload": {
             "desired_distance": 71.5,
             "distance": 18.001,
@@ -20597,7 +20621,7 @@
           "type": "ranged_hold"
         },
         {
-          "event_id": "evt_001267",
+          "event_id": "evt_001269",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 101.41,
@@ -20615,7 +20639,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_001268",
+          "event_id": "evt_001270",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 88.055,
@@ -20638,7 +20662,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001269",
+          "event_id": "evt_001271",
           "payload": {
             "desired_distance": 71.5,
             "distance": 18.001,
@@ -20650,7 +20674,7 @@
           "type": "ranged_hold"
         },
         {
-          "event_id": "evt_001270",
+          "event_id": "evt_001272",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 101.412,
@@ -20668,7 +20692,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_001271",
+          "event_id": "evt_001273",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 88.052,
@@ -20691,7 +20715,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001272",
+          "event_id": "evt_001274",
           "payload": {
             "desired_distance": 71.5,
             "distance": 18.001,
@@ -20703,7 +20727,7 @@
           "type": "ranged_hold"
         },
         {
-          "event_id": "evt_001273",
+          "event_id": "evt_001275",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 101.414,
@@ -20721,7 +20745,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_001274",
+          "event_id": "evt_001276",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 88.049,
@@ -20739,7 +20763,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_001275",
+          "event_id": "evt_001277",
           "payload": {
             "attacker": "enemy_005",
             "target": "ally_001",
@@ -20758,7 +20782,7 @@
           "type": "attack"
         },
         {
-          "event_id": "evt_001276",
+          "event_id": "evt_001278",
           "payload": {
             "amount": 1,
             "reason": "basic_attack",
@@ -20770,7 +20794,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_001277",
+          "event_id": "evt_001279",
           "payload": {
             "action_interval_ticks": 28,
             "current_tick": 234,
@@ -20787,7 +20811,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001278",
+          "event_id": "evt_001280",
           "payload": {
             "desired_distance": 71.5,
             "distance": 18.001,
@@ -20799,7 +20823,7 @@
           "type": "ranged_hold"
         },
         {
-          "event_id": "evt_001279",
+          "event_id": "evt_001281",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 101.416,
@@ -20817,7 +20841,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_001280",
+          "event_id": "evt_001282",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 88.047,
@@ -20835,7 +20859,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_001281",
+          "event_id": "evt_001283",
           "payload": {
             "distance_to_target": 117.892,
             "from_x": 89.101,
@@ -20858,7 +20882,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001282",
+          "event_id": "evt_001284",
           "payload": {
             "desired_distance": 71.5,
             "distance": 18.001,
@@ -20870,7 +20894,7 @@
           "type": "ranged_hold"
         },
         {
-          "event_id": "evt_001283",
+          "event_id": "evt_001285",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 101.418,
@@ -20888,7 +20912,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_001284",
+          "event_id": "evt_001286",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 88.044,
@@ -20911,7 +20935,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001285",
+          "event_id": "evt_001287",
           "payload": {
             "desired_distance": 71.5,
             "distance": 18.001,
@@ -20923,7 +20947,7 @@
           "type": "ranged_hold"
         },
         {
-          "event_id": "evt_001286",
+          "event_id": "evt_001288",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 101.419,
@@ -20941,7 +20965,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_001287",
+          "event_id": "evt_001289",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 88.042,
@@ -20964,7 +20988,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001288",
+          "event_id": "evt_001290",
           "payload": {
             "desired_distance": 71.5,
             "distance": 18.001,
@@ -20976,7 +21000,7 @@
           "type": "ranged_hold"
         },
         {
-          "event_id": "evt_001289",
+          "event_id": "evt_001291",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 101.421,
@@ -20994,7 +21018,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_001290",
+          "event_id": "evt_001292",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 88.039,
@@ -21012,7 +21036,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_001291",
+          "event_id": "evt_001293",
           "payload": {
             "skill": "katana_slash",
             "source": "ally_003",
@@ -21035,7 +21059,7 @@
           "type": "skill_trigger"
         },
         {
-          "event_id": "evt_001292",
+          "event_id": "evt_001294",
           "payload": {
             "amount": 34,
             "reason": "skill:katana_slash",
@@ -21047,7 +21071,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_001293",
+          "event_id": "evt_001295",
           "payload": {
             "cooldown_ticks": 20,
             "ready_tick": 258,
@@ -21059,7 +21083,7 @@
           "type": "skill_cooldown"
         },
         {
-          "event_id": "evt_001294",
+          "event_id": "evt_001296",
           "payload": {
             "action_interval_ticks": 20,
             "current_tick": 238,
@@ -21076,7 +21100,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001295",
+          "event_id": "evt_001297",
           "payload": {
             "distance": 18.001,
             "reason": "melee_entered_range",
@@ -21088,7 +21112,7 @@
           "type": "engagement_lock"
         },
         {
-          "event_id": "evt_001296",
+          "event_id": "evt_001298",
           "payload": {
             "desired_distance": 71.5,
             "distance": 18.001,
@@ -21100,7 +21124,7 @@
           "type": "ranged_hold"
         },
         {
-          "event_id": "evt_001297",
+          "event_id": "evt_001299",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 101.422,
@@ -21118,7 +21142,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_001298",
+          "event_id": "evt_001300",
           "payload": {
             "attack_range": 18.0,
             "distance": 18.001,
@@ -21130,7 +21154,7 @@
           "type": "enter_range"
         },
         {
-          "event_id": "evt_001299",
+          "event_id": "evt_001301",
           "payload": {
             "attack_range": 18.0,
             "distance": 18.001,
@@ -21143,7 +21167,7 @@
           "type": "engage_start"
         },
         {
-          "event_id": "evt_001300",
+          "event_id": "evt_001302",
           "payload": {
             "attacker": "ally_001",
             "target": "enemy_005",
@@ -21162,7 +21186,7 @@
           "type": "attack"
         },
         {
-          "event_id": "evt_001301",
+          "event_id": "evt_001303",
           "payload": {
             "amount": 9,
             "reason": "basic_attack",
@@ -21174,7 +21198,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_001302",
+          "event_id": "evt_001304",
           "payload": {
             "action_interval_ticks": 32,
             "current_tick": 239,
@@ -21191,7 +21215,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001303",
+          "event_id": "evt_001305",
           "payload": {
             "anchor_x": 125.541,
             "anchor_y": 63.718,
@@ -21203,7 +21227,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001304",
+          "event_id": "evt_001306",
           "payload": {
             "anchor_x": 125.541,
             "anchor_y": 99.718,
@@ -21215,7 +21239,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001305",
+          "event_id": "evt_001307",
           "payload": {
             "anchor_x": 69.541,
             "anchor_y": 135.718,
@@ -21227,7 +21251,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001306",
+          "event_id": "evt_001308",
           "payload": {
             "anchor_x": 237.541,
             "anchor_y": 135.718,
@@ -21239,7 +21263,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001307",
+          "event_id": "evt_001309",
           "payload": {
             "anchor_x": 90.459,
             "anchor_y": 336.282,
@@ -21251,7 +21275,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001308",
+          "event_id": "evt_001310",
           "payload": {
             "anchor_x": 258.459,
             "anchor_y": 336.282,
@@ -21263,7 +21287,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001309",
+          "event_id": "evt_001311",
           "payload": {
             "anchor_x": 90.459,
             "anchor_y": 408.282,
@@ -21275,7 +21299,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001310",
+          "event_id": "evt_001312",
           "payload": {
             "desired_distance": 71.5,
             "distance": 18.001,
@@ -21287,7 +21311,7 @@
           "type": "ranged_hold"
         },
         {
-          "event_id": "evt_001311",
+          "event_id": "evt_001313",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 88.035,
@@ -21305,7 +21329,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_001312",
+          "event_id": "evt_001314",
           "payload": {
             "distance_to_target": 113.392,
             "from_x": 89.577,
@@ -21328,7 +21352,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001313",
+          "event_id": "evt_001315",
           "payload": {
             "desired_distance": 71.5,
             "distance": 18.001,
@@ -21340,7 +21364,7 @@
           "type": "ranged_hold"
         },
         {
-          "event_id": "evt_001314",
+          "event_id": "evt_001316",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 101.426,
@@ -21363,7 +21387,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001315",
+          "event_id": "evt_001317",
           "payload": {
             "desired_distance": 71.5,
             "distance": 18.001,
@@ -21375,7 +21399,7 @@
           "type": "ranged_hold"
         },
         {
-          "event_id": "evt_001316",
+          "event_id": "evt_001318",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 88.031,
@@ -21398,7 +21422,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001317",
+          "event_id": "evt_001319",
           "payload": {
             "desired_distance": 71.5,
             "distance": 18.001,
@@ -21410,7 +21434,7 @@
           "type": "ranged_hold"
         },
         {
-          "event_id": "evt_001318",
+          "event_id": "evt_001320",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 101.428,
@@ -21433,7 +21457,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001319",
+          "event_id": "evt_001321",
           "payload": {
             "desired_distance": 71.5,
             "distance": 18.001,
@@ -21445,7 +21469,7 @@
           "type": "ranged_hold"
         },
         {
-          "event_id": "evt_001320",
+          "event_id": "evt_001322",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 88.027,
@@ -21468,7 +21492,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001321",
+          "event_id": "evt_001323",
           "payload": {
             "desired_distance": 71.5,
             "distance": 18.001,
@@ -21480,7 +21504,7 @@
           "type": "ranged_hold"
         },
         {
-          "event_id": "evt_001322",
+          "event_id": "evt_001324",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 101.431,
@@ -21498,7 +21522,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_001323",
+          "event_id": "evt_001325",
           "payload": {
             "attack_range": 110.0,
             "distance": 109.792,
@@ -21510,7 +21534,7 @@
           "type": "enter_range"
         },
         {
-          "event_id": "evt_001324",
+          "event_id": "evt_001326",
           "payload": {
             "attack_range": 110.0,
             "distance": 109.792,
@@ -21528,7 +21552,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001325",
+          "event_id": "evt_001327",
           "payload": {
             "desired_distance": 71.5,
             "distance": 18.001,
@@ -21540,7 +21564,7 @@
           "type": "ranged_hold"
         },
         {
-          "event_id": "evt_001326",
+          "event_id": "evt_001328",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 88.024,
@@ -21563,7 +21587,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001327",
+          "event_id": "evt_001329",
           "payload": {
             "desired_distance": 71.5,
             "distance": 18.001,
@@ -21575,7 +21599,7 @@
           "type": "ranged_hold"
         },
         {
-          "event_id": "evt_001328",
+          "event_id": "evt_001330",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 101.433,
@@ -21598,7 +21622,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001329",
+          "event_id": "evt_001331",
           "payload": {
             "desired_distance": 71.5,
             "distance": 18.001,
@@ -21610,7 +21634,7 @@
           "type": "ranged_hold"
         },
         {
-          "event_id": "evt_001330",
+          "event_id": "evt_001332",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 88.021,
@@ -21633,7 +21657,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001331",
+          "event_id": "evt_001333",
           "payload": {
             "desired_distance": 71.5,
             "distance": 18.001,
@@ -21645,7 +21669,7 @@
           "type": "ranged_hold"
         },
         {
-          "event_id": "evt_001332",
+          "event_id": "evt_001334",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 101.435,
@@ -21668,7 +21692,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001333",
+          "event_id": "evt_001335",
           "payload": {
             "anchor_x": 128.684,
             "anchor_y": 54.375,
@@ -21680,7 +21704,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001334",
+          "event_id": "evt_001336",
           "payload": {
             "anchor_x": 128.684,
             "anchor_y": 90.375,
@@ -21692,7 +21716,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001335",
+          "event_id": "evt_001337",
           "payload": {
             "anchor_x": 72.684,
             "anchor_y": 126.375,
@@ -21704,7 +21728,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001336",
+          "event_id": "evt_001338",
           "payload": {
             "anchor_x": 240.684,
             "anchor_y": 126.375,
@@ -21716,7 +21740,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001337",
+          "event_id": "evt_001339",
           "payload": {
             "anchor_x": 87.316,
             "anchor_y": 345.625,
@@ -21728,7 +21752,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001338",
+          "event_id": "evt_001340",
           "payload": {
             "anchor_x": 255.316,
             "anchor_y": 345.625,
@@ -21740,7 +21764,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001339",
+          "event_id": "evt_001341",
           "payload": {
             "anchor_x": 87.316,
             "anchor_y": 417.625,
@@ -21752,7 +21776,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001340",
+          "event_id": "evt_001342",
           "payload": {
             "desired_distance": 71.5,
             "distance": 18.001,
@@ -21764,7 +21788,7 @@
           "type": "ranged_hold"
         },
         {
-          "event_id": "evt_001341",
+          "event_id": "evt_001343",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 88.018,
@@ -21787,7 +21811,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001342",
+          "event_id": "evt_001344",
           "payload": {
             "desired_distance": 71.5,
             "distance": 18.001,
@@ -21799,7 +21823,7 @@
           "type": "ranged_hold"
         },
         {
-          "event_id": "evt_001343",
+          "event_id": "evt_001345",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 101.437,
@@ -21822,7 +21846,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001344",
+          "event_id": "evt_001346",
           "payload": {
             "desired_distance": 71.5,
             "distance": 18.001,
@@ -21834,7 +21858,7 @@
           "type": "ranged_hold"
         },
         {
-          "event_id": "evt_001345",
+          "event_id": "evt_001347",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 88.015,
@@ -21852,7 +21876,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_001346",
+          "event_id": "evt_001348",
           "payload": {
             "skill": "bow_shot",
             "source": "ally_005",
@@ -21875,7 +21899,7 @@
           "type": "skill_trigger"
         },
         {
-          "event_id": "evt_001347",
+          "event_id": "evt_001349",
           "payload": {
             "amount": 2,
             "reason": "skill:bow_shot",
@@ -21887,7 +21911,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_001348",
+          "event_id": "evt_001350",
           "payload": {
             "cooldown_ticks": 30,
             "ready_tick": 282,
@@ -21899,7 +21923,7 @@
           "type": "skill_cooldown"
         },
         {
-          "event_id": "evt_001349",
+          "event_id": "evt_001351",
           "payload": {
             "action_interval_ticks": 28,
             "current_tick": 252,
@@ -21916,7 +21940,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001350",
+          "event_id": "evt_001352",
           "payload": {
             "desired_distance": 71.5,
             "distance": 18.001,
@@ -21928,7 +21952,7 @@
           "type": "ranged_hold"
         },
         {
-          "event_id": "evt_001351",
+          "event_id": "evt_001353",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 101.438,
@@ -21946,7 +21970,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_001352",
+          "event_id": "evt_001354",
           "payload": {
             "attacker": "enemy_002",
             "target": "ally_006",
@@ -21965,7 +21989,7 @@
           "type": "attack"
         },
         {
-          "event_id": "evt_001353",
+          "event_id": "evt_001355",
           "payload": {
             "amount": 11,
             "reason": "basic_attack",
@@ -21977,7 +22001,19 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_001354",
+          "event_id": "evt_001356",
+          "payload": {
+            "action_interval_ticks": 24,
+            "current_tick": 253,
+            "next_action_tick": 277,
+            "reason": "after_action",
+            "unit": "enemy_002"
+          },
+          "tick": 253,
+          "type": "action_scheduled"
+        },
+        {
+          "event_id": "evt_001357",
           "payload": {
             "skill": "intercept",
             "source": "ally_001",
@@ -21991,7 +22027,7 @@
           "type": "skill_trigger"
         },
         {
-          "event_id": "evt_001355",
+          "event_id": "evt_001358",
           "payload": {
             "amount": 16,
             "reason": "skill:intercept",
@@ -22003,7 +22039,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_001356",
+          "event_id": "evt_001359",
           "payload": {
             "cooldown_ticks": 80,
             "ready_tick": 333,
@@ -22013,18 +22049,6 @@
           },
           "tick": 253,
           "type": "skill_cooldown"
-        },
-        {
-          "event_id": "evt_001357",
-          "payload": {
-            "action_interval_ticks": 24,
-            "current_tick": 253,
-            "next_action_tick": 277,
-            "reason": "after_action",
-            "unit": "enemy_002"
-          },
-          "tick": 253,
-          "type": "action_scheduled"
         }
       ],
       "tick": 253
@@ -22032,7 +22056,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001358",
+          "event_id": "evt_001360",
           "payload": {
             "desired_distance": 71.5,
             "distance": 18.001,
@@ -22044,7 +22068,7 @@
           "type": "ranged_hold"
         },
         {
-          "event_id": "evt_001359",
+          "event_id": "evt_001361",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 88.013,
@@ -22062,7 +22086,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_001360",
+          "event_id": "evt_001362",
           "payload": {
             "attacker": "enemy_001",
             "target": "ally_001",
@@ -22081,7 +22105,7 @@
           "type": "attack"
         },
         {
-          "event_id": "evt_001361",
+          "event_id": "evt_001363",
           "payload": {
             "amount": 1,
             "reason": "basic_attack",
@@ -22093,7 +22117,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_001362",
+          "event_id": "evt_001364",
           "payload": {
             "action_interval_ticks": 32,
             "current_tick": 254,
@@ -22110,7 +22134,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001363",
+          "event_id": "evt_001365",
           "payload": {
             "desired_distance": 71.5,
             "distance": 18.001,
@@ -22122,7 +22146,7 @@
           "type": "ranged_hold"
         },
         {
-          "event_id": "evt_001364",
+          "event_id": "evt_001366",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 101.44,
@@ -22140,7 +22164,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_001365",
+          "event_id": "evt_001367",
           "payload": {
             "attacker": "ally_006",
             "target": "enemy_002",
@@ -22159,7 +22183,7 @@
           "type": "attack"
         },
         {
-          "event_id": "evt_001366",
+          "event_id": "evt_001368",
           "payload": {
             "amount": 2,
             "reason": "basic_attack",
@@ -22171,7 +22195,19 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_001367",
+          "event_id": "evt_001369",
+          "payload": {
+            "action_interval_ticks": 36,
+            "current_tick": 255,
+            "next_action_tick": 291,
+            "reason": "after_action",
+            "unit": "ally_006"
+          },
+          "tick": 255,
+          "type": "action_scheduled"
+        },
+        {
+          "event_id": "evt_001370",
           "payload": {
             "skill": "brace_counter",
             "source": "enemy_002",
@@ -22185,7 +22221,7 @@
           "type": "skill_trigger"
         },
         {
-          "event_id": "evt_001368",
+          "event_id": "evt_001371",
           "payload": {
             "amount": 29,
             "reason": "skill:brace_counter",
@@ -22197,7 +22233,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_001369",
+          "event_id": "evt_001372",
           "payload": {
             "cooldown_ticks": 60,
             "ready_tick": 315,
@@ -22209,7 +22245,7 @@
           "type": "skill_cooldown"
         },
         {
-          "event_id": "evt_001370",
+          "event_id": "evt_001373",
           "payload": {
             "skill": "intercept",
             "source": "enemy_001",
@@ -22223,7 +22259,7 @@
           "type": "skill_trigger"
         },
         {
-          "event_id": "evt_001371",
+          "event_id": "evt_001374",
           "payload": {
             "amount": 16,
             "reason": "skill:intercept",
@@ -22235,7 +22271,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_001372",
+          "event_id": "evt_001375",
           "payload": {
             "unit": "ally_006"
           },
@@ -22243,7 +22279,7 @@
           "type": "death"
         },
         {
-          "event_id": "evt_001373",
+          "event_id": "evt_001376",
           "payload": {
             "cooldown_ticks": 80,
             "ready_tick": 335,
@@ -22260,7 +22296,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001374",
+          "event_id": "evt_001377",
           "payload": {
             "reason": "target_dead",
             "target": "ally_006",
@@ -22270,7 +22306,7 @@
           "type": "engagement_release"
         },
         {
-          "event_id": "evt_001375",
+          "event_id": "evt_001378",
           "payload": {
             "desired_distance": 71.5,
             "distance": 18.0,
@@ -22282,7 +22318,7 @@
           "type": "ranged_hold"
         },
         {
-          "event_id": "evt_001376",
+          "event_id": "evt_001379",
           "payload": {
             "distance": 135.128,
             "reason": "nearest_enemy",
@@ -22298,7 +22334,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001377",
+          "event_id": "evt_001380",
           "payload": {
             "desired_distance": 71.5,
             "distance": 18.001,
@@ -22310,7 +22346,7 @@
           "type": "ranged_hold"
         },
         {
-          "event_id": "evt_001378",
+          "event_id": "evt_001381",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 88.01,
@@ -22333,7 +22369,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001379",
+          "event_id": "evt_001382",
           "payload": {
             "desired_distance": 71.5,
             "distance": 18.0,
@@ -22345,7 +22381,7 @@
           "type": "ranged_hold"
         },
         {
-          "event_id": "evt_001380",
+          "event_id": "evt_001383",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 101.442,
@@ -22363,7 +22399,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_001381",
+          "event_id": "evt_001384",
           "payload": {
             "skill": "katana_slash",
             "source": "ally_003",
@@ -22386,7 +22422,7 @@
           "type": "skill_trigger"
         },
         {
-          "event_id": "evt_001382",
+          "event_id": "evt_001385",
           "payload": {
             "amount": 34,
             "reason": "skill:katana_slash",
@@ -22398,7 +22434,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_001383",
+          "event_id": "evt_001386",
           "payload": {
             "cooldown_ticks": 20,
             "ready_tick": 278,
@@ -22410,7 +22446,7 @@
           "type": "skill_cooldown"
         },
         {
-          "event_id": "evt_001384",
+          "event_id": "evt_001387",
           "payload": {
             "action_interval_ticks": 20,
             "current_tick": 258,
@@ -22427,7 +22463,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001385",
+          "event_id": "evt_001388",
           "payload": {
             "desired_distance": 71.5,
             "distance": 18.0,
@@ -22444,7 +22480,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001386",
+          "event_id": "evt_001389",
           "payload": {
             "anchor_x": 134.428,
             "anchor_y": 46.941,
@@ -22456,7 +22492,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001387",
+          "event_id": "evt_001390",
           "payload": {
             "anchor_x": 134.428,
             "anchor_y": 82.941,
@@ -22468,7 +22504,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001388",
+          "event_id": "evt_001391",
           "payload": {
             "anchor_x": 78.428,
             "anchor_y": 118.941,
@@ -22480,7 +22516,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001389",
+          "event_id": "evt_001392",
           "payload": {
             "anchor_x": 81.572,
             "anchor_y": 353.059,
@@ -22492,7 +22528,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001390",
+          "event_id": "evt_001393",
           "payload": {
             "anchor_x": 249.572,
             "anchor_y": 353.059,
@@ -22504,7 +22540,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001391",
+          "event_id": "evt_001394",
           "payload": {
             "anchor_x": 81.572,
             "anchor_y": 425.059,
@@ -22516,7 +22552,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001392",
+          "event_id": "evt_001395",
           "payload": {
             "desired_distance": 71.5,
             "distance": 18.001,
@@ -22528,7 +22564,7 @@
           "type": "ranged_hold"
         },
         {
-          "event_id": "evt_001393",
+          "event_id": "evt_001396",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 88.007,
@@ -22546,7 +22582,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_001394",
+          "event_id": "evt_001397",
           "payload": {
             "distance_to_target": 129.126,
             "from_x": 227.509,
@@ -22569,7 +22605,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001395",
+          "event_id": "evt_001398",
           "payload": {
             "desired_distance": 71.5,
             "distance": 18.0,
@@ -22581,7 +22617,7 @@
           "type": "ranged_hold"
         },
         {
-          "event_id": "evt_001396",
+          "event_id": "evt_001399",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 101.444,
@@ -22604,7 +22640,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001397",
+          "event_id": "evt_001400",
           "payload": {
             "desired_distance": 71.5,
             "distance": 18.0,
@@ -22616,7 +22652,7 @@
           "type": "ranged_hold"
         },
         {
-          "event_id": "evt_001398",
+          "event_id": "evt_001401",
           "payload": {
             "skill": "bow_shot",
             "source": "enemy_005",
@@ -22639,7 +22675,7 @@
           "type": "skill_trigger"
         },
         {
-          "event_id": "evt_001399",
+          "event_id": "evt_001402",
           "payload": {
             "amount": 2,
             "reason": "skill:bow_shot",
@@ -22651,7 +22687,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_001400",
+          "event_id": "evt_001403",
           "payload": {
             "cooldown_ticks": 30,
             "ready_tick": 292,
@@ -22663,7 +22699,7 @@
           "type": "skill_cooldown"
         },
         {
-          "event_id": "evt_001401",
+          "event_id": "evt_001404",
           "payload": {
             "action_interval_ticks": 28,
             "current_tick": 262,
@@ -22680,7 +22716,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001402",
+          "event_id": "evt_001405",
           "payload": {
             "desired_distance": 71.5,
             "distance": 18.001,
@@ -22692,7 +22728,7 @@
           "type": "ranged_hold"
         },
         {
-          "event_id": "evt_001403",
+          "event_id": "evt_001406",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 88.005,
@@ -22715,7 +22751,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001404",
+          "event_id": "evt_001407",
           "payload": {
             "desired_distance": 71.5,
             "distance": 18.0,
@@ -22727,7 +22763,7 @@
           "type": "ranged_hold"
         },
         {
-          "event_id": "evt_001405",
+          "event_id": "evt_001408",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 101.446,
@@ -22750,7 +22786,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001406",
+          "event_id": "evt_001409",
           "payload": {
             "desired_distance": 71.5,
             "distance": 18.0,
@@ -22762,7 +22798,7 @@
           "type": "ranged_hold"
         },
         {
-          "event_id": "evt_001407",
+          "event_id": "evt_001410",
           "payload": {
             "distance_to_target": 123.125,
             "from_x": 221.705,
@@ -22785,7 +22821,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001408",
+          "event_id": "evt_001411",
           "payload": {
             "desired_distance": 71.5,
             "distance": 18.001,
@@ -22802,7 +22838,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001409",
+          "event_id": "evt_001412",
           "payload": {
             "desired_distance": 71.5,
             "distance": 18.001,
@@ -22814,7 +22850,7 @@
           "type": "ranged_hold"
         },
         {
-          "event_id": "evt_001410",
+          "event_id": "evt_001413",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 88.002,
@@ -22837,7 +22873,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001411",
+          "event_id": "evt_001414",
           "payload": {
             "desired_distance": 71.5,
             "distance": 18.0,
@@ -22849,7 +22885,7 @@
           "type": "ranged_hold"
         },
         {
-          "event_id": "evt_001412",
+          "event_id": "evt_001415",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 101.448,
@@ -22872,7 +22908,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001413",
+          "event_id": "evt_001416",
           "payload": {
             "desired_distance": 71.5,
             "distance": 18.0,
@@ -22889,7 +22925,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001414",
+          "event_id": "evt_001417",
           "payload": {
             "anchor_x": 142.523,
             "anchor_y": 41.072,
@@ -22901,7 +22937,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001415",
+          "event_id": "evt_001418",
           "payload": {
             "anchor_x": 142.523,
             "anchor_y": 77.072,
@@ -22913,7 +22949,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001416",
+          "event_id": "evt_001419",
           "payload": {
             "anchor_x": 86.523,
             "anchor_y": 113.072,
@@ -22925,7 +22961,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001417",
+          "event_id": "evt_001420",
           "payload": {
             "anchor_x": 73.477,
             "anchor_y": 358.928,
@@ -22937,7 +22973,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001418",
+          "event_id": "evt_001421",
           "payload": {
             "anchor_x": 241.477,
             "anchor_y": 358.928,
@@ -22949,7 +22985,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001419",
+          "event_id": "evt_001422",
           "payload": {
             "anchor_x": 73.477,
             "anchor_y": 430.928,
@@ -22961,7 +22997,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001420",
+          "event_id": "evt_001423",
           "payload": {
             "desired_distance": 71.5,
             "distance": 18.001,
@@ -22973,7 +23009,7 @@
           "type": "ranged_hold"
         },
         {
-          "event_id": "evt_001421",
+          "event_id": "evt_001424",
           "payload": {
             "distance_to_target": 117.123,
             "from_x": 215.901,
@@ -22996,7 +23032,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001422",
+          "event_id": "evt_001425",
           "payload": {
             "desired_distance": 71.5,
             "distance": 18.001,
@@ -23008,7 +23044,7 @@
           "type": "ranged_hold"
         },
         {
-          "event_id": "evt_001423",
+          "event_id": "evt_001426",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 87.999,
@@ -23031,7 +23067,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001424",
+          "event_id": "evt_001427",
           "payload": {
             "desired_distance": 71.5,
             "distance": 18.0,
@@ -23043,7 +23079,7 @@
           "type": "ranged_hold"
         },
         {
-          "event_id": "evt_001425",
+          "event_id": "evt_001428",
           "payload": {
             "distance_to_target": 18.0,
             "from_x": 101.449,
@@ -23061,7 +23097,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_001426",
+          "event_id": "evt_001429",
           "payload": {
             "attacker": "ally_001",
             "target": "enemy_005",
@@ -23080,7 +23116,7 @@
           "type": "attack"
         },
         {
-          "event_id": "evt_001427",
+          "event_id": "evt_001430",
           "payload": {
             "amount": 9,
             "reason": "basic_attack",
@@ -23092,7 +23128,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_001428",
+          "event_id": "evt_001431",
           "payload": {
             "unit": "enemy_005"
           },
@@ -23100,7 +23136,7 @@
           "type": "death"
         },
         {
-          "event_id": "evt_001429",
+          "event_id": "evt_001432",
           "payload": {
             "action_interval_ticks": 32,
             "current_tick": 272,
@@ -23117,7 +23153,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001430",
+          "event_id": "evt_001433",
           "payload": {
             "reason": "target_dead",
             "target": "enemy_005",
@@ -23127,7 +23163,7 @@
           "type": "engagement_release"
         },
         {
-          "event_id": "evt_001431",
+          "event_id": "evt_001434",
           "payload": {
             "distance": 6.243,
             "reason": "melee_entered_range",
@@ -23139,7 +23175,7 @@
           "type": "engagement_lock"
         },
         {
-          "event_id": "evt_001432",
+          "event_id": "evt_001435",
           "payload": {
             "reason": "target_dead",
             "target": "enemy_005",
@@ -23149,7 +23185,7 @@
           "type": "engagement_release"
         },
         {
-          "event_id": "evt_001433",
+          "event_id": "evt_001436",
           "payload": {
             "distance": 17.742,
             "reason": "melee_entered_range",
@@ -23161,7 +23197,7 @@
           "type": "engagement_lock"
         },
         {
-          "event_id": "evt_001434",
+          "event_id": "evt_001437",
           "payload": {
             "attack_range": 18.0,
             "distance": 6.243,
@@ -23173,7 +23209,7 @@
           "type": "enter_range"
         },
         {
-          "event_id": "evt_001435",
+          "event_id": "evt_001438",
           "payload": {
             "attack_range": 18.0,
             "distance": 6.243,
@@ -23186,7 +23222,7 @@
           "type": "engage_start"
         },
         {
-          "event_id": "evt_001436",
+          "event_id": "evt_001439",
           "payload": {
             "attack_range": 18.0,
             "distance": 17.742,
@@ -23198,7 +23234,7 @@
           "type": "enter_range"
         },
         {
-          "event_id": "evt_001437",
+          "event_id": "evt_001440",
           "payload": {
             "attack_range": 18.0,
             "distance": 17.742,
@@ -23216,7 +23252,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001438",
+          "event_id": "evt_001441",
           "payload": {
             "distance_to_target": 111.121,
             "from_x": 210.098,
@@ -23239,7 +23275,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001439",
+          "event_id": "evt_001442",
           "payload": {
             "skill": "katana_slash",
             "source": "ally_003",
@@ -23262,7 +23298,7 @@
           "type": "skill_trigger"
         },
         {
-          "event_id": "evt_001440",
+          "event_id": "evt_001443",
           "payload": {
             "amount": 15,
             "reason": "skill:katana_slash",
@@ -23274,7 +23310,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_001441",
+          "event_id": "evt_001444",
           "payload": {
             "cooldown_ticks": 20,
             "ready_tick": 298,
@@ -23286,7 +23322,7 @@
           "type": "skill_cooldown"
         },
         {
-          "event_id": "evt_001442",
+          "event_id": "evt_001445",
           "payload": {
             "action_interval_ticks": 20,
             "current_tick": 278,
@@ -23303,7 +23339,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001443",
+          "event_id": "evt_001446",
           "payload": {
             "anchor_x": 151.66,
             "anchor_y": 36.772,
@@ -23315,7 +23351,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001444",
+          "event_id": "evt_001447",
           "payload": {
             "anchor_x": 151.66,
             "anchor_y": 72.772,
@@ -23327,7 +23363,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001445",
+          "event_id": "evt_001448",
           "payload": {
             "anchor_x": 95.66,
             "anchor_y": 108.772,
@@ -23339,7 +23375,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001446",
+          "event_id": "evt_001449",
           "payload": {
             "anchor_x": 64.34,
             "anchor_y": 363.228,
@@ -23351,7 +23387,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001447",
+          "event_id": "evt_001450",
           "payload": {
             "anchor_x": 232.34,
             "anchor_y": 363.228,
@@ -23363,7 +23399,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001448",
+          "event_id": "evt_001451",
           "payload": {
             "distance_to_target": 105.12,
             "from_x": 204.294,
@@ -23381,7 +23417,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_001449",
+          "event_id": "evt_001452",
           "payload": {
             "attacker": "ally_005",
             "target": "enemy_001",
@@ -23400,7 +23436,7 @@
           "type": "attack"
         },
         {
-          "event_id": "evt_001450",
+          "event_id": "evt_001453",
           "payload": {
             "amount": 1,
             "reason": "basic_attack",
@@ -23412,7 +23448,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_001451",
+          "event_id": "evt_001454",
           "payload": {
             "action_interval_ticks": 28,
             "current_tick": 280,
@@ -23429,7 +23465,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001452",
+          "event_id": "evt_001455",
           "payload": {
             "distance_to_target": 99.118,
             "from_x": 198.49,
@@ -23452,7 +23488,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001453",
+          "event_id": "evt_001456",
           "payload": {
             "attacker": "enemy_001",
             "target": "ally_001",
@@ -23471,7 +23507,7 @@
           "type": "attack"
         },
         {
-          "event_id": "evt_001454",
+          "event_id": "evt_001457",
           "payload": {
             "amount": 1,
             "reason": "basic_attack",
@@ -23483,7 +23519,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_001455",
+          "event_id": "evt_001458",
           "payload": {
             "action_interval_ticks": 32,
             "current_tick": 286,
@@ -23500,7 +23536,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001456",
+          "event_id": "evt_001459",
           "payload": {
             "anchor_x": 160.896,
             "anchor_y": 32.448,
@@ -23512,7 +23548,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001457",
+          "event_id": "evt_001460",
           "payload": {
             "anchor_x": 160.896,
             "anchor_y": 68.448,
@@ -23524,7 +23560,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001458",
+          "event_id": "evt_001461",
           "payload": {
             "anchor_x": 104.896,
             "anchor_y": 104.448,
@@ -23536,7 +23572,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001459",
+          "event_id": "evt_001462",
           "payload": {
             "anchor_x": 55.104,
             "anchor_y": 367.552,
@@ -23548,7 +23584,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001460",
+          "event_id": "evt_001463",
           "payload": {
             "anchor_x": 223.104,
             "anchor_y": 367.552,
@@ -23560,7 +23596,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001461",
+          "event_id": "evt_001464",
           "payload": {
             "distance_to_target": 93.117,
             "from_x": 192.686,
@@ -23583,7 +23619,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001462",
+          "event_id": "evt_001465",
           "payload": {
             "distance_to_target": 87.116,
             "from_x": 186.883,
@@ -23606,7 +23642,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001463",
+          "event_id": "evt_001466",
           "payload": {
             "skill": "katana_slash",
             "source": "ally_003",
@@ -23629,7 +23665,7 @@
           "type": "skill_trigger"
         },
         {
-          "event_id": "evt_001464",
+          "event_id": "evt_001467",
           "payload": {
             "amount": 15,
             "reason": "skill:katana_slash",
@@ -23641,7 +23677,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_001465",
+          "event_id": "evt_001468",
           "payload": {
             "cooldown_ticks": 20,
             "ready_tick": 318,
@@ -23653,7 +23689,7 @@
           "type": "skill_cooldown"
         },
         {
-          "event_id": "evt_001466",
+          "event_id": "evt_001469",
           "payload": {
             "action_interval_ticks": 20,
             "current_tick": 298,
@@ -23670,7 +23706,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001467",
+          "event_id": "evt_001470",
           "payload": {
             "anchor_x": 169.826,
             "anchor_y": 27.523,
@@ -23682,7 +23718,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001468",
+          "event_id": "evt_001471",
           "payload": {
             "anchor_x": 169.826,
             "anchor_y": 63.523,
@@ -23694,7 +23730,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001469",
+          "event_id": "evt_001472",
           "payload": {
             "anchor_x": 113.826,
             "anchor_y": 99.523,
@@ -23706,7 +23742,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001470",
+          "event_id": "evt_001473",
           "payload": {
             "anchor_x": 46.174,
             "anchor_y": 372.477,
@@ -23718,7 +23754,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001471",
+          "event_id": "evt_001474",
           "payload": {
             "anchor_x": 214.174,
             "anchor_y": 372.477,
@@ -23730,7 +23766,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001472",
+          "event_id": "evt_001475",
           "payload": {
             "distance_to_target": 81.116,
             "from_x": 181.079,
@@ -23753,7 +23789,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001473",
+          "event_id": "evt_001476",
           "payload": {
             "attacker": "ally_001",
             "target": "enemy_001",
@@ -23772,7 +23808,7 @@
           "type": "attack"
         },
         {
-          "event_id": "evt_001474",
+          "event_id": "evt_001477",
           "payload": {
             "amount": 1,
             "reason": "basic_attack",
@@ -23784,7 +23820,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_001475",
+          "event_id": "evt_001478",
           "payload": {
             "action_interval_ticks": 32,
             "current_tick": 304,
@@ -23801,7 +23837,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001476",
+          "event_id": "evt_001479",
           "payload": {
             "distance_to_target": 75.115,
             "from_x": 175.275,
@@ -23824,7 +23860,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001477",
+          "event_id": "evt_001480",
           "payload": {
             "skill": "bow_shot",
             "source": "ally_005",
@@ -23847,7 +23883,7 @@
           "type": "skill_trigger"
         },
         {
-          "event_id": "evt_001478",
+          "event_id": "evt_001481",
           "payload": {
             "amount": 2,
             "reason": "skill:bow_shot",
@@ -23859,7 +23895,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_001479",
+          "event_id": "evt_001482",
           "payload": {
             "cooldown_ticks": 30,
             "ready_tick": 338,
@@ -23871,7 +23907,7 @@
           "type": "skill_cooldown"
         },
         {
-          "event_id": "evt_001480",
+          "event_id": "evt_001483",
           "payload": {
             "action_interval_ticks": 28,
             "current_tick": 308,
@@ -23888,7 +23924,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001481",
+          "event_id": "evt_001484",
           "payload": {
             "anchor_x": 178.349,
             "anchor_y": 21.926,
@@ -23900,7 +23936,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001482",
+          "event_id": "evt_001485",
           "payload": {
             "anchor_x": 178.349,
             "anchor_y": 57.926,
@@ -23912,7 +23948,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001483",
+          "event_id": "evt_001486",
           "payload": {
             "anchor_x": 122.349,
             "anchor_y": 93.926,
@@ -23924,7 +23960,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001484",
+          "event_id": "evt_001487",
           "payload": {
             "anchor_x": 37.651,
             "anchor_y": 378.074,
@@ -23936,7 +23972,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001485",
+          "event_id": "evt_001488",
           "payload": {
             "anchor_x": 205.651,
             "anchor_y": 378.074,
@@ -23948,7 +23984,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001486",
+          "event_id": "evt_001489",
           "payload": {
             "distance_to_target": 69.115,
             "from_x": 169.472,
@@ -23971,7 +24007,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001487",
+          "event_id": "evt_001490",
           "payload": {
             "distance_to_target": 63.114,
             "from_x": 163.668,
@@ -23994,7 +24030,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001488",
+          "event_id": "evt_001491",
           "payload": {
             "skill": "katana_slash",
             "source": "ally_003",
@@ -24017,7 +24053,7 @@
           "type": "skill_trigger"
         },
         {
-          "event_id": "evt_001489",
+          "event_id": "evt_001492",
           "payload": {
             "amount": 15,
             "reason": "skill:katana_slash",
@@ -24029,7 +24065,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_001490",
+          "event_id": "evt_001493",
           "payload": {
             "cooldown_ticks": 20,
             "ready_tick": 338,
@@ -24041,7 +24077,7 @@
           "type": "skill_cooldown"
         },
         {
-          "event_id": "evt_001491",
+          "event_id": "evt_001494",
           "payload": {
             "action_interval_ticks": 20,
             "current_tick": 318,
@@ -24053,7 +24089,7 @@
           "type": "action_scheduled"
         },
         {
-          "event_id": "evt_001492",
+          "event_id": "evt_001495",
           "payload": {
             "attacker": "enemy_001",
             "target": "ally_001",
@@ -24072,7 +24108,7 @@
           "type": "attack"
         },
         {
-          "event_id": "evt_001493",
+          "event_id": "evt_001496",
           "payload": {
             "amount": 1,
             "reason": "basic_attack",
@@ -24084,7 +24120,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_001494",
+          "event_id": "evt_001497",
           "payload": {
             "action_interval_ticks": 32,
             "current_tick": 318,
@@ -24101,7 +24137,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001495",
+          "event_id": "evt_001498",
           "payload": {
             "anchor_x": 186.34,
             "anchor_y": 15.592,
@@ -24113,7 +24149,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001496",
+          "event_id": "evt_001499",
           "payload": {
             "anchor_x": 186.34,
             "anchor_y": 51.592,
@@ -24125,7 +24161,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001497",
+          "event_id": "evt_001500",
           "payload": {
             "anchor_x": 130.34,
             "anchor_y": 87.592,
@@ -24137,7 +24173,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001498",
+          "event_id": "evt_001501",
           "payload": {
             "anchor_x": 29.66,
             "anchor_y": 384.408,
@@ -24149,7 +24185,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001499",
+          "event_id": "evt_001502",
           "payload": {
             "anchor_x": 197.66,
             "anchor_y": 384.408,
@@ -24161,7 +24197,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001500",
+          "event_id": "evt_001503",
           "payload": {
             "distance_to_target": 57.114,
             "from_x": 157.864,
@@ -24184,7 +24220,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001501",
+          "event_id": "evt_001504",
           "payload": {
             "distance": 109.435,
             "reason": "nearest_enemy",
@@ -24195,7 +24231,7 @@
           "type": "target_acquired"
         },
         {
-          "event_id": "evt_001502",
+          "event_id": "evt_001505",
           "payload": {
             "attack_range": 110.0,
             "distance": 109.435,
@@ -24207,7 +24243,7 @@
           "type": "enter_range"
         },
         {
-          "event_id": "evt_001503",
+          "event_id": "evt_001506",
           "payload": {
             "attack_range": 110.0,
             "distance": 109.435,
@@ -24225,7 +24261,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001504",
+          "event_id": "evt_001507",
           "payload": {
             "distance_to_target": 51.114,
             "from_x": 152.061,
@@ -24248,7 +24284,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001505",
+          "event_id": "evt_001508",
           "payload": {
             "anchor_x": 193.635,
             "anchor_y": 8.471,
@@ -24260,7 +24296,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001506",
+          "event_id": "evt_001509",
           "payload": {
             "anchor_x": 193.635,
             "anchor_y": 44.471,
@@ -24272,7 +24308,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001507",
+          "event_id": "evt_001510",
           "payload": {
             "anchor_x": 137.635,
             "anchor_y": 80.471,
@@ -24284,7 +24320,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001508",
+          "event_id": "evt_001511",
           "payload": {
             "anchor_x": 22.365,
             "anchor_y": 391.529,
@@ -24296,7 +24332,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001509",
+          "event_id": "evt_001512",
           "payload": {
             "anchor_x": 190.365,
             "anchor_y": 391.529,
@@ -24308,7 +24344,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001510",
+          "event_id": "evt_001513",
           "payload": {
             "distance_to_target": 45.114,
             "from_x": 146.257,
@@ -24331,7 +24367,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001511",
+          "event_id": "evt_001514",
           "payload": {
             "distance_to_target": 39.114,
             "from_x": 140.453,
@@ -24354,7 +24390,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001512",
+          "event_id": "evt_001515",
           "payload": {
             "attacker": "ally_001",
             "target": "enemy_001",
@@ -24373,7 +24409,7 @@
           "type": "attack"
         },
         {
-          "event_id": "evt_001513",
+          "event_id": "evt_001516",
           "payload": {
             "amount": 1,
             "reason": "basic_attack",
@@ -24385,7 +24421,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_001514",
+          "event_id": "evt_001517",
           "payload": {
             "action_interval_ticks": 32,
             "current_tick": 336,
@@ -24397,7 +24433,7 @@
           "type": "action_scheduled"
         },
         {
-          "event_id": "evt_001515",
+          "event_id": "evt_001518",
           "payload": {
             "skill": "focus_fire",
             "source": "ally_005",
@@ -24411,7 +24447,7 @@
           "type": "skill_trigger"
         },
         {
-          "event_id": "evt_001516",
+          "event_id": "evt_001519",
           "payload": {
             "amount": 25,
             "reason": "skill:focus_fire",
@@ -24423,7 +24459,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_001517",
+          "event_id": "evt_001520",
           "payload": {
             "cooldown_ticks": 100,
             "ready_tick": 436,
@@ -24435,7 +24471,19 @@
           "type": "skill_cooldown"
         },
         {
-          "event_id": "evt_001518",
+          "event_id": "evt_001521",
+          "payload": {
+            "action_interval_ticks": 28,
+            "current_tick": 336,
+            "next_action_tick": 364,
+            "reason": "after_action",
+            "unit": "ally_005"
+          },
+          "tick": 336,
+          "type": "action_scheduled"
+        },
+        {
+          "event_id": "evt_001522",
           "payload": {
             "skill": "brace_counter",
             "source": "enemy_002",
@@ -24449,7 +24497,7 @@
           "type": "skill_trigger"
         },
         {
-          "event_id": "evt_001519",
+          "event_id": "evt_001523",
           "payload": {
             "amount": 30,
             "reason": "skill:brace_counter",
@@ -24461,7 +24509,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_001520",
+          "event_id": "evt_001524",
           "payload": {
             "cooldown_ticks": 60,
             "ready_tick": 396,
@@ -24473,7 +24521,7 @@
           "type": "skill_cooldown"
         },
         {
-          "event_id": "evt_001521",
+          "event_id": "evt_001525",
           "payload": {
             "skill": "intercept",
             "source": "enemy_001",
@@ -24487,7 +24535,7 @@
           "type": "skill_trigger"
         },
         {
-          "event_id": "evt_001522",
+          "event_id": "evt_001526",
           "payload": {
             "amount": 17,
             "reason": "skill:intercept",
@@ -24499,7 +24547,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_001523",
+          "event_id": "evt_001527",
           "payload": {
             "cooldown_ticks": 80,
             "ready_tick": 416,
@@ -24509,18 +24557,6 @@
           },
           "tick": 336,
           "type": "skill_cooldown"
-        },
-        {
-          "event_id": "evt_001524",
-          "payload": {
-            "action_interval_ticks": 28,
-            "current_tick": 336,
-            "next_action_tick": 364,
-            "reason": "after_action",
-            "unit": "ally_005"
-          },
-          "tick": 336,
-          "type": "action_scheduled"
         }
       ],
       "tick": 336
@@ -24528,7 +24564,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001525",
+          "event_id": "evt_001528",
           "payload": {
             "skill": "katana_slash",
             "source": "ally_003",
@@ -24551,7 +24587,7 @@
           "type": "skill_trigger"
         },
         {
-          "event_id": "evt_001526",
+          "event_id": "evt_001529",
           "payload": {
             "amount": 15,
             "reason": "skill:katana_slash",
@@ -24563,7 +24599,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_001527",
+          "event_id": "evt_001530",
           "payload": {
             "cooldown_ticks": 20,
             "ready_tick": 358,
@@ -24575,7 +24611,7 @@
           "type": "skill_cooldown"
         },
         {
-          "event_id": "evt_001528",
+          "event_id": "evt_001531",
           "payload": {
             "action_interval_ticks": 20,
             "current_tick": 338,
@@ -24592,7 +24628,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001529",
+          "event_id": "evt_001532",
           "payload": {
             "anchor_x": 200.045,
             "anchor_y": 0.544,
@@ -24604,7 +24640,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001530",
+          "event_id": "evt_001533",
           "payload": {
             "anchor_x": 200.045,
             "anchor_y": 36.544,
@@ -24616,7 +24652,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001531",
+          "event_id": "evt_001534",
           "payload": {
             "anchor_x": 144.045,
             "anchor_y": 72.544,
@@ -24628,7 +24664,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001532",
+          "event_id": "evt_001535",
           "payload": {
             "anchor_x": 15.955,
             "anchor_y": 399.456,
@@ -24640,7 +24676,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001533",
+          "event_id": "evt_001536",
           "payload": {
             "anchor_x": 183.955,
             "anchor_y": 399.456,
@@ -24652,7 +24688,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001534",
+          "event_id": "evt_001537",
           "payload": {
             "distance_to_target": 33.114,
             "from_x": 134.65,
@@ -24675,7 +24711,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001535",
+          "event_id": "evt_001538",
           "payload": {
             "distance_to_target": 27.114,
             "from_x": 128.846,
@@ -24698,7 +24734,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001536",
+          "event_id": "evt_001539",
           "payload": {
             "distance_to_target": 26.0,
             "from_x": 127.685,
@@ -24716,7 +24752,7 @@
           "type": "unit_move"
         },
         {
-          "event_id": "evt_001537",
+          "event_id": "evt_001540",
           "payload": {
             "skill": "spear_thrust",
             "source": "enemy_002",
@@ -24739,7 +24775,7 @@
           "type": "skill_trigger"
         },
         {
-          "event_id": "evt_001538",
+          "event_id": "evt_001541",
           "payload": {
             "amount": 8,
             "reason": "skill:spear_thrust",
@@ -24751,7 +24787,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_001539",
+          "event_id": "evt_001542",
           "payload": {
             "cooldown_ticks": 26,
             "ready_tick": 372,
@@ -24763,7 +24799,7 @@
           "type": "skill_cooldown"
         },
         {
-          "event_id": "evt_001540",
+          "event_id": "evt_001543",
           "payload": {
             "action_interval_ticks": 24,
             "current_tick": 346,
@@ -24780,7 +24816,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001541",
+          "event_id": "evt_001544",
           "payload": {
             "distance": 26.0,
             "reason": "melee_entered_range",
@@ -24792,7 +24828,7 @@
           "type": "engagement_lock"
         },
         {
-          "event_id": "evt_001542",
+          "event_id": "evt_001545",
           "payload": {
             "attack_range": 26.0,
             "distance": 26.0,
@@ -24804,7 +24840,7 @@
           "type": "enter_range"
         },
         {
-          "event_id": "evt_001543",
+          "event_id": "evt_001546",
           "payload": {
             "attack_range": 26.0,
             "distance": 26.0,
@@ -24822,7 +24858,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001544",
+          "event_id": "evt_001547",
           "payload": {
             "anchor_x": 205.44,
             "anchor_y": -8.107,
@@ -24834,7 +24870,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001545",
+          "event_id": "evt_001548",
           "payload": {
             "anchor_x": 205.44,
             "anchor_y": 27.893,
@@ -24846,7 +24882,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001546",
+          "event_id": "evt_001549",
           "payload": {
             "anchor_x": 149.44,
             "anchor_y": 63.893,
@@ -24858,7 +24894,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001547",
+          "event_id": "evt_001550",
           "payload": {
             "anchor_x": 10.56,
             "anchor_y": 408.107,
@@ -24870,7 +24906,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001548",
+          "event_id": "evt_001551",
           "payload": {
             "anchor_x": 178.56,
             "anchor_y": 408.107,
@@ -24882,7 +24918,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001549",
+          "event_id": "evt_001552",
           "payload": {
             "attacker": "enemy_001",
             "target": "ally_001",
@@ -24901,7 +24937,7 @@
           "type": "attack"
         },
         {
-          "event_id": "evt_001550",
+          "event_id": "evt_001553",
           "payload": {
             "amount": 1,
             "reason": "basic_attack",
@@ -24913,7 +24949,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_001551",
+          "event_id": "evt_001554",
           "payload": {
             "action_interval_ticks": 32,
             "current_tick": 350,
@@ -24930,7 +24966,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001552",
+          "event_id": "evt_001555",
           "payload": {
             "skill": "katana_slash",
             "source": "ally_003",
@@ -24953,7 +24989,7 @@
           "type": "skill_trigger"
         },
         {
-          "event_id": "evt_001553",
+          "event_id": "evt_001556",
           "payload": {
             "amount": 15,
             "reason": "skill:katana_slash",
@@ -24965,7 +25001,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_001554",
+          "event_id": "evt_001557",
           "payload": {
             "cooldown_ticks": 20,
             "ready_tick": 378,
@@ -24977,7 +25013,7 @@
           "type": "skill_cooldown"
         },
         {
-          "event_id": "evt_001555",
+          "event_id": "evt_001558",
           "payload": {
             "action_interval_ticks": 20,
             "current_tick": 358,
@@ -24994,7 +25030,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001556",
+          "event_id": "evt_001559",
           "payload": {
             "anchor_x": 210.592,
             "anchor_y": -16.91,
@@ -25006,7 +25042,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001557",
+          "event_id": "evt_001560",
           "payload": {
             "anchor_x": 210.592,
             "anchor_y": 19.09,
@@ -25018,7 +25054,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001558",
+          "event_id": "evt_001561",
           "payload": {
             "anchor_x": 154.592,
             "anchor_y": 55.09,
@@ -25030,7 +25066,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001559",
+          "event_id": "evt_001562",
           "payload": {
             "anchor_x": 5.408,
             "anchor_y": 416.91,
@@ -25042,7 +25078,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001560",
+          "event_id": "evt_001563",
           "payload": {
             "anchor_x": 173.408,
             "anchor_y": 416.91,
@@ -25059,7 +25095,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001561",
+          "event_id": "evt_001564",
           "payload": {
             "skill": "bow_shot",
             "source": "ally_005",
@@ -25082,7 +25118,7 @@
           "type": "skill_trigger"
         },
         {
-          "event_id": "evt_001562",
+          "event_id": "evt_001565",
           "payload": {
             "amount": 18,
             "reason": "skill:bow_shot",
@@ -25094,7 +25130,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_001563",
+          "event_id": "evt_001566",
           "payload": {
             "cooldown_ticks": 30,
             "ready_tick": 394,
@@ -25106,7 +25142,7 @@
           "type": "skill_cooldown"
         },
         {
-          "event_id": "evt_001564",
+          "event_id": "evt_001567",
           "payload": {
             "action_interval_ticks": 28,
             "current_tick": 364,
@@ -25123,7 +25159,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001565",
+          "event_id": "evt_001568",
           "payload": {
             "attacker": "ally_001",
             "target": "enemy_001",
@@ -25142,7 +25178,7 @@
           "type": "attack"
         },
         {
-          "event_id": "evt_001566",
+          "event_id": "evt_001569",
           "payload": {
             "amount": 1,
             "reason": "basic_attack",
@@ -25154,7 +25190,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_001567",
+          "event_id": "evt_001570",
           "payload": {
             "action_interval_ticks": 32,
             "current_tick": 368,
@@ -25171,7 +25207,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001568",
+          "event_id": "evt_001571",
           "payload": {
             "anchor_x": 215.743,
             "anchor_y": -25.713,
@@ -25183,7 +25219,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001569",
+          "event_id": "evt_001572",
           "payload": {
             "anchor_x": 215.743,
             "anchor_y": 10.287,
@@ -25195,7 +25231,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001570",
+          "event_id": "evt_001573",
           "payload": {
             "anchor_x": 159.743,
             "anchor_y": 46.287,
@@ -25207,7 +25243,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001571",
+          "event_id": "evt_001574",
           "payload": {
             "anchor_x": 0.257,
             "anchor_y": 425.713,
@@ -25219,7 +25255,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001572",
+          "event_id": "evt_001575",
           "payload": {
             "anchor_x": 168.257,
             "anchor_y": 425.713,
@@ -25231,7 +25267,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001573",
+          "event_id": "evt_001576",
           "payload": {
             "attacker": "enemy_002",
             "target": "ally_001",
@@ -25250,7 +25286,7 @@
           "type": "attack"
         },
         {
-          "event_id": "evt_001574",
+          "event_id": "evt_001577",
           "payload": {
             "amount": 1,
             "reason": "basic_attack",
@@ -25262,7 +25298,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_001575",
+          "event_id": "evt_001578",
           "payload": {
             "action_interval_ticks": 24,
             "current_tick": 370,
@@ -25279,7 +25315,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001576",
+          "event_id": "evt_001579",
           "payload": {
             "skill": "katana_slash",
             "source": "ally_003",
@@ -25302,7 +25338,7 @@
           "type": "skill_trigger"
         },
         {
-          "event_id": "evt_001577",
+          "event_id": "evt_001580",
           "payload": {
             "amount": 15,
             "reason": "skill:katana_slash",
@@ -25314,7 +25350,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_001578",
+          "event_id": "evt_001581",
           "payload": {
             "cooldown_ticks": 20,
             "ready_tick": 398,
@@ -25326,7 +25362,7 @@
           "type": "skill_cooldown"
         },
         {
-          "event_id": "evt_001579",
+          "event_id": "evt_001582",
           "payload": {
             "action_interval_ticks": 20,
             "current_tick": 378,
@@ -25343,7 +25379,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001580",
+          "event_id": "evt_001583",
           "payload": {
             "anchor_x": 220.895,
             "anchor_y": -34.517,
@@ -25355,7 +25391,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001581",
+          "event_id": "evt_001584",
           "payload": {
             "anchor_x": 220.895,
             "anchor_y": 1.483,
@@ -25367,7 +25403,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001582",
+          "event_id": "evt_001585",
           "payload": {
             "anchor_x": 164.895,
             "anchor_y": 37.483,
@@ -25379,7 +25415,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001583",
+          "event_id": "evt_001586",
           "payload": {
             "anchor_x": -4.895,
             "anchor_y": 434.517,
@@ -25391,7 +25427,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001584",
+          "event_id": "evt_001587",
           "payload": {
             "anchor_x": 163.105,
             "anchor_y": 434.517,
@@ -25408,7 +25444,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001585",
+          "event_id": "evt_001588",
           "payload": {
             "attacker": "enemy_001",
             "target": "ally_001",
@@ -25427,7 +25463,7 @@
           "type": "attack"
         },
         {
-          "event_id": "evt_001586",
+          "event_id": "evt_001589",
           "payload": {
             "amount": 1,
             "reason": "basic_attack",
@@ -25439,7 +25475,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_001587",
+          "event_id": "evt_001590",
           "payload": {
             "action_interval_ticks": 32,
             "current_tick": 382,
@@ -25456,7 +25492,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001588",
+          "event_id": "evt_001591",
           "payload": {
             "anchor_x": 226.047,
             "anchor_y": -43.32,
@@ -25468,7 +25504,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001589",
+          "event_id": "evt_001592",
           "payload": {
             "anchor_x": 226.047,
             "anchor_y": -7.32,
@@ -25480,7 +25516,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001590",
+          "event_id": "evt_001593",
           "payload": {
             "anchor_x": 170.047,
             "anchor_y": 28.68,
@@ -25492,7 +25528,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001591",
+          "event_id": "evt_001594",
           "payload": {
             "anchor_x": -10.047,
             "anchor_y": 443.32,
@@ -25504,7 +25540,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001592",
+          "event_id": "evt_001595",
           "payload": {
             "anchor_x": 157.953,
             "anchor_y": 443.32,
@@ -25521,7 +25557,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001593",
+          "event_id": "evt_001596",
           "payload": {
             "attacker": "ally_005",
             "target": "enemy_002",
@@ -25540,7 +25576,7 @@
           "type": "attack"
         },
         {
-          "event_id": "evt_001594",
+          "event_id": "evt_001597",
           "payload": {
             "amount": 5,
             "reason": "basic_attack",
@@ -25552,7 +25588,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_001595",
+          "event_id": "evt_001598",
           "payload": {
             "action_interval_ticks": 28,
             "current_tick": 392,
@@ -25569,7 +25605,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001596",
+          "event_id": "evt_001599",
           "payload": {
             "skill": "spear_thrust",
             "source": "enemy_002",
@@ -25592,7 +25628,7 @@
           "type": "skill_trigger"
         },
         {
-          "event_id": "evt_001597",
+          "event_id": "evt_001600",
           "payload": {
             "amount": 8,
             "reason": "skill:spear_thrust",
@@ -25604,7 +25640,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_001598",
+          "event_id": "evt_001601",
           "payload": {
             "cooldown_ticks": 26,
             "ready_tick": 420,
@@ -25616,7 +25652,7 @@
           "type": "skill_cooldown"
         },
         {
-          "event_id": "evt_001599",
+          "event_id": "evt_001602",
           "payload": {
             "action_interval_ticks": 24,
             "current_tick": 394,
@@ -25633,7 +25669,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001600",
+          "event_id": "evt_001603",
           "payload": {
             "skill": "katana_slash",
             "source": "ally_003",
@@ -25656,7 +25692,7 @@
           "type": "skill_trigger"
         },
         {
-          "event_id": "evt_001601",
+          "event_id": "evt_001604",
           "payload": {
             "amount": 15,
             "reason": "skill:katana_slash",
@@ -25668,7 +25704,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_001602",
+          "event_id": "evt_001605",
           "payload": {
             "cooldown_ticks": 20,
             "ready_tick": 418,
@@ -25680,7 +25716,7 @@
           "type": "skill_cooldown"
         },
         {
-          "event_id": "evt_001603",
+          "event_id": "evt_001606",
           "payload": {
             "action_interval_ticks": 20,
             "current_tick": 398,
@@ -25697,7 +25733,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001604",
+          "event_id": "evt_001607",
           "payload": {
             "anchor_x": 231.199,
             "anchor_y": -52.123,
@@ -25709,7 +25745,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001605",
+          "event_id": "evt_001608",
           "payload": {
             "anchor_x": 231.199,
             "anchor_y": -16.123,
@@ -25721,7 +25757,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001606",
+          "event_id": "evt_001609",
           "payload": {
             "anchor_x": 175.199,
             "anchor_y": 19.877,
@@ -25733,7 +25769,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001607",
+          "event_id": "evt_001610",
           "payload": {
             "anchor_x": -15.199,
             "anchor_y": 452.123,
@@ -25745,7 +25781,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001608",
+          "event_id": "evt_001611",
           "payload": {
             "anchor_x": 152.801,
             "anchor_y": 452.123,
@@ -25757,7 +25793,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001609",
+          "event_id": "evt_001612",
           "payload": {
             "attacker": "ally_001",
             "target": "enemy_001",
@@ -25776,7 +25812,7 @@
           "type": "attack"
         },
         {
-          "event_id": "evt_001610",
+          "event_id": "evt_001613",
           "payload": {
             "amount": 1,
             "reason": "basic_attack",
@@ -25788,7 +25824,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_001611",
+          "event_id": "evt_001614",
           "payload": {
             "action_interval_ticks": 32,
             "current_tick": 400,
@@ -25805,7 +25841,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001612",
+          "event_id": "evt_001615",
           "payload": {
             "anchor_x": 236.351,
             "anchor_y": -60.927,
@@ -25817,7 +25853,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001613",
+          "event_id": "evt_001616",
           "payload": {
             "anchor_x": 236.351,
             "anchor_y": -24.927,
@@ -25829,7 +25865,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001614",
+          "event_id": "evt_001617",
           "payload": {
             "anchor_x": 180.351,
             "anchor_y": 11.073,
@@ -25841,7 +25877,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001615",
+          "event_id": "evt_001618",
           "payload": {
             "anchor_x": -20.351,
             "anchor_y": 460.927,
@@ -25853,7 +25889,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001616",
+          "event_id": "evt_001619",
           "payload": {
             "anchor_x": 147.649,
             "anchor_y": 460.927,
@@ -25870,7 +25906,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001617",
+          "event_id": "evt_001620",
           "payload": {
             "attacker": "enemy_001",
             "target": "ally_001",
@@ -25889,7 +25925,7 @@
           "type": "attack"
         },
         {
-          "event_id": "evt_001618",
+          "event_id": "evt_001621",
           "payload": {
             "amount": 1,
             "reason": "basic_attack",
@@ -25901,7 +25937,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_001619",
+          "event_id": "evt_001622",
           "payload": {
             "action_interval_ticks": 32,
             "current_tick": 414,
@@ -25918,7 +25954,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001620",
+          "event_id": "evt_001623",
           "payload": {
             "skill": "katana_slash",
             "source": "ally_003",
@@ -25941,7 +25977,7 @@
           "type": "skill_trigger"
         },
         {
-          "event_id": "evt_001621",
+          "event_id": "evt_001624",
           "payload": {
             "amount": 15,
             "reason": "skill:katana_slash",
@@ -25953,7 +25989,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_001622",
+          "event_id": "evt_001625",
           "payload": {
             "cooldown_ticks": 20,
             "ready_tick": 438,
@@ -25965,7 +26001,7 @@
           "type": "skill_cooldown"
         },
         {
-          "event_id": "evt_001623",
+          "event_id": "evt_001626",
           "payload": {
             "action_interval_ticks": 20,
             "current_tick": 418,
@@ -25977,7 +26013,7 @@
           "type": "action_scheduled"
         },
         {
-          "event_id": "evt_001624",
+          "event_id": "evt_001627",
           "payload": {
             "attacker": "enemy_002",
             "target": "ally_001",
@@ -25996,7 +26032,7 @@
           "type": "attack"
         },
         {
-          "event_id": "evt_001625",
+          "event_id": "evt_001628",
           "payload": {
             "amount": 1,
             "reason": "basic_attack",
@@ -26008,7 +26044,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_001626",
+          "event_id": "evt_001629",
           "payload": {
             "action_interval_ticks": 24,
             "current_tick": 418,
@@ -26025,7 +26061,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001627",
+          "event_id": "evt_001630",
           "payload": {
             "anchor_x": 241.503,
             "anchor_y": -69.73,
@@ -26037,7 +26073,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001628",
+          "event_id": "evt_001631",
           "payload": {
             "anchor_x": 241.503,
             "anchor_y": -33.73,
@@ -26049,7 +26085,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001629",
+          "event_id": "evt_001632",
           "payload": {
             "anchor_x": 185.503,
             "anchor_y": 2.27,
@@ -26061,7 +26097,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001630",
+          "event_id": "evt_001633",
           "payload": {
             "anchor_x": -25.503,
             "anchor_y": 469.73,
@@ -26073,7 +26109,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001631",
+          "event_id": "evt_001634",
           "payload": {
             "anchor_x": 142.497,
             "anchor_y": 469.73,
@@ -26085,7 +26121,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001632",
+          "event_id": "evt_001635",
           "payload": {
             "skill": "bow_shot",
             "source": "ally_005",
@@ -26108,7 +26144,7 @@
           "type": "skill_trigger"
         },
         {
-          "event_id": "evt_001633",
+          "event_id": "evt_001636",
           "payload": {
             "amount": 18,
             "reason": "skill:bow_shot",
@@ -26120,7 +26156,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_001634",
+          "event_id": "evt_001637",
           "payload": {
             "unit": "enemy_002"
           },
@@ -26128,7 +26164,7 @@
           "type": "death"
         },
         {
-          "event_id": "evt_001635",
+          "event_id": "evt_001638",
           "payload": {
             "cooldown_ticks": 30,
             "ready_tick": 450,
@@ -26140,7 +26176,7 @@
           "type": "skill_cooldown"
         },
         {
-          "event_id": "evt_001636",
+          "event_id": "evt_001639",
           "payload": {
             "action_interval_ticks": 28,
             "current_tick": 420,
@@ -26157,7 +26193,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001637",
+          "event_id": "evt_001640",
           "payload": {
             "reason": "target_dead",
             "target": "enemy_002",
@@ -26167,7 +26203,7 @@
           "type": "engagement_release"
         },
         {
-          "event_id": "evt_001638",
+          "event_id": "evt_001641",
           "payload": {
             "distance": 109.792,
             "reason": "nearest_enemy",
@@ -26183,7 +26219,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001639",
+          "event_id": "evt_001642",
           "payload": {
             "anchor_x": 243.424,
             "anchor_y": -79.289,
@@ -26195,7 +26231,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001640",
+          "event_id": "evt_001643",
           "payload": {
             "anchor_x": 243.424,
             "anchor_y": -43.289,
@@ -26207,7 +26243,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001641",
+          "event_id": "evt_001644",
           "payload": {
             "anchor_x": 187.424,
             "anchor_y": -7.289,
@@ -26219,7 +26255,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001642",
+          "event_id": "evt_001645",
           "payload": {
             "anchor_x": -27.424,
             "anchor_y": 479.289,
@@ -26236,7 +26272,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001643",
+          "event_id": "evt_001646",
           "payload": {
             "attacker": "ally_001",
             "target": "enemy_001",
@@ -26255,7 +26291,7 @@
           "type": "attack"
         },
         {
-          "event_id": "evt_001644",
+          "event_id": "evt_001647",
           "payload": {
             "amount": 1,
             "reason": "basic_attack",
@@ -26267,7 +26303,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_001645",
+          "event_id": "evt_001648",
           "payload": {
             "action_interval_ticks": 32,
             "current_tick": 432,
@@ -26284,7 +26320,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001646",
+          "event_id": "evt_001649",
           "payload": {
             "skill": "katana_slash",
             "source": "ally_003",
@@ -26307,7 +26343,7 @@
           "type": "skill_trigger"
         },
         {
-          "event_id": "evt_001647",
+          "event_id": "evt_001650",
           "payload": {
             "amount": 15,
             "reason": "skill:katana_slash",
@@ -26319,7 +26355,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_001648",
+          "event_id": "evt_001651",
           "payload": {
             "cooldown_ticks": 20,
             "ready_tick": 458,
@@ -26331,7 +26367,7 @@
           "type": "skill_cooldown"
         },
         {
-          "event_id": "evt_001649",
+          "event_id": "evt_001652",
           "payload": {
             "action_interval_ticks": 20,
             "current_tick": 438,
@@ -26348,7 +26384,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001650",
+          "event_id": "evt_001653",
           "payload": {
             "anchor_x": 245.346,
             "anchor_y": -88.848,
@@ -26360,7 +26396,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001651",
+          "event_id": "evt_001654",
           "payload": {
             "anchor_x": 245.346,
             "anchor_y": -52.848,
@@ -26372,7 +26408,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001652",
+          "event_id": "evt_001655",
           "payload": {
             "anchor_x": 189.346,
             "anchor_y": -16.848,
@@ -26384,7 +26420,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001653",
+          "event_id": "evt_001656",
           "payload": {
             "anchor_x": -29.346,
             "anchor_y": 488.848,
@@ -26401,7 +26437,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001654",
+          "event_id": "evt_001657",
           "payload": {
             "attacker": "enemy_001",
             "target": "ally_001",
@@ -26420,7 +26456,7 @@
           "type": "attack"
         },
         {
-          "event_id": "evt_001655",
+          "event_id": "evt_001658",
           "payload": {
             "amount": 1,
             "reason": "basic_attack",
@@ -26432,7 +26468,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_001656",
+          "event_id": "evt_001659",
           "payload": {
             "action_interval_ticks": 32,
             "current_tick": 446,
@@ -26449,7 +26485,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001657",
+          "event_id": "evt_001660",
           "payload": {
             "skill": "focus_fire",
             "source": "ally_005",
@@ -26463,7 +26499,7 @@
           "type": "skill_trigger"
         },
         {
-          "event_id": "evt_001658",
+          "event_id": "evt_001661",
           "payload": {
             "amount": 9,
             "reason": "skill:focus_fire",
@@ -26475,7 +26511,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_001659",
+          "event_id": "evt_001662",
           "payload": {
             "cooldown_ticks": 100,
             "ready_tick": 548,
@@ -26487,7 +26523,7 @@
           "type": "skill_cooldown"
         },
         {
-          "event_id": "evt_001660",
+          "event_id": "evt_001663",
           "payload": {
             "action_interval_ticks": 28,
             "current_tick": 448,
@@ -26504,7 +26540,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001661",
+          "event_id": "evt_001664",
           "payload": {
             "anchor_x": 247.268,
             "anchor_y": -98.406,
@@ -26516,7 +26552,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001662",
+          "event_id": "evt_001665",
           "payload": {
             "anchor_x": 247.268,
             "anchor_y": -62.406,
@@ -26528,7 +26564,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001663",
+          "event_id": "evt_001666",
           "payload": {
             "anchor_x": 191.268,
             "anchor_y": -26.406,
@@ -26540,7 +26576,7 @@
           "type": "formation_anchor_update"
         },
         {
-          "event_id": "evt_001664",
+          "event_id": "evt_001667",
           "payload": {
             "anchor_x": -31.268,
             "anchor_y": 498.406,
@@ -26557,7 +26593,7 @@
     {
       "events": [
         {
-          "event_id": "evt_001665",
+          "event_id": "evt_001668",
           "payload": {
             "skill": "katana_slash",
             "source": "ally_003",
@@ -26580,7 +26616,7 @@
           "type": "skill_trigger"
         },
         {
-          "event_id": "evt_001666",
+          "event_id": "evt_001669",
           "payload": {
             "amount": 15,
             "reason": "skill:katana_slash",
@@ -26592,7 +26628,7 @@
           "type": "damage"
         },
         {
-          "event_id": "evt_001667",
+          "event_id": "evt_001670",
           "payload": {
             "unit": "enemy_001"
           },
@@ -26600,7 +26636,7 @@
           "type": "death"
         },
         {
-          "event_id": "evt_001668",
+          "event_id": "evt_001671",
           "payload": {
             "cooldown_ticks": 20,
             "ready_tick": 478,
@@ -26612,7 +26648,7 @@
           "type": "skill_cooldown"
         },
         {
-          "event_id": "evt_001669",
+          "event_id": "evt_001672",
           "payload": {
             "action_interval_ticks": 20,
             "current_tick": 458,
@@ -26624,7 +26660,7 @@
           "type": "action_scheduled"
         },
         {
-          "event_id": "evt_001670",
+          "event_id": "evt_001673",
           "payload": {
             "end_tick": 458,
             "loser_alive": 0,

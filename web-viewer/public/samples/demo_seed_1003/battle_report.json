@@ -89,7 +89,7 @@
     "target_reason_counts": {
       "spatial_engaged_target": 39
     },
-    "total_actions_scheduled": 84,
+    "total_actions_scheduled": 87,
     "total_damage": 1271,
     "total_engage_start": 23,
     "total_engagement_locks": 15,
@@ -207,7 +207,7 @@
       "target_acquired": 1
     },
     "ally_004": {
-      "actions_taken": 2,
+      "actions_taken": 3,
       "cooldowns_started": 2,
       "damage_done": 112,
       "damage_taken": 94,
@@ -218,7 +218,7 @@
       "entered_range": 2,
       "formation_anchor_updates": 16,
       "kills": 1,
-      "last_next_action_tick": 164,
+      "last_next_action_tick": 182,
       "modifiers_received": 1,
       "moves": 73,
       "ranged_holds": 0,
@@ -260,7 +260,7 @@
       "target_acquired": 5
     },
     "ally_006": {
-      "actions_taken": 3,
+      "actions_taken": 4,
       "cooldowns_started": 1,
       "damage_done": 11,
       "damage_taken": 119,
@@ -271,7 +271,7 @@
       "entered_range": 2,
       "formation_anchor_updates": 25,
       "kills": 0,
-      "last_next_action_tick": 255,
+      "last_next_action_tick": 291,
       "modifiers_received": 1,
       "moves": 31,
       "ranged_holds": 0,
@@ -366,7 +366,7 @@
       "target_acquired": 1
     },
     "enemy_004": {
-      "actions_taken": 5,
+      "actions_taken": 6,
       "cooldowns_started": 2,
       "damage_done": 149,
       "damage_taken": 91,
@@ -377,7 +377,7 @@
       "entered_range": 2,
       "formation_anchor_updates": 16,
       "kills": 1,
-      "last_next_action_tick": 163,
+      "last_next_action_tick": 181,
       "modifiers_received": 0,
       "moves": 16,
       "ranged_holds": 0,

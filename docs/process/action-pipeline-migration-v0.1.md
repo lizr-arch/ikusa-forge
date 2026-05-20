@@ -36,15 +36,26 @@ Action Pipeline 是 runtime 内部结构，不改变 replay schema / 回放 sche
 
 技能选择逻辑（`get_ready_skills`）保持不变。
 
+## Completion Status / 收口状态
+
+本阶段后续收口把“散落手工路径”继续迁入管线：
+
+- `_emit_action_scheduled` 及直接 `_run_tick` 调度写入 -> `ActionScheduleEffect`
+- `try_use_on_battle_start_skills`、`try_use_on_attacked_skills`、`try_use_on_ally_attacked_skills` -> `run_combat_action`
+- 状态过期事件 -> `status_system.py` + `StatusExpireEffect` + `status_expire`
+
+Legacy helper（`_emit_skill_trigger` / `_apply_status` / `_mark_skill_used_and_emit_cooldown`）仍保留注释为 fallback，作为集成路径的兼容兜底，不作为主流程入口。
+
 ## Effect Models / 效果模型
 
-新增的 5 个 Effect dataclass：
+新增的 6 个 Effect dataclass：
 
 - DamageEffect / 伤害效果
 - StatusApplyEffect / 状态效果
 - CooldownEffect / 冷却效果
 - DeathEffect / 死亡效果
 - ActionScheduleEffect / 行动安排效果
+- StatusExpireEffect / 状态过期效果
 
 ## Event Contract Preservation / 事件契约保持
 
@@ -61,6 +72,7 @@ Action Pipeline 是 runtime 内部结构，不改变 replay schema / 回放 sche
 - `battle_end`
 - `stat_modifier`
 - `unit_move`
+- `status_expire`
 
 ## Not in Scope / 不在范围
 

@@ -35,6 +35,12 @@
 - `combat_state` 进入 snapshot / 状态快照 和 `unit_spawn` / 单位生成事件
 - `BattleSession / 战斗会话` 仍只负责编排，不持有复杂规则实现
 
+## Pipeline hardening status / 管线收口状态
+
+在当前阶段，`action_scheduled` / 行动调度和常见反应技能触发路径已经并入 Action Pipeline 运行。
+状态生命周期也增加了 `status_expire` 过期链路，继续由 `status_system.py` 管理。
+这为后续 `phase2/pipeline-hardening-and-status-lifecycle` / `phase2/status-lifecycle-system` 打下了稳定地基。
+
 ## Not in Scope / 不在范围
 
 - no behavior tree yet / 暂不引入行为树

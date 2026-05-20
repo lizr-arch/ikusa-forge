@@ -9,11 +9,7 @@ from dataclasses import asdict, dataclass, field
 from typing import Callable, Dict, List, Mapping, Optional, Sequence
 
 from ikusa_sim.action_pipeline import build_skill_action, run_combat_action
-from ikusa_sim.combat_rules import (
-    apply_damage,
-    attack_interval_to_ticks,
-    calculate_skill_damage,
-)
+from ikusa_sim.combat_rules import attack_interval_to_ticks, calculate_skill_damage
 from ikusa_sim.events import BattleEvent
 from ikusa_sim.models import ConfigBundle, SkillDef
 from ikusa_sim.runtime_models import BattleState, StatusEffect, UnitState
@@ -40,6 +36,7 @@ SkillHandler = Callable[
         SkillDef,
         Optional[str],
         Optional[Mapping[str, int]],
+        bool,
     ],
     SkillUseResult,
 ]
@@ -88,9 +85,6 @@ def try_use_on_battle_start_skills(
                 _derive_skill_target_reason(skill),
                 None,
             )
-            if result.used:
-                if not result.cooldown_handled:
-                    _mark_skill_used_and_emit_cooldown(unit, skill, state, tick, events)
 
 
 def try_use_on_attack_skill(
@@ -100,6 +94,7 @@ def try_use_on_attack_skill(
     config: ConfigBundle,
     tick: int,
     events: List[BattleEvent],
+    schedule_next_action: bool = False,
     target_decision: Optional[TargetDecision] = None,
 ) -> SkillUseResult:
     if not attacker.alive:
@@ -121,10 +116,9 @@ def try_use_on_attack_skill(
             skill,
             reason,
             score_payload,
+            schedule_next_action,
         )
         if result.used:
-            if not result.cooldown_handled:
-                _mark_skill_used_and_emit_cooldown(attacker, skill, state, tick, events)
             return result
     return SkillUseResult(used=False, damaged_targets=[])
 
@@ -152,10 +146,8 @@ def try_use_on_attacked_skills(
             skill,
             reason,
             None,
+            False,
         )
-        if result.used:
-            if not result.cooldown_handled:
-                _mark_skill_used_and_emit_cooldown(defender, skill, state, tick, events)
         if not attacker.alive:
             return
 
@@ -192,12 +184,10 @@ def try_use_on_ally_attacked_skills(
                 skill,
                 _derive_skill_target_reason(skill),
                 None,
+                False,
             )
-            if result.used:
-                if not result.cooldown_handled:
-                    _mark_skill_used_and_emit_cooldown(reactor, skill, state, tick, events)
-            if not attacker.alive:
-                return
+        if not attacker.alive:
+            return
 
 
 def _use_skill(
@@ -210,6 +200,7 @@ def _use_skill(
     skill: SkillDef,
     target_reason: Optional[str] = None,
     target_score: Optional[Mapping[str, int]] = None,
+    schedule_next_action: bool = False,
 ) -> SkillUseResult:
     handler = SKILL_HANDLERS.get(skill.id)
     if handler is None:
@@ -224,6 +215,7 @@ def _use_skill(
         skill,
         target_reason,
         target_score,
+        schedule_next_action,
     )
 
 
@@ -237,6 +229,7 @@ def _handle_current_target_damage(
     skill: SkillDef,
     target_reason: Optional[str],
     target_score: Optional[Mapping[str, int]],
+    schedule_next_action: bool,
 ) -> SkillUseResult:
     _ = config
     if current_target is None or not current_target.alive:
@@ -250,6 +243,7 @@ def _handle_current_target_damage(
         events,
         target_reason,
         target_score,
+        schedule_next_action,
     )
 
 
@@ -263,6 +257,7 @@ def _handle_lowest_hp_enemy_damage(
     skill: SkillDef,
     target_reason: Optional[str],
     target_score: Optional[Mapping[str, int]],
+    schedule_next_action: bool,
 ) -> SkillUseResult:
     _ = current_target
     _ = config
@@ -278,6 +273,7 @@ def _handle_lowest_hp_enemy_damage(
         events,
         target_reason,
         target_score,
+        schedule_next_action,
     )
 
 
@@ -291,13 +287,14 @@ def _handle_guard(
     skill: SkillDef,
     target_reason: Optional[str],
     target_score: Optional[Mapping[str, int]],
+    schedule_next_action: bool,
 ) -> SkillUseResult:
     _ = current_target
     _ = config
     action = build_skill_action(state, source, skill, [source], tick, target_reason, target_score)
     action.metadata["status_stat"] = "guard_value"
     action.metadata["status_amount"] = int(round(skill.effect_value))
-    result = run_combat_action(state, action, tick, events)
+    result = run_combat_action(state, action, tick, events, schedule_next_action=schedule_next_action)
     if not result.ok:
         return SkillUseResult(used=False, damaged_targets=[])
     return SkillUseResult(used=True, damaged_targets=[], cooldown_handled=True)
@@ -313,6 +310,7 @@ def _handle_banner_rally(
     skill: SkillDef,
     target_reason: Optional[str],
     target_score: Optional[Mapping[str, int]],
+    schedule_next_action: bool,
 ) -> SkillUseResult:
     _ = current_target
     _ = config
@@ -323,7 +321,7 @@ def _handle_banner_rally(
     action = build_skill_action(state, source, skill, targets, tick, target_reason, target_score)
     action.metadata["status_stat"] = "atk"
     action.metadata["status_amount"] = int(round(skill.effect_value))
-    result = run_combat_action(state, action, tick, events)
+    result = run_combat_action(state, action, tick, events, schedule_next_action=schedule_next_action)
     if not result.ok:
         return SkillUseResult(used=False, damaged_targets=[])
     return SkillUseResult(used=True, damaged_targets=[], cooldown_handled=True)
@@ -338,6 +336,7 @@ def _resolve_damage_skill(
     events: List[BattleEvent],
     target_reason: Optional[str],
     target_score: Optional[Mapping[str, int]],
+    schedule_next_action: bool = False,
 ) -> SkillUseResult:
     live_targets = [target for target in targets if target.alive]
     if not live_targets:
@@ -345,7 +344,7 @@ def _resolve_damage_skill(
 
     action = build_skill_action(state, source, skill, live_targets, tick, target_reason, target_score)
     action.metadata["effect_type"] = "damage"
-    result = run_combat_action(state, action, tick, events)
+    result = run_combat_action(state, action, tick, events, schedule_next_action=schedule_next_action)
     if not result.ok:
         return SkillUseResult(used=False, damaged_targets=[])
 
@@ -368,6 +367,8 @@ def _emit_skill_trigger(
     target_reason: Optional[str],
     target_score: Optional[Mapping[str, int]],
 ) -> None:
+    # Legacy fallback: kept for compatibility with older call sites.
+    # Integrated runtime paths route through action_pipeline actions.
     payload: Dict[str, object] = {
         "source": source.instance_id,
         "skill": skill.id,
@@ -401,6 +402,8 @@ def _apply_status(
     amount: int,
     target_reason: Optional[str],
 ) -> None:
+    # Legacy fallback: kept for compatibility with older offline helpers.
+    # Integrated runtime paths apply status through action_pipeline + status_system.
     status = StatusEffect(
         id=_status_id(target, skill),
         source=source.instance_id,
@@ -435,6 +438,8 @@ def _mark_skill_used_and_emit_cooldown(
     tick: int,
     events: List[BattleEvent],
 ) -> None:
+    # Legacy fallback: used only when bypassing action_pipeline.
+    # Preferred path is pipeline-generated CooldownEffect.
     ready_tick = mark_skill_used(unit, skill, tick, state.tick_rate)
     events.append(
         BattleEvent(

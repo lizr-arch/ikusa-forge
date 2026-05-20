@@ -16,6 +16,7 @@
 - Live Battle Visual Polish / 实时战斗视觉打磨（Battlefield-first layout / 战场优先布局、HP bar / 血条、行动条、攻击线、伤害跳字、胜负横幅）
 - Live Pixi Battlefield Renderer / PixiJS 实时战场渲染器（PixiJS 主战场、DOM 阵容/战报/性能面板、视觉状态缓冲）
 - Realtime Spatial Combat Foundation / 实时空间战斗基础（`spatial_combat.py` 空间模块、Continuous Position / 连续坐标、Movement Intent / 移动意图、Target Acquisition / 寻敌、Attack Range / 攻击范围、Unit Movement Event / 单位移动事件、report spatial counters / 战报空间计数）
+- Pipeline Hardening and Status Lifecycle / 管线加固与状态生命周期（`ActionScheduleEffect`、`status_expire`、`on_battle_start` / 战斗开始技能、`on_attacked` / 被攻击反应技能、`on_ally_attacked` / 友军受创反应技能）
 - Browser Smoke Test / 浏览器冒烟测试（Playwright 基础检查）
 - Verified real `demo_001` modifier evidence：
   - formation modifiers in report summary / 战报阵型修正数 > 0
@@ -52,6 +53,7 @@
 - `phase2/combat-architecture-formalization`: Combat Architecture Formalization / 战斗架构正式化 (current / pending review)
 - `phase2/formation-and-engagement-system`: Formation and Engagement System / 编队与接敌系统 (current / pending review)
 - `phase2/action-pipeline-migration`: Action Pipeline Migration / 行动管线迁移 (current)
+- `phase2/pipeline-hardening-and-status-lifecycle`: Pipeline Hardening and Status Lifecycle / 管线加固与状态生命周期 (current)
 
 ## Current Commands / 当前命令
 
@@ -127,13 +129,14 @@ npm run test:e2e
 
 优先关注交付可展示闭环与交付稳定性：
 
-1. `phase2/combat-architecture-formalization`（若目标是先把运行时架构正式化，再继续迁移）
-2. `phase2/combat-behavior-pack`（若目标是提升战斗行为可解释性）
-3. `phase2/combat-system-pack`（若目标是状态、冷却、行动时间线和胜负解释可见性）
-4. `phase2/demo-one-click-and-scenarios`（若目标是降低演示和冒烟门槛）
-5. `phase2/live-combat-runtime-foundation`（若目标是从 replay 生成迈向可 step 的可移植运行时）
-6. `phase2/live-combat-api`（若目标是向外部客户端暴露本地 HTTP API）
-7. `phase2/live-battle-visual-polish`（若目标是提升展示观感）
-8. `phase2/ci-workflow`（若目标是稳定交付）
-9. `phase1/viewer-polish`（若目标是演示稳定）
-10. `phase2/action-pipeline-migration`（若目标是把攻击/技能/效果结算统一迁移到 Action Pipeline / 行动管线）
+1. `phase2/pipeline-hardening-and-status-lifecycle`（若目标是先收口剩余反应和状态生命周期）
+2. `phase2/combat-architecture-formalization`（若目标是先把运行时架构正式化，再继续迁移）
+3. `phase2/combat-behavior-pack`（若目标是提升战斗行为可解释性）
+4. `phase2/combat-system-pack`（若目标是状态、冷却、行动时间线和胜负解释可见性）
+5. `phase2/demo-one-click-and-scenarios`（若目标是降低演示和冒烟门槛）
+6. `phase2/live-combat-runtime-foundation`（若目标是从 replay 生成迈向可 step 的可移植运行时）
+7. `phase2/live-combat-api`（若目标是向外部客户端暴露本地 HTTP API）
+8. `phase2/live-battle-visual-polish`（若目标是提升展示观感）
+9. `phase2/ci-workflow`（若目标是稳定交付）
+10. `phase1/viewer-polish`（若目标是演示稳定）
+11. `phase2/action-pipeline-migration`（若目标是把攻击/技能/效果结算统一迁移到 Action Pipeline / 行动管线）

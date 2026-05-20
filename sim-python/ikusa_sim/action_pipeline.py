@@ -19,11 +19,13 @@ from ikusa_sim.effect_models import (
     DamageEffect,
     DeathEffect,
     Effect,
+    StatusExpireEffect,
     StatusApplyEffect,
 )
 from ikusa_sim.events import BattleEvent
 from ikusa_sim.models import SkillDef
-from ikusa_sim.runtime_models import BattleState, StatusEffect, UnitState
+from ikusa_sim.runtime_models import BattleState, UnitState
+from ikusa_sim.status_system import apply_status_effect, apply_status_expire_effect
 from ikusa_sim.spatial_utils import distance_between
 
 
@@ -237,22 +239,7 @@ def apply_effects(state: BattleState, effects: Sequence[Effect], tick: int) -> b
         elif isinstance(effect, StatusApplyEffect):
             target = _find_unit(state, effect.target)
             if target is not None and target.alive:
-                status = StatusEffect(
-                    id=effect.status_id,
-                    source=effect.source,
-                    source_type="skill",
-                    target=effect.target,
-                    stat=effect.stat,
-                    amount=effect.amount,
-                    start_tick=tick,
-                    expire_tick=effect.expire_tick,
-                    reason=effect.reason,
-                )
-                target.statuses.append(status)
-                if effect.stat == "guard_value":
-                    target.guard_value += effect.amount
-                elif effect.stat == "atk":
-                    target.atk += effect.amount
+                apply_status_effect(target, effect, tick=tick)
 
         elif isinstance(effect, CooldownEffect):
             source = _find_unit(state, effect.source)
@@ -269,6 +256,9 @@ def apply_effects(state: BattleState, effects: Sequence[Effect], tick: int) -> b
             unit = _find_unit(state, effect.unit)
             if unit is not None:
                 unit.next_action_tick = effect.next_action_tick
+
+        elif isinstance(effect, StatusExpireEffect):
+            apply_status_expire_effect(state, effect)
 
     return any_death
 
@@ -349,18 +339,17 @@ def emit_events_from_effects(
         elif isinstance(effect, StatusApplyEffect):
             target = _find_unit(state, effect.target)
             if target is not None:
-                status = StatusEffect(
-                    id=effect.status_id,
-                    source=effect.source,
-                    source_type="skill",
-                    target=effect.target,
-                    stat=effect.stat,
-                    amount=effect.amount,
-                    start_tick=tick,
-                    expire_tick=effect.expire_tick,
-                    reason=effect.reason,
-                )
-                status_payload: Dict[str, object] = asdict(status)
+                status_payload: Dict[str, object] = {
+                    "id": effect.status_id,
+                    "source": effect.source,
+                    "source_type": "skill",
+                    "target": effect.target,
+                    "stat": effect.stat,
+                    "amount": effect.amount,
+                    "start_tick": tick,
+                    "expire_tick": effect.expire_tick,
+                    "reason": effect.reason,
+                }
                 if "target_reason" in action.metadata:
                     status_payload["target_reason"] = action.metadata["target_reason"]
                 events.append(
@@ -413,6 +402,15 @@ def emit_events_from_effects(
                     },
                 )
             )
+        elif isinstance(effect, StatusExpireEffect):
+            events.append(
+                BattleEvent(
+                    tick=tick,
+                    event_id=_next_event_id(state),
+                    type="status_expire",
+                    payload=asdict(effect),
+                )
+            )
 
 
 def run_combat_action(
@@ -420,10 +418,25 @@ def run_combat_action(
     action: CombatAction,
     tick: int,
     events: List[BattleEvent],
+    *,
+    schedule_next_action: bool = False,
 ) -> ActionResult:
     result = resolve_combat_action(state, action)
     if not result.ok:
         return result
+    if schedule_next_action:
+        unit = _find_unit(state, action.unit_id)
+        if unit is not None and unit.alive:
+            action_interval = unit.action_interval_ticks or attack_interval_to_ticks(unit.base_attack_interval, state.tick_rate)
+            result.effects.append(
+                ActionScheduleEffect(
+                    unit=unit.instance_id,
+                    current_tick=tick,
+                    next_action_tick=tick + action_interval,
+                    action_interval_ticks=action_interval,
+                    reason="after_action",
+                )
+            )
     apply_effects(state, result.effects, tick)
     emit_events_from_effects(state, action, result.effects, tick, events)
     return result

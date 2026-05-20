@@ -45,4 +45,20 @@ class ActionScheduleEffect:
     reason: str
 
 
-Effect = Union[DamageEffect, StatusApplyEffect, CooldownEffect, DeathEffect, ActionScheduleEffect]
+@dataclass(frozen=True)
+class StatusExpireEffect:
+    status_id: str
+    target: str
+    stat: str
+    amount: int
+    reason: str
+
+
+Effect = Union[
+    DamageEffect,
+    StatusApplyEffect,
+    CooldownEffect,
+    DeathEffect,
+    ActionScheduleEffect,
+    StatusExpireEffect,
+]
