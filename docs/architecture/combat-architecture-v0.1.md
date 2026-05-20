@@ -120,3 +120,4 @@ Phase 2 迁移路线：
 
 - `phase2/formation-and-engagement-system` — Formation and Engagement System / 编队与接敌系统 ✅ 已完成
 - `phase2/action-pipeline-migration` — Action Pipeline Migration / 行动管线迁移 ✅ 已完成（把攻击/技能/效果结算从散落逻辑迁入统一管线，新增 Effect Models / 效果模型、Action Pipeline / 行动管线、Validate → Resolve → ApplyEffects → EmitEvents 五阶段设计）
+- `phase2/pipeline-hardening-and-status-lifecycle` — Pipeline Hardening and Status Lifecycle / 管线加固与状态生命周期 ✅ 已完成（将行动调度、反应技能与状态过期收入统一处理链，保留 event contract）

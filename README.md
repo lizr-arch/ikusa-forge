@@ -51,6 +51,7 @@ Current Python simulator status:
 - Combat Architecture Formalization / 战斗架构正式化（Unit FSM / 单位状态机、Decision Models / 决策模型、Action Pipeline / 行动管线骨架、Combat State / 战斗状态）
 - Formation and Engagement System / 编队与接敌系统（Formation Anchor / 编队锚点、Group Advance / 编队推进、Engagement Pairing / 接敌配对、Melee Engagement Lock / 近战接敌锁定、Ranged Hold Distance / 远程保持距离、Separation / 单位分离）
 - Action Pipeline Migration / 行动管线迁移（attack/skill/damage/status/cooldown/death 结算统一迁入管线）
+- Pipeline Hardening and Status Lifecycle / 管线加固与状态生命周期（行动调度统一迁移、`battle_start` / 战斗开始技能、反应技能、`status_expire` / 状态过期）
 
 Phase 1 Demo Package / 第一阶段演示包 / Phase 2 Tactical Depth notes are available at:
 
@@ -68,6 +69,7 @@ Phase 1 Demo Package / 第一阶段演示包 / Phase 2 Tactical Depth notes are 
 - `docs/process/combat-architecture-formalization-v0.1.md`
 - `docs/process/formation-and-engagement-system-v0.1.md`
 - `docs/process/action-pipeline-migration-v0.1.md`
+- `docs/process/pipeline-hardening-and-status-lifecycle-v0.1.md`
 
 Quick start for a full demo run / 一次完整演示最简命令:
 
