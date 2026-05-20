@@ -5,9 +5,10 @@ implement a general-purpose skill DSL, synergies, formation bonuses,
 battle reports, viewers, host integration, or Godot logic.
 """
 
-from dataclasses import asdict, dataclass
+from dataclasses import asdict, dataclass, field
 from typing import Callable, Dict, List, Mapping, Optional, Sequence
 
+from ikusa_sim.action_pipeline import build_skill_action, run_combat_action
 from ikusa_sim.combat_rules import (
     apply_damage,
     attack_interval_to_ticks,
@@ -25,6 +26,7 @@ class SkillUseResult:
     damaged_targets: List[UnitState]
     target_reason: Optional[str] = None
     target_score: Optional[Mapping[str, int]] = None
+    cooldown_handled: bool = False
 
 
 SkillHandler = Callable[
@@ -87,7 +89,8 @@ def try_use_on_battle_start_skills(
                 None,
             )
             if result.used:
-                _mark_skill_used_and_emit_cooldown(unit, skill, state, tick, events)
+                if not result.cooldown_handled:
+                    _mark_skill_used_and_emit_cooldown(unit, skill, state, tick, events)
 
 
 def try_use_on_attack_skill(
@@ -120,7 +123,8 @@ def try_use_on_attack_skill(
             score_payload,
         )
         if result.used:
-            _mark_skill_used_and_emit_cooldown(attacker, skill, state, tick, events)
+            if not result.cooldown_handled:
+                _mark_skill_used_and_emit_cooldown(attacker, skill, state, tick, events)
             return result
     return SkillUseResult(used=False, damaged_targets=[])
 
@@ -150,7 +154,8 @@ def try_use_on_attacked_skills(
             None,
         )
         if result.used:
-            _mark_skill_used_and_emit_cooldown(defender, skill, state, tick, events)
+            if not result.cooldown_handled:
+                _mark_skill_used_and_emit_cooldown(defender, skill, state, tick, events)
         if not attacker.alive:
             return
 
@@ -189,7 +194,8 @@ def try_use_on_ally_attacked_skills(
                 None,
             )
             if result.used:
-                _mark_skill_used_and_emit_cooldown(reactor, skill, state, tick, events)
+                if not result.cooldown_handled:
+                    _mark_skill_used_and_emit_cooldown(reactor, skill, state, tick, events)
             if not attacker.alive:
                 return
 
@@ -288,29 +294,13 @@ def _handle_guard(
 ) -> SkillUseResult:
     _ = current_target
     _ = config
-    source.guard_value += int(round(skill.effect_value))
-    _emit_skill_trigger(
-        state,
-        events,
-        tick,
-        source,
-        skill,
-        [source],
-        target_reason,
-        target_score,
-    )
-    _apply_status(
-        state,
-        events,
-        tick,
-        source,
-        source,
-        skill,
-        stat="guard_value",
-        amount=int(round(skill.effect_value)),
-        target_reason=target_reason,
-    )
-    return SkillUseResult(used=True, damaged_targets=[])
+    action = build_skill_action(state, source, skill, [source], tick, target_reason, target_score)
+    action.metadata["status_stat"] = "guard_value"
+    action.metadata["status_amount"] = int(round(skill.effect_value))
+    result = run_combat_action(state, action, tick, events)
+    if not result.ok:
+        return SkillUseResult(used=False, damaged_targets=[])
+    return SkillUseResult(used=True, damaged_targets=[], cooldown_handled=True)
 
 
 def _handle_banner_rally(
@@ -330,32 +320,13 @@ def _handle_banner_rally(
     if not targets:
         return SkillUseResult(used=False, damaged_targets=[])
 
-    bonus = int(round(skill.effect_value))
-    for target in targets:
-        target.atk += bonus
-    _emit_skill_trigger(
-        state,
-        events,
-        tick,
-        source,
-        skill,
-        targets,
-        target_reason,
-        target_score,
-    )
-    for target in targets:
-        _apply_status(
-            state,
-            events,
-            tick,
-            source,
-            target,
-            skill,
-            stat="atk",
-            amount=bonus,
-            target_reason=target_reason,
-        )
-    return SkillUseResult(used=True, damaged_targets=[])
+    action = build_skill_action(state, source, skill, targets, tick, target_reason, target_score)
+    action.metadata["status_stat"] = "atk"
+    action.metadata["status_amount"] = int(round(skill.effect_value))
+    result = run_combat_action(state, action, tick, events)
+    if not result.ok:
+        return SkillUseResult(used=False, damaged_targets=[])
+    return SkillUseResult(used=True, damaged_targets=[], cooldown_handled=True)
 
 
 def _resolve_damage_skill(
@@ -372,50 +343,18 @@ def _resolve_damage_skill(
     if not live_targets:
         return SkillUseResult(used=False, damaged_targets=[])
 
-    _emit_skill_trigger(
-        state,
-        events,
-        tick,
-        source,
-        skill,
-        live_targets,
-        target_reason,
-        target_score,
-    )
-    damaged_targets = []  # type: List[UnitState]
-    for target in live_targets:
-        amount = calculate_skill_damage(source, target, skill)
-        reason = f"skill:{skill.id}"
-        died = apply_damage(target, amount, reason=reason, source=source.instance_id)
-        events.append(
-            BattleEvent(
-                tick=tick,
-                event_id=_next_event_id(state),
-                type="damage",
-                payload={
-                    "source": source.instance_id,
-                    "target": target.instance_id,
-                    "amount": amount,
-                    "target_hp_after": target.hp,
-                    "reason": reason,
-                },
-            )
-        )
-        damaged_targets.append(target)
-        if died:
-            events.append(
-                BattleEvent(
-                    tick=tick,
-                    event_id=_next_event_id(state),
-                    type="death",
-                    payload={"unit": target.instance_id},
-                )
-            )
+    action = build_skill_action(state, source, skill, live_targets, tick, target_reason, target_score)
+    action.metadata["effect_type"] = "damage"
+    result = run_combat_action(state, action, tick, events)
+    if not result.ok:
+        return SkillUseResult(used=False, damaged_targets=[])
+
     return SkillUseResult(
         used=True,
-        damaged_targets=damaged_targets,
+        damaged_targets=live_targets,
         target_reason=target_reason,
         target_score=target_score,
+        cooldown_handled=True,
     )
 
 

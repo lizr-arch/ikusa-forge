@@ -51,6 +51,7 @@
 - `phase2/realtime-spatial-combat-foundation`: Realtime Spatial Combat Foundation / 实时空间战斗基础 (current / pending review)
 - `phase2/combat-architecture-formalization`: Combat Architecture Formalization / 战斗架构正式化 (current / pending review)
 - `phase2/formation-and-engagement-system`: Formation and Engagement System / 编队与接敌系统 (current / pending review)
+- `phase2/action-pipeline-migration`: Action Pipeline Migration / 行动管线迁移 (current)
 
 ## Current Commands / 当前命令
 
@@ -135,3 +136,4 @@ npm run test:e2e
 7. `phase2/live-battle-visual-polish`（若目标是提升展示观感）
 8. `phase2/ci-workflow`（若目标是稳定交付）
 9. `phase1/viewer-polish`（若目标是演示稳定）
+10. `phase2/action-pipeline-migration`（若目标是把攻击/技能/效果结算统一迁移到 Action Pipeline / 行动管线）

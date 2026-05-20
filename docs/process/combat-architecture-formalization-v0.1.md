@@ -22,7 +22,7 @@
 后续战斗架构会按更细的阶段继续收口：
 
 - `phase2/formation-and-engagement-system`
-- `phase2/combat-action-pipeline`
+- `phase2/action-pipeline-migration` ✅ 已完成 — Action Pipeline Migration / 行动管线迁移
 - `phase2/status-lifecycle-system`
 - `phase2/godot-adapter`
 
